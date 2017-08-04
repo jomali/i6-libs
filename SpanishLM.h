@@ -41,26 +41,37 @@
 !!
 !!------------------------------------------------------------------------------
 !!
+!!	# NOTAS
+!!
+!!	Implementa el conjunto de mensajes por defecto de la librería Inform-INFSP,
+!!	incluyendo la posibilidad de modificar en tiempo de ejecución tanto el
+!!	tiempo verbal (presente, pasado, futuro) y la persona (primera, segunda,
+!!	tercera), como el género (masculino, femenino) el número (singular,
+!!	plural). Los mensajes están basados en gran medida en los de 'Spanish.h'.
+!!
+!!
 !!	# UTILIZACIÓN
 !!
 !!	A continuación se detallan los pasos que deben seguirse para usar la
 !!	librería.
 !!
 !!	1)	Declarar la constante SIN_MENSAJES para omitir los mensajes por defecto
-!!		de la librería Inform:
+!!		de la librería Inform (antes de incluir librerías y extensiones):
 !!
-!!		Constant SIN_MENSAJES; ! (antes de incluir librerías y extensiones)
+!!			Constant SIN_MENSAJES;
 !!
-!!	2)	Declarar el reemplazo de la rutina *ChangePlayer* definida en
-!!		*parserm.h*. *SpanishLM.h* utiliza un mecanismo que permite modificar
-!!		la flexión gramatical de los mensajes de la librería en tiempo de
-!!		ejecución ---permitiendo mensajes en primera, segunda y tercera
-!!		persona; presente, pasado y futuro; singular y plurar; masculino y
-!!		femenino--- en función, en parte, de los atributos del personaje
-!!		controlado por el usuario. Así, al cambiar de personaje, se hace
-!!		necesario actualizar el estado de la librería Inform.
+!!	2)	Declarar el reemplazo de la rutina 'ChangePlayer' definida en
+!!		'parserm.h' (antes de incluir librerías y extensiones):
 !!
-!!		Replace ChangePlayer; ! (antes de incluir librerías y extensiones)
+!!			Replace ChangePlayer;
+!!
+!!		Como se ha apuntado anteriormente, 'SpanishLM.h' utiliza un mecanismo
+!!		que permite modificar la flexión gramatical de los mensajes de la
+!!		librería en tiempo de ejecución ---permitiendo mensajes en primera,
+!!		segunda y tercera persona; presente, pasado y futuro; singular y
+!!		plurar; masculino y femenino--- en función, en parte, de los atributos
+!!		del personaje controlado por el usuario. Así, al cambiar de personaje,
+!!		se hace necesario actualizar el estado de la librería Inform.
 !!
 !!------------------------------------------------------------------------------
 
@@ -86,12 +97,111 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !! Funciones
 !!------------------------------------------------------------------------------
 
+[ _puedes_ x;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "podemos";
+			else print "puedo";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "podéis";
+			else print "puedes";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "pueden";
+			else print "puede";
+		FIRST_PERSON_PAST:
+			if (IsPluralNoun(player)) print "podíamos";
+			else print "podía";
+		SECOND_PERSON_PAST:
+			if (IsPluralNoun(player)) print "podíais";
+			else print "podías";
+		THIRD_PERSON_PAST:
+			if (IsPluralNoun(player)) print "podían";
+			else print "podía";
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "podremos";
+			else print "podré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "podréis";
+			else print "podrás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "podrán";
+			else print "podrá";
+	}
+	print (string) x;
+];
+
+[ oy_ x;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "amos";
+			else print "oy";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "áis";
+			else print "ás";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "án";
+			else print "á";
+		FIRST_PERSON_PAST:
+			if (IsPluralNoun(player)) print "ábamos";
+			else print "aba";
+		SECOND_PERSON_PAST:
+			if (IsPluralNoun(player)) print "abais";
+			else print "abas";
+		THIRD_PERSON_PAST:
+			if (IsPluralNoun(player)) print "aban";
+			else print "aba";
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "aremos";
+			else print "aré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "aréis";
+			else print "arás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "arán";
+			else print "ará";
+	}
+	print (string) x;
+];
+
+[ as_ x;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "amos";
+			else print "o";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "áis";
+			else print "as";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(player)) print "an";
+			else print "a";
+		FIRST_PERSON_PAST:
+			if (IsPluralNoun(player)) print "ábamos";
+			else print "aba";
+		SECOND_PERSON_PAST:
+			if (IsPluralNoun(player)) print "abais";
+			else print "abas";
+		THIRD_PERSON_PAST:
+			if (IsPluralNoun(player)) print "aban";
+			else print "aba";
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "aremos";
+			else print "aré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "aréis";
+			else print "arás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(player)) print "arán";
+			else print "ará";
+	}
+	print (string) x;
+];
+
 !!==============================================================================
 !! Intercambia el objeto controlado por el usuario por otro objeto dado.
-!! (Basado en *parserm.h*)
 !!
 !!	@param {Object} obj
 !!	@param {boolean} [flag]
+!!	@overrides parserm.h
 !!------------------------------------------------------------------------------
 [ ChangePlayer obj flag
 	i;
@@ -123,10 +233,34 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 
 !!==============================================================================
+!! Determina si un objeto está definido como nombre femenino o no.
+!!
+!!	@param {Object} obj
+!!	@returns {boolean} Verdadero si el objeto está definido como nombre
+!!		femenino. Falso en caso contrario
+!!------------------------------------------------------------------------------
+[ IsFemaleNoun obj;
+	return (GetGNAOfObject(obj, true) == 1 or 4 or 7 or 10);
+];
+
+
+!!==============================================================================
+!! Determina si un objeto está definido como nombre plural o no.
+!!
+!!	@param {Object} obj
+!!	@returns {boolean} Verdadero si el objeto está definido como nombre
+!!		plural. Falso en caso contrario
+!!------------------------------------------------------------------------------
+[ IsPluralNoun obj;
+	return (GetGNAOfObject(obj, true) == 3 or 4 or 5 or 9 or 10 or 11);
+];
+
+
+!!==============================================================================
 !! Establece la flexión gramatical de los mensajes de la librería, actualizando
-!! su estado. Para ello, utiliza los atributos ---aquellos referidos al género
-!! y número--- de un objeto dado (si no se especifica uno, por defecto el
-!! objeto controlado por el usuario).
+!! su estado. Para ello, utiliza la definición ---para determinar su género y
+!! número--- de un objeto dado (si no se especifica uno, por defecto el objeto
+!! 'player' controlado por el usuario).
 !!
 !!	@param {int} [gi=SECOND_PERSON_PRESENT] - Nueva flexión gramatical a
 !!		utilizar en los mensajes de la librería. Si no se especifica un valor o
@@ -136,329 +270,323 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !!		referidos a género y número utilizados para actualizar el estado de la
 !!		librería.
 !!------------------------------------------------------------------------------
-[ IsSingularNoun obj;
-	return (GetGNAOfObject(obj) == 0 or 1 or 2 or 6 or 7 or 8);
-];
-[ IsMaleNoun obj;
-	return (GetGNAOfObject(obj) == 0 or 3 or 6 or 9);
-];
 [ SetGrammaticalInflection gi obj;
 	if ((obj == 0) || (metaclass(obj) == nothing)) obj = player;
 	switch (gi) {
 		FIRST_PERSON_PRESENT:
 			_grammatical_inflection = FIRST_PERSON_PRESENT;
-			if (IsSingularNoun(player)) {
-				ARE__TX			= " veo";
-				ARE2__TX		= "veo ";
-				CANTGO__TX		= "No puedo ir por ahí.";
-				IS__TX			= " veo";
-				IS2__TX			= "veo ";
-				PARTICULA_TE	= "me";
-				if (IsMaleNoun(player)) {
-					FORMER__TX		= "mi antiguo ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí mismo";
-				} else {
-					FORMER__TX		= "mi antigua ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " vemos";
 				ARE2__TX		= "vemos ";
 				CANTGO__TX		= "No podemos ir por ahí.";
 				IS__TX			= " vemos";
 				IS2__TX			= "vemos ";
 				PARTICULA_TE	= "nos";
-				if (IsMaleNoun(player)) {
-					FORMER__TX		= "nuestro antiguo ~yo~";
-					YOU__TX			= "Nosotros";
-					YOURSELF__TX	= "nosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
+				} else {
+					FORMER__TX		= "nuestro antiguo ~yo~";
+					YOU__TX			= "Nosotros";
+					YOURSELF__TX	= "nosotros mismos";
+				}
+			} else {
+				ARE__TX			= " veo";
+				ARE2__TX		= "veo ";
+				CANTGO__TX		= "No puedo ir por ahí.";
+				IS__TX			= " veo";
+				IS2__TX			= "veo ";
+				PARTICULA_TE	= "me";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "mi antigua ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí misma";
+				} else {
+					FORMER__TX		= "mi antiguo ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí mismo";
 				}
 			}
 		SECOND_PERSON_PRESENT:
 			.defaultInflection;
 			_grammatical_inflection = SECOND_PERSON_PRESENT;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " ves";
-				ARE2__TX		= "ves ";
-				CANTGO__TX		= "No puedes ir por ahí.";
-				IS__TX			= " ves";
-				IS2__TX			= "ves ";
-				PARTICULA_TE	= "te";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí mismo";
-				} else {
-					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veis";
 				ARE2__TX		= "veis ";
 				CANTGO__TX		= "No podéis ir por ahí.";
 				IS__TX			= " veis";
 				IS2__TX			= "veis ";
 				PARTICULA_TE	= "os";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "vuestro antiguo ~yo~";
-					YOU__TX			= "Vosotros";
-					YOURSELF__TX	= "vosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
+				} else {
+					FORMER__TX		= "vuestro antiguo ~yo~";
+					YOU__TX			= "Vosotros";
+					YOURSELF__TX	= "vosotros mismos";
+				}
+			} else {
+				ARE__TX			= " ves";
+				ARE2__TX		= "ves ";
+				CANTGO__TX		= "No puedes ir por ahí.";
+				IS__TX			= " ves";
+				IS2__TX			= "ves ";
+				PARTICULA_TE	= "te";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "tu antigua ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí misma";
+				} else {
+					FORMER__TX		= "tu antiguo ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí mismo";
 				}
 			}
 		THIRD_PERSON_PRESENT:
 			_grammatical_inflection = THIRD_PERSON_PRESENT;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " ve";
-				ARE2__TX		= "ve ";
-				CANTGO__TX		= "No puede ir por ahí.";
-				IS__TX			= " ve";
-				IS2__TX			= "ve ";
-				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Él";
-					YOURSELF__TX	= "sí mismo";
-				} else {
-					FORMER__TX		= "su antigua ~yo~";
-					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " ven";
 				ARE2__TX		= "ven ";
 				CANTGO__TX		= "No pueden ir por ahí.";
 				IS__TX			= " ven";
 				IS2__TX			= "ven ";
 				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Ellos";
-					YOURSELF__TX	= "ellos mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Ellos";
+					YOURSELF__TX	= "ellos mismos";
+				}
+			} else {
+				ARE__TX			= " ve";
+				ARE2__TX		= "ve ";
+				CANTGO__TX		= "No puede ir por ahí.";
+				IS__TX			= " ve";
+				IS2__TX			= "ve ";
+				PARTICULA_TE	= "se";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "su antigua ~yo~";
+					YOU__TX			= "Ella";
+					YOURSELF__TX	= "sí misma";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Él";
+					YOURSELF__TX	= "sí mismo";
 				}
 			}
 		FIRST_PERSON_PAST:
 			_grammatical_inflection = FIRST_PERSON_PAST;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " veía";
-				ARE2__TX		= "veía ";
-				CANTGO__TX		= "No podía ir por ahí.";
-				IS__TX			= " veía";
-				IS2__TX			= "veía ";
-				PARTICULA_TE	= "me";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "mi antiguo ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí mismo";
-				} else {
-					FORMER__TX		= "mi antigua ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veíamos";
 				ARE2__TX		= "veíamos ";
 				CANTGO__TX		= "No podíamos ir por ahí.";
 				IS__TX			= " veíamos";
 				IS2__TX			= "veíamos ";
 				PARTICULA_TE	= "nos";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "nuestro antiguo ~yo~";
-					YOU__TX			= "Nosotros";
-					YOURSELF__TX	= "nosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
+				} else {
+					FORMER__TX		= "nuestro antiguo ~yo~";
+					YOU__TX			= "Nosotros";
+					YOURSELF__TX	= "nosotros mismos";
+				}
+			} else {
+				ARE__TX			= " veía";
+				ARE2__TX		= "veía ";
+				CANTGO__TX		= "No podía ir por ahí.";
+				IS__TX			= " veía";
+				IS2__TX			= "veía ";
+				PARTICULA_TE	= "me";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "mi antigua ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí misma";
+				} else {
+					FORMER__TX		= "mi antiguo ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí mismo";
 				}
 			}
 		SECOND_PERSON_PAST:
 			_grammatical_inflection = SECOND_PERSON_PAST;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " veías";
-				ARE2__TX		= "veías ";
-				CANTGO__TX		= "No podías ir por ahí.";
-				IS__TX			= " veías";
-				IS2__TX			= "veías ";
-				PARTICULA_TE	= "te";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí mismo";
-				} else {
-					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veíais";
 				ARE2__TX		= "veíais ";
 				CANTGO__TX		= "No podíais ir por ahí.";
 				IS__TX			= " veíais";
 				IS2__TX			= "veíais ";
 				PARTICULA_TE	= "os";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "vuestro antiguo ~yo~";
-					YOU__TX			= "Vosotros";
-					YOURSELF__TX	= "vosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
+				} else {
+					FORMER__TX		= "vuestro antiguo ~yo~";
+					YOU__TX			= "Vosotros";
+					YOURSELF__TX	= "vosotros mismos";
+				}
+			} else {
+				ARE__TX			= " veías";
+				ARE2__TX		= "veías ";
+				CANTGO__TX		= "No podías ir por ahí.";
+				IS__TX			= " veías";
+				IS2__TX			= "veías ";
+				PARTICULA_TE	= "te";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "tu antigua ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí misma";
+				} else {
+					FORMER__TX		= "tu antiguo ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí mismo";
 				}
 			}
 		THIRD_PERSON_PAST:
 			_grammatical_inflection = THIRD_PERSON_PAST;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " veía";
-				ARE2__TX		= "veía ";
-				CANTGO__TX		= "No podía ir por ahí.";
-				IS__TX			= " veía";
-				IS2__TX			= "veía ";
-				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Él";
-					YOURSELF__TX	= "sí mismo";
-				} else {
-					FORMER__TX		= "su antigua ~yo~";
-					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veían";
 				ARE2__TX		= "veían ";
 				CANTGO__TX		= "No podían ir por ahí.";
 				IS__TX			= " veían";
 				IS2__TX			= "veían ";
 				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Ellos";
-					YOURSELF__TX	= "ellos mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Ellos";
+					YOURSELF__TX	= "ellos mismos";
+				}
+			} else {
+				ARE__TX			= " veía";
+				ARE2__TX		= "veía ";
+				CANTGO__TX		= "No podía ir por ahí.";
+				IS__TX			= " veía";
+				IS2__TX			= "veía ";
+				PARTICULA_TE	= "se";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "su antigua ~yo~";
+					YOU__TX			= "Ella";
+					YOURSELF__TX	= "sí misma";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Él";
+					YOURSELF__TX	= "sí mismo";
 				}
 			}
 		FIRST_PERSON_FUTURE:
 			_grammatical_inflection = FIRST_PERSON_FUTURE;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " veré";
-				ARE2__TX		= "veré ";
-				CANTGO__TX		= "No podré ir por ahí.";
-				IS__TX			= " veré";
-				IS2__TX			= "veré ";
-				PARTICULA_TE	= "me";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "mi antiguo ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí mismo";
-				} else {
-					FORMER__TX		= "mi antigua ~yo~";
-					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veremos";
 				ARE2__TX		= "veremos ";
 				CANTGO__TX		= "No podremos ir por ahí.";
 				IS__TX			= " veremos";
 				IS2__TX			= "veremos ";
 				PARTICULA_TE	= "nos";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "nuestro antiguo ~yo~";
-					YOU__TX			= "Nosotros";
-					YOURSELF__TX	= "nosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
+				} else {
+					FORMER__TX		= "nuestro antiguo ~yo~";
+					YOU__TX			= "Nosotros";
+					YOURSELF__TX	= "nosotros mismos";
+				}
+			} else {
+				ARE__TX			= " veré";
+				ARE2__TX		= "veré ";
+				CANTGO__TX		= "No podré ir por ahí.";
+				IS__TX			= " veré";
+				IS2__TX			= "veré ";
+				PARTICULA_TE	= "me";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "mi antigua ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí misma";
+				} else {
+					FORMER__TX		= "mi antiguo ~yo~";
+					YOU__TX			= "Yo";
+					YOURSELF__TX	= "mí mismo";
 				}
 			}
 		SECOND_PERSON_FUTURE:
 			_grammatical_inflection = SECOND_PERSON_FUTURE;
-			if (IsSingularNoun(obj)) {
-				ARE__TX				= " verás";
-				ARE2__TX			= "verás ";
-				CANTGO__TX			= "No podrás ir por ahí.";
-				IS__TX				= " verás";
-				IS2__TX				= "verás ";
-				PARTICULA_TE		= "te";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí mismo";
-				} else {
-					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "Tú";
-					YOURSELF__TX	= "tí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " veréis";
 				ARE2__TX		= "veréis ";
 				CANTGO__TX		= "No podréis ir por ahí.";
 				IS__TX			= " veréis";
 				IS2__TX			= "veréis ";
 				PARTICULA_TE	= "os";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "vuestro antiguo ~yo~";
-					YOU__TX			= "Vosotros";
-					YOURSELF__TX	= "vosotros mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
+				} else {
+					FORMER__TX		= "vuestro antiguo ~yo~";
+					YOU__TX			= "Vosotros";
+					YOURSELF__TX	= "vosotros mismos";
+				}
+			} else {
+				ARE__TX				= " verás";
+				ARE2__TX			= "verás ";
+				CANTGO__TX			= "No podrás ir por ahí.";
+				IS__TX				= " verás";
+				IS2__TX				= "verás ";
+				PARTICULA_TE		= "te";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "tu antigua ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí misma";
+				} else {
+					FORMER__TX		= "tu antiguo ~yo~";
+					YOU__TX			= "Tú";
+					YOURSELF__TX	= "tí mismo";
 				}
 			}
 		THIRD_PERSON_FUTURE:
 			_grammatical_inflection = THIRD_PERSON_FUTURE;
-			if (IsSingularNoun(obj)) {
-				ARE__TX			= " verá";
-				ARE2__TX		= "verá ";
-				CANTGO__TX		= "No podrá ir por ahí.";
-				IS__TX			= " verá";
-				IS2__TX			= "verá ";
-				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Él";
-					YOURSELF__TX	= "sí mismo";
-				} else {
-					FORMER__TX		= "su antigua ~yo~";
-					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sí misma";
-				}
-			} else {
+			if (IsPluralNoun(player)) {
 				ARE__TX			= " verán";
 				ARE2__TX		= "verán ";
 				CANTGO__TX		= "No podrán ir por ahí.";
 				IS__TX			= " verán";
 				IS2__TX			= "verán ";
 				PARTICULA_TE	= "se";
-				if (IsMaleNoun(obj)) {
-					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "Ellos";
-					YOURSELF__TX	= "ellos mismos";
-				} else {
+				if (IsFemaleNoun(player)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Ellos";
+					YOURSELF__TX	= "ellos mismos";
+				}
+			} else {
+				ARE__TX			= " verá";
+				ARE2__TX		= "verá ";
+				CANTGO__TX		= "No podrá ir por ahí.";
+				IS__TX			= " verá";
+				IS2__TX			= "verá ";
+				PARTICULA_TE	= "se";
+				if (IsFemaleNoun(player)) {
+					FORMER__TX		= "su antigua ~yo~";
+					YOU__TX			= "Ella";
+					YOURSELF__TX	= "sí misma";
+				} else {
+					FORMER__TX		= "su antiguo ~yo~";
+					YOU__TX			= "Él";
+					YOURSELF__TX	= "sí mismo";
 				}
 			}
 		default:
@@ -474,20 +602,27 @@ Verb	meta 'gramatica' 'grammar'
 [ GrammarSub;
 	switch (noun) {
 		1:	SetGrammaticalInflection(FIRST_PERSON_PRESENT);
-			print "Cambio de flexión gramatical: ";
 		2:	SetGrammaticalInflection(SECOND_PERSON_PRESENT);
-			print "Cambio de flexión gramatical: ";
 		3:	SetGrammaticalInflection(THIRD_PERSON_PRESENT);
-			print "Cambio de flexión gramatical: ";
 		4:	SetGrammaticalInflection(FIRST_PERSON_PAST);
-			print "Cambio de flexión gramatical: ";
 		5:	SetGrammaticalInflection(SECOND_PERSON_PAST);
-			print "Cambio de flexión gramatical: ";
 		6:	SetGrammaticalInflection(THIRD_PERSON_PAST);
-			print "Cambio de flexión gramatical: ";
+		7:	SetGrammaticalInflection(FIRST_PERSON_FUTURE);
+		8:	SetGrammaticalInflection(SECOND_PERSON_FUTURE);
+		9:	SetGrammaticalInflection(THIRD_PERSON_FUTURE);
 		default:
-			print "Flexión gramatical actual: ";
+			"Flexión gramatical actual: ", _grammatical_inflection,
+			"^ARE__TX: ", ARE__TX,
+			"^ARE2__TX: ", ARE2__TX,
+			"^CANTGO__TX: ", CANTGO__TX,
+			"^IS__TX: ", IS__TX,
+			"^IS2__TX: ", IS2__TX,
+			"^PARTICULA_TE: ", PARTICULA_TE,
+			"^FORMER__TX: ", FORMER__TX,
+			"^YOU__TX: ", YOU__TX,
+			"^YOURSELF__TX: ", YOURSELF__TX;
 	}
+	print "Cambio de flexión gramatical: ";
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:	print "(1) presente 1a persona";
 		SECOND_PERSON_PRESENT:	print "(2) presente 2a persona";
@@ -495,6 +630,9 @@ Verb	meta 'gramatica' 'grammar'
 		FIRST_PERSON_PAST:		print "(4) pasado 1a persona";
 		SECOND_PERSON_PAST:		print "(5) pasado 2a persona";
 		THIRD_PERSON_PAST:		print "(6) pasado 3a persona";
+		FIRST_PERSON_FUTURE:	print "(7) futuro 1a persona";
+		SECOND_PERSON_FUTURE:	print "(8) futuro 2a persona";
+		THIRD_PERSON_FUTURE:	print "(9) futuro 3a persona";
 	}
 	".";
 ];
@@ -502,16 +640,21 @@ Verb	meta 'gramatica' 'grammar'
 
 
 !!==============================================================================
-[ LanguageLM n x1
-	gna;
+[ LanguageLM n x1;
 
 	Answer, Ask, AskFor:
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				"No hay respuesta.";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				"No había respuesta.";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				"No habrá respuesta.";
 		}
 
@@ -521,159 +664,150 @@ Verb	meta 'gramatica' 'grammar'
 	Attack:
 		print "No ";
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				print "es";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				print "era";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				print "será";
 		}
 		" necesario emprenderla a golpes con ", (the) x1, ".";
 
 	Blow:
-		gna = GetGNAOfObject(player, true);
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT:
-				switch (gna) {
-					0,1,6,7: print "Mi";
-					3,4,9,10: print "Nuestro";
-				}
+				if (IsPluralNoun(player)) print "Nuestro";
+				else print "Mi";
 				print " soplido no produce";
 			SECOND_PERSON_PRESENT:
-				switch (gna) {
-					0,1,6,7: print "Tú";
-					3,4,9,10: print "Vuestro";
-				}
+				if (IsPluralNoun(player)) print "Vuestro";
+				else print "Tu";
 				print " soplido no produce";
 			THIRD_PERSON_PRESENT:
 				print "Su soplido no produce";
 			FIRST_PERSON_PAST:
-				switch (gna) {
-					0,1,6,7: print "Mi";
-					3,4,9,10: print "Nuestro";
-				}
+				if (IsPluralNoun(player)) print "Nuestro";
+				else print "Mi";
 				print " soplido no produjo";
 			SECOND_PERSON_PAST:
-				switch (gna) {
-					0,1,6,7: print "Tu";
-					3,4,9,10: print "Vuestro";
-				}
+				if (IsPluralNoun(player)) print "Vuestro";
+				else print "Tu";
 				print " soplido no produjo";
 			THIRD_PERSON_PAST:
 				print "Su soplido no produjo";
 			FIRST_PERSON_FUTURE:
-				switch (gna) {
-					0,1,6,7: print "Mi";
-					3,4,9,10: print "Nuestro";
-				}
+				if (IsPluralNoun(player)) print "Nuestro";
+				else print "Mi";
 				print " soplido no producirá";
 			SECOND_PERSON_FUTURE:
-				switch (gna) {
-					0,1,6,7: print "Tu";
-					3,4,9,10: print "Vuestro";
-				}
+				if (IsPluralNoun(player)) print "Vuestro";
+				else print "Tu";
 				print " soplido no producirá";
 			THIRD_PERSON_FUTURE:
 				print "Su soplido no producirá";
 		}
 		" ningún efecto.";
 
-!! TODO
 	Burn:
 		print "Con esa peligrosa acción no ";
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT,
 			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "iba";
-				else print "íbamos";
+				if (IsPluralNoun(player)) print "íbamos";
+				else print "iba";
 				" a lograr nada.";
 			SECOND_PERSON_PRESENT,
 			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "ibas";
-				else print "ibais";
+				if (IsPluralNoun(player)) print "ibais";
+				else print "ibas";
 				" a lograr nada.";
 			THIRD_PERSON_PRESENT,
 			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "iba";
-				else print "iban";
+				if (IsPluralNoun(player)) print "iban";
+				else print "iba";
 				" a lograr nada.";
 			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubiese";
-				else print "hubiésemos";
+				if (IsPluralNoun(player)) print "hubiésemos";
+				else print "hubiese";
 				" logrado nada.";
 			SECOND_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubieses";
-				else print "hubieseis";
+				if (IsPluralNoun(player)) print "hubieseis";
+				else print "hubieses";
 				" logrado nada.";
 			THIRD_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubiese";
-				else print "hubiesen";
+				if (IsPluralNoun(player)) print "hubiesen";
+				else print "hubiese";
 				" logrado nada.";
 		}
 
-!! TODO
 	Buy:
+		print "No ";
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT,
 			SECOND_PERSON_PRESENT,
 			THIRD_PERSON_PRESENT:
-				"No hay nada en venta.";
+				print "hay";
 			FIRST_PERSON_PAST,
 			SECOND_PERSON_PAST,
 			THIRD_PERSON_PAST:
-				"No había nada en venta.";
+				print "había";
 			FIRST_PERSON_FUTURE,
 			SECOND_PERSON_FUTURE,
 			THIRD_PERSON_FUTURE:
-				"No habrá nada en venta.";
+				print "habrá";
 		}
+		" nada en venta.";
 
-!! TODO
 	Climb:
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "No creo que vaya";
-				else print "No creemos que vayamos";
+				if (IsPluralNoun(player)) print "No creemos que vayamos";
+				else print "No creo que vaya";
 				" a lograr nada haciendo eso.";
 			SECOND_PERSON_PRESENT:
 				print "En realidad no";
-				if (IsSingularNoun(player)) print " crees que vayas";
-				else print " creeis que vayais";
+				if (IsPluralNoun(player)) print "creéis que vayáis";
+				else print "crees que vayas";
 				" a lograr nada haciendo eso.";
 			THIRD_PERSON_PRESENT:
 				print "En realidad no";
-				if (IsSingularNoun(player)) print " cree que vaya";
-				else print " creen que vayan";
+				if (IsPluralNoun(player)) print "creen que vayan";
+				else print "cree que vaya";
 				" a lograr nada haciendo eso.";
 			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "No creo que hubiese";
-				else print "No creemos que hubiésemos";
+				if (IsPluralNoun(player)) print "No creemos que hubiésemos";
+				else print "No creo que hubiese";
 				" logrado nada haciendo aquello.";
 			SECOND_PERSON_PAST:
 				print "En realidad no";
-				if (IsSingularNoun(player)) print " crees que hubieses";
-				else print " creéis que hubieseis";
+				if (IsPluralNoun(player)) print "creéis que hubieseis";
+				else print "crees que hubieses";
 				" logrado nada haciendo aquello.";
 			THIRD_PERSON_PAST:
 				print "En realidad no";
-				if (IsSingularNoun(player)) print " cree que hubiese";
-				else print " creen que hubiesen";
+				if (IsPluralNoun(player)) print "creen que hubiesen";
+				else print "cree que hubiese";
 				" logrado nada haciendo aquello.";
 			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "No iba";
-				else print "No íbamos";
-				" a lograr nada haciendo aquello.";
+				if (IsPluralNoun(player)) print "No lograremos";
+				else print "No lograré";
+				" nada haciendo eso.";
 			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "No ibas";
-				else print "No ibais";
-				" a lograr nada haciendo aquello.";
+				if (IsPluralNoun(player)) print "No lograréis";
+				else print "No lograrás";
+				" nada haciendo eso.";
 			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "No iba";
-				else print "No iban";
-				" a lograr nada haciendo aquello.";
+				if (IsPluralNoun(player)) print "No lograrán";
+				else print "No logrará";
+				" nada haciendo eso.";
 		}
 
-!! TODO
 	Close:
 		!!	1:	Error. El objeto no es *openable*.
 		!!	2:	Error. El objeto está cerrado.
@@ -691,7 +825,7 @@ Verb	meta 'gramatica' 'grammar'
 					FIRST_PERSON_FUTURE,
 					SECOND_PERSON_FUTURE,
 					THIRD_PERSON_FUTURE:
-						"No será algo que se pueda cerrar.";
+						"No será algo que pueda cerrarse.";
 				}
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -709,46 +843,44 @@ Verb	meta 'gramatica' 'grammar'
 				}
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Cierro";
-						else print "Cerramos";
+						if (IsPluralNoun(player)) print "Cerramos";
+						else print "Cierro";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Cierras";
-						else print "Cerráis";
+						if (IsPluralNoun(player)) print "Cerráis";
+						else print "Cierras";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Cierra";
-						else print "Cierran";
+						if (IsPluralNoun(player)) print "Cierran";
+						else print "Cierra";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Cerré";
-						else print "Cerramos";
+						if (IsPluralNoun(player)) print "Cerramos";
+						else print "Cerré";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Cerraste";
-						else print "Cerrasteis";
+						if (IsPluralNoun(player)) print "Cerrasteis";
+						else print "Cerraste";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Cerró";
-						else print "Cerraron";
+						if (IsPluralNoun(player)) print "Cerraron";
+						else print "Cerró";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Cerraré";
-						else print "Cerraremos";
+						if (IsPluralNoun(player)) print "Cerraremos";
+						else print "Cerraré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Cerrarás";
-						else print "Cerraréis";
+						if (IsPluralNoun(player)) print "Cerraréis";
+						else print "Cerrarás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Cerrará";
-						else print "Cerrarán";
+						if (IsPluralNoun(player)) print "Cerrarán";
+						else print "Cerrará";
 				}
 				" ", (the) x1, ".";
 		}
 
-!! TODO
 	CommandsOff:
 		switch (n) { ![6/11]
 			1:	"[Grabación de órdenes finalizada.]";
 			#Ifdef TARGET_GLULX;
-			2:	"[La grabación de órdenes ya estaba finalizada.]";
+			2:	"[Grabación de órdenes ya finalizada.]";
 			#Endif; ! TARGET_
 		}
 
-!! TODO
 	CommandsOn:
 		switch (n) { ![6/11]
 			1:	"[Grabación de órdenes activada.]";
@@ -759,7 +891,6 @@ Verb	meta 'gramatica' 'grammar'
 			#Endif; ! TARGET_
 		}
 
-!! TODO
 	CommandsRead:
 		switch (n) { ![6/11]
 			1:	"[Relanzando acciones.]";
@@ -771,69 +902,69 @@ Verb	meta 'gramatica' 'grammar'
 			#Endif; ! TARGET_
 		}
 
-!! TODO
 	Consult:
 		print "No ";
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "descubro";
-				else print "descubrimos";
+				if (IsPluralNoun(player)) print "descubrimos";
+				else print "descubro";
 			SECOND_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "descubres";
-				else print "descubrís";
+				if (IsPluralNoun(player)) print "descubrís";
+				else print "descubres";
 			THIRD_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "descubre";
-				else print "descubren";
+				if (IsPluralNoun(player)) print "descubren";
+				else print "descubre";
 			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "descubrí";
-				else print "descubrimos";
+				if (IsPluralNoun(player)) print "descubrimos";
+				else print "descubrí";
+				" nada interesante en ", (the) x1, " sobre aquel tema.";
 			SECOND_PERSON_PAST:
-				if (IsSingularNoun(player)) print "descubriste";
-				else print "descubrieron";
+				if (IsPluralNoun(player)) print "descubristeis";
+				else print "descubriste";
+				" nada interesante en ", (the) x1, " sobre aquel tema.";
 			THIRD_PERSON_PAST:
-				if (IsSingularNoun(player)) print "descubrió";
-				else print "descubrieron";
+				if (IsPluralNoun(player)) print "descubrieron";
+				else print "descubrió";
+				" nada interesante en ", (the) x1, " sobre aquel tema.";
 			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "descubriré";
-				else print "descubriremos";
+				if (IsPluralNoun(player)) print "descubriremos";
+				else print "descubriré";
 			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "descubrirás";
-				else print "descubriréis";
+				if (IsPluralNoun(player)) print "descubriréis";
+				else print "descubrirás";
 			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "descubrirá";
-				else print "descubrirán";
+				if (IsPluralNoun(player)) print "descubrirán";
+				else print "descubrirá";
 		}
 		" nada interesante en ", (the) x1, " sobre ese tema.";
 
-!! TODO
 	Cut:
 		print "Cortándo", (lo) x1, " no ";
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT,
 			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "lograré";
-				else print "lograremos";
+				if (IsPluralNoun(player)) print "lograremos";
+				else print "lograré";
 			SECOND_PERSON_PRESENT,
 			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "lograrás";
-				else print "lograréis";
+				if (IsPluralNoun(player)) print "lograréis";
+				else print "lograrás";
 			THIRD_PERSON_PRESENT,
 			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "logrará";
-				else print "lograrán";
+				if (IsPluralNoun(player)) print "lograrán";
+				else print "logrará";
 			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubiese logrado";
-				else print "hubiésemos logrado";
+				if (IsPluralNoun(player)) print "hubiésemos logrado";
+				else print "hubiese logrado";
 			SECOND_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubieses logrado";
-				else print "hubieseis logrado";
+				if (IsPluralNoun(player)) print "hubieseis logrado";
+				else print "hubiese logrado";
 			THIRD_PERSON_PAST:
-				if (IsSingularNoun(player)) print "hubiese logrado";
-				else print "hubiesen logrado";
+				if (IsPluralNoun(player)) print "hubiesen logrado";
+				else print "hubiese logrado";
 		}
 		" gran cosa.";
 
-!! TODO
 	Dig:
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT,
@@ -850,7 +981,6 @@ Verb	meta 'gramatica' 'grammar'
 				"Excavar no servirá de nada allí.";
 		}
 
-!! TODO
 	Disrobe:
 		!!	1:	Error. El protagonista no lleva el objeto puesto.
 		!!	2:	Mensaje cuando el protagonista se quita el objeto.
@@ -858,67 +988,66 @@ Verb	meta 'gramatica' 'grammar'
 			1:	print "No ", (lo) x1, " ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "llevo";
-						else print "llevamos";
+						if (IsPluralNoun(player)) print "llevamos";
+						else print "llevo";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "llevas";
-						else print "lleváis";
+						if (IsPluralNoun(player)) print "lleváis";
+						else print "llevas";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "lleva";
-						else print "llevan";
+						if (IsPluralNoun(player)) print "llevan";
+						else print "lleva";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevaba";
-						else print "llevábamos";
+						if (IsPluralNoun(player)) print "llevábamos";
+						else print "llevaba";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevabas";
-						else print "llevabais";
+						if (IsPluralNoun(player)) print "llevabais";
+						else print "llevabas";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevaba";
-						else print "llevaban";
+						if (IsPluralNoun(player)) print "llevaban";
+						else print "llevaba";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevaré";
-						else print "llevaremos";
+						if (IsPluralNoun(player)) print "llevaremos";
+						else print "llevaré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevarás";
-						else print "llevaréis";
+						if (IsPluralNoun(player)) print "llevaréis";
+						else print "llevarás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevará";
-						else print "llevarán";
+						if (IsPluralNoun(player)) print "llevarán";
+						else print "llevará";
 				}
 				" puest", (o) x1, ".";
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Me quito";
-						else print "Nos quitamos";
+						if (IsPluralNoun(player)) print "Nos quitamos";
+						else print "Me quito";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Te quitas";
-						else print "Os quitáis";
+						if (IsPluralNoun(player)) print "Os quitáis";
+						else print "Te quitas";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Se quita";
-						else print "Se quitan";
+						if (IsPluralNoun(player)) print "Se quitan";
+						else print "Se quita";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Me quité";
-						else print "Nos quitamos";
+						if (IsPluralNoun(player)) print "Nos quitamos";
+						else print "Me quité";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Te quitaste";
-						else print "Os quitasteis";
+						if (IsPluralNoun(player)) print "Os quitasteis";
+						else print "Te quitaste";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Se quitó";
-						else print "Se quitaron";
+						if (IsPluralNoun(player)) print "Se quitaron";
+						else print "Se quitó";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Me quitaré";
-						else print "Nos quitaremos";
+						if (IsPluralNoun(player)) print "Nos quitaremos";
+						else print "Me quitaré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Te quitarás";
-						else print "Os quitaréis";
+						if (IsPluralNoun(player)) print "Os quitaréis";
+						else print "Te quitarás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Se quitará";
-						else print "Se quitarán";
+						if (IsPluralNoun(player)) print "Se quitarán";
+						else print "Se quitará";
 				}
 				" ", (the) x1, ".";
 		}
 
-!! TODO
 	Drink:
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT,
@@ -932,10 +1061,9 @@ Verb	meta 'gramatica' 'grammar'
 			FIRST_PERSON_FUTURE:
 			SECOND_PERSON_FUTURE:
 			THIRD_PERSON_FUTURE:
-				"Aquello no parecerá potable.";
+				"Eso no parecerá potable.";
 		}
 
-!! TODO
 	Drop:
 		!!	1:	Error, el objeto dejado no está en poder del protagonista,
 		!!		pero está en la localidad.
@@ -949,108 +1077,107 @@ Verb	meta 'gramatica' 'grammar'
 			1:	print "Para dejar ", (the) x1, " ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "debería";
-						else print "deberíamos";
+						if (IsPluralNoun(player)) print "deberíamos";
+						else print "debería";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "deberías";
-						else print "deberíais";
+						if (IsPluralNoun(player)) print "deberíais";
+						else print "deberías";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "debería";
-						else print "deberían";
+						if (IsPluralNoun(player)) print "deberían";
+						else print "debería";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "hubiese debido";
-						else print "hubiésemos debido";
+						if (IsPluralNoun(player)) print "hubiésemos debido";
+						else print "hubiese debido";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "hubieses debido";
-						else print "hubieseis debido";
+						if (IsPluralNoun(player)) print "hubieseis debido";
+						else print "hubieses debido";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "hubiese debido";
-						else print "hubiesen debido";
+						if (IsPluralNoun(player)) print "hubiesen debido";
+						else print "hubiese debido";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "deberé";
-						else print "deberemos";
+						if (IsPluralNoun(player)) print "deberemos";
+						else print "deberé";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "deberás";
-						else print "deberéis";
+						if (IsPluralNoun(player)) print "deberéis";
+						else print "deberás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "deberá";
-						else print "deberán";
+						if (IsPluralNoun(player)) print "deberán";
+						else print "deberá";
 				}
 				" tener", (lo) x1, ".";
 			2:	print "No ", (lo) x1, " ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) "tengo conmigo.";
-						if (IsMaleNoun(player)) "tenemos con nosotros.";
-						"tenemos con nosotras.";
+						if (~~IsPluralNoun(player)) "tengo conmigo.";
+						if (IsFemaleNoun(player)) "tenemos con nosotras.";
+						"tenemos con nosotros.";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) "tienes contigo.";
-						if (IsMaleNoun(player)) "tenéis con vosotros.";
-						"tenéis con vosotras.";
+						if (~~IsPluralNoun(player)) "tienes contigo.";
+						if (IsFemaleNoun(player)) "tenéis con vosotras.";
+						"tenéis con vosotros.";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) "tiene consigo";
-						if (IsMaleNoun(noun)) "tienen con ellos.";
-						"tienen con ellas.";
+						if (~~IsPluralNoun(player)) "tiene consigo";
+						if (IsFemaleNoun(noun)) "tienen con ellas.";
+						"tienen con ellos.";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) "tenía conmigo";
-						if (IsMaleNoun(noun)) "teníamos con nosotros.";
-						"teníamos con nosotras.";
+						if (~~IsPluralNoun(player)) "tenía conmigo";
+						if (IsFemaleNoun(noun)) "teníamos con nosotras.";
+						"teníamos con nosotros.";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) "tenías contigo";
-						if (IsMaleNoun(noun)) "teníais con vosotros.";
-						"teníais con vosotras.";
+						if (~~IsPluralNoun(player)) "tenías contigo";
+						if (IsFemaleNoun(noun)) "teníais con vosotras.";
+						"teníais con vosotros.";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) "tenía consigo";
-						if (IsMaleNoun(noun)) "tenían con ellos.";
-						"tenían con ellas.";
+						if (~~IsPluralNoun(player)) "tenía consigo";
+						if (IsFemaleNoun(noun)) "tenían con ellas.";
+						"tenían con ellos.";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) "tendré conmigo";
-						if (IsMaleNoun(noun)) "tendremos con nosotros.";
-						"tendremos con nosotras.";
+						if (~~IsPluralNoun(player)) "tendré conmigo";
+						if (IsFemaleNoun(noun)) "tendremos con nosotras.";
+						"tendremos con nosotros.";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) "tendrás contigo";
-						if (IsMaleNoun(noun)) "tendréis con vosotros.";
-						"tendréis con vosotras.";
+						if (~~IsPluralNoun(player)) "tendrás contigo";
+						if (IsFemaleNoun(noun)) "tendréis con vosotras.";
+						"tendréis con vosotros.";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) "tendrá consigo";
-						if (IsMaleNoun(noun)) "tendrán con ellos.";
-						"tendrán con ellas.";
+						if (~~IsPluralNoun(player)) "tendrá consigo";
+						if (IsFemaleNoun(noun)) "tendrán con ellas.";
+						"tendrán con ellos.";
 				}
 			3:	print "(Primero ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "me quito";
-						else print "nos quitamos";
+						if (IsPluralNoun(player)) print "nos quitamos";
+						else print "me quito";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "te quitas";
-						else print "os quitáis";
+						if (IsPluralNoun(player)) print "os quitáis";
+						else print "te quitas";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "se quita";
-						else print "se quitan";
+						if (IsPluralNoun(player)) print "se quitan";
+						else print "se quita";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "me quité";
-						else print "nos quitamos";
+						if (IsPluralNoun(player)) print "nos quitamos";
+						else print "me quité";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "te quitaste";
-						else print "os quitasteis";
+						if (IsPluralNoun(player)) print "os quitasteis";
+						else print "te quitaste";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "se quitó";
-						else print "se quitaron";
+						if (IsPluralNoun(player)) print "se quitaron";
+						else print "se quitó";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "me quitaré";
-						else print "nos quitaremos";
+						if (IsPluralNoun(player)) print "nos quitaremos";
+						else print "me quitaré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "te quitarás";
-						else print "os quitaréis";
+						if (IsPluralNoun(player)) print "os quitaréis";
+						else print "te quitarás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "se quitará";
-						else print "se quitarán";
+						if (IsPluralNoun(player)) print "se quitarán";
+						else print "se quitará";
 				}
 				" ", (the) x1, ".)";
 			4:	"Dejad", (o) x1, ".";
 		}
 
-!! TODO
 	Eat:
 		!!	1:	Error, el objeto no tiene el atributo "comestible".
 		!!	2:	Éxito. [NOTA: la librería permite por defecto comerse
@@ -1070,41 +1197,40 @@ Verb	meta 'gramatica' 'grammar'
 					FIRST_PERSON_FUTURE:
 					SECOND_PERSON_FUTURE:
 					THIRD_PERSON_FUTURE:
-						"Aquello no parecerá comestible.";
+						"Eso no parecerá comestible.";
 				}
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Me como";
-						else print "Nos comemos";
+						if (IsPluralNoun(player)) print "Nos comemos";
+						else print "Me como";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Te comes";
-						else print "Os coméis";
+						if (IsPluralNoun(player)) print "Os coméis";
+						else print "Te comes";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Se come";
-						else print "Se comen";
+						if (IsPluralNoun(player)) print "Se comen";
+						else print "Se come";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Me comí";
-						else print "Nos comimos";
+						if (IsPluralNoun(player)) print "Nos comimos";
+						else print "Me comí";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Te comiste";
-						else print "Os comisteis";
+						if (IsPluralNoun(player)) print "Os comisteis";
+						else print "Te comiste";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Se comió";
-						else print "Se comieron";
+						if (IsPluralNoun(player)) print "Se comieron";
+						else print "Se comió";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Me comeré";
-						else print "Nos comeremos";
+						if (IsPluralNoun(player)) print "Nos comeremos";
+						else print "Me comeré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Te comerás";
-						else print "Os comeréis";
+						if (IsPluralNoun(player)) print "Os comeréis";
+						else print "Te comerás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Se comerá";
-						else print "Se comerán";
+						if (IsPluralNoun(player)) print "Se comerán";
+						else print "Se comerá";
 				}
 				" ", (the) x1, ".";
 		}
 
-!! TODO
 	EmptyT:
 		!!	1:	Error, el usuario intenta vaciar un objeto en otro que no es un
 		!!		recipiente.
@@ -1170,37 +1296,36 @@ Verb	meta 'gramatica' 'grammar'
 			4:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedo";
-						else print "podemos";
+						if (IsPluralNoun(player)) print "podemos";
+						else print "puedo";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedes";
-						else print "podéis";
+						if (IsPluralNoun(player)) print "podéis";
+						else print "puedes";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puede";
-						else print "pueden";
+						if (IsPluralNoun(player)) print "pueden";
+						else print "puede";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podíamos";
+						if (IsPluralNoun(player)) print "podíamos";
+						else print "podía";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podías";
-						else print "podíais";
+						if (IsPluralNoun(player)) print "podíais";
+						else print "podías";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podían";
+						if (IsPluralNoun(player)) print "podían";
+						else print "podía";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
+						if (IsPluralNoun(player)) print "podremos";
+						else print "podré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
+						if (IsPluralNoun(player)) print "podréis";
+						else print "podrás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
+						if (IsPluralNoun(player)) print "podrán";
+						else print "podrá";
 				}
 				" vaciar un objeto sobre sí mismo.";
 		}
 
-!! TODO
 	Enter:
 		! [infsp] GoIn (Meterse) se cambió por Enter.
 		!! CUIDADO. La acción Meterse se genera en muy diversas
@@ -1242,79 +1367,50 @@ Verb	meta 'gramatica' 'grammar'
 		!!		al jugador en el objeto desde el cual pueda acceder al que el
 		!!		jugador le ha indicado.
 		switch (n) {
-			1:	print "Ya estoy "; ! FIXME
+			1:	print "Ya est", (oy_) " ";
 				if (x1 has supporter) print "sobre ";
 				else print "en ";
 				"", (the) x1, ".";
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player))
-							print "No es algo donde pueda";
-						else print "No es algo donde podamos";
+						if (IsPluralNoun(player))
+							print "No es algo donde podamos";
+						else print "No es algo donde pueda";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player))
-							print "No es algo donde puedas";
-						else print "No es algo donde podáis";
+						if (IsPluralNoun(player))
+							print "No es algo donde podáis";
+						else print "No es algo donde puedas";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player))
-							print "No es algo donde pueda";
-						else print "No es algo donde puedan";
+						if (IsPluralNoun(player))
+							print "No es algo donde puedan";
+						else print "No es algo donde pueda";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player))
-							print "No era algo donde pudiese";
-						else print "No era algo donde pudiésemos";
+						if (IsPluralNoun(player))
+							print "No era algo donde pudiésemos";
+						else print "No era algo donde pudiese";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player))
-							print "No era algo donde pudieses";
-						else print "No era algo donde pudieseis";
+						if (IsPluralNoun(player))
+							print "No era algo donde pudieseis";
+						else print "No era algo donde pudieses";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player))
-							print "No era algo donde pudiese";
-						else print "No era algo donde pudiesen";
+						if (IsPluralNoun(player))
+							print "No era algo donde pudiesen";
+						else print "No era algo donde pudiese";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player))
-							print "No será algo donde podré";
-						else print "No será algo donde podremos";
+						if (IsPluralNoun(player))
+							print "No será algo donde podremos";
+						else print "No será algo donde podré";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player))
-							print "No será algo donde podrás";
-						else print "No será algo donde podréis";
+						if (IsPluralNoun(player))
+							print "No será algo donde podréis";
+						else print "No será algo donde podrás";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player))
-							print "No será algo donde podrá";
-						else print "No será algo donde podrán";
+						if (IsPluralNoun(player))
+							print "No será algo donde podrán";
+						else print "No será algo donde podrá";
 				}
 				LanguageVerb(verb_word); ".";
-			3:	print "No ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedo";
-						else print "podemos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedes";
-						else print "podéis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puede";
-						else print "pueden";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podíamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podías";
-						else print "podíais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podían";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
-				}
+			3:	print "No ", (_puedes_) " ";
 				LanguageVerb(verb_word);
 				print " en ", (the) x1, " porque ";
 				switch (_grammatical_inflection) {
@@ -1335,156 +1431,159 @@ Verb	meta 'gramatica' 'grammar'
 			4:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "voy a poder";
-						else print "vamos a poder";
+						if (IsPluralNoun(player)) print "vamos a poder";
+						else print "voy a poder";
 					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "vas a poder";
-						else print "vais a poder";
+						if (IsPluralNoun(player)) print "vais a poder";
+						else print "vas a poder";
 					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "va a poder";
-						else print "van a poder";
+						if (IsPluralNoun(player)) print "van a poder";
+						else print "va a poder";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "iba a poder";
-						else print "íbamos a poder";
+						if (IsPluralNoun(player)) print "íbamos a poder";
+						else print "iba a poder";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "ibas a poder";
-						else print "ibais a poder";
+						if (IsPluralNoun(player)) print "ibais a poder";
+						else print "ibas a poder";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "iba a poder";
-						else print "iban a poder";
+						if (IsPluralNoun(player)) print "iban a poder";
+						else print "iba a poder";
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
+						if (IsPluralNoun(player)) print "podremos";
+						else print "podré";
+						" hacerlo sin soltarlo antes.";
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
+						if (IsPluralNoun(player)) print "podréis";
+						else print "podrás";
+						" hacerlo sin soltarlo antes.";
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
+						if (IsPluralNoun(player)) print "podrán";
+						else print "podrá";
+						" hacerlo sin soltarlo antes.";
 				}
 				LanguageVerb(verb_word);
 				print " ahí mientras no ", (lo) x1, " ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "suelte";
-						else print "soltemos";
+						if (IsPluralNoun(player)) print "soltemos";
+						else print "suelte";
 					SECOND_PERSON_PRESENT,
 					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "sueltes";
-						else print "soltéis";
+						if (IsPluralNoun(player)) print "soltéis";
+						else print "sueltes";
 					THIRD_PERSON_PRESENT,
 					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "suelte";
-						else print "suelten";
+						if (IsPluralNoun(player)) print "suelten";
+						else print "suelte";
 					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "soltase";
-						else print "soltásemos";
+						if (IsPluralNoun(player)) print "soltásemos";
+						else print "soltase";
 					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "soltases";
-						else print "soltaseis";
+						if (IsPluralNoun(player)) print "soltaseis";
+						else print "soltases";
 					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "soltase";
-						else print "soltasen";
+						if (IsPluralNoun(player)) print "soltasen";
+						else print "soltase";
 				}
 				".";
 			5:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subo";
-							else print "Subimos";
+							if (IsPluralNoun(player)) print "Subimos";
+							else print "Subo";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entro";
-							else print "Entramos";
+							if (IsPluralNoun(player)) print "Entramos";
+							else print "Entro";
 							print " en ", (the) x1;
 						}
 						".";
 					SECOND_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subes";
-							else print "Subís";
+							if (IsPluralNoun(player)) print "Subís";
+							else print "Subes";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entras";
-							else print "Entráis";
+							if (IsPluralNoun(player)) print "Entráis";
+							else print "Entras";
 							print " en ", (the) x1;
 						}
 						".";
 					THIRD_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Sube";
-							else print "Suben";
+							if (IsPluralNoun(player)) print "Suben";
+							else print "Sube";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entra";
-							else print "Entran";
+							if (IsPluralNoun(player)) print "Entran";
+							else print "Entra";
 							print " en ", (the) x1;
 						}
 						".";
 					FIRST_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subí";
-							else print "Subimos";
+							if (IsPluralNoun(player)) print "Subimos";
+							else print "Subí";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entré";
-							else print "Entramos";
+							if (IsPluralNoun(player)) print "Entramos";
+							else print "Entré";
 							print " en ", (the) x1;
 						}
 						".";
 					SECOND_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subiste";
-							else print "Subisteis";
+							if (IsPluralNoun(player)) print "Subisteis";
+							else print "Subiste";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entraste";
-							else print "Entrasteis";
+							if (IsPluralNoun(player)) print "Entrasteis";
+							else print "Entraste";
 							print " en ", (the) x1;
 						}
 						".";
 					THIRD_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subió";
-							else print "Subieron";
+							if (IsPluralNoun(player)) print "Subieron";
+							else print "Subió";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entró";
-							else print "Entraron";
+							if (IsPluralNoun(player)) print "Entraron";
+							else print "Entró";
 							print " en ", (the) x1;
 						}
 						".";
 					FIRST_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subiré";
-							else print "Subiremos";
+							if (IsPluralNoun(player)) print "Subiremos";
+							else print "Subiré";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entraré";
-							else print "Entraremos";
+							if (IsPluralNoun(player)) print "Entraremos";
+							else print "Entraré";
 							print " en ", (the) x1;
 						}
 						".";
 					SECOND_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subirás";
-							else print "Subiréis";
+							if (IsPluralNoun(player)) print "Subiréis";
+							else print "Subirás";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entrarás";
-							else print "Entraréis";
+							if (IsPluralNoun(player)) print "Entraréis";
+							else print "Entrarás";
 							print " en ", (the) x1;
 						}
 						".";
 					THIRD_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "Subirá";
-							else print "Subirán";
+							if (IsPluralNoun(player)) print "Subirán";
+							else print "Subirá";
 							print " ", (al_) x1;
 						} else {
-							if (IsSingularNoun(player)) print "Entrará";
-							else print "Entrarán";
+							if (IsPluralNoun(player)) print "Entrarán";
+							else print "Entrará";
 							print " en ", (the) x1;
 						}
 						".";
@@ -1492,197 +1591,189 @@ Verb	meta 'gramatica' 'grammar'
 			6:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me bajo";
-							else print "(Nos bajamos";
+							if (IsPluralNoun(player)) print "(Nos bajamos";
+							else print "(Me bajo";
 						} else {
-							if (IsSingularNoun(player)) print "(Salgo";
-							else print "(Salimos";
+							if (IsPluralNoun(player)) print "(Salimos";
+							else print "(Salgo";
 						}
 					SECOND_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te bajas";
-							else print "(Os bajáis";
+							if (IsPluralNoun(player)) print "(Os bajáis";
+							else print "(Te bajas";
 						} else {
-							if (IsSingularNoun(player)) print "(Sales";
-							else print "(Salís";
+							if (IsPluralNoun(player)) print "(Salís";
+							else print "(Sales";
 						}
 					THIRD_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se baja";
-							else print "(Se bajan";
+							if (IsPluralNoun(player)) print "(Se bajan";
+							else print "(Se baja";
 						} else {
-							if (IsSingularNoun(player)) print "(Sale";
-							else print "(Salen";
+							if (IsPluralNoun(player)) print "(Salen";
+							else print "(Sale";
 						}
 					FIRST_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me bajé";
-							else print "(Nos bajamos";
+							if (IsPluralNoun(player)) print "(Nos bajamos";
+							else print "(Me bajé";
 						} else {
-							if (IsSingularNoun(player)) print "(Salí";
-							else print "(Salimos";
+							if (IsPluralNoun(player)) print "(Salimos";
+							else print "(Salí";
 						}
 					SECOND_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te bajaste";
-							else print "(Os bajásteis";
+							if (IsPluralNoun(player)) print "(Os bajásteis";
+							else print "(Te bajaste";
 						} else {
-							if (IsSingularNoun(player)) print "(Saliste";
-							else print "(Salisteis";
+							if (IsPluralNoun(player)) print "(Salisteis";
+							else print "(Saliste";
 						}
 					THIRD_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se bajó";
-							else print "(Se bajaron";
+							if (IsPluralNoun(player)) print "(Se bajaron";
+							else print "(Se bajó";
 						} else {
-							if (IsSingularNoun(player)) print "(Salió";
-							else print "(Salieron";
+							if (IsPluralNoun(player)) print "(Salieron";
+							else print "(Salió";
 						}
 					FIRST_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me bajaré";
-							else print "(Nos bajaremos";
+							if (IsPluralNoun(player)) print "(Nos bajaremos";
+							else print "(Me bajaré";
 						} else {
-							if (IsSingularNoun(player)) print "(Saldré";
-							else print "(Saldremos";
+							if (IsPluralNoun(player)) print "(Saldremos";
+							else print "(Saldré";
 						}
 					SECOND_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te bajarás";
-							else print "(Os bajaréis";
+							if (IsPluralNoun(player)) print "(Os bajaréis";
+							else print "(Te bajarás";
 						} else {
-							if (IsSingularNoun(player)) print "(Saldrás";
-							else print "(Saldréis";
+							if (IsPluralNoun(player)) print "(Saldréis";
+							else print "(Saldrás";
 						}
 					THIRD_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se bajará";
-							else print "(Se bajarán";
+							if (IsPluralNoun(player)) print "(Se bajarán";
+							else print "(Se bajará";
 						} else {
-							if (IsSingularNoun(player)) print "(Saldrá";
-							else print "(Saldrán";
+							if (IsPluralNoun(player)) print "(Saldrán";
+							else print "(Saldrá";
 						}
 				}
-				" ", (del_) x1, ".)";
+				" ", (del_) x1, ").";
 			7:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me subo";
-							else print "(Nos subimos";
+							if (IsPluralNoun(player)) print "(Nos subimos";
+							else print "(Me subo";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Me meto";
-							else print "(Nos metemos";
+							if (IsPluralNoun(player)) print "(Nos metemos";
+							else print "(Me meto";
 						} else {
-							if (IsSingularNoun(player)) print "(Entro";
-							else print "(Entramos";
+							if (IsPluralNoun(player)) print "(Entramos";
+							else print "(Entro";
 						}
-						" en ", (the) x1, ".)^";
 					SECOND_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te subes";
-							else print "(Os subís";
+							if (IsPluralNoun(player)) print "(Os subís";
+							else print "(Te subes";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Te metes";
-							else print "(Os metéis";
+							if (IsPluralNoun(player)) print "(Os metéis";
+							else print "(Te metes";
 						} else {
-							if (IsSingularNoun(player)) print "(Entras";
-							else print "(Entráis";
+							if (IsPluralNoun(player)) print "(Entráis";
+							else print "(Entras";
 						}
-						" en ", (the) x1, ".)^";
 					THIRD_PERSON_PRESENT:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se sube";
-							else print "(Se suben";
+							if (IsPluralNoun(player)) print "(Se suben";
+							else print "(Se sube";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Se mete";
-							else print "(Se meten";
+							if (IsPluralNoun(player)) print "(Se meten";
+							else print "(Se mete";
 						} else {
-							if (IsSingularNoun(player)) print "(Entra";
-							else print "(Entran";
+							if (IsPluralNoun(player)) print "(Entran";
+							else print "(Entra";
 						}
-						" en ", (the) x1, ".)^";
 					FIRST_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me subí";
-							else print "(Nos subimos";
+							if (IsPluralNoun(player)) print "(Nos subimos";
+							else print "(Me subí";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Me metí";
-							else print "(Nos metimos";
+							if (IsPluralNoun(player)) print "(Nos metimos";
+							else print "(Me metí";
 						} else {
-							if (IsSingularNoun(player)) print "(Entré";
-							else print "(Entramos";
+							if (IsPluralNoun(player)) print "(Entramos";
+							else print "(Entré";
 						}
-						" en ", (the) x1, ".)^";
 					SECOND_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te subiste";
-							else print "(Os subisteis";
+							if (IsPluralNoun(player)) print "(Os subisteis";
+							else print "(Te subiste";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Te metiste";
-							else print "(Os metisteis";
+							if (IsPluralNoun(player)) print "(Os metisteis";
+							else print "(Te metiste";
 						} else {
-							if (IsSingularNoun(player)) print "(Entraste";
-							else print "(Entrasteis";
+							if (IsPluralNoun(player)) print "(Entrasteis";
+							else print "(Entraste";
 						}
-						" en ", (the) x1, ".)^";
 					THIRD_PERSON_PAST:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se subió";
-							else print "(Se subieron";
+							if (IsPluralNoun(player)) print "(Se subieron";
+							else print "(Se subió";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Se metió";
-							else print "(Se metieron";
+							if (IsPluralNoun(player)) print "(Se metieron";
+							else print "(Se metió";
 						} else {
-							if (IsSingularNoun(player)) print "(Entró";
-							else print "(Entraron";
+							if (IsPluralNoun(player)) print "(Entraron";
+							else print "(Entró";
 						}
-						" en ", (the) x1, ".)^";
 					FIRST_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Me subiré";
-							else print "(Nos subiremos";
+							if (IsPluralNoun(player)) print "(Nos subiremos";
+							else print "(Me subiré";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Me meteré";
-							else print "(Nos meteremos";
+							if (IsPluralNoun(player)) print "(Nos meteremos";
+							else print "(Me meteré";
 						} else {
-							if (IsSingularNoun(player)) print "(Entraré";
-							else print "(Entraremos";
+							if (IsPluralNoun(player)) print "(Entraremos";
+							else print "(Entraré";
 						}
-						" en ", (the) x1, ".)^";
 					SECOND_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Te subirás";
-							else print "(Os subiréis";
+							if (IsPluralNoun(player)) print "(Os subiréis";
+							else print "(Te subirás";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Te meterás";
-							else print "(Os meteréis";
+							if (IsPluralNoun(player)) print "(Os meteréis";
+							else print "(Te meterás";
 						} else {
-							if (IsSingularNoun(player)) print "(Entrarás";
-							else print "(Entraréis";
+							if (IsPluralNoun(player)) print "(Entraréis";
+							else print "(Entrarás";
 						}
-						" en ", (the) x1, ".)^";
 					THIRD_PERSON_FUTURE:
 						if (x1 has supporter) {
-							if (IsSingularNoun(player)) print "(Se subirá";
-							else print "(Se subirán";
+							if (IsPluralNoun(player)) print "(Se subirán";
+							else print "(Se subirá";
 							" ", (al_) x1, ".)^";
 						} else if (x1 has container) {
-							if (IsSingularNoun(player)) print "(Se meterá";
-							else print "(Se meterán";
+							if (IsPluralNoun(player)) print "(Se meterán";
+							else print "(Se meterá";
 						} else {
-							if (IsSingularNoun(player)) print "(Entrará";
-							else print "(Entrarán";
+							if (IsPluralNoun(player)) print "(Entrarán";
+							else print "(Entrará";
 						}
-						" en ", (the) x1, ".)^";
 				}
+				" en ", (the) x1, ".)^";
 		}
 
 !! TODO
@@ -1708,37 +1799,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "Estará";
 				}
-				print " demasiado oscuro. No ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedo";
-						else print "podemos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedes";
-						else print "podéis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puede";
-						else print "pueden";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podíamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podías";
-						else print "podíais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podían";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
-				}
-				" ver nada.";
+				" demasiado oscuro. No ", (_puedes_) " ver nada.";
 			2:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
@@ -1789,7 +1850,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	3:	Éxito, el usuario sale/baja del objeto
 		!!	4:	Error, más específico. [6/11]
 		switch (n) {
-			1:	print "No estoy en ningún sitio del que "; ! FIXME
+			1:	print "No est", (oy_) " en ningún sitio del que ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsSingularNoun(player)) print "deba";
@@ -1820,37 +1881,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "deberían";
 				}
 				LanguageVerb(verb_word); ".";
-			2:	print "No ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedo";
-						else print "podemos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedes";
-						else print "podéis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puede";
-						else print "pueden";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podíamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podías";
-						else print "podíais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podían";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
-				}
-				print " salir ", (del_) x1, " porque ";
+			2:	print "No ", (_puedes_) " salir ", (del_) x1, " porque ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -1941,75 +1972,14 @@ Verb	meta 'gramatica' 'grammar'
 						}
 				}
 				" ", (del_) x1, ".";
-			4:	print "No ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedo";
-						else print "podemos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puedes";
-						else print "podéis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "puede";
-						else print "pueden";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podíamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podías";
-						else print "podíais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "podía";
-						else print "podían";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podré";
-						else print "podremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrás";
-						else print "podréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "podrá";
-						else print "podrán";
-				}
-				print ". No estoy "; ! FIXME
+			4:	print "No ", (_puedes_) ". No est", (oy_) " ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
 				" ", (del_) x1, ".";
 		}
 
-!! TODO
 	Fill:
-		print "No ";
-		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puedo";
-				else print "podemos";
-			SECOND_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puedes";
-				else print "podéis";
-			THIRD_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puede";
-				else print "pueden";
-			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podía";
-				else print "podíamos";
-			SECOND_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podías";
-				else print "podíais";
-			THIRD_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podía";
-				else print "podían";
-			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podré";
-				else print "podremos";
-			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podrás";
-				else print "podréis";
-			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podrá";
-				else print "podrán";
-		}
-		" llenar", (lo) x1, ".";
+		print "No ", (_puedes_) " llenar", (lo) x1, ".";
 
 	FullScore:
 		!! Puntuación en modo "explicativo". Puede activarse porque el
@@ -2031,44 +2001,13 @@ Verb	meta 'gramatica' 'grammar'
 			4: print "total (de ", MAX_SCORE ; ")";
 		}
 
-!! TODO
 	GetOff:
 		!! Esta acción se genera ante la frase SAL DEL ARMARIO o similares.
 		!! Ante SAL a secas la acción es Salir. Si el jugador no está en el
 		!! objeto indicado, se genera el siguiente mensaje de error. Si está,
 		!! la librería generará una acción Salir, por lo que el mensaje de
 		!! éxito será el de Salir.
-		print "No ";
-		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puedo";
-				else print "podemos";
-			SECOND_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puedes";
-				else print "podéis";
-			THIRD_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "puede";
-				else print "pueden";
-			FIRST_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podía";
-				else print "podíamos";
-			SECOND_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podías";
-				else print "podíais";
-			THIRD_PERSON_PAST:
-				if (IsSingularNoun(player)) print "podía";
-				else print "podían";
-			FIRST_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podré";
-				else print "podremos";
-			SECOND_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podrás";
-				else print "podréis";
-			THIRD_PERSON_FUTURE:
-				if (IsSingularNoun(player)) print "podrá";
-				else print "podrán";
-		}
-		". No estoy en ", (the) x1, "."; ! FIXME
+		print "No ", (_puedes_) ". No est", (oy_) " en ", (the) x1, ".";
 
 !! TODO
 	Give:
@@ -2161,17 +2100,7 @@ Verb	meta 'gramatica' 'grammar'
 					else print "salir ";
 				}
 				print_ret (del_) x1, " antes.";
-			2:	switch (_grammatical_inflection) {
-				1:	"No puedo ir por ahí.";
-				2:	"No puedes ir por ahí.";
-				3:	"No puede ir por ahí.";
-				4:	"No podía ir por ahí.";
-				5:	"No podías ir por ahí.";
-				6:	"No podía ir por ahí.";
-				7:	"No podré ir por ahí.";
-				8:	"No podrás ir por ahí.";
-				9:	"No podrá ir por ahí.";
-				}
+			2:	"No ", (_puedes_) " ir por ahí.";
 			3:	switch (_grammatical_inflection) {
 				1:	"Soy incapaz de trepar por ", (the) x1, ".";
 				2:	"Eres incapaz de trepar por ", (the) x1, ".";
@@ -2194,37 +2123,23 @@ Verb	meta 'gramatica' 'grammar'
 				8:	"Serás incapaz de bajar por ", (the) x1, ".";
 				9:	"Será incpaz de bajar por ", (the) x1, ".";
 				}
-			5:	switch (_grammatical_inflection) {
-				1:	"No puedo pasar a través ", (del_) x1, ".";
-				2:	"No puedes pasar a través ", (del_) x1, ".";
-				3:	"No puede pasar a través ", (del_) x1, ".";
-				4:	"No podía pasar a través ", (del_) x1, ".";
-				5:	"No podías pasar a través ", (del_) x1, ".";
-				6:	"No podía pasar a través ", (del_) x1, ".";
-				7:	"No podré pasar a través ", (del_) x1, ".";
-				8:	"No podrás pasar a través ", (del_) x1, ".";
-				9:	"No podrá pasar a través ", (del_) x1, ".";
+			5:	"No ", (_puedes_) " pasar a través ", (del_) x1, ".";
+			6:	print "No ", (_puedes_) " ir porque ", (the) x1, " no ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "lleva", (n) x1;
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "llevaba", (n) x1;
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "llevará", (n) x1;
 				}
-			6:	switch (_grammatical_inflection) {
-				1:	"No puedo ir porque ", (the) x1, " no lleva", (n) x1,
-					" a ningún sitio.";
-				2:	"No puedes ir porque ", (the) x1, " no lleva", (n) x1,
-					" a ningún sitio.";
-				3:	"No puede ir porque ", (the) x1, " no lleva", (n) x1,
-					" a ningún sitio.";
-				4:	"No podía ir porque ", (the) x1, " no llevaba", (n) x1,
-					" a ningún sitio.";
-				5:	"No podías ir porque ", (the) x1, " no llevaba", (n) x1,
-					" a ningún sitio.";
-				6:	"No podía ir porque ", (the) x1, " no llevaba", (n) x1,
-					" a ningún sitio.";
-				7:	"No podré ir porque ", (the) x1, " no llevará", (n) x1,
-					" a ningún sitio.";
-				8:	"No podrás ir porque ", (the) x1, " no llevará", (n) x1,
-					" a ningún sitio.";
-				9:	"No podrá ir porque ", (the) x1, " no llevará", (n) x1,
-					" a ningún sitio.";
-				}
+				" a ningún sitio.";
 		}
 
 !! TODO
@@ -2334,18 +2249,7 @@ Verb	meta 'gramatica' 'grammar'
 				8:	"Tendrás que quitárte", (lo) x1, " antes.";
 				9:	"Tendrá que quitárse", (lo) x1, " antes.";
 				}
-			5:	switch (_grammatical_inflection) {
-				1:	print "No puedo";
-				2:	print "No puedes";
-				3:	print "No puede";
-				4:	print "No podía";
-				5:	print "No podías";
-				6:	print "No podía";
-				7:	print "No podré";
-				8:	print "No podrás";
-				9:	print "No podrá";
-				}
-				" poner un objeto dentro de sí mismo.";
+			5:	"No ", (_puedes_) " poner un objeto dentro de sí mismo.";
 			6:	switch (_grammatical_inflection) {
 				1:	"(Primero me ", (lo) x1, " quito.)^";
 				2:	"(Primero te ", (lo) x1, " quitas.)^";
@@ -2377,109 +2281,20 @@ Verb	meta 'gramatica' 'grammar'
 				print_ret (the) x1, " dentro ", (del_) second, ".";
 		}
 
-!! TODO
 	Inv:
 		!!	1:	Mensaje si el inventario está vacío
 		!!	2:	Encabezado del inventario, antes de la lista de objetos
 		!!		generada por la librería
 		!!	3 y 4: [6/11]
 		switch (n) {
-			1:	print "No ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "llevo";
-						else print "llevamos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "llevas";
-						else print "lleváis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "lleva";
-						else print "llevan";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevaba";
-						else print "llevábamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevabas";
-						else print "llevabais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "llevaba";
-						else print "llevaban";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevaré";
-						else print "llevaremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevarás";
-						else print "llevaréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "llevará";
-						else print "llevarán";
-				}
-				" nada.";
-			2:	switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Llevo";
-						else print "Llevamos";
-					SECOND_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Llevas";
-						else print "Lleváis";
-					THIRD_PERSON_PRESENT:
-						if (IsSingularNoun(player)) print "Lleva";
-						else print "Llevan";
-					FIRST_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Llevaba";
-						else print "Llevábamos";
-					SECOND_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Llevabas";
-						else print "Llevabais";
-					THIRD_PERSON_PAST:
-						if (IsSingularNoun(player)) print "Llevaba";
-						else print "Llevaban";
-					FIRST_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Llevaré";
-						else print "Llevaremos";
-					SECOND_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Llevarás";
-						else print "Llevaréis";
-					THIRD_PERSON_FUTURE:
-						if (IsSingularNoun(player)) print "Llevará";
-						else print "Llevarán";
-				}
+			1:	print "No llev", (as_) " nada.";
+			2:	print "LLev", (as_) "";
 			3:	print ":^";
 			4:	print ".^";
 		}
 
-!! TODO
 	Jump:
-		switch (_grammatical_inflection) {
-				FIRST_PERSON_PRESENT:
-					if (IsSingularNoun(player)) print "Salto";
-					else print "Saltamos";
-				SECOND_PERSON_PRESENT:
-					if (IsSingularNoun(player)) print "Saltas";
-					else print "Saltáis";
-				THIRD_PERSON_PRESENT:
-					if (IsSingularNoun(player)) print "Salta";
-					else print "Saltan";
-				FIRST_PERSON_PAST:
-					if (IsSingularNoun(player)) print "Salté";
-					else print "Saltamos";
-				SECOND_PERSON_PAST:
-					if (IsSingularNoun(player)) print "Saltaste";
-					else print "Saltasteis";
-				THIRD_PERSON_PAST:
-					if (IsSingularNoun(player)) print "Saltó";
-					else print "Saltaron";
-				FIRST_PERSON_FUTURE:
-					if (IsSingularNoun(player)) print "Saltaré";
-					else print "Saltaremos";
-				SECOND_PERSON_FUTURE:
-					if (IsSingularNoun(player)) print "Saltarás";
-					else print "Saltaréis";
-				THIRD_PERSON_FUTURE:
-					if (IsSingularNoun(player)) print "Saltará";
-					else print "Saltarán";
-		}
-		" en el sitio, sin ningún resultado.";
+		"Salt", (as_) " en el sitio, sin ningún resultado.";
 
 !! TODO
 	JumpOver, Tie:
@@ -2550,18 +2365,17 @@ Verb	meta 'gramatica' 'grammar'
 				" hacer algo así en ese momento.";
 		}
 
-!! TODO
 	Listen:
 		switch (_grammatical_inflection) {
 			FIRST_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "No escucho";
-				else print "No escuchamos";
+				if (IsPluralNoun(player)) print "No escuchamos";
+				else print "No escucho";
 			SECOND_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "No escuchas";
-				else "No escucháis";
+				if (IsPluralNoun(player)) print "No escucháis";
+				else print "No escuchas";
 			THIRD_PERSON_PRESENT:
-				if (IsSingularNoun(player)) print "No escucha";
-				else "No escuchan";
+				if (IsPluralNoun(player)) print "No escuchas";
+				else print "No escucha";
 			FIRST_PERSON_PAST,
 			SECOND_PERSON_PAST,
 			THIRD_PERSON_PAST:
@@ -2619,34 +2433,14 @@ Verb	meta 'gramatica' 'grammar'
 			!! deben llevar el cerrado de paréntesis al final, que lo añade la
 			!! propia librería. *** NO SE ACONSEJA CAMBIAR ESTOS ***
 
-			8:	switch (_grammatical_inflection) {
-				1:	print " (alumbrando y que llevo puest", (o) x1;
-				2:	print " (alumbrando y que llevas puest", (o) x1;
-				3:	print " (alumbrando y que lleva puest", (o) x1;
-				4:	print " (alumbrando y que llevaba puest", (o) x1;
-				5:	print " (alumbrando y que llevabas puest", (o) x1;
-				6:	print " (alumbrando y que llevaba puest", (o) x1;
-				7:	print " (alumbrando y que llevaré puest", (o) x1;
-				8:	print " (alumbrando y que llevarás puest", (o) x1;
-				9:	print " (alumbrando y que llevará puest", (o) x1;
-				}
+			8:	print " (alumbrando y que llev", (as_) " puest", (o) x1;
 			!! El objeto tiene "luz" y "puesto"
-			9: print " (alumbrando";
+			9:	print " (alumbrando";
 			!! El objeto tiene "luz" pero no "puesto"
-			10:	switch (_grammatical_inflection) {
-				1:	print " (que llevo puest", (o) x1;
-				2:	print " (que llevas puest", (o) x1;
-				3:	print " (que lleva puest", (o) x1;
-				4:	print " (que llevaba puest", (o) x1;
-				5:	print " (que llevabas puest", (o) x1;
-				6:	print " (que llevaba puest", (o) x1;
-				7:	print " (que llevaré puest", (o) x1;
-				8:	print " (que llevarás puest", (o) x1;
-				9:	print " (que llevará puest", (o) x1;
-				}
+			10:	print " (que llev", (as_) " puest", (o) x1;
 			!! El objeto tiene "puesto" pero no "luz"
 			11:	switch (_grammatical_inflection) {
-				1,2,3:	print " (que ", (esta) x1, " ";
+				1,2,3:	print " (que está", (n) x1, " ";
 				4,5,6:	print " (que estaba", (n) x1;
 				7,8,9:	print " (que estará", (n) x1;
 				}
@@ -2664,7 +2458,7 @@ Verb	meta 'gramatica' 'grammar'
 			16:	print " vací", (o) x1;
 			!! Objeto tiene "recipiente", no "abrible" y "transparente"
 			17:	switch (_grammatical_inflection) {
-				1,2,3:	print " (que ", (esta) x1, " vací", (o) x1, ")";
+				1,2,3:	print " (que está", (n) x1, " vací", (o) x1, ")";
 				4,5,6:	print " (que estaba", (n) x1, " vací", (o) x1, ")";
 				7,8,9:	print " (que estará", (n) x1, " vací", (o) x1, ")";
 				}
@@ -2867,18 +2661,7 @@ Verb	meta 'gramatica' 'grammar'
 				new_line;
 				if (x1~=location) {
 					if (x1 has supporter) print "Sobre "; else print "En ";
-					print (the) x1;
-					switch (_grammatical_inflection) {
-					1:	print " puedo ver ";
-					2:	print " puedes ver ";
-					3:	print " puede ver ";
-					4:	print " podía ver ";
-					5:	print " podías ver ";
-					6:	print " podía ver ";
-					7:	print " podré ver ";
-					8:	print " podrás ver ";
-					9:	print " podrá ver ";
-					}
+					print (the) x1, " ", (_puedes_) " ver ";
 				}
 				else switch (_grammatical_inflection) {
 				1:	print "Puedo ver ";
@@ -3428,11 +3211,17 @@ Verb	meta 'gramatica' 'grammar'
 	Pray:
 		print "La fe tal vez ";
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				print "pueda";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				print "pudiese";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				print "podrá";
 		}
 		" resultar útil en una ocasión diferente.";
@@ -3538,18 +3327,7 @@ Verb	meta 'gramatica' 'grammar'
 					4,5,6:	"Eso no era una dirección.";
 					7,8,9:	"Eso no será una dirección.";
 				}
-			3:	switch (_grammatical_inflection) {
-					1:	print "No puedo";
-					2:	print "No puedes";
-					3:	print "No puede";
-					4:	print "No podía";
-					5:	print "No podías";
-					6:	print "No podía";
-					7:	print "No podré";
-					8:	print "No podrás";
-					9:	print "No podrá";
-				}
-				" empujar", (lo) x1, " en esa dirección.";
+			3:	"No ", (_puedes_) " empujar", (lo) x1, " en esa dirección.";
 		}
 
 !! TODO
@@ -3633,18 +3411,7 @@ Verb	meta 'gramatica' 'grammar'
 						"Necesitará tener ", (the) x1, " para poder
 						poner", (lo) x1, " donde sea.";
 				}
-			2:	switch (_grammatical_inflection) {
-					1:	print "No puedo";
-					2:	print "No puedes";
-					3:	print "No puede";
-					4:	print "No podía";
-					5:	print "No podías";
-					6:	print "No podía";
-					7:	print "No podré";
-					8:	print "No podrás";
-					9:	print "No podrá";
-				}
-				" poner un objeto sobre sí mismo.";
+			2:	"No ", (_puedo_) " poner un objeto sobre sí mismo.";
 			3:	switch (_grammatical_inflection) {
 				1,2,3:	"Poner cosas sobre ", (the) x1," no servirá de nada.";
 				4,5,6:	"Poner cosas sobre ", (the) x1, " no hubiese servido
@@ -3759,14 +3526,19 @@ Verb	meta 'gramatica' 'grammar'
 				new_line; <<Look>>;
 		}
 
-!! TODO
 	Rub:
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				print "Ya está", (n) x1;
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				print "Ya estaba", (n) x1;
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				print "Ya estará", (n) x1;
 		}
 		" bastante limpi", (o) x1, ".";
@@ -3898,20 +3670,9 @@ Verb	meta 'gramatica' 'grammar'
 				".";
 		}
 
-!! TODO
 	Set:
 		!! Set sale ante la frase FIJA OBJETO o AJUSTA OBJETO
-		switch (_grammatical_inflection) {
-			1:	"No, no puedo.";
-			2:	"No, no puedes.";
-			3:	"No, no puede.";
-			4:	"No, no podía.";
-			5:	"No, no podías.";
-			6:	"No, no podía.";
-			7:	"No, no podré.";
-			8:	"No, no podrás.";
-			9:	"No, no podrá.";
-		}
+		"No, no ", (_puedes_) ".";
 
 	SetTo:
 		!! SetTo sale ante la frase AJUSTA DIAL A 23 o FIJA CONTROL EN
@@ -4447,20 +4208,8 @@ Verb	meta 'gramatica' 'grammar'
 !!				}
 !!		}
 
-!! TODO
 	Think:
-		!! -- "Vaya. Qué buena idea.";
-		switch (_grammatical_inflection) {
-			1:	"Si, eso intento.";
-			2:	"Si, eso intentas.";
-			3:	"Si, eso intenta.";
-			4:	"Si, eso intentaba.";
-			5:	"Si, eso intentabas.";
-			6:	"Si, eso intentaba.";
-			7:	"Si, eso intentaré.";
-			8:	"Si, eso intentarás.";
-			9:	"Si, eso intentará.";
-		}
+		"Si, eso intent", (as_) ".";
 
 !! TODO
 	ThrowAt:
@@ -4619,11 +4368,17 @@ Verb	meta 'gramatica' 'grammar'
 
 	Wait:
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				print "Pasa";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				print "Pasaba";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				print "Pasará";
 		}
 		" el tiempo...";
@@ -4632,23 +4387,35 @@ Verb	meta 'gramatica' 'grammar'
 	Wake:
 		print "La cruda realidad es que ";
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				print "esto no es";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				print "aquello no era";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
 				print "aquello no será";
 		}
 		" un sueño.";
 
 	WakeOther:
 		switch (_grammatical_inflection) {
-			FIRST_PERSON_PRESENT, SECOND_PERSON_PRESENT, THIRD_PERSON_PRESENT:
+			FIRST_PERSON_PRESENT,
+			SECOND_PERSON_PRESENT,
+			THIRD_PERSON_PRESENT:
 				"No parece necesario hacer eso.";
-			FIRST_PERSON_PAST, SECOND_PERSON_PAST, THIRD_PERSON_PAST:
+			FIRST_PERSON_PAST,
+			SECOND_PERSON_PAST,
+			THIRD_PERSON_PAST:
 				"No parecía necesario hacer aquello.";
-			FIRST_PERSON_FUTURE, SECOND_PERSON_FUTURE, THIRD_PERSON_FUTURE:
-				"No parecerá necesario hacer aquello.";
+			FIRST_PERSON_FUTURE,
+			SECOND_PERSON_FUTURE,
+			THIRD_PERSON_FUTURE:
+				"No parecerá necesario hacer eso.";
 		}
 
 !! TODO
