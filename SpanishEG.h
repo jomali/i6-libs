@@ -165,7 +165,7 @@ Verb	'baila'
 ;
 
 [ DanceSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -338,7 +338,7 @@ Verb	'masturba'
 ;
 
 [ MasturbateSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -444,7 +444,7 @@ Extend	'grita' last
 ;
 
 [ ShoutSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -526,7 +526,7 @@ Extend    'sienta' replace
 ; VerboIrregular "sentar" with imperativo 'sientate';
 
 [ SitSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -658,7 +658,7 @@ Verb	'haz'
 
 [ SleepWithSub gna;
 	if (noun == player) <<Masturbate>>;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -753,7 +753,7 @@ Verb    'levanta' 'incorpora'
 ;
 
 [ StandUpSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -844,7 +844,7 @@ Extend	only 'desconecta' last
 ;
 
 [ UntieSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -966,7 +966,7 @@ Verb	'actua' 'interactua'
 ;
 
 [ UseSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -1064,7 +1064,7 @@ Verb	'escribe'
 ; VerboIrregular "escribir" with imperativo 'escribe';
 
 [ WriteSub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
@@ -1141,7 +1141,7 @@ Verb	'xyzzy' 'plugh' 'plover' 'abracadabra'
 ; VerboIrregular "xyzzy" with imperativo 'xyzzy';
 
 [ XyzzySub gna;
-	gna = GetGNAOfObject(player, true);
+	gna = GetGNAOfObject(player);
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
