@@ -15,6 +15,8 @@ Relación de extensiones incluidas:
 
 - **Receptacles**: Implementación de la clase de objetos ``Receptacle``; un tipo de contenedores o soportes con atributos de peso, volumen, tamaño y número de objetos que pueden albergar en su interior (o sobre ellos). Cada vez que se intenta colocar un objeto en un ``Receptacle``, éste comprobará si tiene capacidad suficiente para albergar o no al nuevo objeto. *Autor(es): Peer Schaefer y J. Francisco Martín*.
 
+- **Spanish Extended Grammar**: Gramática española extendida. Define un nuevo conjunto de acciones (así­ como sinónimos sobre acciones ya definidas en la gramática por defecto) que pueden ser utilizadas en una obra. Los mensajes por defecto de las nuevas acciones contemplan inflexiones de género y número del actor y tiempo verbal del narrador. *Autor(es): Emily Short, J. Francisco Martín y Mapache*.
+
 - **Types**: Rutinas biplataforma (Máquina-Z/GLULX) para imprimir texto con diferentes estilos. Además de los estilos básicos: romana, itálica, negrita y monoespaciada; defne cuatro estilos abstractos que varían dependiendo del contexto: enfático, fuerte, código y parser. *Autor(es): J. Francisco Martín*.
 
 Incluye además un directorio *discarded* con algunas extensiones no analizadas, pero que pueden implementar conceptos y soluciones de interés.
