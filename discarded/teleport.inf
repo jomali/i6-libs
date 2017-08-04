@@ -1,0 +1,79 @@
+! Inform source code that allows the player to teleport to a room by
+! typing in the room's name as a command.
+!
+! If the player's command applies to more than one room, the parser
+! asks a question to differentiate between the two, just as it would
+! for any other command.
+!
+! Compile and run the game to see how it works.
+!
+! by Jim Fisher and Michael Huang
+! 2001-12-20
+
+Constant Story "Teleport";
+Constant Headline "^Example program^";
+
+Include "Parser";
+Include "VerbLib";
+
+Attribute teleport;
+
+ Object mainward "main ward"
+   with name 'main' 'ward',
+        description "Welcome to the main ward.",
+    has teleport light;
+
+ Object leftupperward "left upper ward"
+   with name 'left' 'upper' 'ward',
+        description "The left upper ward is busy.",
+    has teleport light;
+
+ Object leftlowerward "left lower ward"
+   with name 'left' 'lower' 'ward',
+        description "The left lower ward is empty.",
+    has teleport light;
+
+[ Initialise;
+  location = mainward;
+  "^^^Welcome to Teleport General Hospital! Try these commands:
+    ^^examine ward
+     ^ward
+     ^examine left upper
+     ^left upper^";
+];
+
+[ UnknownVerb word place;
+  objectloop (place has teleport)
+  {
+    if (WordInProperty(word,place,name))
+    {
+      verb_wordnum=0;
+      return 'teleport.room';
+    }
+  }
+  rfalse;
+];
+
+[ TeleportScope i;
+  switch (scope_stage)
+    {
+      1: rfalse;
+      2: objectloop (i has teleport)
+           PlaceInScope(i);
+         rtrue;
+      3: "You can't see any such thing.";
+    }
+];
+
+[ TeleportSub;
+  PlayerTo (noun, 2);
+];
+
+Include "Grammar";
+
+Verb 'teleport.room'
+  * scope=TeleportScope  -> Teleport;
+
+Extend 'examine'
+  * scope=TeleportScope  -> Examine;
+
