@@ -13,7 +13,7 @@
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Máquina-Z / GLULX
-!!	Version:		5.0
+!!	Version:		5.1
 !!	Released:		2017/08/04
 !!
 !!------------------------------------------------------------------------------
