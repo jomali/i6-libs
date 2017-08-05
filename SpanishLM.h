@@ -74,6 +74,7 @@
 !!		se hace necesario actualizar el estado de la librería Inform.
 !!
 !!------------------------------------------------------------------------------
+System_file;
 
 
 !!------------------------------------------------------------------------------
@@ -257,11 +258,10 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			if (IsPluralNoun(obj)) print "podrán";
 			else print "podrá";
 	}
-	print (string) x;
 ];
 [ n_puedo_ obj; return n_puedo(obj, true); ];
 
-[ n_Puedo obj flag;
+[ n_ppuedo obj flag;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "Podemos";
@@ -306,9 +306,8 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			if (IsPluralNoun(obj)) print "Podrán";
 			else print "Podrá";
 	}
-	print (string) x;
 ];
-[ n_Puedo_ obj; return n_Puedo(obj, true); ];
+[ n_ppuedo_ obj; return n_ppuedo(obj, true); ];
 
 [ n_soy obj flag;
 	switch (_grammatical_inflection) {
@@ -358,7 +357,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 ];
 [ n_soy_ obj; return n_soy(obj, true); ];
 
-[ n_Soy obj flag;
+[ n_ssoy obj flag;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "Somos";
@@ -404,7 +403,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "Será";
 	}
 ];
-[ n_Soy_ obj; return n_Soy(obj, true); ];
+[ n_ssoy_ obj; return n_ssoy(obj, true); ];
 
 [ n_tengo obj flag;
 	switch (_grammatical_inflection) {
@@ -454,7 +453,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 ];
 [ n_tengo_ obj; return n_tengo(obj, true); ];
 
-[ n_Tengo obj flag;
+[ n_ttengo obj flag;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "Tenemos";
@@ -500,7 +499,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "Tendrá";
 	}
 ];
-[ n_Tengo_ obj; return n_Tengo(obj, true); ];
+[ n_ttengo_ obj; return n_ttengo(obj, true); ];
 
 !!==============================================================================
 !! Intercambia el objeto controlado por el usuario por otro objeto dado.
@@ -2289,13 +2288,13 @@ Verb	meta 'gramatica' 'grammar'
 		!!		pero ésta no tiene una propiedad "door_to" (probablemente un
 		!!		error de programación del juego).
 		switch (n) {
-			1:	print (n_Tengo) player, " que ";
+			1:	print (n_ttengo) player, " que ";
 				if (x1 has supporter) print "bajar", (n_me) player;
 				else print "salir";
 				" ", (del_) x1, " antes.";
 			2:	"No ", (n_puedo) player, " ir por ahí.";
-			3:	"", (n_Soy) player, " incapaz de trepar por ", (the) x1, ".";
-			4:	"", (n_Soy) player, " incapaz de bajar por ", (the) x1, ".";
+			3:	"", (n_ssoy) player, " incapaz de trepar por ", (the) x1, ".";
+			4:	"", (n_ssoy) player, " incapaz de bajar por ", (the) x1, ".";
 			5:	"No ", (n_puedo) player, " pasar a través ", (del_) x1, ".";
 			6:	print "No ", (n_puedo) player, " ir porque ", (the) x1, " no ";
 				switch (_grammatical_inflection) {
@@ -2440,7 +2439,7 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, " estará", (n) x1;
 				}
 				" cerrad", (o) x1, ".";
-			4:	"", (n_Tengo) player, " que quitár", (n_me) player, "",
+			4:	"", (n_ttengo) player, " que quitár", (n_me) player, "",
 				(lo) x1, " antes.";
 			5:	"No ", (n_puedo) player, " poner un objeto dentro de sí mismo.";
 			6:	"(Primero ", (n_me) player, "", (lo) x1, " quit",
@@ -2857,6 +2856,7 @@ Verb	meta 'gramatica' 'grammar'
 						} else {
 							if (IsPluralNoun(player)) print "Echamos";
 							else print "Echo";
+						}
 					SECOND_PERSON_PRESENT:
 						if (second) {
 							if (IsPluralNoun(player)) print "Cerrais";
@@ -2913,7 +2913,7 @@ Verb	meta 'gramatica' 'grammar'
 						}
 					SECOND_PERSON_FUTURE:
 						if (second) {
-							if (IsPluralNoun(player)) print "Cerraréis"
+							if (IsPluralNoun(player)) print "Cerraréis";
 							else print "Cerrarás";
 							" ", (the) x1, " con ", (the) second, ".";
 						} else {
@@ -3001,7 +3001,7 @@ Verb	meta 'gramatica' 'grammar'
 				if (x1~=location) {
 					if (x1 has supporter) print "Sobre "; else print "En ";
 					print (the) x1, " ", (n_puedo) player, " ver ";
-				} else print (n_Puedo) player, " ver ";
+				} else print (n_ppuedo) player, " ver ";
 				if (n==5) print "también ";
 				WriteListFrom(child(x1),
 					ENGLISH_BIT + WORKFLAG_BIT + RECURSE_BIT
@@ -3823,7 +3823,7 @@ Verb	meta 'gramatica' 'grammar'
 						"Necesitará tener ", (the) x1, " para poder
 						poner", (lo) x1, " donde sea.";
 				}
-			2:	"No ", (_puedo_) " poner un objeto sobre sí mismo.";
+			2:	"No ", (n_puedo_) player, " poner un objeto sobre sí mismo.";
 			3:	switch (_grammatical_inflection) {
 				1,2,3:	"Poner cosas sobre ", (the) x1," no servirá de nada.";
 				4,5,6:	"Poner cosas sobre ", (the) x1, " no hubiese servido
@@ -4463,19 +4463,19 @@ Verb	meta 'gramatica' 'grammar'
 				" encendid", (o) x1, ".";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						if (IsPluralNoun(playe)) print "Encendemos";
+						if (IsPluralNoun(player)) print "Encendemos";
 						else print "Enciendo";
 					SECOND_PERSON_PRESENT:
-						if (IsPluralNoun(playe)) print "Encendéis";
+						if (IsPluralNoun(player)) print "Encendéis";
 						else print "Enciendes";
 					THIRD_PERSON_PRESENT:
-						if (IsPluralNoun(playe)) print "Encienden";
+						if (IsPluralNoun(player)) print "Encienden";
 						else print "Enciendes";
 					FIRST_PERSON_PAST:
-						if (IsPluralNoun(playe)) print "Encendimos";
+						if (IsPluralNoun(player)) print "Encendimos";
 						else print "Encendí";
 					SECOND_PERSON_PAST:
-						if (IsPluralNoun(playe)) print "Encendisteis";
+						if (IsPluralNoun(player)) print "Encendisteis";
 						else print "Encendiste";
 					THIRD_PERSON_PAST:
 						if (IsPluralNoun(player)) print "Encendieron";
@@ -4523,8 +4523,9 @@ Verb	meta 'gramatica' 'grammar'
 		!!		consigo, la librería lo usará automáticamente como mochila
 		!!		para descargar al usuario cuando sea necesario].
 		switch (n) {
-			1:	if (dialecto_sudamericano) print "Tomad"; else print "Cogid";
-				print_ret (o) noun, ".";
+			1:	if (dialecto_sudamericano) print "Tomad";
+				else print "Cogid";
+				"", (o) noun, ".";
 			2:	switch (_grammatical_inflection) {
 					1:	"Siempre me tengo a mí mism", (o) player, ".";
 					2:	"Siempre te tienes a tí mism", (o) player, ".";
@@ -4580,7 +4581,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) print "bajarse ";
 						else print "salir ";
 				}
-				print_ret (del_) x1, " antes.";
+				"", (del_) x1, " antes.";
 			5:	"Ya ", (n_tengo) player, " ", (the) x1, ".";
 			6:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -4669,7 +4670,6 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, "estará", (n) x1;
 				}
 				" fij", (o) x1, " en el sitio.";
-				}
 			12:	"Ya ", (n_tengo) player, " las manos ocupadas con demasiadas
 				cosas.";
 			!! -- "(colocas ", (the) x1, " en ", (the) SACK_OBJECT,
@@ -4685,8 +4685,7 @@ Verb	meta 'gramatica' 'grammar'
 					8:	print "(Primero meterás ";
 					9:	print "(Primero meterá ";
 				}
-				print_ret (the) x1, " en ", (the) SACK_OBJECT, " para hacer
-				sitio).";
+				"", (the) x1, " en ", (the) SACK_OBJECT, " para hacer sitio).";
 		}
 
 	Taste:
