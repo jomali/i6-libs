@@ -1138,12 +1138,12 @@ Verb	meta 'gramatica' 'grammar'
 				else print "No creo que vaya";
 				" a lograr nada haciendo eso.";
 			SECOND_PERSON_PRESENT:
-				print "En realidad no";
+				print "En realidad no ";
 				if (IsPluralNoun(player)) print "creéis que vayáis";
 				else print "crees que vayas";
 				" a lograr nada haciendo eso.";
 			THIRD_PERSON_PRESENT:
-				print "En realidad no";
+				print "En realidad no ";
 				if (IsPluralNoun(player)) print "creen que vayan";
 				else print "cree que vaya";
 				" a lograr nada haciendo eso.";
@@ -1152,12 +1152,12 @@ Verb	meta 'gramatica' 'grammar'
 				else print "No creo que hubiese";
 				" logrado nada haciendo aquello.";
 			SECOND_PERSON_PAST:
-				print "En realidad no";
+				print "En realidad no ";
 				if (IsPluralNoun(player)) print "creéis que hubieseis";
 				else print "crees que hubieses";
 				" logrado nada haciendo aquello.";
 			THIRD_PERSON_PAST:
-				print "En realidad no";
+				print "En realidad no ";
 				if (IsPluralNoun(player)) print "creen que hubiesen";
 				else print "cree que hubiese";
 				" logrado nada haciendo aquello.";
@@ -2405,6 +2405,7 @@ Verb	meta 'gramatica' 'grammar'
 							else print "Necesitaba";
 							" tener ", (the) x1, " para poder meter", (lo) x1,
 							" donde fuese.";
+						}
 					SECOND_PERSON_PAST:
 						if (x1 has animate) {
 							if (IsPluralNoun(player))
@@ -2428,7 +2429,7 @@ Verb	meta 'gramatica' 'grammar'
 							"Antes tenía que ", (coge)"r", (lo) x1,
 							" y no sabía si se hubiese", (n) x1, " dejado.";
 						} else {
-							if (IsPluralNoun(player)) print "Necesitaban"
+							if (IsPluralNoun(player)) print "Necesitaban";
 							else print "Necesitaba";
 							" tener ", (the) x1, " para poder meter", (lo) x1,
 							" donde fuese.";
@@ -3650,7 +3651,7 @@ Verb	meta 'gramatica' 'grammar'
 				FIRST_PERSON_FUTURE,
 				SECOND_PERSON_FUTURE,
 				THIRD_PERSON_FUTURE:
-					print "Estará", (n) x1,
+					print "Estará", (n) x1;
 				}
 				" cerrad", (o) x1, " con llave.";
 			3:	print "Ya ";
@@ -4018,6 +4019,7 @@ Verb	meta 'gramatica' 'grammar'
 							else print "Necesitaba";
 							" tener ", (the) x1, " para poder poner", (lo) x1,
 							" donde fuese.";
+						}
 					SECOND_PERSON_PAST:
 						if (x1 has animate) {
 							if (IsPluralNoun(player))
@@ -4041,7 +4043,7 @@ Verb	meta 'gramatica' 'grammar'
 							"Antes tenía que ", (coge)"r", (lo) x1,
 							" y no sabía si se hubiese", (n) x1, " dejado.";
 						} else {
-							if (IsPluralNoun(player)) print "Necesitaban"
+							if (IsPluralNoun(player)) print "Necesitaban";
 							else print "Necesitaba";
 							" tener ", (the) x1, " para poder poner", (lo) x1,
 							" donde fuese.";
@@ -4094,7 +4096,7 @@ Verb	meta 'gramatica' 'grammar'
 						THIRD_PERSON_PRESENT:
 							print "servirá";
 						FIRST_PERSON_PAST,
-						SECOND_PERSON_PAST
+						SECOND_PERSON_PAST,
 						THIRD_PERSON_PAST:
 							print "hubiese servido";
 						FIRST_PERSON_FUTURE,
@@ -4134,8 +4136,7 @@ Verb	meta 'gramatica' 'grammar'
 				}
 				" destreza.";
 			5:	"(Primero ", (n_me) player, " ", (lo) x1, "quit",
-				(n_o_) player, ").^"
-				}
+				(n_o_) player, ").^";
 			6:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -4866,12 +4867,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creo";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
 					SECOND_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creéis";
 						else print "crees";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
 					THIRD_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
@@ -4880,12 +4881,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creía";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
 					SECOND_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creíais";
 						else print "creías";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
 					THIRD_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
@@ -5110,12 +5111,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creo";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
 					SECOND_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creéis";
 						else print "crees";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
 					THIRD_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
 						" que ", (al_) x1, " le", (s) x1, " gustara.";
@@ -5124,12 +5125,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creía";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
 					SECOND_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creíais";
 						else print "creías";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
 					THIRD_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
 						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
@@ -5153,12 +5154,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creo";
 						" que eso sirva de nada.";
 					SECOND_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creéis";
 						else print "crees";
 						" que eso sirva de nada.";
 					THIRD_PERSON_PRESENT:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
 						" que eso sirva de nada.";
@@ -5167,12 +5168,12 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No creía";
 						" que algo así hubiese servido de nada.";
 					SECOND_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creíais";
 						else print "creías";
 						" que algo así hubiese servido de nada.";
 					THIRD_PERSON_PAST:
-						print "En realidad no";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
 						" que algo así hubiese servido de nada.";
