@@ -98,7 +98,8 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !! Funciones
 !!------------------------------------------------------------------------------
 
-[ n_estoy obj flag;
+
+[ n_oy obj flag;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "amos";
@@ -144,7 +145,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "ará";
 	}
 ];
-[ n_estoy_ obj; return n_estoy(obj, true); ];
+[ n_oy_ obj; return n_oy(obj, true); ];
 
 [ n_me obj;
 	switch (_grammatical_inflection) {
@@ -1621,7 +1622,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!		al usuario en el objeto desde el cual pueda acceder al que el
 		!!		usuario le ha indicado.
 		switch (n) {
-			1:	print "Ya ", (n_estoy) player, " ";
+			1:	print "Ya est", (n_oy) player, " ";
 				if (x1 has supporter) print "sobre ";
 				else print "en ";
 				"", (the) x1, ".";
@@ -2082,7 +2083,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	3:	Éxito, el usuario sale/baja del objeto
 		!!	4:	Error, más específico. [6/11]
 		switch (n) {
-			1:	print "No ", (n_estoy) player, " en ningún sitio del que ";
+			1:	print "No est", (n_oy) player, " en ningún sitio del que ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "debamos";
@@ -2201,7 +2202,7 @@ Verb	meta 'gramatica' 'grammar'
 						}
 				}
 				" ", (del_) x1, ".";
-			4:	print "No ", (n_puedo) player, ". No ", (n_estoy) player, " ";
+			4:	print "No ", (n_puedo) player, ". No est", (n_oy) player, " ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
 				" ", (del_) x1, ".";
@@ -2236,7 +2237,7 @@ Verb	meta 'gramatica' 'grammar'
 		!! objeto indicado, se genera el siguiente mensaje de error. Si está,
 		!! la librería generará una acción Salir, por lo que el mensaje de
 		!! éxito será el de Salir.
-		"No ", (n_puedo) player, ". No ", (n_estoy) player, " en ",
+		"No ", (n_puedo) player, ". No est", (n_oy) player, " en ",
 		(the) x1, ".";
 
 	Give:
@@ -2314,7 +2315,6 @@ Verb	meta 'gramatica' 'grammar'
 				" a ningún sitio.";
 		}
 
-	! TODO - flexiones de género/número
 	Insert:
 		!!	1:	Error, el objeto no está en poder del usuario. [Nota, conviene
 		!!		mirar en este caso si el objeto es animado o no, para generar
@@ -2338,75 +2338,125 @@ Verb	meta 'gramatica' 'grammar'
 		!!		de otro.
 		switch (n) {
 			1:	switch (_grammatical_inflection) {
-				FIRST_PERSON_PRESENT:
-					if (x1 has animate)
-						"Antes tendría que ", (coge)"rl", (o) x1, " y no sé
-						si se dejará", (n) x1, ".";
-					else
-						"Necesito tener ", (the) x1, " para poder meter",
-						(lo) x1, " donde sea.";
-				SECOND_PERSON_PRESENT:
-					if (x1 has animate)
-						"Antes tendrías que ", (coge)"rl", (o) x1, " y no sabes
-						si se dejará", (n) x1, ".";
-					else
-						"Necesitas tener ", (the) x1, " para poder meter",
-						(lo) x1, " donde sea.";
-				THIRD_PERSON_PRESENT:
-					if (x1 has animate)
-						"Antes tendría que ", (coge)"rl", (o) x1, " y no sabe
-						si se dejará", (n) x1, ".";
-					else
-						"Necesita tener ", (the) x1, " para poder meter",
-						(lo) x1, " donde sea.";
-				FIRST_PERSON_PAST:
-					if (x1 has animate)
-						"Antes tendría que haber", (lo) x1, " cogido, y no
-						sé si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubiese necesitado tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde fuese.";
-				SECOND_PERSON_PAST:
-					if (x1 has animate)
-						"Antes tendrías que haber", (lo) x1, " cogido, y no
-						sabes si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubieses necesitado tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde fuese.";
-				THIRD_PERSON_PAST:
-					if (x1 has animate)
-						"Antes tendría que haber", (lo) x1, " cogido, y no
-						sabe si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubiese necesitado tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde fuese.";
-				FIRST_PERSON_FUTURE:
-					if (x1 has animate)
-						"Antes tendré que haber", (lo) x1, " cogido, y no
-						sabré si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-					 	"Necesitaré tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde sea.";
-				SECOND_PERSON_FUTURE:
-					if (x1 has animate)
-						"Antes tendrás que haber", (lo) x1, " cogido, y no
-						sabrás si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-						"Necesitarás tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde sea.";
-				THIRD_PERSON_FUTURE:
-					if (x1 has animate)
-						"Antes tendrá que haber", (lo) x1, " cogido, y no
-						sabrá si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-						"Necesitará tener ", (the) x1, " para poder
-						meter", (lo) x1, " donde sea.";
+					FIRST_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendríamos que ", (coge)"r", (lo) x1,
+								" y no sabemos si se dejará", (n) x1, ".";
+							"Antes tendría que ", (coge)"r", (lo) x1,
+							" y no sé si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitamos";
+							else print "Necesito";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
+					SECOND_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendríais que ", (coge)"r", (lo) x1,
+								" y no sabéis si se dejará", (n) x1, ".";
+							"Antes tendrías que ", (coge)"r", (lo) x1,
+							" y no sabes si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitáis";
+							else print "Necesitas";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
+					THIRD_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendrían que ", (coge)"r", (lo) x1,
+								" y no saben si se dejará", (n) x1, ".";
+							"Antes tendría que ", (coge)"r", (lo) x1,
+							" y no sabe si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitan";
+							else print "Necesita";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
+					FIRST_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes teníamos que ", (coge)"r", (lo) x1,
+								" y no sabíamos si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenía que ", (coge)"r", (lo) x1,
+							" y no sabía si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitábamos";
+							else print "Necesitaba";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde fuese.";
+					SECOND_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes teníais que ", (coge)"r", (lo) x1,
+								" y no sabíais si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenías que ", (coge)"r", (lo) x1,
+							" y no sabías si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitabais";
+							else print "Necesitabas";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde fuese.";
+						}
+					THIRD_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tenían que ", (coge)"r", (lo) x1,
+								" y no sabían si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenía que ", (coge)"r", (lo) x1,
+							" y no sabía si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaban"
+							else print "Necesitaba";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde fuese.";
+						}
+					FIRST_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendremos que ", (coge)"r", (lo) x1,
+								" y no sabremos si se dejará", (n) x1, ".";
+							"Antes tendré que ", (coge)"r", (lo) x1,
+							" y no sab?e si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaremos";
+							else print "Necesitaré";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
+					SECOND_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendréis que ", (coge)"r", (lo) x1,
+								" y no sabréis si se dejará", (n) x1, ".";
+							"Antes tendrás que ", (coge)"r", (lo) x1,
+							" y no sabrás si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaréis";
+							else print "Necesitarás";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
+					THIRD_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendrán que ", (coge)"r", (lo) x1,
+								" y no sabrán si se dejará", (n) x1, ".";
+							"Antes tendrá que ", (coge)"r", (lo) x1,
+							" y no sabrá si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitarán";
+							else print "Necesitará";
+							" tener ", (the) x1, " para poder meter", (lo) x1,
+							" donde sea.";
+						}
 				}
 			2:	print "No se ";
 				switch (_grammatical_inflection) {
@@ -4252,7 +4302,7 @@ Verb	meta 'gramatica' 'grammar'
 			}
 
 	Sleep:
-		"No ", (n_estoy) player, " especialmente somnolient", (o) player, ".";
+		"No est", (n_oy) player, " especialmente somnolient", (o) player, ".";
 
 	Smell:
 		print "No ";
