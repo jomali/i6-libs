@@ -99,6 +99,35 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !!------------------------------------------------------------------------------
 
 
+[ n_conmigo obj;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT,
+		FIRST_PERSON_PAST,
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) {
+				if (IsFemaleNoun(obj)) print "con nosotras";
+				else print "con nosotros";
+			} else print "conmigo";
+		SECOND_PERSON_PRESENT,
+		SECOND_PERSON_PAST,
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) {
+				if (IsFemaleNoun(obj)) print "con vosotras";
+				else print "con vosotros";
+			} else print "contigo";
+		THIRD_PERSON_PRESENT,
+		THIRD_PERSON_PAST,
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) {
+				if (IsFemaleNoun(obj)) print "con ellas";
+				else print "con ellos";
+			} else {
+				if (IsFemaleNoun(obj)) print "con ella";
+				else print "con él";
+			}
+	}
+];
+
 [ n_oy obj flag;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
@@ -1390,45 +1419,8 @@ Verb	meta 'gramatica' 'grammar'
 						else print "deberá";
 				}
 				" tener", (lo) x1, ".";
-			2:	print "No ", (lo) x1, " ";
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-						if (~~IsPluralNoun(player)) "tengo conmigo.";
-						if (IsFemaleNoun(player)) "tenemos con nosotras.";
-						"tenemos con nosotros.";
-					SECOND_PERSON_PRESENT:
-						if (~~IsPluralNoun(player)) "tienes contigo.";
-						if (IsFemaleNoun(player)) "tenéis con vosotras.";
-						"tenéis con vosotros.";
-					THIRD_PERSON_PRESENT:
-						if (~~IsPluralNoun(player)) "tiene consigo";
-						if (IsFemaleNoun(noun)) "tienen con ellas.";
-						"tienen con ellos.";
-					FIRST_PERSON_PAST:
-						if (~~IsPluralNoun(player)) "tenía conmigo";
-						if (IsFemaleNoun(noun)) "teníamos con nosotras.";
-						"teníamos con nosotros.";
-					SECOND_PERSON_PAST:
-						if (~~IsPluralNoun(player)) "tenías contigo";
-						if (IsFemaleNoun(noun)) "teníais con vosotras.";
-						"teníais con vosotros.";
-					THIRD_PERSON_PAST:
-						if (~~IsPluralNoun(player)) "tenía consigo";
-						if (IsFemaleNoun(noun)) "tenían con ellas.";
-						"tenían con ellos.";
-					FIRST_PERSON_FUTURE:
-						if (~~IsPluralNoun(player)) "tendré conmigo";
-						if (IsFemaleNoun(noun)) "tendremos con nosotras.";
-						"tendremos con nosotros.";
-					SECOND_PERSON_FUTURE:
-						if (~~IsPluralNoun(player)) "tendrás contigo";
-						if (IsFemaleNoun(noun)) "tendréis con vosotras.";
-						"tendréis con vosotros.";
-					THIRD_PERSON_FUTURE:
-						if (~~IsPluralNoun(player)) "tendrá consigo";
-						if (IsFemaleNoun(noun)) "tendrán con ellas.";
-						"tendrán con ellos.";
-				}
+			2:	"No ", (lo) x1, " ", (n_tengo) player, " ",
+				(n_conmigo) player, ".";
 			3:	print "(Primero ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
@@ -3057,7 +3049,7 @@ Verb	meta 'gramatica' 'grammar'
 					ENGLISH_BIT + WORKFLAG_BIT + RECURSE_BIT
 					+ PARTINV_BIT + TERSE_BIT + CONCEAL_BIT);
 				".";
-			7:	"No observ", (n_o) player, " nada digno de mención al mirar
+			7:	"No observ", (n_o_) player, " nada digno de mención al mirar
 				hacia ", (the) x1, ".";
 			8:	if (x1 has supporter) print " (sobre "; else print " (en ";
 				print (the) x1, ")";
@@ -3508,7 +3500,6 @@ Verb	meta 'gramatica' 'grammar'
 	NotifyOff:
 		"[Notificación de puntuación desactivada].";
 
-	! TODO - flexiones de género/número/tiempo
 	Objects:
 		! TODO - mensaje del parser
 		!! Ante el verbo "OBJETOS" se genera esta acción, que muestra una
@@ -3530,21 +3521,75 @@ Verb	meta 'gramatica' 'grammar'
 			1:	"Objetos que has manejado:^";
 			2:	"Ninguno.";
 			3:	print "   (puest", (o) x1, ")";
-			! TODO - flexiones de género/número
-			4:	print "   (contigo)";
+			4:	print "   (", (n_conmigo) player, ")";
 			5:	print "   (dejad", (o) x1, " con alguien)";
-			! TODO - flexiones de tiempo
-			6:	print "   (ahora en ", (name) x1, ")";
-			! TODO - flexiones de tiempo
-			7:	print "   (ahora en ", (the) x1, ")";
-			! TODO - flexiones de tiempo
-			8:	print "   (ahora dentro ", (del_) x1, ")";
-			! TODO - flexiones de tiempo
-			9:	print "   (ahora en ", (the) x1, ")";
+			6:	print "   (";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "ahora";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "entonces";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "en ese momento";
+				}
+				print " en ", (name) x1, ")";
+			7:	print "   (";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "ahora";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "entonces";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "en ese momento";
+				}
+				print " en ", (the) x1, ")";
+			8:	print "   (";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "ahora";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "entonces";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "en ese momento";
+				}
+				print " dentro ", (del_) x1, ")";
+			9:	print "   (";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "ahora";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "entonces";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "en ese momento";
+				}
+				print " en ", (the) x1, ")";
 			10:	print "   (perdid", (o) x1, ")";
 		}
 
-	! TODO - flexiones de género/número
 	Open:
 		!!	1:	Error, el objeto no tiene el atributo "openable".
 		!!	2:	Error, el objeto es abrible, pero tiene "locked".
@@ -3555,42 +3600,129 @@ Verb	meta 'gramatica' 'grammar'
 		!!	5:	Éxito, el objeto se abre (pero no tiene nada en su
 		!!		interior, o no era recipiente).
 		switch (n) {
-			1:	switch (_grammatical_inflection) {
-				1,2,3:	"No es algo que pueda abrirse.";
-				4,5,6:	"No era algo que se pudiese abrir.";
-				7,8,9:	"No será algo que pueda abrirse.";
+			1:	print "No ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						"es algo que pueda abrirse";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						"era algo que se pudiese abrir.";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						"será algo que pueda abrirse.";
 				}
 			2:	switch (_grammatical_inflection) {
-				1,2,3:	"Está", (n) x1, " cerrad", (o) x1, " con llave.";
-				4,5,6:	"Estaba", (n) x1, " cerrad", (o) x1, " con llave.";
-				7,8,9:	"Estará", (n) x1, " cerrad", (o) x1, " con llave.";
+				FIRST_PERSON_PRESENT,
+				SECOND_PERSON_PRESENT,
+				THIRD_PERSON_PRESENT:
+					print "Está", (n) x1;
+				FIRST_PERSON_PAST,
+				SECOND_PERSON_PAST,
+				THIRD_PERSON_PAST:
+					print "Estaba", (n) x1;
+				FIRST_PERSON_FUTURE,
+				SECOND_PERSON_FUTURE,
+				THIRD_PERSON_FUTURE:
+					print "Estará", (n) x1,
 				}
-			3:	switch (_grammatical_inflection) {
-				1,2,3:	"Ya estaba", (n) x1, " abiert", (o) x1, ".";
-				4,5,6:	"Ya estaba", (n) x1, " abiert", (o) x1, ".";
-				7,8,9:	"Ya estará", (n) x1, " abiert", (o) x1, ".";
+				" cerrad", (o) x1, " con llave.";
+			3:	print "Ya ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "estaba", (n) x1;
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "estaba", (n) x1;
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "estará", (n) x1;
 				}
+				" abiert", (o) x1, ".";
 			4:	switch (_grammatical_inflection) {
-					1: print "Abro "; 	2: print "Abres ";	3: print "Abre ";
-					4: print "Abrí ";	5: print "Abriste "; 6: print "Abrió ";
-					7: print "Abriré ";	8: print "Abrirás "; 9: print "Abrirá ";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abrimos";
+						else print "Abro";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abréis";
+						else print "Abres";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abren";
+						else print "Abre";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abrimos";
+						else print "Abrí";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abristeis";
+						else print "Abriste";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abrieron";
+						else print "Abrió";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abriremos";
+						else print "Abriré";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abriréis";
+						else print "Abrirás";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abrirán";
+						else print "Abrirá";
 				}
-				print (the) x1, ", descubriendo ";
+				print " ", (the) x1, ", descubriendo ";
 				if (WriteListFrom(child(x1),
 					ENGLISH_BIT + TERSE_BIT + CONCEAL_BIT) == 0) {
 					switch (_grammatical_inflection) {
-					1,2,3:	"que está", (n) x1, " vací", (o) x1, ".";
-					4,5,6:	"que estaba", (n) x1, " vací", (o) x1, ".";
-					7,8,9:	"que estará", (n) x1, " vací", (o) x1, ".";
+						FIRST_PERSON_PRESENT,
+						SECOND_PERSON_PRESENT,
+						THIRD_PERSON_PRESENT:
+							"que está", (n) x1, " vací", (o) x1, ".";
+						FIRST_PERSON_PAST,
+						SECOND_PERSON_PAST,
+						THIRD_PERSON_PAST:
+							"que estaba", (n) x1, " vací", (o) x1, ".";
+						FIRST_PERSON_FUTURE,
+						SECOND_PERSON_FUTURE,
+						THIRD_PERSON_FUTURE:
+							"que estará", (n) x1, " vací", (o) x1, ".";
 					}
-				}
-				".";
+				} else ".";
 			5:	switch (_grammatical_inflection) {
-					1: print "Abro "; 	2: print "Abres ";	3: print "Abre ";
-					4: print "Abrí ";	5: print "Abriste "; 6: print "Abrió ";
-					7: print "Abriré ";	8: print "Abrirás "; 9: print "Abrirá ";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abrimos";
+						else print "Abro";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abréis";
+						else print "Abres";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Abren";
+						else print "Abre";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abrimos";
+						else print "Abrí";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abristeis";
+						else print "Abriste";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Abrieron";
+						else print "Abrió";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abriremos";
+						else print "Abriré";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abriréis";
+						else print "Abrirás";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Abrirán";
+						else print "Abrirá";
 				}
-				print_ret (the) x1, ".";
+				"", (the) x1, ".";
 		}
 
 	Order:
@@ -3750,7 +3882,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "crees";
 						" que empujar", (lo) x1, " sirva de nada.";
 					THIRD_PERSON_PRESENT:
-						print "No ";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
 						" que empujar", (lo) x1, " sirva de nada.";
@@ -3765,7 +3897,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "creías";
 						" que empujar", (lo) x1, " hubiese servido de nada.";
 					THIRD_PERSON_PAST:
-						print "No ";
+						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
 						" que empujar", (lo) x1, " hubiese servido de nada.";
@@ -3792,7 +3924,6 @@ Verb	meta 'gramatica' 'grammar'
 				dirección.";
 		}
 
-	! TODO - flexiones de género/número
 	PutOn:
 		!!	1:	Error, el objeto no está en poder del usuario. [Nota, conviene
 		!!		mirar en este caso si el objeto es animado o no, para generar
@@ -3812,115 +3943,197 @@ Verb	meta 'gramatica' 'grammar'
 		!!	8:	Exito. Mensaje a mostrar cuando se pone un objeto sobre otro.
 		switch (n) {
 			1:	switch (_grammatical_inflection) {
-				1:	if (x1 has animate)
-						"Antes tendría que ", (coge)"rl", (o) x1, " y no sé
-						si se dejará", (n) x1, ".";
-					else
-						"Necesito tener ", (the) x1, " para poder poner",
-						(lo) x1, " donde sea.";
-				2:	if (x1 has animate)
-						"Antes tendrías que ", (coge)"rl", (o) x1, " y no sabes
-						si se dejará", (n) x1, ".";
-					else
-						"Necesitas tener ", (the) x1, " para poder poner",
-						(lo) x1, " donde sea.";
-				3:	if (x1 has animate)
-						"Antes tendría que ", (coge)"rl", (o) x1, " y no sabe
-						si se dejará", (n) x1, ".";
-					else
-						"Necesita tener ", (the) x1, " para poder poner",
-						(lo) x1, " donde sea.";
-				4:	if (x1 has animate)
-						"Antes tendría que haber", (lo) x1, " cogido, y no
-						sabía si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubiese necesitado tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde fuese.";
-				5:	if (x1 has animate)
-						"Antes tendrías que haber", (lo) x1, " cogido, y no
-						sabías si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubieses necesitado tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde fuese.";
-				6:	if (x1 has animate)
-						"Antes tendría que haber", (lo) x1, " cogido, y no
-						sabía si ", (the) x1, " se hubiese", (n) x1,
-						" dejado.";
-					else
-						"Hubiese necesitado tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde fuese.";
-				7:	if (x1 has animate)
-						"Antes tendré que haber", (lo) x1, " cogido, y no
-						sabré si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-						"Necesitaré tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde sea.";
-				8:	if (x1 has animate)
-						"Antes tendrás que haber", (lo) x1, " cogido, y no
-						sabrás si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-						"Necesitarás tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde sea.";
-				9:	if (x1 has animate)
-						"Antes tendrá que haber", (lo) x1, " cogido, y no
-						sabrá si ", (the) x1, " se habría", (n) x1,
-						" dejado.";
-					else
-						"Necesitará tener ", (the) x1, " para poder
-						poner", (lo) x1, " donde sea.";
+					FIRST_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendríamos que ", (coge)"r", (lo) x1,
+								" y no sabemos si se dejará", (n) x1, ".";
+							"Antes tendría que ", (coge)"r", (lo) x1,
+							" y no sé si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitamos";
+							else print "Necesito";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
+					SECOND_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendríais que ", (coge)"r", (lo) x1,
+								" y no sabéis si se dejará", (n) x1, ".";
+							"Antes tendrías que ", (coge)"r", (lo) x1,
+							" y no sabes si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitáis";
+							else print "Necesitas";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
+					THIRD_PERSON_PRESENT:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendrían que ", (coge)"r", (lo) x1,
+								" y no saben si se dejará", (n) x1, ".";
+							"Antes tendría que ", (coge)"r", (lo) x1,
+							" y no sabe si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitan";
+							else print "Necesita";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
+					FIRST_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes teníamos que ", (coge)"r", (lo) x1,
+								" y no sabíamos si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenía que ", (coge)"r", (lo) x1,
+							" y no sabía si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitábamos";
+							else print "Necesitaba";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde fuese.";
+					SECOND_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes teníais que ", (coge)"r", (lo) x1,
+								" y no sabíais si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenías que ", (coge)"r", (lo) x1,
+							" y no sabías si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitabais";
+							else print "Necesitabas";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde fuese.";
+						}
+					THIRD_PERSON_PAST:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tenían que ", (coge)"r", (lo) x1,
+								" y no sabían si se hubiese", (n) x1,
+								" dejado.";
+							"Antes tenía que ", (coge)"r", (lo) x1,
+							" y no sabía si se hubiese", (n) x1, " dejado.";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaban"
+							else print "Necesitaba";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde fuese.";
+						}
+					FIRST_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendremos que ", (coge)"r", (lo) x1,
+								" y no sabremos si se dejará", (n) x1, ".";
+							"Antes tendré que ", (coge)"r", (lo) x1,
+							" y no sab?e si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaremos";
+							else print "Necesitaré";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
+					SECOND_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendréis que ", (coge)"r", (lo) x1,
+								" y no sabréis si se dejará", (n) x1, ".";
+							"Antes tendrás que ", (coge)"r", (lo) x1,
+							" y no sabrás si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitaréis";
+							else print "Necesitarás";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
+					THIRD_PERSON_FUTURE:
+						if (x1 has animate) {
+							if (IsPluralNoun(player))
+								"Antes tendrán que ", (coge)"r", (lo) x1,
+								" y no sabrán si se dejará", (n) x1, ".";
+							"Antes tendrá que ", (coge)"r", (lo) x1,
+							" y no sabrá si se dejará", (n) x1, ".";
+						} else {
+							if (IsPluralNoun(player)) print "Necesitarán";
+							else print "Necesitará";
+							" tener ", (the) x1, " para poder poner", (lo) x1,
+							" donde sea.";
+						}
 				}
 			2:	"No ", (n_puedo_) player, " poner un objeto sobre sí mismo.";
-			3:	switch (_grammatical_inflection) {
-				1,2,3:	"Poner cosas sobre ", (the) x1," no servirá de nada.";
-				4,5,6:	"Poner cosas sobre ", (the) x1, " no hubiese servido
-						de nada.";
-				7,8,9:	"Poner cosas sobre ", (the) x1," no servirá de nada.";
+			3:	print "Poner cosas sobre ", (the) x1, " no ";
+				switch (_grammatical_inflection) {
+						FIRST_PERSON_PRESENT,
+						SECOND_PERSON_PRESENT,
+						THIRD_PERSON_PRESENT:
+							print "servirá";
+						FIRST_PERSON_PAST,
+						SECOND_PERSON_PAST
+						THIRD_PERSON_PAST:
+							print "hubiese servido";
+						FIRST_PERSON_FUTURE,
+						SECOND_PERSON_FUTURE,
+						THIRD_PERSON_FUTURE:
+							print "servirá";
 				}
-			4:	switch (_grammatical_inflection) { !! TODO - cambiar mensaje
-					1:	"Me falta destreza.";
-					2:	"Te falta destreza.";
-					3:	"Le falta destreza.";
-					4:	"Me faltaba destreza.";
-					5:	"Te faltaba destreza.";
-					6:	"Le faltaba destreza.";
-					7:	"Me faltará destreza.";
-					8:	"Te faltará destreza.";
-					9:	"Le faltará destreza.";
+				" de nada.";
+			4:	switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) "Nos falta";
+						else print "Me falta";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) "Os falta";
+						else print "Te falta";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "Les falta";
+						else print "Le falta";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Nos faltaba";
+						else print "Me faltaba";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Os faltaba";
+						else print "Te faltaba";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print "Les faltaba";
+						else print "Le faltaba";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Nos faltará";
+						else print "Me faltará";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Os faltará";
+						else print "Te faltará";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "Les faltará";
+						else print "Le faltará";
 				}
-			5:	switch (_grammatical_inflection) {
-				1:	"(Primero me ", (lo) x1, " quito.)^";
-				2:	"(Primero te ", (lo) x1, " quitas.)^";
-				3:	"(Primero se ", (lo) x1, " quita.)^";
-				4:	"(Primero me ", (lo) x1, " quité.)^";
-				5:	"(Primero te ", (lo) x1, " quitaste.)^";
-				6:	"(Primero se ", (lo) x1, " quitó.)^";
-				7:	"(Primero me ", (lo) x1, " quitaré.)^";
-				8:	"(Primero te ", (lo) x1, " quitarás.)^";
-				9:	"(Primero se ", (lo) x1, " quitará.)^";
+				" destreza.";
+			5:	"(Primero ", (n_me) player, " ", (lo) x1, "quit",
+				(n_o_) player, ").^"
 				}
-			6:	switch (_grammatical_inflection) {
-					1,2,3:	print "No queda";
-					4,5,6:	print "No quedaba";
-					7,8,9:	print "No quedará";
+			6:	print "No ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "queda";
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "quedaba";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "quedará";
 				}
 				" sitio en ", (the) x1, " para poner nada más.";
 			7:	"Hecho.";
-			8:	switch (_grammatical_inflection) {
-					1:	print "Coloco ";
-					2:	print "Colocas ";
-					3:	print "Coloca ";
-					4:	print "Coloqué ";
-					5:	print "Colocaste ";
-					6:	print "Colocó ";
-					7:	print "Colocaré ";
-					8:	print "Colocarás ";
-					9:	print "Colocará ";
-				}
-				print_ret (the) x1, " sobre ", (the) second, ".";
+			8:	if ((_grammatical_inflection == FIRST_PERSON_PAST)
+			 		&& (~~IsPluralNoun(player))) print "Coloqué";
+				else print "Coloc", (n_o_) player;
+				" ", (the) x1, " sobre ", (the) second, ".";
 		}
 
 	Quit:
@@ -4342,33 +4555,83 @@ Verb	meta 'gramatica' 'grammar'
 		!! "PERDONA" o cosas similares.
 		"[Oh, no es necesario que te disculpes].";
 
-	! TODO - flexiones de género/número
 	Squeeze:
 		!!	1:	Tratar de retorcer un ser animado.
 		!!	2:	Cualquier otro objeto.
 		switch (n) {
 			1:	switch (_grammatical_inflection) {
-					1:	"No creo que deba.";
-					2:	"En realidad no crees que debas.";
-					3:	"No cree que deba.";
-					4:	"No se me hubiese ocurrido hacer algo así.";
-					5:	"No se te hubiese ocurrido hacer algo así.";
-					6:	"No se le hubiese ocurrido hacer algo así.";
-					7:	"No se me ocurrirá hacer algo así.";
-					8:	"No se te ocurrirá hacer algo así.";
-					9:	"No se le ocurrirá hacer algo así.";
+					FIRST_PERSON_PRESENT:
+						print "No ";
+						if (IsPluralNoun(player)) "creemos que debamos.";
+						else "creo que deba";
+					SECOND_PERSON_PRESENT:
+						print "En realidad no ";
+						if (IsPluralNoun(player)) "creéis que debáis.";
+						else "crees que debas.";
+					THIRD_PERSON_PRESENT:
+						print "En realidad no ";
+						if (IsPluralNoun(player)) "creen que deban.";
+						else "cree que deba.";
+					FIRST_PERSON_PAST:
+						print "No ";
+						if (IsPluralNoun(player))
+							print "se nos hubiese ocurrido";
+						else print "se me hubiese ocurrido";
+					SECOND_PERSON_PAST:
+						print "En realidad no ";
+						if (IsPluralNoun(player))
+							print "se os hubiese ocurrido";
+						else print "se te hubiese ocurrido";
+					THIRD_PERSON_PAST:
+						print "En realidad no ";
+						if (IsPluralNoun(player))
+							print "se les hubiese ocurrido";
+						else print "se le hubiese ocurrido";
+					FIRST_PERSON_FUTURE:
+						print "No ";
+						if (IsPluralNoun(player)) print "se nos ocurrirá";
+						else print "se me ocurrirá";
+					SECOND_PERSON_FUTURE:
+						print "En realidad no ";
+						if (IsPluralNoun(player)) print "se os ocurrirá";
+						else print "se te ocurrirá";
+					THIRD_PERSON_FUTURE:
+						print "En realidad no ";
+						if (IsPluralNoun(player)) print "se les ocurrirá";
+						else print "se le ocurrirá";
 				}
-			2:	switch (_grammatical_inflection) {
-					1:	"No consigo nada haciendo eso.";
-					2:	"No consigues nada haciendo eso.";
-					3:	"No consigue nada haciendo eso.";
-					4:	"No conseguí nada haciendo eso.";
-					5:	"No conseguiste nada haciendo eso.";
-					6:	"No consiguió nada haciendo eso.";
-					7:	"No conseguiré nada haciendo eso.";
-					8:	"No conseguirás nada haciendo eso.";
-					9:	"No conseguirá nada haciendo eso.";
+				" hacer algo así.";
+			2:	print "No ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "conseguimos";
+						else print "consigo";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "conseguís";
+						else print "consigues";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "consiguen";
+						else print "consigue";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "conseguimos";
+						else print "conseguí";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print "conseguisteis";
+						else print "conseguiste";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print "consiguieron";
+						else print "consiguió";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "conseguiremos";
+						else print "conseguiré";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "conseguiréis";
+						else print "conseguirás";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "conseguirán";
+						else print "conseguirá";
 				}
+				" nada haciendo eso.";
 		}
 
 	Strong:
@@ -4462,12 +4725,9 @@ Verb	meta 'gramatica' 'grammar'
 						print "estará", (n) x1;
 				}
 				" apagad", (o) x1, ".";
-			3:	if (_grammatical_inflection == FIRST_PERSON_PAST) {
-					if (IsPluralNoun(player)) print "Apagamos";
-					else print "Apagué";
-					" ", (the) x1, ".";
-				}
-				"Apag", (n_o) player, " ", (the) x1, ".";
+			3:	if (_grammatical_inflection == FIRST_PERSON_PAST
+					&& ~~IsPluralNoun(player)) "Apagué ", (the) x1, ".";
+				"Apag", (n_o_) player, " ", (the) x1, ".";
 		}
 
 	SwitchOn:
@@ -4543,7 +4803,6 @@ Verb	meta 'gramatica' 'grammar'
 				" ", (the) x1, ".";
 		}
 
-	! TODO - flexiones de género/número
 	Take:
 		!! Hay 13 casos diferentes. Se trata de 1 mensaje de éxito y 11
 		!! mensajes de error y un aviso:
@@ -4576,61 +4835,53 @@ Verb	meta 'gramatica' 'grammar'
 			1:	if (dialecto_sudamericano) print "Tomad";
 				else print "Cogid";
 				"", (o) noun, ".";
-			2:	switch (_grammatical_inflection) {
-					1:	"Siempre me tengo a mí mism", (o) player, ".";
-					2:	"Siempre te tienes a tí mism", (o) player, ".";
-					3:	"Siempre se tiene a sí mism", (o) player, ".";
-					4:	"Siempre me he tenido a mí mism", (o) player, ".";
-					5:	"Siempre te has tenido a tí mism", (o) player, ".";
-					6:	"Siempre se ha tenido a sí mism", (o) player, ".";
-					7:	"Siempre me tendré a mí mism", (o) player, ".";
-					8:	"Siempre te tendrás a tí mism", (o) player, ".";
-					9:	"Siempre se tendrá a sí mism", (o) player, ".";
-				}
+			2:	"Siempre ", (n_me) player, " ", (n_tengo) player, " a ",
+				(string) YOURSELF__TX, ".";
 			3:	switch (_grammatical_inflection) {
-				1:	"No creo que ", (al_) x1, " le", (s) x1, " gustara.";
-				2:	"No crees que ", (al_) x1, " le", (s) x1, " gustara.";
-				3:	"No cree que ", (al_) x1, " le", (s) x1, " gustara.";
-				4:	"No creía que ", (al_) x1, " le", (s) x1, " hubiese
-					gustado.";
-				5:	"No creías que ", (al_) x1, " le", (s) x1, " hubiese
-					gustado.";
-				6:	"No creía que ", (al_) x1, " le", (s) x1, " hubiese
-					gustado.";
-				7:	"No lo creeré buena idea.";
-				8:	"No lo creerás buena idea.";
-				9:	"No lo creerá buena idea.";
-
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "No creemos";
+						else print "No creo";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					SECOND_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creéis";
+						else print "crees";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					THIRD_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creen";
+						else print "cree";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "No creíamos";
+						else print "No creía";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					SECOND_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creíais";
+						else print "creías";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					THIRD_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creían";
+						else print "creía";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creeremos";
+						else print "No lo creeré";
+						" buena idea.";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creeréis";
+						else print "No lo creerás";
+						" buena idea.";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creerán";
+						else print "No lo creerá";
+						" buena idea.";
 				}
-			4:	switch (_grammatical_inflection) {
-					1:	print "Tengo que ";
-						if (x1 has supporter) print "bajarme ";
-						else print "salir ";
-					2:	print "Tienes que ";
-						if (x1 has supporter) print "bajarte ";
-						else print "salir ";
-					3:	print "Tiene que ";
-						if (x1 has supporter) print "bajarse ";
-						else print "salir ";
-					4:	print "Tenía que ";
-						if (x1 has supporter) print "bajarme ";
-						else print "salir ";
-					5:	print "Tenías que ";
-						if (x1 has supporter) print "bajarte ";
-						else print "salir ";
-					6:	print "Tenía que ";
-						if (x1 has supporter) print "bajarse ";
-						else print "salir ";
-					7:	print "Tendré que ";
-						if (x1 has supporter) print "bajarme ";
-						else print "salir ";
-					8:	print "Tendrás que ";
-						if (x1 has supporter) print "bajarte ";
-						else print "salir ";
-					9:	print "Tendrá que ";
-						if (x1 has supporter) print "bajarse ";
-						else print "salir ";
-				}
+			4:	print (n_ttengo) player, " que ";
+				if (x1 has supporter) print "bajar", (n_me) player;
+				else print "salir";
 				"", (del_) x1, " antes.";
 			5:	"Ya ", (n_tengo) player, " ", (the) x1, ".";
 			6:	switch (_grammatical_inflection) {
@@ -4694,16 +4945,38 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, " no estará", (n) x1;
 				}
 				" abiert", (o) x1, ".";
-			10:	switch (_grammatical_inflection) {
-					1:	"Difícilmente podría llevarme eso.";
-					2:	"Difícilmente podrías llevarte eso.";
-					3:	"Difícilmente podría llevarse eso.";
-					4:	"Difícilmente hubiese podido llevarme eso.";
-					5:	"Difícilmente hubieses podido llevarte eso.";
-					6:	"Difícilmente hubiese podido llevarse eso.";
-					7:	"Difícilmente podré llevarme eso.";
-					8:	"Difícilmente podrás llevarte eso.";
-					9:	"Difícilmente podrá llevarse eso.";
+			10:	print "Difícilmente ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) "podríamos llevarnos eso.";
+						"podría llevarme eso.";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) "podríais llevaros eso.";
+						"podrías llevarte eso.";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) "podrían llevarse eso.";
+						"podría llevarse eso.";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player))
+							"hubiésemos podido llevarnos aquello.";
+						"hubiese podido llevarme aquello.";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player))
+							"hubiéseis podido llevaros aquello.";
+						"hubieses podido llevarte aquello.";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player))
+							"hubiesen podido llevarse aquello.";
+						"hubiese podido llevarse aquello.";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) "podremos llevarnos eso.";
+						"podré llevarme eso.";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) "podréis llevaros eso.";
+						"podrás llevarte eso.";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) "podrán llevarse eso.";
+						"podrá llevarse eso.";
 				}
 			11:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -4722,50 +4995,56 @@ Verb	meta 'gramatica' 'grammar'
 				" fij", (o) x1, " en el sitio.";
 			12:	"Ya ", (n_tengo) player, " las manos ocupadas con demasiadas
 				cosas.";
-			!! -- "(colocas ", (the) x1, " en ", (the) SACK_OBJECT,
-			!! -- " para hacer sitio)"
-			13:	switch (_grammatical_inflection) {
-					1:	print "(Primero meto ";
-					2:	print "(Primero metes ";
-					3:	print "(Primero mete ";
-					4:	print "(Primero metí ";
-					5:	print "(Primero metiste ";
-					6:	print "(Primero metió ";
-					7:	print "(Primero meteré ";
-					8:	print "(Primero meterás ";
-					9:	print "(Primero meterá ";
-				}
-				"", (the) x1, " en ", (the) SACK_OBJECT, " para hacer sitio).";
+			13:	print "(Primero ";
+				if (_grammatical_inflection == FIRST_PERSON_PAST
+					&& ~~IsPluralNoun(player)) print "coloqué";
+				else print "coloc", (n_o_) player;
+				" ", (the) x1, " en ", (the) SACK_OBJECT, " para hacer sitio).";
 		}
 
 	Taste:
-		"No sabore", (n_o) player, " nada inesperado.";
+		"No sabore", (n_o_) player, " nada inesperado.";
 
-	! TODO - flexiones de género/número
 	Tell:
 		!!	1:	El usuario habla consigo mismo.
 		!!	2:	Hablar con cualquier otro ser animado.
 		!! [Nota: Hablar con un objeto inanimado no está permitido por el
 		!! parser, que da un error y no llega a generar la acción.]
-		!! [Los errores de parser se tratan en la sección "Miscelanea" de
+		!! [Los errores de parser se tratan en la sección "Miscelánea" de
 		!! esta rutina, al final.]
 		switch (n) {
-			1:	switch (_grammatical_inflection) {
-				1:	"Hablo sol", (o) player, " durante un rato.";
-				2:	"Hablas sol", (o) player, " durante un rato.";
-				3:	"Habla sol", (o) player, " durante un rato.";
-				4:	"Hablé sol", (o) player, " durante un rato.";
-				5:	"Hablaste sol", (o) player, " durante un rato.";
-				6:	"Habló sol", (o) player, " durante un rato.";
+			1:	"Habl", (n_o_) player, " sol", (o) player, " durante un rato.";
+			2:	print "No ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "hemos provocado";
+						else print "he provocado";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "habéis provocado";
+						else print "has provocado";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "han provocado";
+						else print "ha provocado";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "provocamos";
+						else print "provoqué";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print "provocasteis";
+						else print "provocaste";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print "provocaron";
+						else print "provocó";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "provocaremos";
+						else print "provocaré";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "provocaréis";
+						else print "provocarás";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "provocarán";
+						else print "provocará";
 				}
-			2:	switch (_grammatical_inflection) {
-				1:	"No he provocado ninguna reacción.";
-				2:	"No has provocado ninguna reacción.";
-				3:	"No ha provocado ninguna reacción.";
-				4:	"No provoqué ninguna reacción.";
-				5:	"No provocaste ninguna reacción.";
-				6:	"No provocó ninguna reacción.";
-				}
+				" ninguna reacción.";
 		}
 
 	Think:
@@ -4791,59 +5070,99 @@ Verb	meta 'gramatica' 'grammar'
 						print "servirá";
 				}
 				" de nada.";
-			2:	"En el último momento ", (n_me) player, " ech", (n_o) player,
+			2:	"En el último momento ", (n_me) player, " ech", (n_o_) player,
 				" atrás.";
 		}
 
 !!	Tie: see JumpOver
 
-	! TODO - flexiones de género/número
 	Touch:
 		!!	1:	Si se intenta tocar a un ser animado.
 		!!	2:	Tocar un objeto normal del juego.
-		!!	3: Tocarse a si mismo.
+		!!	3:	Tocarse a si mismo.
 		switch (n) {
-			!! "¡Las manos quietas!";
 			1:	switch (_grammatical_inflection) {
-					1:	"No creo que deba.";
-					2:	"En realidad no crees que debas.";
-					3:	"No cree que deba.";
-					4:	"No creía que debiese hacer algo así.";
-					5:	"En realidad no creías que debieses hacer algo así.";
-					6:	"No creía que debiese hacer algo así.";
-					7:	"No creeré que deba hacerlo.";
-					8:	"No creerás que debas hacerlo.";
-					9:	"No creerá que deba hacerlo.";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "No creemos";
+						else print "No creo";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					SECOND_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creéis";
+						else print "crees";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					THIRD_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creen";
+						else print "cree";
+						" que ", (al_) x1, " le", (s) x1, " gustara.";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "No creíamos";
+						else print "No creía";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					SECOND_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creíais";
+						else print "creías";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					THIRD_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creían";
+						else print "creía";
+						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creeremos";
+						else print "No lo creeré";
+						" buena idea.";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creeréis";
+						else print "No lo creerás";
+						" buena idea.";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print "No lo creerán";
+						else print "No lo creerá";
+						" buena idea.";
 				}
-			2:	switch (_grammatical_inflection) {
-					1:	"No noto nada extraño al tacto.";
-					2:	"No notas nada extraño al tacto.";
-					3:	"No nota nada extraño al tacto.";
-					4:	"No noté nada extraño al tacto.";
-					5:	"No notaste nada extraño al tacto.";
-					6:	"No notó nada extraño al tacto.";
-					7:	"No notaré nada extraño al tacto.";
-					8:	"No notarás nada extraño al tacto.";
-					9:	"No notará nada extraño al tacto.";
-				}
-			!! "Si crees que eso servirá de algo...";
+			2:	"No not", (n_o_) player, " nada extraño al tacto.";
 			3:	switch (_grammatical_inflection) {
-				1:	"No creo que eso sirva de nada.";
-				2:	"En realidad no crees que eso sirva de nada.";
-				3:	"No cree que eso sirva de nada.";
-				4:	"No creía que algo así hubiese servido de nada.";
-				5:	"En realidad no creías que algo así hubiese servido de
-					nada.";
-				6:	"No creía que algo así hubiese servido de nada.";
-				7:	"No creeré que eso sirva de nada.";
-				8:	"No creerás que eso sirva de nada.";
-				9:	"No creerá que eso sirva de nada.";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print "No creemos";
+						else print "No creo";
+						" que eso sirva de nada.";
+					SECOND_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creéis";
+						else print "crees";
+						" que eso sirva de nada.";
+					THIRD_PERSON_PRESENT:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creen";
+						else print "cree";
+						" que eso sirva de nada.";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print "No creíamos";
+						else print "No creía";
+						" que algo así hubiese servido de nada.";
+					SECOND_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creíais";
+						else print "creías";
+						" que algo así hubiese servido de nada.";
+					THIRD_PERSON_PAST:
+						print "En realidad no";
+						if (IsPluralNoun(player)) print "creían";
+						else print "creía";
+						" que algo así hubiese servido de nada.";
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						"No será un buen momento para andar tocándo",
+						(n_me) player, ".";
 				}
-    }
+    	}
 
 !!	Turn:	see Pull
 
-	! TODO - flexiones de género/número
 	Unlock:
 		!! Unlock se genera ante ABRE <objeto> CON <objeto2>, o también
 		!! ante QUITA CERROJO A <objeto> (en este segundo caso no se
@@ -4859,54 +5178,58 @@ Verb	meta 'gramatica' 'grammar'
 		!!	4:	Éxito. El <objeto> se abre (con <objeto2> si éste ha sido
 		!!		especificado, el cual podemos encontrarlo en la variable "otro".
 		switch (n) {
-			1:	switch (_grammatical_inflection) {
-					1,2,3:	print "No parece", (n) x1;
-					4,5,6:	print "No parecía", (n) x1;
-					7,8,9:	print "No parecerá", (n) x1;
+			1:	print "No ";
+				switch (_grammatical_inflection) {
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print "parece", (n) x1;
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print "parecía", (n) x1;
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print "parecerá", (n) x1;
 				}
 				" tener ningún tipo de cerrojo.";
 			2:	switch (_grammatical_inflection) {
-					1,2,3:	print (The) x1, " ya tenía", (n) x1;
-					4,5,6:	print (The) x1, " ya tenía", (n) x1;
-					7,8,9:	print (The) x1, " ya tendrá", (n) x1;
+					FIRST_PERSON_PRESENT,
+					SECOND_PERSON_PRESENT,
+					THIRD_PERSON_PRESENT:
+						print (The) x1, " ya tenía", (n) x1;
+					FIRST_PERSON_PAST,
+					SECOND_PERSON_PAST,
+					THIRD_PERSON_PAST:
+						print (The) x1, " ya tenía", (n) x1;
+					FIRST_PERSON_FUTURE,
+					SECOND_PERSON_FUTURE,
+					THIRD_PERSON_FUTURE:
+						print (The) x1, " ya tendrá", (n) x1;
 				}
 				" abierto el cerrojo.";
-			3:	if (second) switch (_grammatical_inflection) {
-					1,2,3:	"No parece", (n) x1, " encajar en la cerradura.";
-					4,5,6:	"No parecía", (n) x1, " encajar en la cerradura.";
-					7,8,9:	"No parecerá", (n) x1, " encajar en la cerradura.";
-				}
-				else switch (_grammatical_inflection) {
-					1:	"Necesito algún tipo de llave.";
-					2:	"Necesitas algún tipo de llave.";
-					3:	"Necesita algún tipo de llave.";
-					4:	"Necesitaba algún tipo de llave.";
-					5:	"Necesitabas algún tipo de llave.";
-					6:	"Necesitaba algún tipo de llave.";
-					7:	"Necesitaré algún tipo de llave.";
-					8:	"Necesitarás algún tipo de llave.";
-					9:	"Necesitará algún tipo de llave.";
-				}
-			4:	switch (_grammatical_inflection) {
-				1:	if (~~second) "Quito el cerrojo ", (al_) x1, ".";
-					"Quito el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				2:	if (~~second) "Quitas el cerrojo ", (al_) x1, ".";
-					"Quitas el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				3:	if (~~second) "Quita el cerrojo ", (al_) second, ".";
-					"Quita el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				4:	if (~~second) "Quité el cerrojo ", (al_) x1, ".";
-					"Quité el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				5:	if (~~second) "Quitaste el cerrojo ", (al_) x1, ".";
-					"Quitaste el cerrojo ",(al_) x1," con ", (the) second, ".";
-				6:	if (~~second) "Quitó el cerrojo ", (al_) x1, ".";
-					"Quitó el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				7:	if (~~second) "Quitaré el cerrojo ", (al_) x1, ".";
-					"Quitaré el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				8:	if (~~second) "Quitarás el cerrojo ", (al_) x1, ".";
-					"Quitarás el cerrojo ", (al_) x1, " con ", (the) second,".";
-				9:	if (~~second) "Quitará el cerrojo ", (al_) x1, ".";
-					"Quitará el cerrojo ", (al_) x1, " con ", (the) second, ".";
-				}
+			3:	if (second) {
+					print "No ";
+					switch (_grammatical_inflection) {
+						FIRST_PERSON_PRESENT,
+						SECOND_PERSON_PRESENT,
+						THIRD_PERSON_PRESENT:
+							print "parece", (n) x1;
+						FIRST_PERSON_PAST,
+						SECOND_PERSON_PAST,
+						THIRD_PERSON_PAST:
+							print "parecía", (n) x1;
+						FIRST_PERSON_FUTURE,
+						SECOND_PERSON_FUTURE,
+						THIRD_PERSON_FUTURE:
+							print "parecerá", (n) x1;
+					}
+					" encajar en la cerradura.";
+				} else "Necesit", (n_o) player, " algún tipo de llave.";
+			4:	print "Quit", (n_o_) player, " el cerrojo ", (al_) x1;
+				if (second) " con ", (the) second, ".";
+				".";
 		}
 
 	VagueGo:
