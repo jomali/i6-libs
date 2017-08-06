@@ -47,13 +47,15 @@
 !!	incluyendo la posibilidad de modificar en tiempo de ejecución tanto el
 !!	tiempo verbal (presente, pasado, futuro) y la persona (primera, segunda,
 !!	tercera), como el género (masculino, femenino) el número (singular,
-!!	plural). Los mensajes están basados en gran medida en los de 'Spanish.h'.
+!!	plural) ---estos últimos, en función de la definición del objeto 'player'
+!!	controlado por el usuario---. Los mensajes están basados en gran medida en
+!!	los de 'Spanish.h'.
 !!
 !!
 !!	# UTILIZACIÓN
 !!
-!!	A continuación se detallan los pasos que deben seguirse para usar la
-!!	librería.
+!!	A continuación se detallan los pasos que deben seguirse para instalar la
+!!	extensión:
 !!
 !!	1)	Declarar la constante SIN_MENSAJES para omitir los mensajes por defecto
 !!		de la librería Inform (antes de incluir librerías y extensiones):
@@ -72,6 +74,13 @@
 !!		plurar; masculino y femenino--- en función, en parte, de los atributos
 !!		del personaje controlado por el usuario. Así, al cambiar de personaje,
 !!		se hace necesario actualizar el estado de la librería Inform.
+!!
+!!	Una vez instalada, se puede modificar la flexión gramatical utilizada en
+!!	los mensajes por defecto invocando a la rutina
+!!	'SetGrammaticalInflection()'. Por ejemplo, para pasar a utilizar un
+!!	narrador en pasado y tercera persona:
+!!
+!!		SetGrammaticalInflection(THIRD_PERSON_PAST);
 !!
 !!------------------------------------------------------------------------------
 System_file;
@@ -99,6 +108,13 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !!------------------------------------------------------------------------------
 
 
+!!==============================================================================
+!! Imprime la construcción correcta (en forma amalgamada o no) formada por la
+!! preposición 'con' y el pronombre o segmento pronominal que se corresponda
+!! con la flexión gramatical del narrador y el objeto pasado como parámetro.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
 [ n_conmigo obj;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT,
@@ -176,6 +192,13 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 ];
 [ n_oy_ obj; return n_oy(obj, true); ];
 
+
+!!==============================================================================
+!! Imprime el pronombre personal átono que se corresponde con el objeto pasado
+!! como parámetro.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
 [ n_me obj;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT,
