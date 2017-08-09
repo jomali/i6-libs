@@ -109,13 +109,84 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 
 !!==============================================================================
+!! Imprime la terminación correcta de los verbos de primera conjugación para la
+!! inflexión gramatical del narrador y el objeto pasado como parámetro. Por
+!! defecto utiliza el pretérito imperfecto para imprimir las inflexiones en
+!! pasado; a menos que se invoque con el parámetro 'pastSimple' activado, en
+!! cuyo caso se utiliza el pretérito perfecto simple.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Si se invoca con él activado
+!!		(==true) utiliza el pretérito perfecto simple para imprimir las
+!!		flexiones del verbo en pasado. En caso contrario, se utiliza el
+!!		pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_as obj pastSimple;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "amos";
+			else print "o";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "áis";
+			else print "as";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "an";
+			else print "a";
+		FIRST_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "amos";
+				else print "é";
+			} else {
+				if (IsPluralNoun(obj)) print "ábamos";
+				else print "aba";
+			}
+		SECOND_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "asteis";
+				else print "aste";
+			} else {
+				if (IsPluralNoun(obj)) print "abais";
+				else print "abas";
+			}
+		THIRD_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "aron";
+				else print "ó";
+			} else {
+				if (IsPluralNoun(obj)) print "aban";
+				else print "aba";
+			}
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "aremos";
+			else print "aré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "aréis";
+			else print "arás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "arán";
+			else print "ará";
+	}
+];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_as()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_as_ obj; return lm_as(obj, true); ];
+
+
+!!==============================================================================
 !! Imprime la construcción correcta (en forma amalgamada o no) formada por la
 !! preposición 'con' y el pronombre o segmento pronominal que se corresponda
 !! con la flexión gramatical del narrador y el objeto pasado como parámetro.
 !!
 !!	@param {Object} obj
 !!------------------------------------------------------------------------------
-[ n_conmigo obj;
+[ lm_contigo obj;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT,
 		FIRST_PERSON_PAST,
@@ -144,7 +215,149 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 	}
 ];
 
-[ n_oy obj flag;
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'ser'.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_eres obj pastSimple;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "somos";
+			else print "soy";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "sois";
+			else print "eres";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "son";
+			else print "es";
+		FIRST_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "fuimos";
+				else print "fui";
+			} else {
+				if (IsPluralNoun(obj)) print "éramos";
+				else print "era";
+			}
+		SECOND_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "fuisteis";
+				else print "fuiste";
+			} else {
+				if (IsPluralNoun(obj)) print "érais";
+				else print "eras";
+			}
+		THIRD_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "fueron";
+				else print "fue";
+			} else {
+				if (IsPluralNoun(obj)) print "eran";
+				else print "era";
+			}
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "seremos";
+			else print "seré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "seréis";
+			else print "serás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "serán";
+			else print "será";
+	}
+];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_eres()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_eres_ obj; return lm_eres(obj, true); ];
+
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'ser', usando mayúsculas para la
+!! primera letra.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_eeres obj pastSimple;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Somos";
+			else print "Soy";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Sois";
+			else print "Eres";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Son";
+			else print "Es";
+		FIRST_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Fuimos";
+				else print "Fui";
+			} else {
+				if (IsPluralNoun(obj)) print "Éramos";
+				else print "Era";
+			}
+		SECOND_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Fuisteis";
+				else print "Fuiste";
+			} else {
+				if (IsPluralNoun(obj)) print "Érais";
+				else print "Eras";
+			}
+		THIRD_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Fueron";
+				else print "Fue";
+			} else {
+				if (IsPluralNoun(obj)) print "Eran";
+				else print "Era";
+			}
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Seremos";
+			else print "Seré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Seréis";
+			else print "Serás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Serán";
+			else print "Será";
+	}
+];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_eeres()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_eeres_ obj; return lm_eeres(obj, true); ];
+
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'estar'.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_estas obj pastSimple;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "amos";
@@ -156,7 +369,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			if (IsPluralNoun(obj)) print "án";
 			else print "á";
 		FIRST_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "uvimos";
 				else print "uve";
 			} else {
@@ -164,7 +377,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "aba";
 			}
 		SECOND_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "uvisteis";
 				else print "uviste";
 			} else {
@@ -172,7 +385,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "abas";
 			}
 		THIRD_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "uvieron";
 				else print "uvo";
 			} else {
@@ -190,7 +403,149 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "ará";
 	}
 ];
-[ n_oy_ obj; return n_oy(obj, true); ];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_estas()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_estas_ obj; return lm_estas(obj, true); ];
+
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'poder'.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_puedes obj pastSimple;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "podemos";
+			else print "puedo";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "podéis";
+			else print "puedes";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "pueden";
+			else print "puede";
+		FIRST_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "pudimos";
+				else print "pude";
+			} else {
+				if (IsPluralNoun(obj)) print "podíamos";
+				else print "podía";
+			}
+		SECOND_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "pudisteis";
+				else print "pudimos";
+			} else {
+				if (IsPluralNoun(obj)) print "podíais";
+				else print "podías";
+			}
+		THIRD_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "pudieron";
+				else print "pudo";
+			} else {
+				if (IsPluralNoun(obj)) print "podían";
+				else print "podía";
+			}
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "podremos";
+			else print "podré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "podréis";
+			else print "podrás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "podrán";
+			else print "podrá";
+	}
+];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_puedes()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_puedes_ obj; return lm_puedes(obj, true); ];
+
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'poder', usando mayúsculas para
+!! la primera letra.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_ppuedes obj pastSimple;
+	switch (_grammatical_inflection) {
+		FIRST_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Podemos";
+			else print "Puedo";
+		SECOND_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Podéis";
+			else print "Puedes";
+		THIRD_PERSON_PRESENT:
+			if (IsPluralNoun(obj)) print "Pueden";
+			else print "Puede";
+		FIRST_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Pudimos";
+				else print "Pude";
+			} else {
+				if (IsPluralNoun(obj)) print "Podíamos";
+				else print "Podía";
+			}
+		SECOND_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Pudisteis";
+				else print "Pudimos";
+			} else {
+				if (IsPluralNoun(obj)) print "Podíais";
+				else print "Podías";
+			}
+		THIRD_PERSON_PAST:
+			if (pastSimple) {
+				if (IsPluralNoun(obj)) print "Pudieron";
+				else print "Pudo";
+			} else {
+				if (IsPluralNoun(obj)) print "Podían";
+				else print "Podía";
+			}
+		FIRST_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Podremos";
+			else print "Podré";
+		SECOND_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Podréis";
+			else print "Podrás";
+		THIRD_PERSON_FUTURE:
+			if (IsPluralNoun(obj)) print "Podrán";
+			else print "Podrá";
+	}
+];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_ppuedes()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_ppuedes_ obj; return lm_ppuedes(obj, true); ];
 
 
 !!==============================================================================
@@ -199,7 +554,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 !!
 !!	@param {Object} obj
 !!------------------------------------------------------------------------------
-[ n_me obj;
+[ lm_te obj;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT,
 		FIRST_PERSON_PAST,
@@ -218,247 +573,16 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 	}
 ];
 
-[ n_o obj flag;
-	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "amos";
-			else print "o";
-		SECOND_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "áis";
-			else print "as";
-		THIRD_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "an";
-			else print "a";
-		FIRST_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "amos";
-				else print "é";
-			} else {
-				if (IsPluralNoun(obj)) print "ábamos";
-				else print "aba";
-			}
-		SECOND_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "asteis";
-				else print "aste";
-			} else {
-				if (IsPluralNoun(obj)) print "abais";
-				else print "abas";
-			}
-		THIRD_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "aron";
-				else print "ó";
-			} else {
-				if (IsPluralNoun(obj)) print "aban";
-				else print "aba";
-			}
-		FIRST_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "aremos";
-			else print "aré";
-		SECOND_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "aréis";
-			else print "arás";
-		THIRD_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "arán";
-			else print "ará";
-	}
-];
-[ n_o_ obj; return n_o(obj, true); ];
 
-[ n_puedo obj flag;
-	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "podemos";
-			else print "puedo";
-		SECOND_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "podéis";
-			else print "puedes";
-		THIRD_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "pueden";
-			else print "puede";
-		FIRST_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "pudimos";
-				else print "pude";
-			} else {
-				if (IsPluralNoun(obj)) print "podíamos";
-				else print "podía";
-			}
-		SECOND_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "pudisteis";
-				else print "pudimos";
-			} else {
-				if (IsPluralNoun(obj)) print "podíais";
-				else print "podías";
-			}
-		THIRD_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "pudieron";
-				else print "pudo";
-			} else {
-				if (IsPluralNoun(obj)) print "podían";
-				else print "podía";
-			}
-		FIRST_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "podremos";
-			else print "podré";
-		SECOND_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "podréis";
-			else print "podrás";
-		THIRD_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "podrán";
-			else print "podrá";
-	}
-];
-[ n_puedo_ obj; return n_puedo(obj, true); ];
-
-[ n_ppuedo obj flag;
-	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Podemos";
-			else print "Puedo";
-		SECOND_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Podéis";
-			else print "Puedes";
-		THIRD_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Pueden";
-			else print "Puede";
-		FIRST_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Pudimos";
-				else print "Pude";
-			} else {
-				if (IsPluralNoun(obj)) print "Podíamos";
-				else print "Podía";
-			}
-		SECOND_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Pudisteis";
-				else print "Pudimos";
-			} else {
-				if (IsPluralNoun(obj)) print "Podíais";
-				else print "Podías";
-			}
-		THIRD_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Pudieron";
-				else print "Pudo";
-			} else {
-				if (IsPluralNoun(obj)) print "Podían";
-				else print "Podía";
-			}
-		FIRST_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Podremos";
-			else print "Podré";
-		SECOND_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Podréis";
-			else print "Podrás";
-		THIRD_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Podrán";
-			else print "Podrá";
-	}
-];
-[ n_ppuedo_ obj; return n_ppuedo(obj, true); ];
-
-[ n_soy obj flag;
-	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "somos";
-			else print "soy";
-		SECOND_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "sois";
-			else print "eres";
-		THIRD_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "son";
-			else print "es";
-		FIRST_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "fuimos";
-				else print "fui";
-			} else {
-				if (IsPluralNoun(obj)) print "éramos";
-				else print "era";
-			}
-		SECOND_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "fuisteis";
-				else print "fuiste";
-			} else {
-				if (IsPluralNoun(obj)) print "érais";
-				else print "eras";
-			}
-		THIRD_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "fueron";
-				else print "fue";
-			} else {
-				if (IsPluralNoun(obj)) print "eran";
-				else print "era";
-			}
-		FIRST_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "seremos";
-			else print "seré";
-		SECOND_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "seréis";
-			else print "serás";
-		THIRD_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "serán";
-			else print "será";
-	}
-];
-[ n_soy_ obj; return n_soy(obj, true); ];
-
-[ n_ssoy obj flag;
-	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Somos";
-			else print "Soy";
-		SECOND_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Sois";
-			else print "Eres";
-		THIRD_PERSON_PRESENT:
-			if (IsPluralNoun(obj)) print "Son";
-			else print "Es";
-		FIRST_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Fuimos";
-				else print "Fui";
-			} else {
-				if (IsPluralNoun(obj)) print "Éramos";
-				else print "Era";
-			}
-		SECOND_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Fuisteis";
-				else print "Fuiste";
-			} else {
-				if (IsPluralNoun(obj)) print "Érais";
-				else print "Eras";
-			}
-		THIRD_PERSON_PAST:
-			if (flag) {
-				if (IsPluralNoun(obj)) print "Fueron";
-				else print "Fue";
-			} else {
-				if (IsPluralNoun(obj)) print "Eran";
-				else print "Era";
-			}
-		FIRST_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Seremos";
-			else print "Seré";
-		SECOND_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Seréis";
-			else print "Serás";
-		THIRD_PERSON_FUTURE:
-			if (IsPluralNoun(obj)) print "Serán";
-			else print "Será";
-	}
-];
-[ n_ssoy_ obj; return n_ssoy(obj, true); ];
-
-[ n_tengo obj flag;
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'tener'.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_tienes obj pastSimple;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "tenemos";
@@ -470,7 +594,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			if (IsPluralNoun(obj)) print "tienen";
 			else print "tiene";
 		FIRST_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "tuvimos";
 				else print "tuve";
 			} else {
@@ -478,7 +602,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "tenía";
 			}
 		SECOND_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "tuvisteis";
 				else print "tuviste";
 			} else {
@@ -486,7 +610,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "tenías";
 			}
 		THIRD_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "tuvieron";
 				else print "tuvo";
 			} else {
@@ -504,9 +628,27 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "tendrá";
 	}
 ];
-[ n_tengo_ obj; return n_tengo(obj, true); ];
 
-[ n_ttengo obj flag;
+!!==============================================================================
+!! Invoca a la rutina 'lm_tienes()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_tienes_ obj; return lm_tienes(obj, true); ];
+
+
+!!==============================================================================
+!! Similar a la rutina 'lm_as()', con el verbo 'tener', usando mayúsculas para
+!! la primera letra.
+!!
+!!	@param {Object} obj
+!!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
+!!		pretérito perfecto simple en las flexiones en pasado. En caso contrario
+!!		se utiliza el pretérito imperfecto
+!!------------------------------------------------------------------------------
+[ lm_ttienes obj pastSimple;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			if (IsPluralNoun(obj)) print "Tenemos";
@@ -518,7 +660,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			if (IsPluralNoun(obj)) print "Tienen";
 			else print "Tiene";
 		FIRST_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "Tuvimos";
 				else print "Tuve";
 			} else {
@@ -526,7 +668,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "Tenía";
 			}
 		SECOND_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "Tuvisteis";
 				else print "Tuviste";
 			} else {
@@ -534,7 +676,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 				else print "Tenías";
 			}
 		THIRD_PERSON_PAST:
-			if (flag) {
+			if (pastSimple) {
 				if (IsPluralNoun(obj)) print "Tuvieron";
 				else print "Tuvo";
 			} else {
@@ -552,7 +694,17 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 			else print "Tendrá";
 	}
 ];
-[ n_ttengo_ obj; return n_ttengo(obj, true); ];
+
+
+!!==============================================================================
+!! Invoca a la rutina 'lm_ttienes()' con el parámetro opcional 'pastSimple'
+!! activado para imprimir las flexiones en pasado utilizando el pretérito
+!! perfecto simple.
+!!
+!!	@param {Object} obj
+!!------------------------------------------------------------------------------
+[ lm_ttienes_ obj; return lm_ttienes(obj, true); ];
+
 
 !!==============================================================================
 !! Intercambia el objeto controlado por el usuario por otro objeto dado.
@@ -1352,7 +1504,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	1:	Error. El protagonista no lleva el objeto puesto.
 		!!	2:	Mensaje cuando el protagonista se quita el objeto.
 		switch (n) {
-			1:	"No ", (lo) x1, " llev", (n_o) player, " puest", (o) x1, ".";
+			1:	"No ", (lo) x1, " llev", (lm_as) player, " puest", (o) x1, ".";
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "Nos quitamos";
@@ -1442,8 +1594,8 @@ Verb	meta 'gramatica' 'grammar'
 						else print "deberá";
 				}
 				" tener", (lo) x1, ".";
-			2:	"No ", (lo) x1, " ", (n_tengo) player, " ",
-				(n_conmigo) player, ".";
+			2:	"No ", (lo) x1, " ", (lm_tienes) player, " ",
+				(lm_contigo) player, ".";
 			3:	print "(Primero ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
@@ -1593,7 +1745,7 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, " ya estará", (n) x1;
 				}
 				" vací", (o) x1, ".";
-			4:	"No ", (n_puedo) player, " vaciar un objeto sobre sí mismo.";
+			4:	"No ", (lm_puedes) player, " vaciar un objeto sobre sí mismo.";
 		}
 
 	Enter:
@@ -1637,7 +1789,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!		al usuario en el objeto desde el cual pueda acceder al que el
 		!!		usuario le ha indicado.
 		switch (n) {
-			1:	print "Ya est", (n_oy) player, " ";
+			1:	print "Ya ", (lm_estas) player, " ";
 				if (x1 has supporter) print "sobre ";
 				else print "en ";
 				"", (the) x1, ".";
@@ -1680,7 +1832,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No será algo donde podrá";
 				}
 				LanguageVerb(verb_word); ".";
-			3:	print "No ", (n_puedo) player, " ";
+			3:	print "No ", (lm_puedes) player, " ";
 				LanguageVerb(verb_word);
 				print " en ", (the) x1, " porque ";
 				switch (_grammatical_inflection) {
@@ -2068,8 +2220,8 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "Estará";
 				}
-				" demasiado oscuro. No ", (n_puedo) player, " ver nada.";
-			2:	"No observ", (n_o_) player, "  nada especial en ",
+				" demasiado oscuro. No ", (lm_puedes) player, " ver nada.";
+			2:	"No observ", (lm_as_) player, "  nada especial en ",
 				(the) x1, ".";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2098,7 +2250,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	3:	Éxito, el usuario sale/baja del objeto
 		!!	4:	Error, más específico. [6/11]
 		switch (n) {
-			1:	print "No est", (n_oy) player, " en ningún sitio del que ";
+			1:	print "No ", (lm_estas) player, " en ningún sitio del que ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "debamos";
@@ -2126,7 +2278,8 @@ Verb	meta 'gramatica' 'grammar'
 				print " ";
 				LanguageVerb(verb_word);
 				".";
-			2:	print "No ", (n_puedo) player, " salir ", (del_) x1, " porque ";
+			2:	print "No ", (lm_puedes) player, " salir ", (del_) x1,
+				" porque ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -2217,14 +2370,14 @@ Verb	meta 'gramatica' 'grammar'
 						}
 				}
 				" ", (del_) x1, ".";
-			4:	print "No ", (n_puedo) player, ". No est", (n_oy) player, " ";
+			4:	print "No ", (lm_puedes) player, ". No ", (lm_estas) player," ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
 				" ", (del_) x1, ".";
 		}
 
 	Fill:
-		 "No ", (n_puedo) player, " llenar", (lo) x1, ".";
+		 "No ", (lm_puedes) player, " llenar", (lo) x1, ".";
 
 	FullScore:
 		!! Puntuación en modo "explicativo". Puede activarse porque el
@@ -2252,7 +2405,7 @@ Verb	meta 'gramatica' 'grammar'
 		!! objeto indicado, se genera el siguiente mensaje de error. Si está,
 		!! la librería generará una acción Salir, por lo que el mensaje de
 		!! éxito será el de Salir.
-		"No ", (n_puedo) player, ". No est", (n_oy) player, " en ",
+		"No ", (lm_puedes) player, ". No ", (lm_estas) player, " en ",
 		(the) x1, ".";
 
 	Give:
@@ -2266,8 +2419,8 @@ Verb	meta 'gramatica' 'grammar'
 		!! usuario. Si queremos que el PNJ lo acepte, hay que programarlo
 		!! como parte de su rutina Vida.]
 		switch (n) {
-			1:	"No ", (n_tengo) player, " ", (the) x1, ".";
-			2:	"Manose", (n_o_) player, " ", (the) x1, " durante unos
+			1:	"No ", (lm_tienes) player, " ", (the) x1, ".";
+			2:	"Manose", (lm_as_) player, " ", (the) x1, " durante unos
 				momentos, sin conseguir nada.";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2304,15 +2457,15 @@ Verb	meta 'gramatica' 'grammar'
 		!!		pero ésta no tiene una propiedad "door_to" (probablemente un
 		!!		error de programación del juego).
 		switch (n) {
-			1:	print (n_ttengo) player, " que ";
-				if (x1 has supporter) print "bajar", (n_me) player;
+			1:	print (lm_ttienes) player, " que ";
+				if (x1 has supporter) print "bajar", (lm_te) player;
 				else print "salir";
 				" ", (del_) x1, " antes.";
-			2:	"No ", (n_puedo) player, " ir por ahí.";
-			3:	"", (n_ssoy) player, " incapaz de trepar por ", (the) x1, ".";
-			4:	"", (n_ssoy) player, " incapaz de bajar por ", (the) x1, ".";
-			5:	"No ", (n_puedo) player, " pasar a través ", (del_) x1, ".";
-			6:	print "No ", (n_puedo) player, " ir porque ", (the) x1, " no ";
+			2:	"No ", (lm_puedes) player, " ir por ahí.";
+			3:	"", (lm_eeres) player, " incapaz de trepar por ", (the) x1, ".";
+			4:	"", (lm_eeres) player, " incapaz de bajar por ", (the) x1, ".";
+			5:	"No ", (lm_puedes) player, " pasar a través ", (del_) x1, ".";
+			6:	print "No ", (lm_puedes) player, " ir porque ", (the) x1," no ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -2505,11 +2658,11 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, " estará", (n) x1;
 				}
 				" cerrad", (o) x1, ".";
-			4:	"", (n_ttengo) player, " que quitár", (n_me) player, "",
+			4:	"", (lm_ttienes) player, " que quitár", (lm_te) player, "",
 				(lo) x1, " antes.";
-			5:	"No ", (n_puedo) player, " poner un objeto dentro de sí mismo.";
-			6:	"(Primero ", (n_me) player, "", (lo) x1, " quit",
-				(n_o_) player, ").^";
+			5:	"No ",(lm_puedes) player," poner un objeto dentro de sí mismo.";
+			6:	"(Primero ", (lm_te) player, "", (lo) x1, " quit",
+				(lm_as_) player, ").^";
 			7:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2565,14 +2718,14 @@ Verb	meta 'gramatica' 'grammar'
 		!!		generada por la librería
 		!!	3 y 4: [6/11]
 		switch (n) {
-			1:	print "No llev", (n_o) player, " nada.";
-			2:	print "LLev", (n_o) player;
+			1:	print "No llev", (lm_as) player, " nada.";
+			2:	print "LLev", (lm_as) player;
 			3:	print ":^";
 			4:	print ".^";
 		}
 
 	Jump:
-		"Salt", (n_o_) player, " en el sitio, sin ningún resultado.";
+		"Salt", (lm_as_) player, " en el sitio, sin ningún resultado.";
 
 	JumpOver, Tie:
 		print "No ";
@@ -2732,11 +2885,12 @@ Verb	meta 'gramatica' 'grammar'
 			!! deben llevar el cerrado de paréntesis al final, que lo añade la
 			!! propia librería. *** NO SE ACONSEJA CAMBIAR ESTOS ***
 
-			8:	print " (alumbrando y que llev", (n_o) player, " puest", (o) x1;
+			8:	print " (alumbrando y que llev", (lm_as) player,
+				" puest", (o) x1;
 			!! El objeto tiene "luz" y "puesto"
 			9:	print " (alumbrando";
 			!! El objeto tiene "luz" pero no "puesto"
-			10:	print " (que llev", (n_o) player, " puest", (o) x1;
+			10:	print " (que llev", (lm_as) player, " puest", (o) x1;
 			!! El objeto tiene "puesto" pero no "luz"
 			11:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2897,7 +3051,7 @@ Verb	meta 'gramatica' 'grammar'
 					}
 					" echado el cerrojo.";
 				}
-			3:	"Primero ", (n_tengo) player, " que cerrar ", (the) x1, ".";
+			3:	"Primero ", (lm_tienes) player, " que cerrar ", (the) x1, ".";
 			4:	if (second) switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -2912,7 +3066,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						"No parecerá", (n) x1, " encajar en la cerradura.";
 				}
-				"Necesit", (n_o) player, " algún tipo de llave.";
+				"Necesit", (lm_as) player, " algún tipo de llave.";
 			5:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (second) {
@@ -3066,14 +3220,14 @@ Verb	meta 'gramatica' 'grammar'
 				new_line;
 				if (x1~=location) {
 					if (x1 has supporter) print "Sobre "; else print "En ";
-					print (the) x1, " ", (n_puedo) player, " ver ";
-				} else print (n_ppuedo) player, " ver ";
+					print (the) x1, " ", (lm_puedes) player, " ver ";
+				} else print (lm_ppuedes) player, " ver ";
 				if (n==5) print "también ";
 				WriteListFrom(child(x1),
 					ENGLISH_BIT + WORKFLAG_BIT + RECURSE_BIT
 					+ PARTINV_BIT + TERSE_BIT + CONCEAL_BIT);
 				".";
-			7:	"No observ", (n_o_) player, " nada digno de mención al mirar
+			7:	"No observ", (lm_as_) player, " nada digno de mención al mirar
 				hacia ", (the) x1, ".";
 			8:	if (x1 has supporter) print " (sobre "; else print " (en ";
 				print (the) x1, ")";
@@ -3545,7 +3699,7 @@ Verb	meta 'gramatica' 'grammar'
 			1:	"Objetos que has manejado:^";
 			2:	"Ninguno.";
 			3:	print "   (puest", (o) x1, ")";
-			4:	print "   (", (n_conmigo) player, ")";
+			4:	print "   (", (lm_contigo) player, ")";
 			5:	print "   (dejad", (o) x1, " con alguien)";
 			6:	print "   (";
 				switch (_grammatical_inflection) {
@@ -3847,7 +4001,7 @@ Verb	meta 'gramatica' 'grammar'
 						print "Estará", (n) x1;
 				}
 				" firmemente sujet", (o) x1, ".";
-			2:	"No ", (n_soy_) player, " capaz.";
+			2:	"No ", (lm_eres_) player, " capaz.";
 			3:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -3944,7 +4098,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						"Eso no será una dirección.";
 				}
-			3:	"No ", (n_puedo) player, " empujar", (lo) x1, " en esa
+			3:	"No ", (lm_puedes) player, " empujar", (lo) x1, " en esa
 				dirección.";
 		}
 
@@ -4088,7 +4242,7 @@ Verb	meta 'gramatica' 'grammar'
 							" donde sea.";
 						}
 				}
-			2:	"No ", (n_puedo_) player, " poner un objeto sobre sí mismo.";
+			2:	"No ", (lm_puedes_) player, " poner un objeto sobre sí mismo.";
 			3:	print "Poner cosas sobre ", (the) x1, " no ";
 				switch (_grammatical_inflection) {
 						FIRST_PERSON_PRESENT,
@@ -4135,8 +4289,8 @@ Verb	meta 'gramatica' 'grammar'
 						else print "Le faltará";
 				}
 				" destreza.";
-			5:	"(Primero ", (n_me) player, " ", (lo) x1, "quit",
-				(n_o_) player, ").^";
+			5:	"(Primero ", (lm_te) player, " ", (lo) x1, "quit",
+				(lm_as_) player, ").^";
 			6:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -4156,7 +4310,7 @@ Verb	meta 'gramatica' 'grammar'
 			7:	"Hecho.";
 			8:	if ((_grammatical_inflection == FIRST_PERSON_PAST)
 			 		&& (~~IsPluralNoun(player))) print "Coloqué";
-				else print "Coloc", (n_o_) player;
+				else print "Coloc", (lm_as_) player;
 				" ", (the) x1, " sobre ", (the) second, ".";
 		}
 
@@ -4453,7 +4607,7 @@ Verb	meta 'gramatica' 'grammar'
 
 	Set:
 		!! Set sale ante la frase FIJA OBJETO o AJUSTA OBJETO
-		"No, no ", (n_puedo) player, ".";
+		"No, no ", (lm_puedes) player, ".";
 
 	SetTo:
 		!! SetTo sale ante la frase AJUSTA DIAL A 23 o FIJA CONTROL EN
@@ -4480,7 +4634,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!		respondido. En este caso x1 apunta al PNJ y no al objeto que
 		!!		le hemos mostrado.
 		switch (n) {
-			1:	"No ", (n_tengo) player, " ", (the) x1, ".";
+			1:	"No ", (lm_tienes) player, " ", (the) x1, ".";
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -4539,7 +4693,7 @@ Verb	meta 'gramatica' 'grammar'
 			}
 
 	Sleep:
-		"No est", (n_oy) player, " especialmente somnolient", (o) player, ".";
+		"No ", (lm_estas) player, " especialmente somnolient", (o) player, ".";
 
 	Smell:
 		print "No ";
@@ -4712,7 +4866,7 @@ Verb	meta 'gramatica' 'grammar'
 			THIRD_PERSON_FUTURE:
 				print "parecerá", (n) x1;
 		}
-		" el lugar más adecuado en el que columpiar", (n_me) player, ".";
+		" el lugar más adecuado en el que columpiar", (lm_te) player, ".";
 
 	SwitchOff:
 		!!	1:	Error, el objeto no tiene el atributo "switchable".
@@ -4751,7 +4905,7 @@ Verb	meta 'gramatica' 'grammar'
 				" apagad", (o) x1, ".";
 			3:	if (_grammatical_inflection == FIRST_PERSON_PAST
 					&& ~~IsPluralNoun(player)) "Apagué ", (the) x1, ".";
-				"Apag", (n_o_) player, " ", (the) x1, ".";
+				"Apag", (lm_as_) player, " ", (the) x1, ".";
 		}
 
 	SwitchOn:
@@ -4859,7 +5013,7 @@ Verb	meta 'gramatica' 'grammar'
 			1:	if (dialecto_sudamericano) print "Tomad";
 				else print "Cogid";
 				"", (o) noun, ".";
-			2:	"Siempre ", (n_me) player, " ", (n_tengo) player, " a ",
+			2:	"Siempre ", (lm_te) player, " ", (lm_tienes) player, " a ",
 				(string) YOURSELF__TX, ".";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
@@ -4903,11 +5057,11 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No lo creerá";
 						" buena idea.";
 				}
-			4:	print (n_ttengo) player, " que ";
-				if (x1 has supporter) print "bajar", (n_me) player;
+			4:	print (lm_ttienes) player, " que ";
+				if (x1 has supporter) print "bajar", (lm_te) player;
 				else print "salir";
 				"", (del_) x1, " antes.";
-			5:	"Ya ", (n_tengo) player, " ", (the) x1, ".";
+			5:	"Ya ", (lm_tienes) player, " ", (the) x1, ".";
 			6:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -5017,17 +5171,17 @@ Verb	meta 'gramatica' 'grammar'
 						print (The) x1, "estará", (n) x1;
 				}
 				" fij", (o) x1, " en el sitio.";
-			12:	"Ya ", (n_tengo) player, " las manos ocupadas con demasiadas
+			12:	"Ya ", (lm_tienes) player, " las manos ocupadas con demasiadas
 				cosas.";
 			13:	print "(Primero ";
 				if (_grammatical_inflection == FIRST_PERSON_PAST
 					&& ~~IsPluralNoun(player)) print "coloqué";
-				else print "coloc", (n_o_) player;
+				else print "coloc", (lm_as_) player;
 				" ", (the) x1, " en ", (the) SACK_OBJECT, " para hacer sitio).";
 		}
 
 	Taste:
-		"No sabore", (n_o_) player, " nada inesperado.";
+		"No sabore", (lm_as_) player, " nada inesperado.";
 
 	Tell:
 		!!	1:	El usuario habla consigo mismo.
@@ -5037,7 +5191,7 @@ Verb	meta 'gramatica' 'grammar'
 		!! [Los errores de parser se tratan en la sección "Miscelánea" de
 		!! esta rutina, al final.]
 		switch (n) {
-			1:	"Habl", (n_o_) player, " sol", (o) player, " durante un rato.";
+			1:	"Habl", (lm_as_) player, " sol", (o) player," durante un rato.";
 			2:	print "No ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
@@ -5072,7 +5226,7 @@ Verb	meta 'gramatica' 'grammar'
 		}
 
 	Think:
-		"Si, eso intent", (n_o) player, ".";
+		"Si, eso intent", (lm_as) player, ".";
 
 	ThrowAt:
 		!!  1:	Lanzar cosas a objetos inanimados.
@@ -5094,8 +5248,8 @@ Verb	meta 'gramatica' 'grammar'
 						print "servirá";
 				}
 				" de nada.";
-			2:	"En el último momento ", (n_me) player, " ech", (n_o_) player,
-				" atrás.";
+			2:	"En el último momento ", (lm_te) player, " ech",
+				(lm_as_) player, " atrás.";
 		}
 
 !!	Tie: see JumpOver
@@ -5147,7 +5301,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "No lo creerá";
 						" buena idea.";
 				}
-			2:	"No not", (n_o_) player, " nada extraño al tacto.";
+			2:	"No not", (lm_as_) player, " nada extraño al tacto.";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "No creemos";
@@ -5181,7 +5335,7 @@ Verb	meta 'gramatica' 'grammar'
 					SECOND_PERSON_FUTURE,
 					THIRD_PERSON_FUTURE:
 						"No será un buen momento para andar tocándo",
-						(n_me) player, ".";
+						(lm_te) player, ".";
 				}
     	}
 
@@ -5250,8 +5404,8 @@ Verb	meta 'gramatica' 'grammar'
 							print "parecerá", (n) x1;
 					}
 					" encajar en la cerradura.";
-				} else "Necesit", (n_o) player, " algún tipo de llave.";
-			4:	print "Quit", (n_o_) player, " el cerrojo ", (al_) x1;
+				} else "Necesit", (lm_as) player, " algún tipo de llave.";
+			4:	print "Quit", (lm_as_) player, " el cerrojo ", (al_) x1;
 				if (second) " con ", (the) second, ".";
 				".";
 		}
@@ -5326,7 +5480,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	1:	Si se intenta agitar un objeto que no está en el inventario.
 		!!	2:	Si se agita un objeto que sí está en el inventario.
 		switch (n) {
-			1:	"No l", (o) x1, " ", (n_tengo) player, ".";
+			1:	"No l", (o) x1, " ", (lm_tienes) player, ".";
 			2:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "Nos sentimos";
@@ -5399,7 +5553,7 @@ Verb	meta 'gramatica' 'grammar'
 		!! 3: Error, el objeto ya tiene el atributo "worn".
 		!! 4: Éxito.
 		switch (n) {
-			1:	print "No ", (n_puedo) player, " poner", (n_me) player, " ";
+			1:	print "No ", (lm_puedes) player, " poner", (lm_te) player, " ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -5415,8 +5569,8 @@ Verb	meta 'gramatica' 'grammar'
 						print "eso";
 				}
 				".";
-			2:	"No ", (lo) x1, " ", (n_tengo) player, ".";
-			3:	"Ya ", (lo) x1, " llev", (n_o) player, " puest", (o) x1, ".";
+			2:	"No ", (lo) x1, " ", (lm_tienes) player, ".";
+			3:	"Ya ", (lo) x1, " llev", (lm_as) player, " puest", (o) x1, ".";
 			4:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "Nos ponemos";
