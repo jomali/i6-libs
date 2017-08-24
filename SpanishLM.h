@@ -3289,7 +3289,6 @@ Verb	meta 'gramatica' 'grammar'
 		!! Respuesta si se usa como primera palabra algún insulto suave.
 		"Bastante.";
 
-	! TODO - flexiones de género/número
 	Miscellany:
 		!! Esta es una falsa acción, que se usa simplemente para agrupar aquí
 		!! todos los mensajes de error del parser, los mensajes ante algunos
@@ -3307,32 +3306,66 @@ Verb	meta 'gramatica' 'grammar'
 				!! la lista del parser está vacía.
 				"[No se pudo determinar a qué objetos te has referido].";
 			3:
-				! TODO - flexiones de género/número
 				!! Mensaje de fin del relato. Has muerto.
 				switch (_grammatical_inflection) {
-					1:	print " He muerto ";
-					2:	print " Has muerto ";
-					3:	print " Ha muerto ";
-					4:	print " Había muerto ";
-					5:	print " Habías muerto ";
-					6:	print " Había muerto ";
-					7:	print " Habré muerto ";
-					8:	print " Habrás muerto ";
-					9:	print " Habrá muerto ";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Hemos muerto ";
+						else print " He muerto ";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Habéis muerto ";
+						else print " Has muerto ";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Han muerto ";
+						else print " Ha muerto ";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habíamos muerto ";
+						else print " Había muerto ";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habíais muerto ";
+						else print " Habías muerto ";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habían muerto ";
+						else print " Había muerto ";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habremos muerto ";
+						else print " Habré muerto ";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habréis muerto ";
+						else print " Habrás muerto ";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habrán muerto ";
+						else print " Habrá muerto ";
 				}
 			4:
-				! TODO - flexiones de género/número
 				!! Mensaje de fin del relato. Victoria.
 				switch (_grammatical_inflection) {
-					1:	print " He ganado ";
-					2:	print " Has ganado ";
-					3:	print " Ha ganado ";
-					4:	print " Había ganado ";
-					5:	print " Habías ganado ";
-					6:	print " Había ganado ";
-					7:	print " Habré ganado ";
-					8:	print " Habrás ganado ";
-					9:	print " Habrá ganado ";
+					FIRST_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Hemos ganado ";
+						else print " He ganado ";
+					SECOND_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Habéis ganado ";
+						else print " Has ganado ";
+					THIRD_PERSON_PRESENT:
+						if (IsPluralNoun(player)) print " Han ganado ";
+						else print " Ha ganado ";
+					FIRST_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habíamos ganado ";
+						else print " Había ganado ";
+					SECOND_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habíais ganado ";
+						else print " Habías ganado ";
+					THIRD_PERSON_PAST:
+						if (IsPluralNoun(player)) print " Habían ganado ";
+						else print " Había ganado ";
+					FIRST_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habremos ganado ";
+						else print " Habré ganado ";
+					SECOND_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habréis ganado ";
+						else print " Habrás ganado ";
+					THIRD_PERSON_FUTURE:
+						if (IsPluralNoun(player)) print " Habrán ganado ";
+						else print " Habrá ganado ";
 				}
 			5:
 				!! Mensaje a mostrar tras el fin del juego, para pedir al
@@ -3367,29 +3400,39 @@ Verb	meta 'gramatica' 'grammar'
 				!! mensaje [Miscellany,5]
 				"[Por favor, introduce una de las respuestas anteriores].";
 			9:
-				! TODO - flexiones de género/número
 				!! Mensaje cuando se detecta, al final del turno, que ya no hay
 				!! una fuente de luz en la localidad actual.
+				print "^¡";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
-						"^¡Me he quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Nos hemos";
+						else print "Me he";
 					SECOND_PERSON_PRESENT:
-						"^¡Te has quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Os habéis";
+						else print "Te has";
 					THIRD_PERSON_PRESENT:
-						"^¡Se ha quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Se han";
+						else print "Se ha";
 					FIRST_PERSON_PAST:
-						"^¡Me había quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Nos habíamos";
+						else print "Me había";
 					SECOND_PERSON_PAST:
-						"^¡Te habías quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Os habíais";
+						else print "Te habías";
 					THIRD_PERSON_PAST:
-						"^¡Se había quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Se habían";
+						else print "Se había";
 					FIRST_PERSON_FUTURE:
-						"^¡Me habré quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Nos habremos";
+						else print "Me habré";
 					SECOND_PERSON_FUTURE:
-						"^¡Te habrás quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Os habréis";
+						else print "Te habrás";
 					THIRD_PERSON_FUTURE:
-						"^¡Se habrá quedado a oscuras!";
+						if (IsPluralNoun(player)) print "Se habrán";
+						else print "Se habrá";
 				}
+				" quedado a oscuras!";
 			10:
 				!! Mensaje cuando el usuario introduce una linea en blanco.
 				"[No has introducido ninguna instrucción].";
@@ -3434,7 +3477,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "Estará";
 				}
-				" muy oscuro como para poder ver algo.";
+				" demasiado oscuro como para poder ver algo.";
 			18:
 				!! Nombre corto del objeto usuario.
 				switch (_grammatical_inflection) {
@@ -3484,58 +3527,141 @@ Verb	meta 'gramatica' 'grammar'
 				"[Para iniciar una conversación, intenta órdenes del tipo:
 				PERSONAJE, HOLA].";
 			26:
-				! TODO - flexiones de género/número
 				!! La gramática especifica que una acción debe efectuarse sobre
 				!! un objeto en poder del usuario (token 'held'), pero el
 				!! usuario lo ha intentado sobre un objeto que no tiene, aunque
 				!! está a su alcance. El parser intentará automáticamente coger
 				!! ese objeto antes de efectuar la acción. En este mensaje se
 				!! avisa al usuario de esta intención.
-				switch (_grammatical_inflection) {
-					FIRST_PERSON_PRESENT:
-				1:	"(Primero trato de ", (coge)"r ", (the) x1, ".)";
-					SECOND_PERSON_PRESENT:
-				2:	"(Primero tratas de ", (coge)"r ", (the) x1, ".)";
-					THIRD_PERSON_PRESENT:
-				3:	"(Primero trata de ", (coge)"r ", (the) x1, ".)";
-					FIRST_PERSON_PAST:
-				4:	"(Primero traté de ", (coge)"r ", (the) x1, ".)";
-					SECOND_PERSON_PAST:
-				5:	"(Primero trataste de ", (coge)"r ", (the) x1, ".)";
-					THIRD_PERSON_PAST:
-				6:	"(Primero trató de ", (coge)"r ", (the) x1, ".)";
-					FIRST_PERSON_FUTURE:
-				7:	"(Primero trataré de ", (coge)"r ", (the) x1, ".)";
-					SECOND_PERSON_FUTURE:
-				8:	"(Primero tratarás de ", (coge)"r ", (the) x1, ".)";
-					THIRD_PERSON_FUTURE:
-				9:	"(Primero tratará de ", (coge)"r ", (the) x1, ".)";
-				}
+				"(Primero trat", (lm_as_) player, " de ", (coge) "r ",
+				(the) x1, ".)";
 
 			!! ERRORES DE PARSING: Estos errores son generados por la librería,
 			!! a menos que el programador proporcione su propia función
 			!! ParserError para manejo de errores.
 
-			! 27:	!! manejado por ParserError.
-			! 28:	!! manejado por ParserError.
-			! 29:	!! manejado por ParserError.
-			! 30:	!! manejado por ParserError.
-			! 31:	!! manejado por ParserError.
-			! 32:	!! manejado por ParserError.
-			! 33:	!! manejado por ParserError.
-			! 34:	!! manejado por ParserError.
-			! 35:	!! manejado por ParserError.
-			! 36:	!! manejado por ParserError.
-			! 37:	!! manejado por ParserError.
-			! 38:	!! manejado por ParserError.
-			! 39:	!! manejado por ParserError.
-			! 40:	!! manejado por ParserError.
-			! 41:	!! manejado por ParserError.
-			! 42:	!! manejado por ParserError.
-			! 43:	!! manejado por ParserError.
+			27:
+				!! ERROR DE PARSING. El parser se ha atascado. Es el tipo de
+				!! error más genérico. Si el parser puede, se generará un error
+				!! más concreto.
+				"[No se pudo entender esa instrucción.]";
+
+			28:
+				!! ERROR DE PARSING. A la instrucción le sobraban palabras,
+				!! aunque el parser ha entendido gran parte de su significado.
+				print "[Intenta de nuevo porque sólo se pudo entender: ~";
+				PrintCommand();
+				print "~.]^";
+				return true;
+
+			29:
+				!! ERROR DE PARSING. El parser esperaba un token de tipo
+				!! número.
+				"[No se pudo comprender ese número.]";
+
+			30:
+				!! ERROR DE PARSING. El parser no ha comprendido el nombre del
+				!! objeto al que se refiere el jugador, o ese objeto no está
+				!! aquí.
+				"[Te has referido a algo con lo que no se puede interactuar en
+				este momento.]";
+
+			31:
+				!! ERROR DE PARSING. Este error parece que no se genera nunca.
+				!! Un posible bug de libreria, o restos de versiones arcaicas.
+				"[Parece que falta información en esa instrucción.]";
+
+			32:
+				!! ERROR DE PARSING. El objeto que el usuario intenta usar no
+				!! está en su poder. El parser ha intentado "cogerlo de forma
+				!! automatica", pero ha fallado.
+				"No ", (lm_tienes) player, " eso.";
+
+			33:
+				!! ERROR DE PARSING. El usuario ha intentado usar objetos
+				!! múltiples (o "TODO") con un verbo que en su gramática no lo
+				!! admite.
+				"[No se pueden especificar objetos múltiples con ~",
+				(address) verb_word, "~.]";
+
+			34:
+				!! ERROR DE PARSING. El usuario ha intentado objetos multiples
+				!! para "noun" y para "second", como en METE TODO EN TODO.
+				"[Sólo se pueden especificar objetos múltiples una vez en cada
+				línea].";
+
+			35:
+				!! ERROR DE PARSING. El usuario ha usado un pronombre, como
+				!! COMELO, pero el parser no tiene asignado un valor a ese
+				!! pronombre.
+				"[No está claro a qué te refieres con ~",
+				(address) pronoun_word ,"~].";
+
+			36:
+				!! ERROR DE PARSING. El usuario ha puesto una lista de objetos
+				!! y ha usado la palabra EXCEPTO para exceptuar algo que no
+				!! estaba incluido en la lista, por ejemplo: COGE TODAS LAS
+				!! MONEDAS EXCEPTO EL SACO.
+				"[Has exceptuado algo que no estaba incluido].";
+
+			37:
+				!! ERROR DE PARSING. La gramática de un verbo obliga a que el
+				!! objeto sobre el que se actúe sea animate (tiene un token de
+				!! tipo "creature"), pero el usuario lo ha intentado sobre un
+				!! objeto que no es animate.
+				"[Sólo se puede hacer eso con seres animados].";
+
+			38:
+				!! ERROR DE PARSING. La primera palabra usada por el usuario es
+				!! desconocida (o la primera palabra tras la coma, si se trata
+				!! de una orden a un PNJ).
+				print "[La acción ~";
+				for (j = 0: j < WordLength(1): j++)
+					print (char) WordAddress(1) -> j;
+				"~ no está definida].";
+
+			39:
+				!! ERROR DE PARSING. El usuario intenta actiones sobre las
+				!! palabras que están en la propiedad "irrelevante" de la
+				!! localidad.
+				"[No es necesario referirse a eso para terminar la historia].";
+
+			40:
+				!! ERROR DE PARSING. El usuario ha usado un pronombre, como
+				!! EXAMINALO, pero el pronombre se refiere a un objeto que ya
+				!! no está visible.
+				"[Ahora mismo no se puede encontrar lo que representa el
+				pronombre ~", (address) pronoun_word, "~ (", (the) pronoun_obj,
+				").]";
+
+			41:
+				!! ERROR DE PARSING. Este error no se produce nunca.
+				!! Probablemente sigue aqui por razones de compatibilidad, o
+				!! por despiste de Graham. ¿Tal vez ha sido sustituido en
+				!! versiones mas recients por el mensaje número 28?
+				"[No se pudo entender la última parte de la instrucción].";
+
+			42:
+				!! ERROR DE PARSING. El usuario ha solicitado un numero de
+				!! objetos en una lista de objetos múltiples, pero el parser no
+				!! es capaz de encontrar tantos. Por ejemplo: COGE SEIS MONEDAS.
+				if (x1==0) "[No hay suficientes].";
+		        else if (x1 == 1) {
+			    	print "[Aquí sólo hay un";
+			    	if (multiple_object-->1) print (o) multiple_object-->1;
+			    	else print "o";
+			    	" disponible].";
+			    }
+				"[Sólo hay ", (number) x1, " disponibles para esa acción].";
+
+			43:
+				!! ERROR DE PARSING. El usuario ha puesto TODO como objeto
+				!! múltiple, pero el parser no ha encontrado ningún objeto. En
+				!! realidad este error parece no producirse nunca y el que
+				!! acaba generándose siempre es el siguiente (#44, ASKSCOPE_PE).
+				"[No se puede encontrar nada con lo que hacer eso].";
 
 			44:
-				! TODO - flexiones de género/número
 				! TODO - mensaje del parser
 				!! El usuario ha intentado objetos múltiples usando TODO
 				!! pero el parser no ha encontrado ninguno. Por ejemplo, COGE
@@ -3543,14 +3669,23 @@ Verb	meta 'gramatica' 'grammar'
 				!! Modificado en [020621] para dar un mensaje más coherente
 				!! si el usuario tiene algún objeto en su inventario.
 				if (action_to_be == ##Drop) {
-					print "¡Pero si no llevas nada";
+					print "¡Pero si no llev", (lm_as) player, " nada";
 					if (children (player)) " de eso!";
 					else "!";
 				}
 				switch (_grammatical_inflection) {
-				1,2,3:	print "No hay nada para ";
-				4,5,6:	print "No había nada para ";
-				7,8,9:	print "No habrá nada para ";
+					FIRST_PERSON_PRESENT,
+					FIRST_PERSON_PAST,
+					FIRST_PERSON_FUTURE:
+						print "No hay nada que ";
+					SECOND_PERSON_PRESENT,
+					SECOND_PERSON_PAST,
+					SECOND_PERSON_FUTURE:
+						print "No había nada que ";
+					THIRD_PERSON_PRESENT,
+					THIRD_PERSON_PAST,
+					THIRD_PERSON_FUTURE:
+						print "No habrá nada que ";
 				}
 				LanguageVerb(verb_word);
 				".";
