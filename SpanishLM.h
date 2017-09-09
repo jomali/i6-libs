@@ -3385,16 +3385,15 @@ Verb	meta 'gramatica' 'grammar'
 			6:
 				!! Error si el intérprete no tiene "undo"
 				"[Tu intérprete no puede ~DESHACER~ acciones].";
-			#Ifdef TARGET_ZCODE; ![6/11]
+			7:
+				#Ifdef TARGET_ZCODE; ![6/11]
 				!! Otro error si el intérprete no tiene "undo", pero no había
 				!! sido detectado correctamente.
-			7:
 				"[~DESHACER~ falló. (Puede que tu intérprete no permita
-				realizar la acción)].";
-			#Ifnot; ! TARGET_GLULX
-			7:
+				realizar esa acción)].";
+				#Ifnot; ! TARGET_GLULX
 				"[No puedes ~DESHACER~ más].";
-			#Endif; ! TARGET_
+				#Endif; ! TARGET_
 			8:
 				!! Si el usuario no responde correctamente a la pregunta del
 				!! mensaje [Miscellany,5]
@@ -3499,7 +3498,7 @@ Verb	meta 'gramatica' 'grammar'
 				}
 				print " mism", (o) player;
 			19:
-				!! Descripción del objeto usuario.
+				!! Descripción del personaje controlado por el usuario.
 				"Tan buen aspecto como siempre.";
 			20:
 				!! Cuando el usuario pone PNJ, REPITE para que el PNJ haga otra
@@ -3551,25 +3550,25 @@ Verb	meta 'gramatica' 'grammar'
 				!! aunque el parser ha entendido gran parte de su significado.
 				print "[Intenta de nuevo porque sólo se pudo entender: ~";
 				PrintCommand();
-				print "~.]^";
+				print "~].^";
 				return true;
 
 			29:
 				!! ERROR DE PARSING. El parser esperaba un token de tipo
 				!! número.
-				"[No se pudo comprender ese número.]";
+				"[No se pudo comprender ese número].";
 
 			30:
 				!! ERROR DE PARSING. El parser no ha comprendido el nombre del
 				!! objeto al que se refiere el jugador, o ese objeto no está
 				!! aquí.
 				"[Te has referido a algo con lo que no se puede interactuar en
-				este momento.]";
+				este momento].";
 
 			31:
 				!! ERROR DE PARSING. Este error parece que no se genera nunca.
 				!! Un posible bug de libreria, o restos de versiones arcaicas.
-				"[Parece que falta información en esa instrucción.]";
+				"[Parece que falta información en esa instrucción].";
 
 			32:
 				!! ERROR DE PARSING. El objeto que el usuario intenta usar no
@@ -3615,7 +3614,7 @@ Verb	meta 'gramatica' 'grammar'
 				!! ERROR DE PARSING. La primera palabra usada por el usuario es
 				!! desconocida (o la primera palabra tras la coma, si se trata
 				!! de una orden a un PNJ).
-				print "[La acción ~";
+				print "[La instrucción ~";
 				for (j = 0: j < WordLength(1): j++)
 					print (char) WordAddress(1) -> j;
 				"~ no está definida].";
@@ -3636,13 +3635,13 @@ Verb	meta 'gramatica' 'grammar'
 
 			41:
 				!! ERROR DE PARSING. Este error no se produce nunca.
-				!! Probablemente sigue aqui por razones de compatibilidad, o
+				!! Probablemente sigue aquí por razones de compatibilidad, o
 				!! por despiste de Graham. ¿Tal vez ha sido sustituido en
-				!! versiones mas recients por el mensaje número 28?
+				!! versiones mas recientes por el mensaje número 28?
 				"[No se pudo entender la última parte de la instrucción].";
 
 			42:
-				!! ERROR DE PARSING. El usuario ha solicitado un numero de
+				!! ERROR DE PARSING. El usuario ha solicitado un número de
 				!! objetos en una lista de objetos múltiples, pero el parser no
 				!! es capaz de encontrar tantos. Por ejemplo: COGE SEIS MONEDAS.
 				if (x1==0) "[No hay suficientes].";
@@ -3769,8 +3768,6 @@ Verb	meta 'gramatica' 'grammar'
 				!! en la ejecución de alguna de estas actiones encuentra que la
 				!! localidad del player ha cambiado, debe abortar el proceso.
 				!! Este mensaje informa de ello al usuario.
-				!!	-- (Ya que ha ocurrido algo dramático, se ha recortado la
-				!!		lista de objetos sobre los que actuabas)
 				"(Se ha producido un evento inesperado que ha obligado a
 				recortar la lista de objetos sobre los que actuabas).";
 			52:
@@ -4524,6 +4521,7 @@ Verb	meta 'gramatica' 'grammar'
 			1:	"[Error. No se pudo recuperar la partida].";
 			2:	print "[Partida cargada].";
 				new_line;
+				new_line;
 				<<Look>>;
 		}
 
@@ -4566,7 +4564,7 @@ Verb	meta 'gramatica' 'grammar'
 				print "].";
 				new_line;
 				return;
-			2:	"[Este juego no tiene conteo de puntuación].";
+			2:	"[Este relato no tiene conteo de puntuación].";
 		}
 
 	ScriptOff:
@@ -5739,6 +5737,6 @@ Verb	meta 'gramatica' 'grammar'
 		}
 
 	Yes:
-		"[La instrucción ~SÍ~ no tiene sentido en esta situación.]";
+		"[La instrucción ~SÍ~ no tiene sentido en esta situación].";
 
 ];
