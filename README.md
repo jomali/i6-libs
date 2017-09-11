@@ -13,6 +13,8 @@ Relación de extensiones incluidas:
 
 - **Parsing Preprocessor**: Preprocesador de la entrada de teclado del usuario utilizando análisis no estricto para el reconocimiento de patrones. Trata de identificar la entrada de usuario con alguno de los objetos modelados en el entorno simulado de la obra (facilita la utilización de comandos que cuenten tan sólo con el nombre de objetos presentes en el entorno, sin necesidad de especificar un verbo concreto). *Autor(es): J. Francisco Martín*.
 
+- **Preprocesador de texto**: Script Perl para preprocesar un archivo de texto. Sustituye ciertas etiquetas de texto por funciones definidas dentro del relato para manipular el estilo de los textos, listar objetos contenidos por otro objeto, o crear hipervínculos, por ejemplo. *Autor(es): J. Francisco Martín*.
+
 - **Receptacles**: Implementación de la clase de objetos ``Receptacle``; un tipo de contenedores o soportes con atributos de peso, volumen, tamaño y número de objetos que pueden albergar en su interior (o sobre ellos). Cada vez que se intenta colocar un objeto en un ``Receptacle``, éste comprobará si tiene capacidad suficiente para albergar o no al nuevo objeto. *Autor(es): Peer Schaefer y J. Francisco Martín*.
 
 - **Spanish Extended Grammar**: Gramática española extendida. Define un nuevo conjunto de acciones (así­ como sinónimos sobre acciones ya definidas en la gramática por defecto) que pueden ser utilizadas en una obra. Los mensajes por defecto de las nuevas acciones contemplan inflexiones de género y número del actor y tiempo verbal del narrador. *Autor(es): Emily Short, J. Francisco Martín y Mapache*.
