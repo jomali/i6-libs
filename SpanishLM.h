@@ -51,6 +51,12 @@
 !!	controlado por el usuario---. Los mensajes están basados en gran medida en
 !!	los de 'Spanish.h'.
 !!
+!!	Incluye además una nueva meta-acción de depuración (sólo está definida
+!!	si la obra se compila con la opción DEBUG activada); 'gramatica [opción]',
+!!	que  permite consultar la flexión gramatical actual de los mensajes de la
+!!	librería (cuando se invoca sin indicar ninguna opción), o si se especifica
+!!	una opción [1-9], modifica la flexión gramatical utilizada.
+!!
 !!
 !!	# UTILIZACIÓN
 !!
@@ -87,7 +93,7 @@ System_file;
 
 
 !!------------------------------------------------------------------------------
-!! Definición de constantes y variables
+!! Definición de constantes, variables y propiedades
 !!------------------------------------------------------------------------------
 
 Constant FIRST_PERSON_PRESENT	= 1;
@@ -101,6 +107,44 @@ Constant SECOND_PERSON_FUTURE	= 8;
 Constant THIRD_PERSON_FUTURE	= 9;
 
 Global _grammatical_inflection = SECOND_PERSON_PRESENT;
+
+!Global FORMER__TX    = "tu antiguo ~yo~";
+!Global YOURSELF__TX  = "ti mismo";
+!Global CANTGO__TX    = "No puedes ir por ahí.";
+!Global IS__TX        = " ves";
+!Global ARE__TX       = " ves";
+!Global IS2__TX       = "ves ";
+!Global ARE2__TX      = "ves ";
+!Global YOU__TX       = "Tú";
+!Global PARTICULA_TE  = "te";
+
+!!==============================================================================
+!! La propiedad 'clarification' está ideada para aquellos objetos que no son
+!! localidades y que permiten al personaje controlado por el usuario (PJ)
+!! entrar en ellos (objetos con el atributo 'enterable'). Cuando un PJ se
+!! encuentra dentro de uno de estos objetos 'enterables', al imprimir la
+!! descripción de la localidad como resultado de la acción ##Look, se imprime
+!! el título de la localidad con un pequeño apéndice del tipo ", en el
+!! <objeto enterable>" o ", sobre el <objeto enterable>". La propiedad
+!! 'clarification' permite personalizar los mensajes de este apéndice. Por
+!! ejemplo, en una localidad "DORMITORIO" podemos definir un objeto 'enterable'
+!! cama con la propiedad:
+!!
+!!		clarification "sentado en la cama",
+!!
+!! para conseguir títulos del tipo: "DORMITORIO, sentado en la cama", en lugar
+!! del: "DORMITORIO, en la cama" por defecto.
+!!------------------------------------------------------------------------------
+Property clarification; ! string
+
+!!==============================================================================
+!! La propiedad 'inhibit_object_list' está ideada para ser utilizada por los
+!! objetos de tipo localidad. Se se define una localidad con la propiedad
+!! 'inhibit_object_list' como verdadera, al imprimir su descripción como
+!! resultado de la acción ##Look se omitirá el listado automático de objetos
+!! presentes en esa localidad.
+!!------------------------------------------------------------------------------
+Property inhibit_object_list; ! boolean
 
 
 !!------------------------------------------------------------------------------
@@ -351,6 +395,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 !!==============================================================================
 !! Similar a la rutina 'lm_as()', con el verbo 'estar'.
+!! FIXME
 !!
 !!	@param {Object} obj
 !!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
@@ -1117,7 +1162,9 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 #Ifdef	DEBUG;
 Verb	meta 'gramatica' 'grammar'
 	*								-> Grammar
-	* number						-> Grammar;
+	* number						-> Grammar
+;
+
 [ GrammarSub;
 	switch (noun) {
 		1:	SetGrammaticalInflection(FIRST_PERSON_PRESENT);
@@ -1131,15 +1178,15 @@ Verb	meta 'gramatica' 'grammar'
 		9:	SetGrammaticalInflection(THIRD_PERSON_FUTURE);
 		default:
 			"Flexión gramatical actual: ", _grammatical_inflection,
-			"^ARE__TX: ", ARE__TX,
-			"^ARE2__TX: ", ARE2__TX,
-			"^CANTGO__TX: ", CANTGO__TX,
-			"^IS__TX: ", IS__TX,
-			"^IS2__TX: ", IS2__TX,
-			"^PARTICULA_TE: ", PARTICULA_TE,
-			"^FORMER__TX: ", FORMER__TX,
-			"^YOU__TX: ", YOU__TX,
-			"^YOURSELF__TX: ", YOURSELF__TX;
+			"^ARE__TX: ", (string) ARE__TX,
+			"^ARE2__TX: ", (string) ARE2__TX,
+			"^CANTGO__TX: ", (string) CANTGO__TX,
+			"^IS__TX: ", (string) IS__TX,
+			"^IS2__TX: ", (string) IS2__TX,
+			"^PARTICULA_TE: ", (string) PARTICULA_TE,
+			"^FORMER__TX: ", (string) FORMER__TX,
+			"^YOU__TX: ", (string) YOU__TX,
+			"^YOURSELF__TX: ", (string) YOURSELF__TX;
 	}
 	print "Cambio de flexión gramatical: ";
 	switch (_grammatical_inflection) {
@@ -1159,7 +1206,8 @@ Verb	meta 'gramatica' 'grammar'
 
 
 !!==============================================================================
-[ LanguageLM n x1;
+[ LanguageLM n x1
+	i;
 
 	Answer, Ask, AskFor:
 		switch (_grammatical_inflection) {
@@ -3615,8 +3663,8 @@ Verb	meta 'gramatica' 'grammar'
 				!! desconocida (o la primera palabra tras la coma, si se trata
 				!! de una orden a un PNJ).
 				print "[La instrucción ~";
-				for (j = 0: j < WordLength(1): j++)
-					print (char) WordAddress(1) -> j;
+				for (i = 0: i < WordLength(1): i++)
+					print (char) WordAddress(1) -> i;
 				"~ no está definida].";
 
 			39:
@@ -3651,7 +3699,7 @@ Verb	meta 'gramatica' 'grammar'
 			    	else print "o";
 			    	" disponible].";
 			    }
-				"[Sólo hay ", (number) x1, " disponibles para esa acción].";
+				"[Sólo hay ", (number) lm_o, " disponibles para esa acción].";
 
 			43:
 				!! ERROR DE PARSING. El usuario ha puesto TODO como objeto
