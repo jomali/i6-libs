@@ -60,7 +60,7 @@
 !!
 !!	# UTILIZACIÓN
 !!
-!!	A continuación se detallan los pasos que deben seguirse para instalar la
+!!	A continuación se detallan los 3 pasos que deben seguirse para instalar la
 !!	extensión:
 !!
 !!	1)	Declarar la constante SIN_MENSAJES para omitir los mensajes por defecto
@@ -68,7 +68,20 @@
 !!
 !!			Constant SIN_MENSAJES;
 !!
-!!	2)	Declarar el reemplazo de la rutina 'ChangePlayer' definida en
+!!	2)	Declarar el siguiente conjunto de variables (antes de incluir librerías
+!!		y extensiones):
+!!
+!!			Global FORMER__TX	= "tu antiguo ~yo~";
+!!			Global YOURSELF__TX	= "ti mismo";
+!!			Global CANTGO__TX	= "No puedes ir por ahí.";
+!!			Global IS__TX		= " ves";
+!!			Global ARE__TX		= " ves";
+!!			Global IS2__TX		= "ves ";
+!!			Global ARE2__TX		= "ves ";
+!!			Global YOU__TX		= "Tú";
+!!			Global PARTICULA_TE	= "te";
+!!
+!!	3)	Declarar el reemplazo de la rutina 'ChangePlayer' definida en
 !!		'parserm.h' (antes de incluir librerías y extensiones):
 !!
 !!			Replace ChangePlayer;
@@ -89,7 +102,6 @@
 !!		SetGrammaticalInflection(THIRD_PERSON_PAST);
 !!
 !!------------------------------------------------------------------------------
-System_file;
 
 
 !!------------------------------------------------------------------------------
@@ -107,16 +119,6 @@ Constant SECOND_PERSON_FUTURE	= 8;
 Constant THIRD_PERSON_FUTURE	= 9;
 
 Global _grammatical_inflection = SECOND_PERSON_PRESENT;
-
-!Global FORMER__TX    = "tu antiguo ~yo~";
-!Global YOURSELF__TX  = "ti mismo";
-!Global CANTGO__TX    = "No puedes ir por ahí.";
-!Global IS__TX        = " ves";
-!Global ARE__TX       = " ves";
-!Global IS2__TX       = "ves ";
-!Global ARE2__TX      = "ves ";
-!Global YOU__TX       = "Tú";
-!Global PARTICULA_TE  = "te";
 
 !!==============================================================================
 !! La propiedad 'clarification' está ideada para aquellos objetos que no son
@@ -384,16 +386,6 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Invoca a la rutina 'lm_eeres()' con el parámetro opcional 'pastSimple'
-!! activado para imprimir las flexiones en pasado utilizando el pretérito
-!! perfecto simple.
-!!
-!!	@param {Object} obj
-!!------------------------------------------------------------------------------
-[ lm_eeres_ obj; return lm_eeres(obj, true); ];
-
-
-!!==============================================================================
 !! Similar a la rutina 'lm_as()', con el verbo 'estar'.
 !! FIXME
 !!
@@ -448,16 +440,6 @@ Property inhibit_object_list; ! boolean
 			else print "ará";
 	}
 ];
-
-
-!!==============================================================================
-!! Invoca a la rutina 'lm_estas()' con el parámetro opcional 'pastSimple'
-!! activado para imprimir las flexiones en pasado utilizando el pretérito
-!! perfecto simple.
-!!
-!!	@param {Object} obj
-!!------------------------------------------------------------------------------
-[ lm_estas_ obj; return lm_estas(obj, true); ];
 
 
 !!==============================================================================
@@ -584,16 +566,6 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Invoca a la rutina 'lm_ppuedes()' con el parámetro opcional 'pastSimple'
-!! activado para imprimir las flexiones en pasado utilizando el pretérito
-!! perfecto simple.
-!!
-!!	@param {Object} obj
-!!------------------------------------------------------------------------------
-[ lm_ppuedes_ obj; return lm_ppuedes(obj, true); ];
-
-
-!!==============================================================================
 !! Imprime el pronombre personal átono que se corresponde con el objeto pasado
 !! como parámetro.
 !!
@@ -674,15 +646,6 @@ Property inhibit_object_list; ! boolean
 	}
 ];
 
-!!==============================================================================
-!! Invoca a la rutina 'lm_tienes()' con el parámetro opcional 'pastSimple'
-!! activado para imprimir las flexiones en pasado utilizando el pretérito
-!! perfecto simple.
-!!
-!!	@param {Object} obj
-!!------------------------------------------------------------------------------
-[ lm_tienes_ obj; return lm_tienes(obj, true); ];
-
 
 !!==============================================================================
 !! Similar a la rutina 'lm_as()', con el verbo 'tener', usando mayúsculas para
@@ -742,16 +705,6 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Invoca a la rutina 'lm_ttienes()' con el parámetro opcional 'pastSimple'
-!! activado para imprimir las flexiones en pasado utilizando el pretérito
-!! perfecto simple.
-!!
-!!	@param {Object} obj
-!!------------------------------------------------------------------------------
-[ lm_ttienes_ obj; return lm_ttienes(obj, true); ];
-
-
-!!==============================================================================
 !! Intercambia el objeto controlado por el usuario por otro objeto dado.
 !!
 !!	@param {Object} obj
@@ -799,8 +752,11 @@ Property inhibit_object_list; ! boolean
 !!	@returns {boolean} Verdadero si el objeto está definido como nombre
 !!		femenino. Falso en caso contrario
 !!------------------------------------------------------------------------------
-[ IsFemaleNoun obj;
-	return (GetGNAOfObject(obj, true) == 1 or 4 or 7 or 10);
+[ IsFemaleNoun obj
+	result;
+	if (obj provides gender) result = (obj.gender == 2 or 4);
+	else result = (GetGNAOfObject(obj) == 1 or 4 or 7 or 10);
+	return result;
 ];
 
 
@@ -815,8 +771,11 @@ Property inhibit_object_list; ! boolean
 !!	@returns {boolean} Verdadero si el objeto está definido como nombre
 !!		plural. Falso en caso contrario
 !!------------------------------------------------------------------------------
-[ IsPluralNoun obj;
-	return (GetGNAOfObject(obj, true) == 3 or 4 or 5 or 9 or 10 or 11);
+[ IsPluralNoun obj
+	result;
+	if (obj provides gender) result = (obj.gender == 3 or 4);
+	else result = (GetGNAOfObject(obj) == 3 or 4 or 5 or 9 or 10 or 11);
+	return result;
 ];
 
 
@@ -839,14 +798,14 @@ Property inhibit_object_list; ! boolean
 	switch (gi) {
 		FIRST_PERSON_PRESENT:
 			_grammatical_inflection = FIRST_PERSON_PRESENT;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " vemos";
 				ARE2__TX		= "vemos ";
 				CANTGO__TX		= "No podemos ir por ahí.";
 				IS__TX			= " vemos";
 				IS2__TX			= "vemos ";
 				PARTICULA_TE	= "nos";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
@@ -862,12 +821,12 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " veo";
 				IS2__TX			= "veo ";
 				PARTICULA_TE	= "me";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
 					YOURSELF__TX	= "mí misma";
 				} else {
-					FORMER__TX		= "mi antiguo ~yo~";
+					FORMER__TX		= "mi mi antiguo ~yo~";
 					YOU__TX			= "Yo";
 					YOURSELF__TX	= "mí mismo";
 				}
@@ -875,14 +834,14 @@ Property inhibit_object_list; ! boolean
 		SECOND_PERSON_PRESENT:
 			.defaultInflection;
 			_grammatical_inflection = SECOND_PERSON_PRESENT;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veis";
 				ARE2__TX		= "veis ";
 				CANTGO__TX		= "No podéis ir por ahí.";
 				IS__TX			= " veis";
 				IS2__TX			= "veis ";
 				PARTICULA_TE	= "os";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
@@ -898,7 +857,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " ves";
 				IS2__TX			= "ves ";
 				PARTICULA_TE	= "te";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
 					YOU__TX			= "Tú";
 					YOURSELF__TX	= "tí misma";
@@ -910,14 +869,14 @@ Property inhibit_object_list; ! boolean
 			}
 		THIRD_PERSON_PRESENT:
 			_grammatical_inflection = THIRD_PERSON_PRESENT;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " ven";
 				ARE2__TX		= "ven ";
 				CANTGO__TX		= "No pueden ir por ahí.";
 				IS__TX			= " ven";
 				IS2__TX			= "ven ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
@@ -933,7 +892,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " ve";
 				IS2__TX			= "ve ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
 					YOURSELF__TX	= "sí misma";
@@ -945,14 +904,14 @@ Property inhibit_object_list; ! boolean
 			}
 		FIRST_PERSON_PAST:
 			_grammatical_inflection = FIRST_PERSON_PAST;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veíamos";
 				ARE2__TX		= "veíamos ";
 				CANTGO__TX		= "No podíamos ir por ahí.";
 				IS__TX			= " veíamos";
 				IS2__TX			= "veíamos ";
 				PARTICULA_TE	= "nos";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
@@ -968,7 +927,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " veía";
 				IS2__TX			= "veía ";
 				PARTICULA_TE	= "me";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
 					YOURSELF__TX	= "mí misma";
@@ -980,14 +939,14 @@ Property inhibit_object_list; ! boolean
 			}
 		SECOND_PERSON_PAST:
 			_grammatical_inflection = SECOND_PERSON_PAST;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veíais";
 				ARE2__TX		= "veíais ";
 				CANTGO__TX		= "No podíais ir por ahí.";
 				IS__TX			= " veíais";
 				IS2__TX			= "veíais ";
 				PARTICULA_TE	= "os";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
@@ -1003,7 +962,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " veías";
 				IS2__TX			= "veías ";
 				PARTICULA_TE	= "te";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
 					YOU__TX			= "Tú";
 					YOURSELF__TX	= "tí misma";
@@ -1015,14 +974,14 @@ Property inhibit_object_list; ! boolean
 			}
 		THIRD_PERSON_PAST:
 			_grammatical_inflection = THIRD_PERSON_PAST;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veían";
 				ARE2__TX		= "veían ";
 				CANTGO__TX		= "No podían ir por ahí.";
 				IS__TX			= " veían";
 				IS2__TX			= "veían ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
@@ -1038,7 +997,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " veía";
 				IS2__TX			= "veía ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
 					YOURSELF__TX	= "sí misma";
@@ -1050,14 +1009,14 @@ Property inhibit_object_list; ! boolean
 			}
 		FIRST_PERSON_FUTURE:
 			_grammatical_inflection = FIRST_PERSON_FUTURE;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veremos";
 				ARE2__TX		= "veremos ";
 				CANTGO__TX		= "No podremos ir por ahí.";
 				IS__TX			= " veremos";
 				IS2__TX			= "veremos ";
 				PARTICULA_TE	= "nos";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
 					YOU__TX			= "Nosotras";
 					YOURSELF__TX	= "nosotras mismas";
@@ -1073,7 +1032,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " veré";
 				IS2__TX			= "veré ";
 				PARTICULA_TE	= "me";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
 					YOURSELF__TX	= "mí misma";
@@ -1085,14 +1044,14 @@ Property inhibit_object_list; ! boolean
 			}
 		SECOND_PERSON_FUTURE:
 			_grammatical_inflection = SECOND_PERSON_FUTURE;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veréis";
 				ARE2__TX		= "veréis ";
 				CANTGO__TX		= "No podréis ir por ahí.";
 				IS__TX			= " veréis";
 				IS2__TX			= "veréis ";
 				PARTICULA_TE	= "os";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
 					YOU__TX			= "Vosotras";
 					YOURSELF__TX	= "vosotras mismas";
@@ -1108,7 +1067,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX				= " verás";
 				IS2__TX				= "verás ";
 				PARTICULA_TE		= "te";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
 					YOU__TX			= "Tú";
 					YOURSELF__TX	= "tí misma";
@@ -1120,14 +1079,14 @@ Property inhibit_object_list; ! boolean
 			}
 		THIRD_PERSON_FUTURE:
 			_grammatical_inflection = THIRD_PERSON_FUTURE;
-			if (IsPluralNoun(player)) {
+			if (IsPluralNoun(obj)) {
 				ARE__TX			= " verán";
 				ARE2__TX		= "verán ";
 				CANTGO__TX		= "No podrán ir por ahí.";
 				IS__TX			= " verán";
 				IS2__TX			= "verán ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ellas";
 					YOURSELF__TX	= "ellas mismas";
@@ -1143,7 +1102,7 @@ Property inhibit_object_list; ! boolean
 				IS__TX			= " verá";
 				IS2__TX			= "verá ";
 				PARTICULA_TE	= "se";
-				if (IsFemaleNoun(player)) {
+				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
 					YOURSELF__TX	= "sí misma";
