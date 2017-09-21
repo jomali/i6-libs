@@ -2976,21 +2976,23 @@ Verb	meta 'gramatica' 'grammar'
 	    !! La acción LMode1 se genera ante el comando BREVE (o NORMAL). La
 	    !! librería imprime la constante Historia y a continuación este
 	    !! mensaje.
-	    " está ahora en su modo normal ~breve~, que da sólo descripciones
-	    largas de los lugares la primera vez que son visitadas, y
-	    descripciones cortas en otro caso.";
+		print_ret "[", (string) Story, " está ahora en su modo normal ~breve~,
+		que da sólo descripciones largas de los lugares la primera vez que son
+		visitadas, y descripciones cortas en otro caso].";
 
 	LMode2:
     	!! La acción LMode2 se genera ante el comando LARGO. La librería
 		!! imprime la constante Historia y a continuación este mensaje.
-		" está ahora en su modo ~largo~, que siempre da descripciones
-    	largas de los lugares (incluso si ya habías estado antes).";
+		print_ret "[", (string) Story, " está ahora en su modo ~largo~, que
+		siempre da descripciones largas de los lugares (incluso si ya habías
+		estado antes)].";
 
 	LMode3:
     	!! La acción LMode3 se genera ante el comando SUPERBREVE. La librería
 		!! imprime la constante Historia y a continuación este mensaje.
-		" está ahora en su modo ~superbreve~, que siempre da descripciones
-    	cortas de los lugares (incluso si nunca habías estado antes).";
+		print_ret "[", (string) Story, " está ahora en su modo ~superbreve~,
+		que siempre da descripciones cortas de los lugares (incluso si nunca
+		habías estado antes).";
 
 	Lock:
 		!! Lock se genera con CIERRA <objeto> CON <objeto2>, o
