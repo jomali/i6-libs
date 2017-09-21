@@ -18,14 +18,6 @@
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# HISTORIAL DE VERSIONES
-!!
-!!	0.0: 2016/07/24	Inicio de la adaptación de la extensión 'topicInventory'
-!!					v2.2 para generalizar el sistema de conversación con
-!!					inventario de temas.
-!!
-!!------------------------------------------------------------------------------
-!!
 !!	This program is free software; you can redistribute it and/or modify
 !!	it under the terms of the GNU General Public License as published by
 !!	the Free Software Foundation; either version 2 of the License, or
@@ -43,6 +35,14 @@
 !!
 !!	Copyright (c) 2009, Mastodon
 !!	Copyright (C) 2017, J. Francisco Martín
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	# HISTORIAL DE VERSIONES
+!!
+!!	0.0: 2016/07/24	Inicio de la adaptación de la extensión 'topicInventory'
+!!					v2.2 para generalizar el sistema de conversación con
+!!					inventario de temas.
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -226,6 +226,29 @@ System_file;
 Constant _CHOICE_SET_;
 Message "[Including <choiceSet>]";
 
+!! Descomentar para obtener info. de depuración del controlador:
+!Constant DEBUG_CHOICE_SET;
+
+!! Descomentar para obtener info. de depuración de la rutina 'CompareWord()'':
+!Constant DEBUG_COMPARE_WORD_ROUTINE;
+
+!! Descomentar y compilar para probar la extensión:
+!Constant TEST_CHOICE_SET;
+
+!! Estilo y textos por defecto de la extensión:
+Default CSET_STYLE	1; ! [0-3]
+Default CSET_PREFIX	"(";
+Default CSET_SUFIX	".)";
+Default CSET_MSG1	"Puedes ";
+Default CSET_MSG2	"escoger entre ";
+Default CSET_COMMA	", ";
+Default CSET_OR		" o ";
+Default CSET_NO_MSG	"Listado de opciones vacío";
+
+!! Objeto de apoyo para reordenar los temas de una conversación:
+Object	ChoiceBag "(ChoiceSet Bag)";
+
+
 #Ifndef _COMPARE_WORD_ROUTINE_;
 Constant _COMPARE_WORD_ROUTINE_;
 !! Array para guardar palabras temporalmente:
@@ -320,27 +343,6 @@ Array compare_word_tmp_text -> 64;
 #Endif; ! DEBUG_COMPARE_WORD_ROUTINE;
 #Endif; ! _COMPARE_WORD_ROUTINE_;
 
-!! Descomentar y compilar para probar la extensión:
-!Constant TEST_CHOICE_SET;
-
-!! Descomentar para obtener info. de depuración del controlador:
-!Constant DEBUG_CHOICE_SET;
-
-!! Descomentar para obtener info. de depuración de la rutina 'CompareWord()'':
-!Constant DEBUG_COMPARE_WORD_ROUTINE;
-
-!! Estilo y textos por defecto de la extensión:
-Default CSET_STYLE	1; ! [0-3]
-Default CSET_PREFIX	"(";
-Default CSET_SUFIX	".)";
-Default CSET_MSG1	"Puedes ";
-Default CSET_MSG2	"escoger entre ";
-Default CSET_COMMA	", ";
-Default CSET_OR		" o ";
-Default CSET_NO_MSG	"Listado de opciones vacío";
-
-!! Objeto de apoyo para reordenar las elecciones de un conjunto:
-Object	ChoiceBag "(CHOICE SET: Choice Bag)";
 
 !!==============================================================================
 !!	Representa una elección que puede ser seleccionada por el usuario.
@@ -354,7 +356,7 @@ Class	ChoiceSetItem
 			i j;
 			self.hits = 0;
 			if (self.keys ~= 0) {
-				for (i = 0 : i < (self.#keys) / WORDSIZE : i++) {
+				for (i = 0 : i < (self.#keys)/WORDSIZE : i++) {
 					for (j = 1 : j <= num_words : j++) {
 						if (CompareWord(j, self.&keys-->i)) {
 							self.hits++;
@@ -366,15 +368,17 @@ Class	ChoiceSetItem
 		!!----------------------------------------------------------------------
 		!! Otras propiedades:
 		!!----------------------------------------------------------------------
-		!! Indica si el turno en que se trata este ítem debe finalizar
-		!! mostrando el listado de elecciones restantes del conjunto del que
-		!! forma parte:
+		!! Indica si el turno en que se trata este tema debe finalizar
+		!! mostrando el inventario de temas restantes de la conversación de la
+		!! que forma parte.
 		append_choice_set false,
 		!! Descripción del ítem. Es el texto que se imprime al mostrar el
 		!! listado de elecciones de un conjunto:
 		entry 0,
 		!! Indica si el ítem pone fin a la selección:
 		final_choice false,
+   		!! Número de coincidencias de la entrada del usuario con el ítem:
+   		hits 0,
 		!! Palabras clave con las que el usuario puede hacer alusión al ítem:
 		keys 0,
 		!! Indica si el ítem es persistente. Cuando el gestor trata un ítem no
@@ -393,9 +397,7 @@ Class	ChoiceSetItem
 		!! Array de ítems que se añaden al conjunto de elecciones tras tratar
 		!! éste:
 		subchoices 0,
- private
-		!! Número de coincidencias de la entrada del usuario con el ítem:
-		hits 0;
+;
 
 
 !!==============================================================================
@@ -421,19 +423,19 @@ Class	ChoiceSet
 		!!	@returns {boolean} Verdadero si la elección se añade correctamente
 		!!		al conjunto. Falso en caso contrario
 		!!----------------------------------------------------------------------
-		add_choice [choice temp_flag countdown;
-			!! Se comprueba que la elección pasada sea válida:
+		add_choice [ choice temp_flag countdown;
+			!! Se comprueba que el tema pasado sea válido:
 			if (choice == 0) return false;
 			if (~~(choice ofclass ChoiceSetItem)) return false;
 			if (choice has visited) return false;
-			!! Si es necesario se establece como elección temporal:
+			!! Si es necesario se establece como tema temporal:
 			if (temp_flag) {
 				if (countdown < 1) countdown = 1;
 				self.temporal_choice = choice;
 				StopTimer(self);
 				StartTimer(self, countdown);
 			}
-			!! Se añade al conjunto:
+			!! Se añade a la conversación:
 			move choice to self;
 			return true;
 		],
@@ -488,13 +490,13 @@ Class	ChoiceSet
 		!!		caso contrario
 		!!----------------------------------------------------------------------
 		has_ended [;
-			if (self has general) return true;
-			else return false;
+			return (self has general);
 		],
 		!!----------------------------------------------------------------------
 		!! Indica si el conjunto de elecciones tiene la elección concreta
 		!! pasada como parámetro.
 		!!
+		!!	@param {ChoiceSetItem} choice
 		!!	@returns {boolean} Verdadero si el conjunto tiene la elección dada.
 		!!		Falso en caso contrario
 		!!----------------------------------------------------------------------
@@ -560,7 +562,7 @@ Class	ChoiceSet
 			choice = 0; ! para evitar un desconcertante warning del compilador
 			objectloop(choice in self) size++;
 			return size;
-		]
+		],
 		!!----------------------------------------------------------------------
 		!! Ordena aleatoriamente e imprime un listado con el conjunto de
 		!! elecciones. Si la entidad tiene definida la propiedad 'title', ésta
@@ -586,10 +588,10 @@ Class	ChoiceSet
 				print ": ";
 			}
 
-			!! Se calcula el número de elecciones del conjunto:
+			!! Se calcula el número de temas de la conversación:
 			size = self.get_size();
 
-			!! Se imprimen los mensajes previos al listado:
+			!! Se imprimen los mensajes previos al inventario:
 			if ((size == 0) && (CSET_NO_MSG ~= 0))
 				print (string) CSET_NO_MSG;
 			if ((size > 0) && (CSET_MSG1 ~= 0))
@@ -597,7 +599,7 @@ Class	ChoiceSet
 			if ((size > 1) && (CSET_MSG2 ~= 0))
 				print (string) CSET_MSG2;
 
-			!! Se recolocan las elecciones del conjunto de forma aleatoria:
+			!! Se recolocan los temas en la conversación de forma aleatoria:
 			for (i = size : i > 0 : i--) {
 				n = random(i);
 				choice = child(self);
@@ -610,7 +612,7 @@ Class	ChoiceSet
 			while (child(ChoiceBag)) move child(ChoiceBag) to self;
 
 			!! Por último se imprime el listado de ítems:
-			for (choice = child(self) : choice ~= nothing
+			for (choice = child(self) : choice~=nothing
 					: choice = sibling(choice)) {
 				PrintOrRun(choice, entry, true);
 				if (sibling(choice) ~= nothing) {
@@ -651,7 +653,7 @@ Class	ChoiceSet
 		time_left -1,
 		time_out [; self.remove_temporal_choice(); ],
  private
-		!! Guarda una elección temporal del conjunto
+		!! Guarda el tema temporal.
 		temporal_choice 0;
 
 
@@ -664,7 +666,7 @@ Class	ChoiceSet
 !!			ChoiceSetManager.run();
 !!		];
 !!------------------------------------------------------------------------------
-Object	ChoiceSetManager "(Choice Set Manager)"
+Object ChoiceSetManager "(ChoiceSet Manager)"
  with	!!----------------------------------------------------------------------
 		!! Retorna el valor de la propiedad 'choice_set_flag' utilizado por la
 		!! acción 'CSETSelected' para determinar si debe listar o no el
@@ -690,10 +692,7 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 		is_running [ choiceSet;
 			if (choiceSet ~= nothing) {
 				return self.current_choice_set == choiceSet;
-			}
-			else {
-				return self.current_choice_set == nothing;
-			}
+			} else return self.current_choice_set ~= nothing;
 		],
 		!!----------------------------------------------------------------------
 		!! Función principal del gestor. Comprueba si la entrada de usuario se
@@ -707,31 +706,35 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 		run [
 			o o_tmp_hits;
 			if (self.current_choice_set) {
+				if (self.current_choice_set.has_ended()) return false;
 
-				!! A) Inicializaciones de la función:
+				!! A) Inicializaciones del método:
 				self.choice_set_flag = false;
 				self.hits = 0;
 				self.selected_choice = 0;
 
 				!! B) Explora las elecciones del conjunto actual, comprobando
 				!! si alguna encaja con la entrada de usuario:
-				objectloop(o in self.current_choice_set) {
+				objectloop (o in self.current_choice_set) {
 					#Ifdef DEBUG_CHOICE_SET;
 					print "Probando: ", (string) o.entry, "... ";
 					#Endif; ! DEBUG_CHOICE_SET;
+
 					!! Se calcula el número de coincidencias de la elección en
 					!! relación al total de palabras de la entrada (en %):
 					o.compare_prompt();
 					o_tmp_hits = (o.hits*100) / num_words;
+
 					#Ifdef DEBUG_CHOICE_SET;
 					print "Ajuste de ", o.hits, " sobre ",
 					o.#keys / WORDSIZE, " palabras: ", o_tmp_hits, "%^";
 					#Endif; ! DEBUG_CHOICE_SET;
+
 					!! Si la elección coincide con más exactitud que la
 					!! mejor provisional:
 					if (o_tmp_hits > self.hits) {
 						self.hits = o_tmp_hits;
-						self.selected_choice = 0;
+						self.selected_choice = o;
 					}
 				}
 
@@ -740,22 +743,26 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 				!! procede), y se añaden las posibles sub-elecciones:
 				if (self.hits) {
 					#Ifdef DEBUG_CHOICE_SET;
-					print "Tema seleccionado: ";
-					print (string) self.selected_choice.entry, "^";
+					print "Tema seleccionado: ",
+					(string) self.selected_choice.entry, "^";
 					#Endif; ! DEBUG_CHOICE_SET;
+
 					!! Si no es persistente, la elección queda marcada como
 					!! tratada:
 					if (~~(self.selected_choice.persistent)) {
 						give self.selected_choice visited;
 					}
+
 					!! Acción al seleccionar la elección:
 					if (self.selected_choice.reply ~= 0) {
 						PrintOrRun(self.selected_choice, reply);
 					}
-					!! Se establece la propiedad *choice_set_flag* del gestor
+
+					!! Se establece la propiedad 'choice_set_flag' del gestor
 					!! en función de las propiedades de la elección:
-					self.choice_set_flag =
-						self.selected_choice.append_choice_set;
+					self.choice_set_flag
+						= self.selected_choice.append_choice_set;
+
 					!! La elección se elimina del conjunto si está agotada y
 					!! se añaden todas sus sub-elecciones (si tiene alguna):
 					if (self.selected_choice has visited) {
@@ -764,14 +771,17 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 					}
 					self.current_choice_set.add_subchoices(
 						self.selected_choice);
+
 					!! Acción después de tratar la elección:
 					if (self.selected_choice.reaction ~= 0) {
 						PrintOrRun(self.selected_choice, reaction);
 					}
+
 					!! Si es un ítem final, termina la selección:
 					if (self.selected_choice.final_choice) {
 						self.current_choice_set.end();
 					}
+
 					!! Se modifica la entrada de usuario para que la librería
 					!! lance la acción de apoyo ##CSETSelected (referenciada
 					!! por el verbo de apoyo 'cset.selected'):
@@ -804,9 +814,9 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 			#Endif; ! _TYPES_;
 			switch (CSET_STYLE) {
 			0:	!! Estilo: Romana
-				#Ifdef	TARGET_ZCODE;
-				font on; style roman;
-				#Ifnot;	! TARGET_GLULX;
+				#Ifdef TARGET_ZCODE;
+				font_on; style roman;
+				#Ifnot; ! TARGET_GLULX;
 				glk($0086, 0);
 				#Endif;	! TARGET_
 			1:	!! Estilo: Itálica
@@ -828,17 +838,14 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 				glk($0086, 2);
 				#Endif;	! TARGET_
 			}
-			if (CSET_PREFIX ~= 0) {
-				print (string) CSET_PREFIX;
-			}
+			if (CSET_PREFIX ~= 0) print (string) CSET_PREFIX;
 			self.current_choice_set.show_choice_set();
-			if (CSET_SUFIX ~= 0)
-				print (string) CSET_SUFIX;
+			if (CSET_SUFIX ~= 0) print (string) CSET_SUFIX;
 			#Ifdef	TARGET_ZCODE;		!!
 			font on; style roman;		!!
 			#Ifnot;	! TARGET_GLULX;		!! Romana
 			glk($0086, 0);				!!
-			#Endif;	! TARGET_			!!
+			#Endif; ! TARGET_			!!
 			#Ifdef _TYPES_;
 			SetTextStyle(st);
 			#Endif; ! _TYPES_;
@@ -847,10 +854,15 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 		],
 		!!----------------------------------------------------------------------
 		!! Inicia y deja activo en el gestor el conjunto de elecciones pasado
-		!! como parámetro. Si además se invoca con *no_action* verdadero, se
+		!! como parámetro. Si además se invoca con 'no_action' verdadero, se
 		!! evita la ejecución de las acciones asociadas a la activación (o
 		!! reactivación) del conjunto.
 		!!
+		!!	@param {ChoiceSet} choice_set - Conjunto de elecciones que se
+		!!		activa en el gestor
+		!!	@param {boolean} [no_action=false] - Si se invoca como verdadero,
+		!!		evita la ejecucción de las acciones asociadas con la activación
+		!!		y reactivación del conjunto
 		!!	@returns {boolean} Verdadero si el conjunto de elecciones se activa
 		!!		(o reactiva) correctamente. Falso si el conjunto no es válido o
 		!!		está marcado como agotado
@@ -860,7 +872,7 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 			if ((choice_set == 0) || ~~(choice_set ofclass ChoiceSet)) {
 				#Ifdef DEBUG_CHOICE_SET;
 				print "ERROR. El conjunto introducido no es válido.^";
-				#Endif; ! DEBUG_CHOICE_SET;
+				#Endif;
 				return false;
 			}
 			!! Si el conjunto está agotado, se ejecuta su acción final (si hay
@@ -906,20 +918,22 @@ Object	ChoiceSetManager "(Choice Set Manager)"
 		!!
 		!!	@returns {integer} Número de elecciones del conjunto activo
 		!!----------------------------------------------------------------------
-		choice_set_size [;
+		get_size [;
 			if (self.is_running()) return self.current_choice_set.get_size();
 			else return 0;
 		],
  private
-		!! Indica si hay que imprimir el listado de elecciones del conjunto
-		!! activo tras terminar de tratar alguna de las elecciones:
-		choice_set_flag false,
-		!! Conjunto de elecciones activo en el gestor:
-		current_choice_set 0,
-		!! Número de coincidencias de la elección con más coincidencias del
-		!! conjunto (en tanto por 100 sobre el número de palabras clave):
+		 !! Indica si hay que mostrar el inventario de temas al terminar de
+		 !! desarrollar uno de los temas de la conversación actual.
+		 choice_set_flag false,
+ 		!! Conversación actual activa en el gestor.
+ 		current_choice_set 0,
+		!! Número de coincidencias del tema con más coincidencias de la
+		!! conversación (en tanto por 100 sobre el número de palabras clave).
 		hits 0,
-		!! Elección con mayor porcentaje de coincidencias hasta el momento:
+
+		!! Tema con mayor porcentaje de coincidencias hasta el momento.
+		!! FIXME
 		selected_choice 0,
 ;
 
