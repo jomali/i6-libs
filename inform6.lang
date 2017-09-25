@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+ File:			inform6.lang
+ Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
+ Version:		1.3
+ Released:		2014/01/20
+
+ Para instalar este resaltado parcial de sintaxis de Inform 6 en GtkSourceView 
+ (utilizado entre otros por los editores de texto gedit y Anjuta), copia este 
+ archivo en la carpeta: </usr/share/gtksourceview-3.0/language-specs>.
+
+-->
+
+<language id="inform_6" _name="Inform 6" version="2.0" _section="Sources">
+
+  <metadata>
+    <property name="mimetypes">text/x-inform6</property>
+    <property name="globs">*.inf</property>
+    <property name="line-comment-start">!</property>
+  </metadata>
+
+  <styles>
+    <style  id="actions"    _name="Actions"     map-to="def:keyword" />
+    <style  id="attributes" _name="Attributes"  map-to="def:type" />
+    <style	id="boolean"	_name="Boolean"		map-to="def:boolean" />
+    <style  id="comment"    _name="Comment"     map-to="def:comment" />
+    <style  id="keyword"    _name="Keyword"     map-to="def:keyword" />
+    <style  id="name"       _name="Name"        map-to="def:character" />
+    <style	id="preprocessor" _name="Preprocessor" map-to="def:preprocessor" />
+    <style  id="properties" _name="Properties"  map-to="def:type" />
+    <style  id="string"     _name="String"      map-to="def:string" />
+  </styles>
+
+  <definitions>
+
+    <context id="actions" style-ref="actions">
+      <!-- 	GROUP 1 ACTIONS: Support 'meta' verbs. -->
+      <keyword>CommandsOff</keyword>
+      <keyword>CommandsOn</keyword>
+      <keyword>CommandsRead</keyword>
+      <keyword>FullScore</keyword>
+      <keyword>LMode1</keyword>
+      <keyword>LMode2</keyword>
+      <keyword>LMode3</keyword>
+      <keyword>NotifyOff</keyword>
+      <keyword>NotifyOn</keyword>
+      <keyword>Pronouns</keyword>
+      <keyword>Quit</keyword>
+      <keyword>Restart</keyword>
+      <keyword>Restore</keyword>
+      <keyword>Save</keyword>
+      <keyword>Score</keyword>
+      <keyword>ScriptOff</keyword>
+      <keyword>ScriptOn</keyword>
+      <keyword>Verify</keyword>
+      <keyword>Version</keyword>
+      <!-- 	GROUP 2 ACTIONS: Usually work, given the right circumstances. -->
+      <keyword>Close</keyword>
+      <keyword>Disrobe</keyword>
+      <keyword>Drop</keyword>
+      <keyword>Eat</keyword>
+      <keyword>Empty</keyword>
+      <keyword>EmptyT</keyword>
+      <keyword>Enter</keyword>
+      <keyword>Examine</keyword>
+      <keyword>Exit</keyword>
+      <keyword>GetOff</keyword>
+      <keyword>Give</keyword>
+      <keyword>Go</keyword>
+      <keyword>GoIn</keyword>
+      <keyword>Insert</keyword>
+      <keyword>Inv</keyword>
+      <keyword>InvTall</keyword>
+      <keyword>InvWide</keyword>
+      <keyword>Lock</keyword>
+      <keyword>Look</keyword>
+      <keyword>Open</keyword>
+      <keyword>Order</keyword>		<!-- Group 2? -->
+      <keyword>PutOn</keyword>
+      <keyword>Remove</keyword>
+      <keyword>Search</keyword>
+      <keyword>Show</keyword>
+      <keyword>SwitchOff</keyword>
+      <keyword>SwitchOn</keyword>
+      <keyword>Take</keyword>
+      <keyword>Transfer</keyword>
+      <keyword>Unlock</keyword>
+      <keyword>VagueGo</keyword>
+      <keyword>Wear</keyword>
+      <!-- GROUP 3 ACTIONS: Output a message and stop at the "before" stage. -->
+      <keyword>Answer</keyword>
+      <keyword>Ask</keyword>
+      <keyword>AskFor</keyword>
+      <keyword>Attack</keyword>
+      <keyword>Blow</keyword>
+      <keyword>Burn</keyword>
+      <keyword>Buy</keyword>
+      <keyword>Climb</keyword>
+      <keyword>Consult</keyword>
+      <keyword>Cut</keyword>
+      <keyword>Dig</keyword>
+      <keyword>Drink</keyword>
+      <keyword>Fill</keyword>
+      <keyword>Jump</keyword>
+      <keyword>JumpOver</keyword>
+      <keyword>Kiss</keyword>
+      <keyword>LetGo</keyword>
+      <keyword>Listen</keyword>
+      <keyword>LookUnder</keyword>
+      <keyword>Mild</keyword>
+      <keyword>No</keyword>
+      <keyword>Pray</keyword>
+      <keyword>Pull</keyword>
+      <keyword>Push</keyword>
+      <keyword>PushDir</keyword>
+      <keyword>Receive</keyword>
+      <keyword>Rub</keyword>
+      <keyword>Set</keyword>
+      <keyword>SetTo</keyword>
+      <keyword>Sing</keyword>
+      <keyword>Sleep</keyword>
+      <keyword>Smell</keyword>
+      <keyword>Sorry</keyword>
+      <keyword>Squeeze</keyword>
+      <keyword>Strong</keyword>
+      <keyword>Swim</keyword>
+      <keyword>Swing</keyword>
+      <keyword>Taste</keyword>
+      <keyword>Tell</keyword>
+      <keyword>Think</keyword>
+      <keyword>ThrowAt</keyword>
+      <keyword>Tie</keyword>
+      <keyword>Touch</keyword>
+      <keyword>Turn</keyword>
+      <keyword>Wait</keyword>
+      <keyword>Wake</keyword>
+      <keyword>WakeOther</keyword>
+      <keyword>Wave</keyword>
+      <keyword>WaveHands</keyword>
+      <keyword>Yes</keyword>
+      <!-- OTHER ACTIONS -->
+      <keyword>ListMiscellany</keyword>
+      <keyword>Miscellany</keyword>
+      <keyword>Objects</keyword>
+      <keyword>Places</keyword>
+      <keyword>Prompt</keyword>
+    </context>
+
+    <context id="custom_actions" style-ref="actions">
+      <!-- Acciones definidas en la extensión SpanishEG.h -->
+      <keyword>Dance</keyword>
+      <keyword>GoDown</keyword>
+      <keyword>GoUp</keyword>
+      <keyword>Iron</keyword>
+      <keyword>KnockOn</keyword>
+      <keyword>Masturbate</keyword>
+      <keyword>Read</keyword>
+      <keyword>Shout</keyword>
+      <keyword>Sit</keyword>
+      <keyword>SleepWith</keyword>
+      <keyword>StandUp</keyword>
+      <keyword>TalkTo</keyword>
+      <keyword>Untie</keyword>
+      <keyword>Use</keyword>
+      <keyword>Write</keyword>
+      <keyword>Xyzzy</keyword>
+      <!-- Otras acciones definidas aparte -->
+      <keyword>Audio</keyword>
+      <keyword>AudioOn</keyword>
+      <keyword>AudioOff</keyword>
+      <keyword>CloseX</keyword>
+      <keyword>DefaultAction</keyword>
+      <keyword>DisrobeX</keyword>
+      <keyword>GNA</keyword>
+      <keyword>Graphics</keyword>
+      <keyword>GraphicsOn</keyword>
+      <keyword>GraphicsOff</keyword>
+      <keyword>NoSuchVerb</keyword>
+      <keyword>OpenX</keyword>
+      <keyword>RemarkableObjects</keyword>
+      <keyword>TalkOn</keyword>
+      <keyword>TopicInventory</keyword>
+      <keyword>WearX</keyword>
+    </context>
+
+    <context id="attributes" style-ref="attributes">
+      <keyword>absent</keyword>
+      <keyword>animate</keyword>
+      <keyword>clothing</keyword>
+      <keyword>concealed</keyword>
+      <keyword>container</keyword>
+      <keyword>door</keyword>
+      <keyword>edible</keyword>
+      <keyword>enterable</keyword>
+      <keyword>female</keyword>
+      <keyword>general</keyword>
+      <keyword>light</keyword>
+      <keyword>lockable</keyword>
+      <keyword>locked</keyword>
+      <keyword>male</keyword>
+      <keyword>moved</keyword>
+      <keyword>neuter</keyword>
+      <keyword>on</keyword>
+      <keyword>open</keyword>
+      <keyword>openable</keyword>
+      <keyword>pluralname</keyword>
+      <keyword>proper</keyword>
+      <keyword>scenery</keyword>
+      <keyword>scored</keyword>
+      <keyword>static</keyword>
+      <keyword>supporter</keyword>
+      <keyword>switchable</keyword>
+      <keyword>talkable</keyword>
+      <keyword>transparent</keyword>
+      <keyword>visited</keyword>
+      <keyword>workflag</keyword>
+      <keyword>worn</keyword>
+	  <!-- Custom attributes -->
+	  <keyword>described</keyword>
+	  <keyword>remarkable</keyword>
+    </context>
+
+    <context id="boolean" style-ref="boolean">
+      <keyword>false</keyword>
+      <keyword>rfalse</keyword>
+      <keyword>rtrue</keyword>
+      <keyword>true</keyword>
+    </context>
+
+    <context id="comment" style-ref="comment">
+      <start>!</start>
+      <end>$</end>
+      <include>
+        <context ref="def:in-comment"/>
+      </include>
+    </context>
+
+<!-- DM4 #1.2: Hello World
+    <context id="statement" style-ref="keyword">
+      <keyword>box</keyword>
+      <keyword>break</keyword>
+      <keyword>continue</keyword>
+      <keyword>do</keyword>
+      <keyword>font</keyword>
+      <keyword>for</keyword>
+      <keyword>give</keyword>
+      <keyword>if</keyword>
+      <keyword>inversion</keyword>
+      <keyword>jump</keyword>
+      <keyword>move</keyword>
+      <keyword>new_line</keyword>
+      <keyword>objectloop</keyword>
+      <keyword>print</keyword>
+      <keyword>print_ret</keyword>
+      <keyword>quit</keyword>
+      <keyword>read</keyword>
+      <keyword>remove</keyword>
+      <keyword>restore</keyword>
+      <keyword>return</keyword>
+      <keyword>rfalse</keyword>
+      <keyword>rtrue</keyword>
+      <keyword>save</keyword>
+      <keyword>spaces</keyword>
+      <keyword>string</keyword>
+      <keyword>style</keyword>
+      <keyword>switch</keyword>
+      <keyword>while</keyword>
+    </context>
+-->
+
+    <context id="flow" style-ref="keyword">
+      <keyword>assert</keyword>
+      <keyword>break</keyword>
+      <keyword>case</keyword>
+      <keyword>catch</keyword>
+      <keyword>Class</keyword>
+      <keyword>class</keyword>
+      <keyword>continue</keyword>
+      <keyword>default</keyword>
+      <keyword>do</keyword>
+      <keyword>else</keyword>
+      <keyword>finally</keyword>
+      <keyword>for</keyword>
+      <keyword>has</keyword>
+      <keyword>hasnt</keyword>
+      <keyword>if</keyword>
+	  <keyword>in</keyword>
+	  <keyword>notin</keyword>
+      <keyword>private</keyword>
+      <keyword>return</keyword>
+      <keyword>switch</keyword>
+      <keyword>throw</keyword>
+      <keyword>try</keyword>
+      <keyword>while</keyword>
+      <keyword>with</keyword>
+    </context>
+
+    <context id="inform" style-ref="name">
+      <keyword>G_FEMENINO</keyword>
+      <keyword>G_MASCULINO</keyword>
+      <keyword>G_PLURAL</keyword>
+      <keyword>give</keyword>
+      <keyword>move</keyword>
+      <keyword>new_line</keyword>
+      <keyword>noun</keyword>
+      <keyword>print</keyword>
+      <keyword>print_ret</keyword>
+      <keyword>self</keyword>
+      <keyword>to</keyword>
+    </context>
+
+    <context id="name" end-at-line-end="true" style-ref="string">
+      <start>'</start>
+      <end>'</end>
+    </context>
+
+    <context id="properties" style-ref="properties">
+	  <!-- Compass directions -->
+      <keyword>n_to</keyword>
+      <keyword>s_to</keyword>
+      <keyword>e_to</keyword>
+      <keyword>w_to</keyword>
+      <keyword>ne_to</keyword>
+      <keyword>nw_to</keyword>
+      <keyword>se_to</keyword>
+      <keyword>sw_to</keyword>
+      <keyword>u_to</keyword>
+      <keyword>d_to</keyword>
+      <keyword>in_to</keyword>
+      <keyword>out_to</keyword>
+	  <!-- Common properties -->
+      <keyword>add_to_scope</keyword>
+      <keyword>after</keyword>
+      <keyword>article</keyword>
+      <keyword>articles</keyword>
+      <keyword>before</keyword>
+      <keyword>cant_go</keyword>
+      <keyword>capacity</keyword>
+      <keyword>daemon</keyword>
+      <keyword>describe</keyword>
+      <keyword>description</keyword>
+      <keyword>door_dir</keyword>
+      <keyword>door_to</keyword>
+      <keyword>each_turn</keyword>
+      <keyword>found_in</keyword>
+      <keyword>grammar</keyword>
+      <keyword>initial</keyword>
+      <keyword>inside_description</keyword>
+      <keyword>invent</keyword>
+      <keyword>life</keyword>
+      <keyword>list_together</keyword>
+	  <keyword>name</keyword>
+      <keyword>number</keyword>
+      <keyword>orders</keyword>
+      <keyword>parse_name</keyword>
+      <keyword>plural</keyword>
+      <keyword>react_after</keyword>
+      <keyword>react_before</keyword>
+      <keyword>short_name</keyword>
+      <keyword>short_name_indef</keyword>
+      <keyword>time_left</keyword>
+      <keyword>time_out</keyword>
+      <keyword>when_closed</keyword>
+      <keyword>when_open</keyword>
+      <keyword>when_on</keyword>
+      <keyword>when_off</keyword>
+      <keyword>with_key</keyword>
+	  <!-- INFSP properties -->
+      <keyword>adjectives</keyword>
+      <keyword>gender</keyword>
+      <keyword>name_m</keyword>
+      <keyword>name_f</keyword>
+      <keyword>name_mp</keyword>
+      <keyword>name_fp</keyword>
+	  <!-- Custom properties -->
+      <keyword>long_description</keyword>
+      <keyword>real_name</keyword>
+      <keyword>short_description</keyword>
+    </context>
+
+    <context id="string" end-at-line-end="false" style-ref="string">
+      <start>"</start>
+      <end>"</end>
+    </context>
+
+    <context id ="types" style-ref="name">
+      <keyword>emph</keyword>			<!-- types.h v.4.0 -->
+      <keyword>strong</keyword>			<!-- types.h v.4.0 -->
+      <keyword>code</keyword>			<!-- types.h v.4.0 -->
+      <keyword>parser</keyword>			<!-- types.h v.4.0 -->
+      <keyword>parser_line</keyword>	<!-- types.h v.4.1 -->
+      <keyword>em</keyword>				<!-- types.h v.4.0 -->
+      <keyword>ESB</keyword>			<!-- HelpRoutines, bold type -->
+      <keyword>ESI</keyword>			<!-- HelpRoutines, italic type -->
+    </context>
+
+    <context id="inform_6">
+      <include>
+        <context ref="actions"/>
+        <context ref="attributes"/>
+        <context ref="boolean"/>
+        <context ref="comment"/>
+        <context ref="custom_actions"/>
+        <context ref="def:decimal"/>
+        <context ref="def:float"/>
+        <context ref="flow"/>
+        <context ref="inform"/>
+        <context ref="name"/>
+        <context ref="properties"/>
+        <context ref="string"/>
+        <context ref="types"/>
+      </include>
+    </context>
+
+  </definitions>
+
+</language>
