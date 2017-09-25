@@ -1,0 +1,34 @@
+{
+  "name": "language-inform6",
+  "version": "0.3.0",
+  "description": "Inform 6 Language Support in Atom",
+  "engines": {
+    "atom": "*"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffnyman/language-inform6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jeffnyman/language-inform6/issues"
+  },
+  "license": "MIT",
+  "readme": "Inform 6 Language Grammar for Atom\n\n- Created by Jeff Nyman <jeffnyman@gmail.com>\n- https://github.com/jeffnyman/language-inform6\n- https://atom.io/packages/language-inform6\n\nThis package permits syntax coloring of [Inform 6][i6] source code in the [Atom][] editor. This should also work with compatible syntax colorers, like TextMate 2, with some appropriate changes for the particulars of how grammar files are specified.\n\nNote that this package does not deal with [Inform 7][i7]. Andrew Plotkin has already written an [Inform 7 language file][i7lang].\n\n[i6]: https://github.com/DavidKinder/Inform6\n[i7]: http://inform7.com/\n[i7lang]: https://github.com/erkyrath/language-inform7\n[atom]: https://atom.io/\n\nThis language extension correctly handles:\n\n- Comments\n- Strings (double and single)\n- Directives\n- Keywords\n- Function definitions\n\nNote that Inform 6 uses two file extensions, `inf` and `h`, that are very commonly used by multiple other languages.\n\nIf you want to customize what language package is used when loading a file of a certain extension, Atom can be configured to do this. You'll need to manually edit your Atom `config.cson` file and add this if you want Inform 6 to be the default:\n\n    \"*\":\n      core:\n        customFileTypes:\n          \"source.inform6\": [\n            \"inf\"\n            \"h\"\n          ]",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/jeffnyman/language-inform6#readme",
+  "_id": "language-inform6@0.3.0",
+  "_shasum": "63632a5336a1221fae4c3730304186f991f18a63",
+  "_resolved": "file:../d-117220-8698-1vnuexd/package.tgz",
+  "_from": "../d-117220-8698-1vnuexd/package.tgz",
+  "_atomModuleCache": {
+    "version": 1,
+    "dependencies": [],
+    "extensions": {
+      ".json": [
+        "package.json"
+      ]
+    },
+    "folders": []
+  }
+}

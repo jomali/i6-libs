@@ -1,0 +1,68 @@
+'scopeName': 'source.inform6'
+'name': 'Inform 6'
+'fileTypes': [
+	'inf'
+	'h'
+]
+'patterns': [
+  {
+    'name': 'meta.function.inform'
+    'match': '(?:\\s*)\\[(?:\\s*)(.*)(?:\\s*)'
+    'captures':
+      '1':
+        'name': 'entity.name.function.inform6'
+  },
+  {
+    'begin': '(^[ \\t]+)?(?=!)'
+    'end': '(?!\\G)'
+    'beginCaptures':
+      '1':
+        'name': 'punctuation.whitespace.comment.leading.inform6'
+    'patterns': [
+      'name': 'comment.line.exclamation.inform6'
+      'begin': '!'
+      'end': '\\n'
+      'beginCaptures':
+        '0':
+          'name': 'punctuation.definition.comment.inform6'
+    ]
+  },
+  {
+    'name': 'keyword.control.inform6'
+    'match': '\\b(box|break|continue|do|else|font(\\s+)(on|off)|for|give|if|jump|new_line|objectloop|print|print_ret|remove|return|rfalse|rtrue|spaces|string|style(\\s+)(roman|bold|underline|reverse|fixed)|switch|until|while|has|hasnt|with|in|notin|ofclass|provides|or|;)\\b'
+  },
+  {
+    'name': 'keyword.other.directive.inform6'
+    'match': '\\b(Abbreviate|Array|Attribute|Class|Constant|Default|End|Endif|Extend|Global|Ifdef|Ifndef|Ifnot|Iftrue|Iffalse|Import|Include|Link|Lowstring|Message|Object|Property|Release|Replace|Serial|Switches|Statusline(\\s+)(score|time)|System_file|Verb|Zcharacter)\\b'
+  },
+  {
+    'name': 'constant.numeric.inform6'
+    'match': '\\b((\\$[0-9a-fA-F]*)|(([0-9]+\\.?[0-9]*)|(\\.[0-9]+))((e|E)(\\+|-)?[0-9]+)?)(L|l|UL|ul|u|U|F|f)?\\b'
+  },
+  {
+    'name': 'string.quoted.double.inform6'
+    'begin': '"'
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.inform6'
+    'end': '"'
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.inform6'
+  },
+  {
+    'name': 'string.quoted.single.inform6'
+    'begin': "'"
+    'beginCaptures':
+      '0':
+        'name': 'punctuation.definition.string.begin.inform6'
+    'end': "'"
+    'endCaptures':
+      '0':
+        'name': 'punctuation.definition.string.end.inform6'
+    'patterns': [
+      'name': 'constant.character.escape.inform6'
+      'match': '\\.'
+    ]
+  }
+]
