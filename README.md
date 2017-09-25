@@ -25,6 +25,10 @@ Relación de extensiones incluidas:
 
 Otras herramientas:
 
+- **language-inform6**: Paquete con la definición parcial de la gramática de Inform 6 para el editor de texto Atom. *Autor(es): J. Francisco Martín*.
+
+- **inform6.lang**: Definición parcial del resaltado de sintaxis de Inform 6 en *GtkSourceView* (utilizado entre otros por los editores de texto gedit y Anjuta). Para utilizarlo, se debe copiar este fichero en el directorio: `/usr/share/gtksourceview-3.0/language-specs`. *Autor(es): J. Francisco Martín*.
+
 - **Preprocesador de texto**: Script Perl para preprocesar un archivo de texto. Sustituye ciertas etiquetas de texto por funciones definidas dentro del relato para manipular el estilo de los textos, listar objetos contenidos por otro objeto, o crear hipervínculos, por ejemplo. *Autor(es): J. Francisco Martín*.
 
 Incluye además un directorio *discarded* con algunas extensiones no analizadas, pero que pueden implementar conceptos y soluciones de interés.
