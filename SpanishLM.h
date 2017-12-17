@@ -1921,7 +1921,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subimos";
 							else print "Subo";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entramos";
 							else print "Entro";
@@ -1932,7 +1932,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subís";
 							else print "Subes";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entráis";
 							else print "Entras";
@@ -1943,7 +1943,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Suben";
 							else print "Sube";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entran";
 							else print "Entra";
@@ -1954,7 +1954,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subimos";
 							else print "Subí";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entramos";
 							else print "Entré";
@@ -1965,7 +1965,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subisteis";
 							else print "Subiste";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entrasteis";
 							else print "Entraste";
@@ -1976,7 +1976,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subieron";
 							else print "Subió";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entraron";
 							else print "Entró";
@@ -1987,7 +1987,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subiremos";
 							else print "Subiré";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entraremos";
 							else print "Entraré";
@@ -1998,7 +1998,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subiréis";
 							else print "Subirás";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entraréis";
 							else print "Entrarás";
@@ -2009,7 +2009,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "Subirán";
 							else print "Subirá";
-							print " ", (al_) x1;
+							print " ", (al) x1;
 						} else {
 							if (IsPluralNoun(player)) print "Entrarán";
 							else print "Entrará";
@@ -2091,13 +2091,13 @@ Verb	meta 'gramatica' 'grammar'
 							else print "(Saldrá";
 						}
 				}
-				" ", (del_) x1, ").";
+				" ", (del) x1, ").";
 			7:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Nos subimos";
 							else print "(Me subo";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Nos metemos";
 							else print "(Me meto";
@@ -2109,7 +2109,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Os subís";
 							else print "(Te subes";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Os metéis";
 							else print "(Te metes";
@@ -2121,7 +2121,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Se suben";
 							else print "(Se sube";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Se meten";
 							else print "(Se mete";
@@ -2133,7 +2133,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Nos subimos";
 							else print "(Me subí";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Nos metimos";
 							else print "(Me metí";
@@ -2145,7 +2145,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Os subisteis";
 							else print "(Te subiste";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Os metisteis";
 							else print "(Te metiste";
@@ -2157,7 +2157,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Se subieron";
 							else print "(Se subió";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Se metieron";
 							else print "(Se metió";
@@ -2169,7 +2169,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Nos subiremos";
 							else print "(Me subiré";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Nos meteremos";
 							else print "(Me meteré";
@@ -2181,7 +2181,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Os subiréis";
 							else print "(Te subirás";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Os meteréis";
 							else print "(Te meterás";
@@ -2193,7 +2193,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (x1 has supporter) {
 							if (IsPluralNoun(player)) print "(Se subirán";
 							else print "(Se subirá";
-							" ", (al_) x1, ").^";
+							" ", (al) x1, ").^";
 						} else if (x1 has container) {
 							if (IsPluralNoun(player)) print "(Se meterán";
 							else print "(Se meterá";
@@ -2285,7 +2285,7 @@ Verb	meta 'gramatica' 'grammar'
 				print " ";
 				LanguageVerb(verb_word);
 				".";
-			2:	print "No ", (lm_puedes) player, " salir ", (del_) x1,
+			2:	print "No ", (lm_puedes) player, " salir ", (del) x1,
 				" porque ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2376,11 +2376,11 @@ Verb	meta 'gramatica' 'grammar'
 							else print "Saldrá";
 						}
 				}
-				" ", (del_) x1, ".";
+				" ", (del) x1, ".";
 			4:	print "No ", (lm_puedes) player, ". No ", (lm_estas) player," ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
-				" ", (del_) x1, ".";
+				" ", (del) x1, ".";
 		}
 
 	Fill:
@@ -2467,11 +2467,11 @@ Verb	meta 'gramatica' 'grammar'
 			1:	print (lm_ttienes) player, " que ";
 				if (x1 has supporter) print "bajar", (lm_te) player;
 				else print "salir";
-				" ", (del_) x1, " antes.";
+				" ", (del) x1, " antes.";
 			2:	"No ", (lm_puedes) player, " ir por ahí.";
 			3:	"", (lm_eeres) player, " incapaz de trepar por ", (the) x1, ".";
 			4:	"", (lm_eeres) player, " incapaz de bajar por ", (the) x1, ".";
-			5:	"No ", (lm_puedes) player, " pasar a través ", (del_) x1, ".";
+			5:	"No ", (lm_puedes) player, " pasar a través ", (del) x1, ".";
 			6:	print "No ", (lm_puedes) player, " ir porque ", (the) x1," no ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -2649,7 +2649,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "podrán";
 				}
-				" meter cosas dentro ", (del_) x1, ".";
+				" meter cosas dentro ", (del) x1, ".";
 			3:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -2716,7 +2716,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (IsPluralNoun(player)) print "Meterán";
 						else print "Meterá";
 				}
-				" ", (the) x1, " dentro ", (del_) second, ".";
+				" ", (the) x1, " dentro ", (del) second, ".";
 		}
 
 	Inv:
@@ -2957,17 +2957,17 @@ Verb	meta 'gramatica' 'grammar'
 						print " que contendrá", (n) x1, " ";
 			}
 			!! encabezado a la lista de lo que hay dentro del objeto
-			19: print " (sobre ", (el_) x1;
+			19: print " (sobre ", (the) x1;
 			!! Si el objeto tiene "soporte", la librería va a listar sus
 			!! contenidos. Este es el encabezado de la lista
-			20: print ", encima ", (del_) x1;
+			20: print ", encima ", (del) x1;
 			!! Como e l9, pero en otra modalidad (que se activa si
 			!! EscribirListaDesde es llamada sin el modo BREVE_BIT)
-			21: print " (en ", (el_) x1;
+			21: print " (en ", (the) x1;
 			!! Si el contenido tiene "recipiente" y puede verse su interior
 			!! y hay cosas, la librería va a mostrar sus contenidos. Este
 			!! es el encabezado de la lista
-			22: print ", dentro ", (del_) x1;
+			22: print ", dentro ", (del) x1;
 			!! Como el 21, pero en otra modalidad (que se activa si
 			!! EscribirListaDesde es llamada sin el modo BREVE_BIT)
 		}
@@ -3159,7 +3159,7 @@ Verb	meta 'gramatica' 'grammar'
 							else print "Echará";
 						}
 				}
-				" el cerrojo ", (al_) x1, ".";
+				" el cerrojo ", (al) x1, ".";
 		}
 
 	Look:
@@ -3889,7 +3889,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "en ese momento";
 				}
-				print " dentro ", (del_) x1, ")";
+				print " dentro ", (del) x1, ")";
 			9:	print "   (";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -4683,47 +4683,47 @@ Verb	meta 'gramatica' 'grammar'
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "podemos";
 						else print "puedo";
-						" ver lo que hay dentro ", (del_) x1, " porque
+						" ver lo que hay dentro ", (del) x1, " porque
 						está", (n) x1, " cerrad", (o) x1, ".";
 					SECOND_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "podéis";
 						else print "puedes";
-						" ver lo que hay dentro ", (del_) x1, " porque
+						" ver lo que hay dentro ", (del) x1, " porque
 						está", (n) x1, " cerrad", (o) x1, ".";
 					THIRD_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "pueden";
 						else print "puede";
-						" ver lo que hay dentro ", (del_) x1, " porque
+						" ver lo que hay dentro ", (del) x1, " porque
 						está", (n) x1, " cerrad", (o) x1, ".";
 					FIRST_PERSON_PAST:
 						if (IsPluralNoun(player)) print "podíamos";
 						else print "podía";
-						" ver lo que había dentro ", (del_) x1, " porque
+						" ver lo que había dentro ", (del) x1, " porque
 						estaba", (n) x1, " cerrad", (o) x1, ".";
 					SECOND_PERSON_PAST:
 						if (IsPluralNoun(player)) print "podíais";
 						else print "podías";
-						" ver lo que había dentro ", (del_) x1, " porque
+						" ver lo que había dentro ", (del) x1, " porque
 						estaba", (n) x1, " cerrad", (o) x1, ".";
 					THIRD_PERSON_PAST:
 						if (IsPluralNoun(player)) print "podían";
 						else print "podía";
-						" ver lo que había dentro ", (del_) x1, " porque
+						" ver lo que había dentro ", (del) x1, " porque
 						estaba", (n) x1, " cerrad", (o) x1, ".";
 					FIRST_PERSON_FUTURE:
 						if (IsPluralNoun(player)) print "podremos";
 						else print "podré";
-						" ver lo que haya dentro ", (del_) x1, " porque
+						" ver lo que haya dentro ", (del) x1, " porque
 						estará", (n) x1, " cerrad", (o) x1, ".";
 					SECOND_PERSON_FUTURE:
 						if (IsPluralNoun(player)) print "podréis";
 						else print "podrás";
-						" ver lo que haya dentro ", (del_) x1, " porque
+						" ver lo que haya dentro ", (del) x1, " porque
 						estará", (n) x1, " cerrad", (o) x1, ".";
 					THIRD_PERSON_FUTURE:
 						if (IsPluralNoun(player)) print "podrán";
 						else print "podrá";
-						" ver lo que haya dentro ", (del_) x1, " porque
+						" ver lo que haya dentro ", (del) x1, " porque
 						estará", (n) x1, " cerrad", (o) x1, ".";
 				}
 			6:	switch (_grammatical_inflection) {
@@ -5161,31 +5161,31 @@ Verb	meta 'gramatica' 'grammar'
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "No creemos";
 						else print "No creo";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					SECOND_PERSON_PRESENT:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creéis";
 						else print "crees";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					THIRD_PERSON_PRESENT:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					FIRST_PERSON_PAST:
 						if (IsPluralNoun(player)) print "No creíamos";
 						else print "No creía";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					SECOND_PERSON_PAST:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creíais";
 						else print "creías";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					THIRD_PERSON_PAST:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					FIRST_PERSON_FUTURE:
 						if (IsPluralNoun(player)) print "No lo creeremos";
 						else print "No lo creeré";
@@ -5202,7 +5202,7 @@ Verb	meta 'gramatica' 'grammar'
 			4:	print (lm_ttienes) player, " que ";
 				if (x1 has supporter) print "bajar", (lm_te) player;
 				else print "salir";
-				"", (del_) x1, " antes.";
+				"", (del) x1, " antes.";
 			5:	"Ya ", (lm_tienes) player, " ", (the) x1, ".";
 			6:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
@@ -5218,7 +5218,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "Parecerá", (n) noun;
 				}
-				" pertenecer ", (al_) x1, ".";
+				" pertenecer ", (al) x1, ".";
 			7:	switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -5233,7 +5233,7 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print "Parecerá", (n) noun;
 				}
-				" formar parte ", (del_) x1, ".";
+				" formar parte ", (del) x1, ".";
 			8:	print "No ";
 				switch (_grammatical_inflection) {
 						FIRST_PERSON_PRESENT,
@@ -5405,31 +5405,31 @@ Verb	meta 'gramatica' 'grammar'
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "No creemos";
 						else print "No creo";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					SECOND_PERSON_PRESENT:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creéis";
 						else print "crees";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					THIRD_PERSON_PRESENT:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creen";
 						else print "cree";
-						" que ", (al_) x1, " le", (s) x1, " gustara.";
+						" que ", (al) x1, " le", (s) x1, " gustara.";
 					FIRST_PERSON_PAST:
 						if (IsPluralNoun(player)) print "No creíamos";
 						else print "No creía";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					SECOND_PERSON_PAST:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creíais";
 						else print "creías";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					THIRD_PERSON_PAST:
 						print "En realidad no ";
 						if (IsPluralNoun(player)) print "creían";
 						else print "creía";
-						" que ", (al_) x1, " le", (s) x1, " hubiese gustado.";
+						" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 					FIRST_PERSON_FUTURE:
 						if (IsPluralNoun(player)) print "No lo creeremos";
 						else print "No lo creeré";
@@ -5547,7 +5547,7 @@ Verb	meta 'gramatica' 'grammar'
 					}
 					" encajar en la cerradura.";
 				} else "Necesit", (lm_as) player, " algún tipo de llave.";
-			4:	print "Quit", (lm_as_) player, " el cerrojo ", (al_) x1;
+			4:	print "Quit", (lm_as_) player, " el cerrojo ", (al) x1;
 				if (second) " con ", (the) second, ".";
 				".";
 		}
