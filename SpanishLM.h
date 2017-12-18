@@ -387,7 +387,9 @@ Property inhibit_object_list; ! boolean
 
 !!==============================================================================
 !! Similar a la rutina 'lm_as()', con el verbo 'estar'.
-!! FIXME
+!! FIXME - Modificar rutinas lm_estas y lm_eres para que se comporten igual
+!! (imprimir el verbo completo o la terminación, crear formas con la primera
+!! letra en mayúscula...)
 !!
 !!	@param {Object} obj
 !!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
