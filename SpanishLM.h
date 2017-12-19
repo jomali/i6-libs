@@ -1421,12 +1421,12 @@ Verb	meta 'gramatica' 'grammar'
 
 	CommandsRead:
 		switch (n) { ![6/11]
-			1:	"[Relanzando acciones.]";
+			1:	"[Reejecutando órdenes...]";
 			#Ifdef TARGET_GLULX;
 			2:	"[Las órdenes ya están siendo relanzadas.]";
 			3:	"[Fallo en la reejecución de órdenes: grabación en curso.]";
 			4:	"[Fallo en la reejecución de órdenes.]";
-			5:	"[Acciones ejecutadas: fin del proceso.]";
+			5:	"[Reejecución de órdenes: fin del proceso.]";
 			#Endif; ! TARGET_
 		}
 
