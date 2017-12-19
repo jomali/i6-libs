@@ -4584,17 +4584,17 @@ Verb	meta 'gramatica' 'grammar'
 		switch (n) {
 			1:	"[La transcripción ya estaba desactivada].";
 			2:	new_line; "[Fin de la transcripción].";
-			3:	"[Intento fallido de finalización de transcripción].";
+			3:	"[Error al intentar finalizar la transcripción].";
 		}
 
 	ScriptOn:
 		!!	1:	Error, ya estaba activada la transcrcipción.
-		!!	2:	Éxito (parte inicial del mensaje, la librería añade el título
-		!!		del juego obtenido de la constante Historia).
+		!!	2:	Éxito (parte inicial del mensaje, la librería imprime a
+		!!		continuación un 'Banner' con los créditos de la aplicación.
 		switch (n) {
 			1:	"[La transcripción ya estaba activada].";
-			2:	"[Iniciando la transcripción de]:";
-			3:	"[Intento fallido de comienzo de la transcripción].";
+			2:	"[Iniciando transcripción...]";
+			3:	"[Error al intentar iniciar la transcripción].";
 		}
 
 	Search:
