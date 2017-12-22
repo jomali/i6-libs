@@ -41,7 +41,7 @@
 !!	PERSONA), 3 (PRESENTE 3ª PERSONA), 4 (PASADO 1ª PERSONA), 5 (PASADO 2ª
 !!	PERSONA) o 6 (PASADO 3ª PERSONA) para modificar la conjugación gramatical
 !!	de los mensajes de la librería. Si no se define ninguna
-!!	'_grammatical_inflection', la librería interpreta que se usa el valor 2:
+!!	'_grammatical_inflection', la librería interpreta que se usa el valor 2 y
 !!	los mensajes de "SpanishEG.h" se imprimen en presente y segunda persona.
 !!
 !!
@@ -120,7 +120,8 @@ Verb	'muerde'
 	* edible						-> Eat
 !	* animate						-> Attack
 !	* 'a' animate					-> Attack
-; VerboIrregular "morder" with imperativo 'muerde';
+;
+VerboIrregular "morder" with imperativo 'muerde';
 
 Extend	'salta'
 	* 'en' noun						-> JumpOver
