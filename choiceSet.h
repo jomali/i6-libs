@@ -40,6 +40,8 @@
 !!
 !!	# HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2017/12/28	Corrección en el cambio de estilo de texto en Máquina-Z
+!!	1.0: 2017/09/21	Versión inicial.
 !!	0.0: 2016/07/24	Inicio de la adaptación de la extensión 'topicInventory'
 !!					v2.2 para generalizar el sistema de conversación con
 !!					inventario de temas.
@@ -815,7 +817,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			switch (CSET_STYLE) {
 			0:	!! Estilo: Romana
 				#Ifdef TARGET_ZCODE;
-				font_on; style roman;
+				font on; style roman;
 				#Ifnot; ! TARGET_GLULX;
 				glk($0086, 0);
 				#Endif;	! TARGET_
