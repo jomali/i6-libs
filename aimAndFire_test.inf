@@ -1,0 +1,89 @@
+!% +language_name=Spanish
+
+
+!!==============================================================================
+!!
+!!	AIM AND FIRE: PRUEBAS
+!!	Sistema de apuntado y disparo multiplataforma
+!!
+!!==============================================================================
+!!
+!!	File:			aimAndFire_test.inf
+!!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Language:		ES (Castellano)
+!!	System:			Inform-INFSP 6
+!!	Platform:		Máquina-Z / GLULX
+!!	Version:		1.0
+!!	Released:		2018/01/16
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	Copyright (c) 2018, J. Francisco Martín
+!!
+!!	Este programa es software libre: usted puede redistribuirlo y/o
+!!	modificarlo bajo los términos de la Licencia Pública General GNU
+!!	publicada por la Fundación para el Software Libre, ya sea la versión
+!!	3 de la Licencia, o (a su elección) cualquier versión posterior.
+!!
+!!	Este programa se distribuye con la esperanza de que sea útil, pero
+!!	SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o
+!!	de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia Pública General GNU para más información.
+!!
+!!	Debería haber recibido una copia de la Licencia Pública General GNU
+!!	junto a este programa. En caso contrario, consulte
+!!	<http://www.gnu.org/licenses/>.
+!!
+!!------------------------------------------------------------------------------
+
+
+Constant Story "~Aim & Fire~: Pruebas";
+Constant Headline "^Sistema de apuntado y disparo multiplataforma^";
+Constant DEBUG_AIMANDFIRE;
+
+Include "Parser.h";
+Include "aimAndFire.h";
+Include "VerbLib.h";
+
+Object	LOCALIDAD "Espacio de pruebas"
+ with	description
+			"Puedes utilizar dos acciones distintas: ~DISPARA~ para lanzar el
+			sistema de apuntado y disparo; y ~DIFICULTAD <NUM>~, con NUM
+			comprendido entre [0, 100], para modificar la dificultad del
+			sistema.",
+ has	light;
+
+[ HandleGlkEvent ev;
+	if (ev-->0 == 1) ! evtype_Timer
+		AimingManager.tick();
+];
+
+[ Initialise;
+	location = LOCALIDAD;
+	lookmode = 2;
+];
+
+Include "SpanishG.h";
+
+Verb	'dificultad'
+	* number						-> Difficulty
+;
+
+Verb	'dispara'
+	*								-> Shoot
+;
+
+[ DifficultySub;
+	if (noun < 0 || noun > 100) {
+		"Introduce un número comprendido entre 0 y 100.";
+	}
+	AimingManager.set_difficulty(noun);
+	"Nuevo nivel de dificultad establecido: ", noun;
+];
+
+[ ShootSub
+	i;
+	print "Dificultad del disparo: ", AimingManager.get_difficulty(), "^";
+	i = AimingManager.aim_and_fire();
+	"Resultado: ", i;
+];
