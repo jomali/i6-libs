@@ -112,15 +112,42 @@
 !!	# OBJETO GESTOR
 !!
 !!	La extensión define un objeto gestor 'AimingManager' en el que se
-!!	implementan todas las funcionalidades del sistema. En la propia definición
-!!	del objeto se incluye documentación exhaustiva sobre la interfaz que ofrece
-!!	al desarrollador de relatos interactivos.
+!!	implementan todas las funcionalidades del sistema. A continuación se ofrece
+!!	una relación de métodos que conforman la interfaz pública del gestor. En la
+!!	propia definición del objeto se incluye documentación exhaustiva:
+!!
+!!	-	aim_and_fire(probabilistic:boolean, reset_position_flag:boolean)
+!!			: integer
+!!	-	get_delay_value() : integer
+!!	-	get_difficulty() : integer
+!!	-	get_format_type() : integer
+!!	-	get_grid() : String|integer
+!!	-	get_grid_max_vx_factor() : integer
+!!	-	get_grid_min_vx() : integer
+!!	-	get_iron_sight_distance() : integer
+!!	-	get_iron_sight_symbol() : character|integer
+!!	-	get_status_window() : Object
+!!	-	reset()
+!!	-	set_delay_value(a:integer) : integer
+!!	-	set_difficulty(a:integer) : integer
+!!	-	set_format_type(a:integer) : integer
+!!	-	set_grid(a:String) : String|integer
+!!	-	set_grid_max_vx_factor(a:integer) : integer
+!!	-	set_grid_min_vx(a:integer) : integer
+!!	-	set_iron_sight_distance(a:integer) : integer
+!!	-	set_iron_sight_symbol(a:character) : character|integer
+!!	-	set_status_window(a:Object) : Object
+!!	-	tick() : boolean
 !!
 !!------------------------------------------------------------------------------
 System_file;
 
 !! Descomentar para obtener información de depuración:
 ! Constant DEBUG_AIMANDFIRE;
+
+!! Array para operar con cadenas de caracteres:
+Constant _AIM_AND_FIRE_BUFFER_SIZE = 16;
+Array _aim_and_fire_temp_buffer --> _AIM_AND_FIRE_BUFFER_SIZE;
 
 !! Objeto gestor del sistema
 Object	AimingManager "(Aiming Manager)"
@@ -168,13 +195,27 @@ Object	AimingManager "(Aiming Manager)"
 		!!		formato del sistema
 		!!----------------------------------------------------------------------
 		aim_and_fire [ probabilistic reset_position_flag
-			status_window_width result;
+			status_window_width i result;
 			#Ifdef TARGET_ZCODE;
 			probabilistic = true;
 			#Endif; ! TARGET_ZCODE;
 			!! MODO DE OPERACIÓN 1 ---------------------------------------------
+			!! FIXME - Comprobar lógica. Es posible conseguir aciertos con
+			!! dificultad = 100
 			if (probabilistic) {
-				!! FIXME - Modo de operación probabilista
+				!! Acierto:
+				if (random(100) > self.difficulty) {
+					i = self.iron_sight_distance + 1;
+					result = random(i) - 1;
+				}
+				!! Fallo:
+				else {
+					glk($0025, self.status_window, gg_arguments,
+						gg_arguments + 4);
+					status_window_width = gg_arguments-->0;
+					i = status_window_width - self.iron_sight_distance;
+					result = random(i);
+				}
 			}
 			!! MODO DE OPERACIÓN 0 ---------------------------------------------
 			else {
@@ -205,51 +246,106 @@ Object	AimingManager "(Aiming Manager)"
 				!! estado:
 				glk($0025, self.status_window, gg_arguments, gg_arguments + 4);
 				status_window_width = gg_arguments-->0;
-				result = (self.grid_x/1000) + 1 - (status_window_width / 2);
+				result = (self.grid_x / 1000) + (self.grid_length / 2)
+					- (status_window_width / 2);
 				if (result < 0) result = -result;
 				!! Retorna el resultado de la operación con el formato adecuado:
 				#Ifdef DEBUG_AIMANDFIRE;
-				print "** AIM&FIRE: Resultados... **^";
-				print "** Posición final de la retícula: ", result, " **^";
-				print "** Ancho de la ventana/Medio: ", status_window_width,
-				" / ", (status_window_width/2), " **^";
-				print "** Resultado: ", self.format_result(result), " **^";
+				print "** AIM&FIRE: Pos. final retícula = ", result, " **^";
+				print "** AIM&FIRE: Ancho ventana = ", status_window_width,
+					" / ", (status_window_width/2), " **^";
+				print "** AIM&FIRE: Resultado = ", self.format_result(result),
+					" **^";
 				#Endif; ! DEBUG_AIMANDFIRE;
-				return self.format_result(result);
 			}
+			return self.format_result(result);
 		],
 		!!----------------------------------------------------------------------
 		!!	@returns {integer} Milisegundos que se sigue mostrando la posición
-		!!		final de la retícula una vez detenida la animación de apuntado
+		!!		final de la retícula una vez detenida la animación de apuntado.
+		!!		-1 en Máquina-Z
 		!!----------------------------------------------------------------------
-		get_delay_value [; return self.delay_value; ],
+		get_delay_value [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.delay_value;
+			#Endif; ! TARGET_
+		],
 		!!----------------------------------------------------------------------
 		!!	@returns {integer} Dificultad establecida en el sistema
 		!!----------------------------------------------------------------------
-		get_difficulty [; return self.difficulty; ],
+		get_difficulty [;
+			return self.difficulty;
+		],
 		!!----------------------------------------------------------------------
 		!!	@returns {integer} Tipo de formato de los resultados establecido en
 		!!		el sistema [0-1]
 		!!----------------------------------------------------------------------
-		get_format_type [; return format_type; ],
+		get_format_type [;
+			return format_type;
+		],
 		!!----------------------------------------------------------------------
-		!!	@returns {String|integer} Retícula de apuntado
+		!!	@returns {String|integer} Retícula de apuntado. -1 en Máquina-Z
 		!!----------------------------------------------------------------------
-		get_grid [; return self.grid; ],
+		get_grid [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.grid;
+			#Endif; ! TARGET_
+		],
+		!!----------------------------------------------------------------------
+		!!	@returns {integer} Factor de multiplicación a la velocidad mínima
+		!!		con el que se calcula la velocidad máxima de la retícula. -1
+		!!		en Máquina-Z
+		!!----------------------------------------------------------------------
+		get_grid_max_vx_factor [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.grid_max_vx_factor;
+			#Endif; ! TARGET_
+		],
+		!!----------------------------------------------------------------------
+		!!	@returns {integer} Velocidad mínima de la retícula. -1 en Máquina-Z
+		!!----------------------------------------------------------------------
+		get_grid_min_vx [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.grid_min_vx;
+			#Endif; ! TARGET_
+		],
 		!!----------------------------------------------------------------------
 		!!	@returns {integer} Distancia al centro de la ventana de estado, en
-		!!		número de columnas, a la que se imprimen las guías centrales
+		!!		número de columnas, a la que se imprimen las guías centrales.
+		!!		-1 en Máquina-Z
 		!!----------------------------------------------------------------------
-		get_iron_sight_distance [; return self.iron_sight_distance; ],
+		get_iron_sight_distance [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.iron_sight_distance;
+			#Endif; ! TARGET_
+		],
 		!!----------------------------------------------------------------------
 		!!	@returns {character|integer} Caracter con el que se representan las
-		!!		guías centrales
+		!!		guías centrales. -1 en Máquina-Z
 		!!----------------------------------------------------------------------
-		get_iron_sight_symbol [; return self.iron_sight_symbol; ],
+		get_iron_sight_symbol [;
+			#Ifdef TARGET_ZCODE;
+			return -1;
+			#Ifnot; ! TARGET_GLULX;
+			return self.iron_sight_symbol;
+			#Endif; ! TARGET_
+		],
 		!!----------------------------------------------------------------------
 		!!	@returns {Object} Ventana de estado establecida en el sistema
 		!!----------------------------------------------------------------------
-		get_status_window [; return self.status_window; ],
+		get_status_window [;
+			return self.status_window;
+		],
 		!!----------------------------------------------------------------------
 		!! Reestablece los parámetros iniciales del sistema.
 		!!----------------------------------------------------------------------
@@ -258,11 +354,14 @@ Object	AimingManager "(Aiming Manager)"
 			self.difficulty = self.initial_difficulty;
 			self.format_type = self.initial_format_type;
 			self.grid = self.initial_grid;
-			self.grid_length = self.initial_grid_length;
+			self.grid_max_vx_factor = self.initial_grid_max_vx_factor;
+			self.grid_min_vx = self.initial_grid_min_vx;
 			self.grid_vx = self.initial_grid_vx;
 			self.grid_x = self.initial_grid_x;
+			self.grid_length = self.initial_grid_length;
 			self.iron_sight_distance = self.initial_iron_sight_distance;
 			self.iron_sight_symbol = self.initial_iron_sight_symbol;
+			self.motion_type = self.initial_motion_type;
 			self.status_window = self.initial_status_window;
 		],
 		!!----------------------------------------------------------------------
@@ -288,8 +387,8 @@ Object	AimingManager "(Aiming Manager)"
 		!! del movimiento previo de modo que el nuevo valor tenga el mismo
 		!! sentido (mismo signo).
 		!!
-		!!	@param {integer} difficulty - Valor comprendido en el rango [0-100]
-		!!		que se establece como nueva dificultad del sistema
+		!!	@param {integer} a - Valor comprendido en el rango [0-100] que se
+		!!		establece como nueva dificultad del sistema
 		!!	@returns {integer} El valor de dificultad previo. -1 si el
 		!!		parámetro 'a' se sale del rango válido y no se produce el
  		!!		cambio de dificultad
@@ -333,8 +432,43 @@ Object	AimingManager "(Aiming Manager)"
 			result;
 			result = self.grid;
 			#Ifdef TARGET_GLULX;
-			!! FIXME - Debe calcularse el ancho de la nueva retícula
 			self.grid = a;
+			PrintToBuffer(
+				_aim_and_fire_temp_buffer, _AIM_AND_FIRE_BUFFER_SIZE, a);
+			self.grid_length = _aim_and_fire_temp_buffer->(WORDSIZE-1);
+			#Ifdef DEBUG_AIMANDFIRE;
+			print "** AIM&FIRE: Retícula/Tam. = ", (string) self.grid, " / ",
+				self.grid_length, " **^";
+			#Endif; ! DEBUG_AIMANDFIRE;
+			#Endif; ! TARGET_GLULX;
+			return result;
+		],
+		!!----------------------------------------------------------------------
+		!! Establece el factor de multiplicación a la velocidad mínima con el
+		!! que se calcula la velocidad máxima de la retícula.
+		!!
+		!!	@param {integer} a - Nuevo factor de multiplicación
+		!!	@returns {integer} El factor de multiplicación previo
+		!!----------------------------------------------------------------------
+		set_grid_max_vx_factor [ a
+			result;
+			result = self.grid_max_vx_factor;
+			#Ifdef TARGET_GLULX;
+			self.grid_max_vx_factor = a;
+			#Endif; ! TARGET_GLULX;
+			return result;
+		],
+		!!----------------------------------------------------------------------
+		!! Establece la velocidad mínima de la retícula.
+		!!
+		!!	@param {integer} a - Nueva velocidad mínima de la retícula
+		!!	@returns {integer} La velocidad mínima previa de la retícula
+		!!----------------------------------------------------------------------
+		set_grid_min_vx [ a
+			result;
+			result = self.grid_min_vx;
+			#Ifdef TARGET_GLULX;
+			self.grid_min_vx = a;
 			#Endif; ! TARGET_GLULX;
 			return result;
 		],
@@ -399,7 +533,6 @@ Object	AimingManager "(Aiming Manager)"
 		!!----------------------------------------------------------------------
 		tick [
 			status_window_width;
-			print "* ", self.grid_x, " / ", (self.grid_x/1000), " *^";
 			#Ifdef TARGET_ZCODE;
 			return false;
 			#Ifnot; ! TARGET_GLULX;
@@ -420,6 +553,10 @@ Object	AimingManager "(Aiming Manager)"
 					0:	self.update_grid_position_LM(status_window_width);
 					1:	self.update_grid_position_SHM(status_window_width);
 				}
+				#Ifdef DEBUG_AIMANDFIRE;
+				print "** AIM&FIRE: Pos. retícula = ", self.grid_x, " / ",
+					(self.grid_x/1000), " **^";
+				#Endif; ! DEBUG_AIMANDFIRE;
 				self.draw_aiming_line(status_window_width);
 			}
 			!! Tras ser detenida, la posición final de la retícula aún se
@@ -427,7 +564,8 @@ Object	AimingManager "(Aiming Manager)"
 			else {
 				self.draw_aiming_line(status_window_width);
 				self.delay_counter++;
-				if (self.delay_counter > self.delay_value) {
+				if (self.delay_counter > self.delay_value
+					/ self.timer_frequency) {
 					glk(214, 0); ! glk_request_timer_events(0)
 					self.delay_counter = 0;
 					give self ~on;
@@ -440,9 +578,17 @@ Object	AimingManager "(Aiming Manager)"
 		!!----------------------------------------------------------------------
 		!! MÉTODOS PRIVADOS:
 		!!----------------------------------------------------------------------
-		!! FIXME - Documentación
+		!! Dibuja la animación de apuntado.
+		!!
+		!!	@param {integer} status_window_width - Ancho de la ventana de estado
+		!!	@returns {boolean} Verdadero si imprime el estado actual de la
+		!!		animación con éxito. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		draw_aiming_line [ status_window_width;
+			!! En Máquina-Z, retorna
+			#Ifdef TARRGET_ZCODE;
+			return false;
+			#Endif; ! TARGET_ZCODE;
 			!! Si no hay ventana de estado definida, retorna
 			if (self.status_window == 0) {
 				#Ifdef DEBUG_AIMANDFIRE;
@@ -453,7 +599,11 @@ Object	AimingManager "(Aiming Manager)"
 			}
 			!! Inicializa la ventana de estado
 			glk($002F, self.status_window); ! set_window
-			!! TODO - ¿Establecer alto de la ventana con StatusLineHeight()?
+			!! TODO - Las ventanas de estado tienen habitualmente una altura de
+			!! 1 fila, pero pueden ser mayores. Actualmente la animación se
+			!! imprime en la primera fila de la ventana de estado. Añadir
+			!! lógica para imprimir la animación en el centro de la ventana de
+			!! estado cuando ésta tiene un tamaño superior a 1 fila.
 			glk($002A, self.status_window); ! window_clear
 			!! Imprime las guías
 			glk($002B, self.status_window, ((status_window_width / 2)
@@ -470,28 +620,38 @@ Object	AimingManager "(Aiming Manager)"
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! FIXME - Documentación
+		!! Formatea el resultado de la operación de apuntado y disparo de
+		!! acuerdo al formato establecido en el sistema (consultar
+		!! documentación del atributo 'format_type').
+		!!
+		!!	@param {integer} a - Valor absoluto en número de columnas de la
+		!!		distancia entre la posición final de la retícula y el centro de
+		!!		la ventana de estado
+		!!	@returns {integer} Resultado de la operación de apuntado y disparo
+		!!		formateado adecuadamente
 		!!----------------------------------------------------------------------
-		format_result [ raw
+		format_result [ a
 			result;
 			switch (self.format_type) {
 				0:	! División de la ventana de estado en zonas
-					if (raw == 0) result = 0;
-					else if (raw <= self.iron_sight_distance) result = 1;
-					else if (raw <= (self.iron_sight_distance * 4)) result = -2;
+					if (a == 0) result = 0;
+					else if (a <= self.iron_sight_distance) result = 1;
+					else if (a <= (self.iron_sight_distance * 4)) result = -2;
 					else result = -3;
 				1:	! División de la ventana de estado en columnas
-					if (raw <= self.iron_sight_distance) result = raw;
-					else result = -raw;
+					if (a <= self.iron_sight_distance) result = a;
+					else result = self.iron_sight_distance - a;
 			}
 			return result;
 		],
 		!!----------------------------------------------------------------------
 		!! Actualiza la posición de la retícula (Movimiento Rectilíneo
 		!! Uniforme).
+		!!
+		!!	@param {integer} status_window_width - Ancho de la ventana de estado
 		!!----------------------------------------------------------------------
 		update_grid_position_LM [ status_window_width; ! Linear Motion
-			if ((self.grid_x/1000) < 0 || (self.grid_x/1000)
+			if ((self.grid_x / 1000) < 0 || (self.grid_x / 1000)
 				> status_window_width - self.grid_length) {
 				self.grid_vx = self.grid_vx * -1;
 			}
@@ -504,10 +664,12 @@ Object	AimingManager "(Aiming Manager)"
 		!! temporizador glk, de modo que no se produjesen saltos entre
 		!! posiciones consecutivas y simplemente se modificase el número de
 		!! ticks de reloj en cada posición.
+		!!
+		!!	@param {integer} status_window_width - Ancho de la ventana de estado
 		!!----------------------------------------------------------------------
-		update_grid_position_SHM [ ! Simple Harmonic Motion
+		update_grid_position_SHM [ status_window_width ! Simple Harmonic Motion
 			i ini sini aux gp;
-			i = ini + sini + aux + gp;
+			status_window_width = i + ini + sini + aux + gp;
 			!! aux = WIN_WIDTH/2;
 			!! @numtof aux ini; ! ini: centro de la ventana
 			!! @numtof GRID_COUNTER i; ! i: contador
@@ -530,14 +692,16 @@ Object	AimingManager "(Aiming Manager)"
 		!!----------------------------------------------------------------------
 		!! Número de milisegundos que se sigue mostrando la posición final de
 		!! la retícula tras haber detenido la animación:
-		delay_value 100, initial_delay_value 100,
+		delay_value 1000,
+		initial_delay_value 1000,
 		!! Valor numérico comprendido en el rango [0-100] que expresa la
 		!! dificultad para conseguir un acierto;
 		!!	-	En GLULX afecta a la velocidad de movimiento de la retícula;
 		!!		con 0 indicando velocidad mínima, y 100 velocidad máxima.
 		!!	-	En Máquina-Z afecta a la probabilidad P(Q) de NO conseguir un
 		!!		resultado positivo: P(Q) = 1 - difficulty/100
-		difficulty 50, initial_difficulty 50,
+		difficulty 50,
+		initial_difficulty 50,
 		!! Indicador del formato utilizado para los resultados de la operación
 		!! de apuntado y disparo:
 		!!	0)	División de la ventana de estado en las siguientes zonas:
@@ -558,45 +722,62 @@ Object	AimingManager "(Aiming Manager)"
 		!!		operación 0, usando una animación interactiva, el resultado es
 		!!		la distancia absoluta en número de columnas de la posición
 		!!		final en la que se ha detenido la retícula y el centro de la
-		!!		ventana de estado. Con valores positivos si se ha detenido a
-		!!		una distancia igual o inferior a la delimitada por las guías
-		!!		centrales, y valores negativos en caso contrario. En el modo de
-		!!		operación 1, probabilista, el resultado se selecciona
+		!!		ventana de estado si se ha producido un acierto; o la distancia
+		!!		absoluta con valor negativo entre la posición final de la
+		!!		retícula y la posición de la guía central más próxima. En el
+		!!		modo de operación 1, probabilista, el resultado se selecciona
 		!!		aleatoriamente de entre el conjunto [0, iron_sight_distance],
-		!!		si es un acierto, y entre (iron_sight_distance, <ancho de la
-		!!		ventana de estado>], con valor negativo, si es un fallo.
-		format_type 0, initial_format_type 0,
+		!!		si es un acierto, y entre (0, <ancho de la ventana de estado> -
+		!!		iron_sight_distance), con valor negativo, si es un fallo.
+		format_type 0,
+		initial_format_type 0,
 		!! Cadena que forma la retícula de apuntado:
-		grid "[+]", initial_grid "[+]",
-		!! Factor de multiplicación de la velocidad mínima con el que se
-		!! calcula la velocidad máxima de la retícula:
+		grid "[+]",
+		initial_grid "[+]",
+		!! Factor de multiplicación a la velocidad mínima con el que se calcula
+		!! la velocidad máxima (con 'difficulty' == 100) de la retícula, de
+		!! forma que la velocidad máxima es 'grid_min_vx * grid_max_vx_factor':
 		grid_max_vx_factor 25, initial_grid_max_vx_factor 25,
-		!! Velocidad actual de la retícula (valor/1000):
-		grid_vx 0, initial_grid_vx 0,
+		!! Velocidad mínima (con 'difficulty' == 0) de la retícula:
+		grid_min_vx 60, initial_grid_min_vx 60,
+		!! Velocidad actual de la retícula. Es relativa a la frecuencia con que
+ 		!! se activa el temporizador Glk e indica el número de columnas que se
+		!! mueve la retícula en cada evento del temporizador a razón
+		!! 'grid_vx/1000':
+		grid_vx 0,
+		initial_grid_vx 0,
 		!! Posición de la retícula (valor/1000):
-		grid_x 0, initial_grid_x 0,
+		grid_x 0,
+		initial_grid_x 0,
 		!! Longitud de la retícula en número de caracteres:
-		grid_length 3, initial_grid_length 3,
+		grid_length 3,
+		initial_grid_length 3,
 		!! Distancia al centro de la ventana de estado en número de columnas a
 		!! la que se imprimen las guías centrales (valor absoluto utilizado por
 		!! las dos guías; en positivo y negativo):
-		iron_sight_distance 3, initial_iron_sight_distance 3,
+		iron_sight_distance 3,
+		initial_iron_sight_distance 3,
 		!! Caracter con el que se representan las guías centrales:
-		iron_sight_symbol '·', initial_iron_sight_symbol '·',
-		!! Ventana de estado sobre la que se muestra la animación de apuntado:
-		status_window 0, initial_status_window 0,
-		!!----------------------------------------------------------------------
-		!! Velocidad mínima de la retícula (valor/1000):
-		grid_min_vx 120,
-		!! Contador interno:
-		delay_counter 0,
-		!! Indica si el usuario ha detenido la animación de la retícula:
-		end_flag false,
-		!! Frecuencia con que se activa el temporizador glk (ms):
+		iron_sight_symbol '·',
+		initial_iron_sight_symbol '·',
 		!! Código numérico del tipo de movimiento de la animación de apuntado:
 		!!	0)	Movimiento Rectilíneo Uniforme
 		!!	1)	Movimiento Armónico Simple
 		motion_type 0,
-		!! Frecuencia con que se activa el temporizador Glk (en ms):
-		timer_frequency 16,
+		initial_motion_type 0,
+		!! Ventana de estado sobre la que se muestra la animación de apuntado:
+		status_window 0,
+		initial_status_window 0,
+		!!----------------------------------------------------------------------
+		!! Contador interno para la pausa final de la animación:
+		delay_counter 0,
+		!! Indica si el usuario ha detenido la animación de la retícula:
+		end_flag false,
+		!! Frecuencia con que se activa el temporizador Glk (en ms). Puesto que
+		!! la ventana de estado se divide en columnas y no en píxeles es
+		!! imposible conseguir una animación fluida. Para aumentar el número de
+		!! columnas en las que se hace impresión e intentar reducir mínimamente
+		!! el movimiento entrecortado de la animación se dobla el objetivo
+		!! habitual de 60 FPS:
+		timer_frequency 8, ! 125 FPS
 ;

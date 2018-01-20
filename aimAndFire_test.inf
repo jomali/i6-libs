@@ -40,6 +40,7 @@
 Constant Story "~Aim & Fire~: Pruebas";
 Constant Headline "^Sistema de apuntado y disparo multiplataforma^";
 Constant DEBUG_AIMANDFIRE;
+Global _grid = 0;
 
 Include "Parser.h";
 Include "aimAndFire.h";
@@ -47,10 +48,18 @@ Include "VerbLib.h";
 
 Object	LOCALIDAD "Espacio de pruebas"
  with	description
-			"Puedes utilizar dos acciones distintas: ~DISPARA~ para lanzar el
-			sistema de apuntado y disparo; y ~DIFICULTAD <NUM>~, con NUM
-			comprendido entre [0, 100], para modificar la dificultad del
-			sistema.",
+			"Puedes utilizar las siguientes acciones:^
+			<> ~ANIMACIÓN <NUM>~: Lanza el sistema de apuntado y disparo basado
+			en la animación de la retícula (sólo en GLULX). Con NUM=0 para
+			reiniciar la posición de la retícula cada acción; NUM=1 para
+			utilizar como punto inicial la posición final de la retícula en la
+ 			operación anterior.^
+			<> ~DIFICULTAD <NUM>~: Con NUM comprendido entre [0, 100], para
+			modificar la dificultad del sistema.^
+			<> ~PROBABILISTA~: Lanza el sistema de apuntado y disparo basado en
+			el método de operación probabilista.^
+			<> ~RETÍCULA~: Alterna entre los distintos tipos de retícula
+			predefinidos ---+, [+], | -- |---.",
  has	light;
 
 [ HandleGlkEvent ev;
@@ -65,13 +74,26 @@ Object	LOCALIDAD "Espacio de pruebas"
 
 Include "SpanishG.h";
 
+Verb	'animacion'
+	* number						-> Animation
+;
+VerboIrregular "lanzar mecanismo de apuntado y disparo basado en animación
+	interactiva" with imperativo 'animacion';
+
+[ AnimationSub
+	flag i;
+	if (noun < 0 || noun > 1) "Introduce 0 o 1.";
+	if (noun == 1) flag = true;
+	print "Dificultad del disparo: ", AimingManager.get_difficulty(), "^";
+	i = AimingManager.aim_and_fire(false, flag);
+	"Resultado: ", i;
+];
+
 Verb	'dificultad'
 	* number						-> Difficulty
 ;
-
-Verb	'dispara'
-	*								-> Shoot
-;
+VerboIrregular "establecer dificultad del sistema de apuntado y disparo"
+	with imperativo 'dificultad';
 
 [ DifficultySub;
 	if (noun < 0 || noun > 100) {
@@ -81,9 +103,31 @@ Verb	'dispara'
 	"Nuevo nivel de dificultad establecido: ", noun;
 ];
 
-[ ShootSub
+Verb	'reticula'
+	*								-> Grid
+;
+VerboIrregular "modificar la retícula de apuntado" with imperativo 'reticula';
+
+[ GridSub;
+	_grid++;
+	if (_grid > 2) _grid = 0;
+	switch (_grid) {
+		0:	AimingManager.set_grid("[+]");
+		1:	AimingManager.set_grid("+");
+		2:	AimingManager.set_grid("| -- |");
+	}
+	"Nueva retícula establecida.";
+];
+
+Verb	'probabilista'
+	* 								-> Probabilistic
+;
+VerboIrregular "lanzar mecanismo de apuntado y disparo basado en modo
+	probabilista" with imperativo 'probabilista';
+
+[ ProbabilisticSub
 	i;
 	print "Dificultad del disparo: ", AimingManager.get_difficulty(), "^";
-	i = AimingManager.aim_and_fire();
+	i = AimingManager.aim_and_fire(true);
 	"Resultado: ", i;
 ];
