@@ -1,0 +1,142 @@
+!% +language_name=Spanish
+
+
+!!==============================================================================
+!!
+!!	TEXT STYLES: PRUEBAS
+!!	Interfaz biplataforma para la selección de estilos de texto
+!!
+!!==============================================================================
+!!
+!!	File:			textStyles_test.inf
+!!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Language:		ES (Español)
+!!	System:			Inform-INFSP 6
+!!	Platform:		Máquina-Z / GLULX
+!!	Version:		1.0
+!!	Released:		2018/02/28
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	Copyright (c) 2018, J. Francisco Martín
+!!
+!!	Este programa es software libre: usted puede redistribuirlo y/o
+!!	modificarlo bajo los términos de la Licencia Pública General GNU
+!!	publicada por la Fundación para el Software Libre, ya sea la versión
+!!	3 de la Licencia, o (a su elección) cualquier versión posterior.
+!!
+!!	Este programa se distribuye con la esperanza de que sea útil, pero
+!!	SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o
+!!	de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia Pública General GNU para más información.
+!!
+!!	Debería haber recibido una copia de la Licencia Pública General GNU
+!!	junto a este programa. En caso contrario, consulte
+!!	<http://www.gnu.org/licenses/>.
+!!
+!!------------------------------------------------------------------------------
+
+
+Constant Story
+"~Text Styles~: Pruebas";
+
+Constant Headline
+"^Interfaz biplataforma para la selección de estilos de texto^";
+
+Constant TEXT_STYLE_PARSER_PREFIX "-- ";
+Constant TEXT_STYLE_PARSER_STYLE TEXT_STYLE_MONOSPACED;
+
+Include "Parser.h";
+Include ">textStyles.h";
+Include "VerbLib.h";
+
+#Ifdef TARGET_GLULX;
+[ InitGlkWindow winrock;
+	TextFormatter.initialise_style_hints(winrock);
+
+	return false;
+];
+#Endif; ! TARGET_GLULX;
+
+[ Initialise
+	i;
+	Banner();
+	new_line;
+
+	for (i = 0 : i <= TEXT_STYLE_USER2 : i++) {
+		switch (i) {
+			TEXT_STYLE_HEADER:
+				TextFormatter.use_header();
+				print "Ejemplo de estilo ", (emphasis) "header";
+			TEXT_STYLE_IMPORTANT:
+				TextFormatter.use_important();
+				print "Ejemplo de estilo ", (emphasis) "important";
+			TEXT_STYLE_INPUT:
+				TextFormatter.use_input();
+				print "Ejemplo de estilo ", (emphasis) "input";
+			TEXT_STYLE_MONOSPACED:
+				TextFormatter.use_monospaced();
+				print "Ejemplo de estilo ", (emphasis) "monospaced";
+			TEXT_STYLE_NOTE:
+				TextFormatter.use_note();
+				print "Ejemplo de estilo ", (emphasis) "note";
+			TEXT_STYLE_QUOTE:
+				TextFormatter.use_quote();
+				print "Ejemplo de estilo ", (emphasis) "quoted";
+			TEXT_STYLE_REVERSED:
+				TextFormatter.use_reversed();
+				print "Ejemplo de estilo ", (emphasis) "reversed";
+			TEXT_STYLE_STRESSED:
+				TextFormatter.use_stressed();
+				print "Ejemplo de estilo ", (emphasis) "stressed";
+			TEXT_STYLE_UPRIGHT:
+				TextFormatter.use_upright();
+				print "Ejemplo de estilo ", (emphasis) "upright";
+			TEXT_STYLE_USER1:
+				TextFormatter.use_user1();
+				print "Ejemplo de estilo ", (emphasis) "user 1";
+			TEXT_STYLE_USER2:
+				TextFormatter.use_user2();
+				print "Ejemplo de estilo ", (emphasis) "user 2";
+		}
+		print " con el nombre del estilo enfatizado.^";
+	}
+	new_line;
+
+	for (i = 0 : i <= TEXT_STYLE_USER2 : i++) {
+		TextFormatter.use(i);
+		print "Ejemplo de estilo ";
+		switch (i) {
+			TEXT_STYLE_HEADER:
+				print (strong) "header";
+			TEXT_STYLE_IMPORTANT:
+				print (strong) "important";
+			TEXT_STYLE_INPUT:
+				print (strong) "input";
+			TEXT_STYLE_MONOSPACED:
+				print (strong) "monospaced";
+			TEXT_STYLE_NOTE:
+				print (strong) "note";
+			TEXT_STYLE_QUOTE:
+				print (strong) "quoted";
+			TEXT_STYLE_REVERSED:
+				print (strong) "reversed";
+			TEXT_STYLE_STRESSED:
+				print (strong) "stressed";
+			TEXT_STYLE_UPRIGHT:
+				print (strong) "upright";
+			TEXT_STYLE_USER1:
+				print (strong) "user 1";
+			TEXT_STYLE_USER2:
+				print (strong) "user 2";
+		}
+		print " con el nombre del estilo destacado.^";
+	}
+	new_line;
+
+	print (parser) "Pulsa una tecla para salir.";
+	KeyCharPrimitive();
+	quit;
+];
+
+Include "SpanishG.h";

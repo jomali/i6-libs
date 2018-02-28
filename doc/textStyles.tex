@@ -1,0 +1,449 @@
+\documentclass[a4paper,12pt]{article}
+
+%%
+%%	EXTENSIÓN 'TEXT STYLES'
+%%	Interfaz biplataforma para la selección de estilos de texto
+%%  J. Francisco Martín Lisaso - 2018/02/27
+%%
+
+%% ============================================================================
+
+%% Paquetes:
+
+%% *** LANGUAGE PACKAGES ******************************************************
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+%% *** MISC UTILITY PACKAGES **************************************************
+
+\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+%% *** GRAPHICS RELATED PACKAGES **********************************************
+
+\ifpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{{./res/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpeg,.jpg,.pdf,.png,.eps}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/tex-archive/info/epslatex/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+%% *** MATH TOOLS *************************************************************
+
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+
+\usepackage{amsmath}
+
+\numberwithin{equation}{section}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%% *** OTHER PACKAGES *********************************************************
+
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{fancyhdr}
+
+%% ============================================================================
+
+% Figures and tables captions:
+
+\RequirePackage[labelfont={bf,sf,small},%
+                labelsep=period,%
+                justification=raggedright]{caption}
+%\setlength{\abovecaptionskip}{0pt}
+%\setlength{\belowcaptionskip}{0pt}
+
+%% Título:
+
+\title{\vspace{-3cm}Extensión `Text Styles' \\
+    \Large{Interfaz biplataforma para la selección de estilos de texto}}
+\author{
+	\small{\textbf{Autor(es):} J. Francisco Martín}\\
+	\small{\textbf{Idioma:} ES (Español)}\\
+	\small{\textbf{Sistema:} Inform-INFSP 6}\\
+	\small{\textbf{Plataforma:} Máquina-Z/Glulx}\\
+	\small{\textbf{Versión (extensión):} 1.0}\\
+	\small{\textbf{Versión (documentación):} 1.0}\\
+	\small{\textbf{Última revisión del documento:} 2018/02/28}
+}
+\date{}
+
+%% Redefiniciones:
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\refname}{Referencias}
+
+%% Encabezado (fancyhdr):
+
+\pagestyle{fancy}
+\lhead{\footnotesize{Extensión ``Text Styles"}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+%% Inicio del documento:
+
+\begin{document}
+\maketitle
+
+%%
+
+\section{Introducción} \label{sec:introduccion}
+
+En el sistema Inform, la selección del estilo con el que se imprime texto no es un aspecto específico de su lenguaje de programación sino que está estrechamente ligado a la máquina virtual sobre la que se ejecuta el software. Así, no sólo los códigos de operación para cambiar de estilo en Máquina-Z y Glulx son distintos, sino que también lo es la cantidad total de estilos de texto disponibles en una y otra. De acuerdo con la especificación de la máquina virtual existe un total de cinco estilos en Máquina-Z\cite{NF14} (algunos intérpretes pueden reconocer combinaciones entre ellos, pero éstas no forman parte del estándar):
+
+\begin{itemize}
+	\item Normal.
+	\item Negrita (\emph{Bold}).
+	\item Itálica / Subrayada (\emph{Italic / Underline}).
+	\item Invertida (\emph{Reverse}).
+	\item Ancho-fijo (\emph{Fixed-width}).
+\end{itemize}
+
+En Glulx, por su parte, al hacer uso de la librería de entrada/salida Glk, el conjunto de estilos disponibles se extiende hasta los once\cite{PLO17}:
+
+\begin{itemize}
+	\item Normal.
+	\item Enfático (\emph{Emphasized}).
+	\item Preformateado (\emph{Preformatted}).
+	\item Titular (\emph{Header}).
+	\item Subtitular (\emph{Subheader}).
+	\item Alerta (\emph{Alert}).
+	\item Nota (\emph{Note}).
+	\item Cita (\emph{BlockQuote}).
+	\item Entrada (\emph{Input}).
+	\item Usuario1 (\emph{User1}).
+	\item Usuario2 (\emph{User2}).
+\end{itemize}
+
+La librería Inform permite la compilación biplataforma gracias al uso de directivas condicionales del compilador, de manera que se pueden utilizar los códigos de operación para selección de estilo apropiados de cada máquina virtual. Además, dado que el número de estilos diponibles en una y otra es diferente, se establece una función sobreyectiva de correspondencia entre ellas, de modo que cuando se utilizan los estilos \emph{Titular}, \emph{Subtitular} o \emph{Alerta} al compilar para Glulx, por ejemplo, la librería emplea simplemente el estilo \emph{Negrita} al compilar para Máquina-Z. En el cuadro\ref{table:correspondencias-estilos-glulx-z} se detallan estas correspondencias de estilos utilizadas por la librería ---los estilos \emph{User1} y \emph{User2} no se listan en el cuadro debido a que la librería no los usa---.
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Estilo Glulx}	& \textbf{Estilo Máquina-Z}		\\ \hline
+Normal					& Normal						\\
+Emphasized				& Italic						\\
+Preformatted			& Fixed-width					\\
+Header					& Bold							\\
+Subheader				& Bold							\\
+Alert					& Bold							\\
+Note					& Normal						\\
+BlockQuote				& \emph{sin correspondencia}	\\
+Input					& \emph{sin correspondencia}	\\ \hline
+\end{tabular}
+\caption{Correspondencias de estilos en la librería Inform biplataforma}
+\label{table:correspondencias-estilos-glulx-z}
+\end{table}
+
+El objetivo de \textbf{textStyles} es abstraer el proceso de selección de estilos y ofrecer al autor de ficción interactiva una interfaz trasparente con la que pueda trabajar sin necesidad de atender a la plataforma para la que está desarrollando la aplicación.
+
+%%
+
+\section{Instalación} \label{sec:instalacion}
+
+Para utilizar la extensión basta con añadir la siguiente línea en el fichero principal de la aplicación, inmediatamente después de la línea \verb|Include "Parser";|:
+
+\begin{verbatim}
+Include "textStyles";
+\end{verbatim}
+
+Opcionalmente en Glulx, además, es posible inicializar algunas sugerencias sobre el aspecto de los distintos estilos de texto de la extensión. Desde el propio sistema Inform no puede determinarse la apariencia final de los estilos de texto puesto que esta responsabilidad recae exclusivamente en el programa intérprete, pero sí es posible definir un conjunto de sugerencias que pueden ser tenidas en cuenta por él. Es necesario realizar estas sugerencias antes de la creación de la ventana principal de la obra; habitualmente se recomienda utilizar el punto de entrada Glk \verb|InitGlkWindow(winrock)|, invocado cada vez que la librería se encarga de establecer una de las ventanas estándar de la aplicación\cite{PLO02}:
+
+\begin{verbatim}
+#Ifdef TARGET_GLULX;
+[ InitGlkWindow winrock;
+    !! Sugerencias de aspecto de `textStyles':
+    TextFormatter.set_style_hints(winrock);
+    !! Espacio para sugerencias de aspecto del autor y
+    !! para el resto de contenidos de InitGlkWindow:
+    [...]
+    !! Se continúa con el proceso normal de la librería:
+    return false;
+];
+#Endif; ! TARGET_GLULX;
+\end{verbatim}
+
+
+%%
+
+\section{Relación de estilos} \label{sec:relacion-estilos}
+
+\subsection{Estilos básicos} \label{sec:estilos-basicos}
+
+Basándose en la especificación de Glulx/Glk, \textbf{textStyles} define once estilos básicos. A la hora de determinar con qué estilos concretos de Máquina-Z se corresponden se ha seguido en general el mismo ejemplo de la librería Inform, con excepciones para los estilos \emph{Note} ---en el que se ha explotado la capacidad de algunos intérpretes de Máquina-Z para combinar estilos\footnote{En caso de que el intérprete de Máquina-Z utilizado siga el estándar y no permita combinaciones de estilos simplemente se utiliza \emph{Italic}.}--- y \emph{Reversed} ---en la librería Inform se utiliza \emph{Alert} para imprimir el mensaje final de la obra en Glulx, sin embargo se utiliza \emph{Bold} en vez de \emph{Reverse} para ese mismo mensaje en Máquina-Z---.
+
+Como se puede observar en el cuadro\ref{table:text-styles-estilos-basicos} cada estilo de \textbf{textStyles} se identifica con un código numérico entero. Se facilita el siguiente conjunto de constantes con el que se puede hacer referencia a estos códigos:
+
+\begin{itemize}
+	\item \verb|TEXT_STYLE_UPRIGHT = 0|
+	\item \verb|TEXT_STYLE_STRESSED = 1|
+	\item \verb|TEXT_STYLE_IMPORTANT = 2|
+	\item \verb|TEXT_STYLE_MONOSPACED = 3|
+	\item \verb|TEXT_STYLE_REVERSED = 4|
+	\item \verb|TEXT_STYLE_HEADER = 5|
+	\item \verb|TEXT_STYLE_NOTE = 6|
+	\item \verb|TEXT_STYLE_QUOTE = 7|
+	\item \verb|TEXT_STYLE_INPUT = 8|
+	\item \verb|TEXT_STYLE_USER1 = 9|
+	\item \verb|TEXT_STYLE_USER2 = 10|
+\end{itemize}
+
+\begin{table}[]
+\centering
+\begin{tabular}{llll}
+\hline
+\textbf{\#} &\textbf{Text Styles} & \textbf{Estilo Glulx} & \textbf{Estilo Máquina-Z} \\ \hline
+$0$		& Upright		& Normal		& Normal		\\
+$1$		& Stressed		& Emphasized	& Italic		\\
+$2$		& Important		& Subheader		& Bold			\\
+$3$		& Monospaced	& Preformatted	& Fixed-width	\\
+$4$		& Header		& Header		& Bold			\\
+$5$		& Note			& Note			& Bold e Italic	\\
+$6$		& Reversed		& Alert			& Reverse		\\
+$7$		& Quote			& BlockQuote	& Fixed-width	\\
+$8$		& Input			& Input			& Bold			\\
+$9$		& User1			& User1			& Normal		\\
+$10$	& User2			& User2			& Normal		\\ \hline
+\end{tabular}
+\caption{Estilos de \emph{textStyles} y sus correspondencias en Glulx y Máquina-Z}
+\label{table:text-styles-estilos-basicos}
+\end{table}
+
+\subsection{Reglas de impresión contextuales `emphasis' y `strong'} \label{sec:estilos-contextuales}
+
+Como complemento a estos estilos básicos, se definen dos reglas de impresión contextuales: \emph{emphasis} y \emph{strong}. Una regla de impresión, en Inform, es simplemente una rutina de un único parámetro que se encarga de imprimir los datos que se le pasan de una determinada manera\cite{FIR06}. De esta forma, \emph{emphasis} y \emph{strong} aceptan como parámetro una cadena de caracteres y, en función del estilo en uso actualmente, se encargan de imprimirla con uno u otro estilo de \textbf{textStyles}, de acuerdo a las pautas marcadas en cuadro\ref{table:regla-impresion-emphasis} y cuadro\ref{table:regla-impresion-strong} ---advertir que algunos estilos no aceptan versiones enfatizadas ni destacadas; al intentar aplicar las reglas de impresión utilizando estos estilos no se producirá ningún efecto---.
+
+A la hora de utilizarlas, las reglas de impresión pueden considerarse igual que cualquier otra rutina o bien invocarse con su modo particular, como se muestra en el siguiente ejemplo:
+
+\begin{verbatim}
+!! 1. En forma de rutina convencional:
+print "Este ";
+emphasis("texto");
+print " es un ejemplo.^";
+strong("Otro texto de ejemplo.^");
+
+!! 2. En forma de regla de impresión:
+print "Este ", (emphasis) "texto", " es un ejemplo.^";
+print (strong) "Otro texto de ejemplo.^";
+\end{verbatim}
+
+Es posible referirse a \emph{emphasis} igualmente como \emph{emph} o \emph{em}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Estilo actual}	& \textbf{Al aplicar emphasis} \\ \hline
+Upright					& Stressed						\\
+Stressed				& Upright						\\
+Important				& Note							\\
+Header					& Note							\\
+Note					& Important						\\
+Quote					& Stressed						\\ \hline
+\end{tabular}
+\caption{Regla de impresión \emph{emphasis}}
+\label{table:regla-impresion-emphasis}
+\end{table}
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Estilo actual}	& \textbf{Al aplicar strong} \\ \hline
+Upright					& Important						\\
+Stressed				& Note							\\
+Important				& Upright						\\
+Header					& Upright						\\
+Note					& Stressed						\\
+Quote					& Important						\\ \hline
+\end{tabular}
+\caption{Regla de impresión \emph{strong}}
+\label{table:regla-impresion-strong}
+\end{table}
+
+\subsection{Estilo especial `Parser'} \label{sec:estilo-parser}
+
+\textbf{textStyles} implementa un estilo adicional \emph{Parser} ideado para ser utilizado por los mensajes del sistema y diferenciarlos así del resto de mensajes de la obra emitidos por el narrador. \emph{Parser} se limita a utilizar en realidad uno de los otros estilos de la extensión, a elección del autor. Para ello, se puede definir una constante \verb|TEXT_STYLE_PARSER_STYLE| en la que se indica cuál es el estilo efectivo que se utilizará en su lugar. Esta constante debe tomar el valor de uno de los códigos numéricos adjuntados en el cuadro\ref{table:text-styles-estilos-basicos} ---si el autor no especifica nada, por defecto se considera el valor $0$;  estilo \emph{Upright}---.
+
+Se incluye su propia regla de impresión \emph{parser} para imprimir texto en este estilo, con la particularidad de que los textos impresos con esta regla pueden incluir un prefijo y un sufijo, seleccionables también a elección del autor. En este caso, para hacer que una cadena de caracteres sea utilizada como prefijo o sufijo se deben definir las constantes \verb|TEXT_STYLE_PARSER_PREFIX| y \verb|TEXT_STYLE_PARSER_SUFIX|, respectivamente.
+
+De esta manera un autor puede imprimir mensajes del sistema con, por ejemplo, el formato: \textbf{** Mensaje del sistema. **} utilizando las siguientes declaraciones:
+
+\begin{verbatim}
+Constant TEXT_STYLE_PARSER_PREFIX = "** ";
+Constant TEXT_STYLE_PARSER_SUFIX = " **";
+Constant TEXT_STYLE_PARSER_STYLE = TEXT_STYLE_IMPORTANT;
+[...]
+print (parser) "Mensaje del sistema.";
+\end{verbatim}
+
+%%
+
+\section{Objeto 'Text Formatter'} \label{sec:objeto-text-formatter}
+
+A la hora de implementar la extensión se ha optado por sacrificar optimización de espacio en memoria en favor de provocar la menor ocupación posible del ámbito (\emph{scope}) del sistema. Debido a ello, toda la funcionalidad de la extensión a excepción de las rutinas con las reglas de impresión está implementada en el objeto \textbf{Text Formatter} ---en lugar de crear rutinas independientes por cada método---.
+
+Se adjunta a continuación la interfaz de este objeto formateador:
+
+\begin{itemize}
+    \item \textbf{get\_current\_style()} Retorna el código numérico entero que representa el último estilo de texto establecido por el formateador. Es importante tener en cuenta que si la última vez que se ha modificado el estilo de texto ha sido por medios distintos a los ofrecidos por el objeto formateador ---utilizando directamente los códigos de operación de las máquinas virtuales, por ejemplo---, este valor puede \textbf{no corresponderse} en realidad con el estilo de texto utilizado actualmente en la obra.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código numérico del último estilo establecido por el objeto formateador
+	\end{description}
+
+	\item \textbf{initialise\_style\_hints(winrock)} \emph{(Sólo para Glulx. No tiene ningún efecto en Máquina-Z).} Establece las propuestas de aspecto por defecto para los estilos definidos por la extensión. No garantiza el aspecto real con que se visualizará cada estilo puesto que al final es siempre decisión del intérprete ignorar o reescribir esta información. Debe invocarse antes de crear las ventanas gráficas, por ejemplo en el punto de entrada \verb|InitGlkWindow(winrock)| como se indica en la sección\ref{sec:instalacion}.
+	\begin{description}
+		\item{\textsc{Parámetro: entero}} -- Código con que se indica en qué fase se ha invocado al punto de entrada \verb|InitGlkWindow()|. Si se utiliza el método desde un sitio diferente a este punto de entrada es necesario hacer que el parámetro tome el valor \verb|GG_MAINWIN_ROCK| para que el método lleve a cabo efectivamente la operación
+	\end{description}
+
+	\item \textbf{print\_parser\_prefix()} Imprime el prefijo de los mensajes del sistema, tal y como está definido en la constante \verb|TEXT_STYLE_PARSER_PREFIX|. (Por defecto es la cadena vacía: '').
+	\begin{description}
+		\item{\textsc{Retorna: booleano}} -- Falso si el valor definido por la constante \verb|TEXT_STYLE_PARSER_PREFIX| no es válido (si no es una cadena de caracteres) y, por tanto, no se puede imprimir. Verdadero si la cadena se imprime con éxito
+	\end{description}
+
+	\item \textbf{print\_parser\_sufix()} Imprime el sufijo de los mensajes del sistema, tal y como está definido en la constante \verb|TEXT_STYLE_PARSER_SUFIX|. (Por defecto es la cadena vacía: '').
+	\begin{description}
+		\item{\textsc{Retorna: booleano}} -- Falso si el valor definido por la constante \verb|TEXT_STYLE_PARSER_SUFIX| no es válido (si no es una cadena de caracteres) y, por tanto, no se puede imprimir. Verdadero si la cadena se imprime con éxito
+	\end{description}
+
+	\item \textbf{use(style)} Establece el estilo que se corresponde con el código numérico \emph{style} pasado como parámetro.
+	\begin{description}
+		\item{\textsc{Parámetro: entero}} -- Código numérico del estilo que se desea utilizar en la obra. Si el código no se corresponde con un valor válido, no se produce ningún efecto
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_header()} Establece el estilo \emph{Header}; para introducir secciones principales de la obra. Su propio título o títulos de posibles capítulos, por ejemplo.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_important()} Establece el estilo \emph{Important}; para indicar una importancia destacada, un asunto serio, o urgencia en un texto. Es análogo a las etiquetas \emph{strong} en HTML. Los intérpretes suelen imprimir este estilo en negrita.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_input()} Establece el estilo \emph{Input}; para la entrada de usuario. No se recomienda su utilización salvo en casos excepcionales. (En Máquina-Z, en particular, no se imprime correctamente).
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_monospaced()} Establece el estilo \emph{Monospaced}. En un intérprete bien configurado este estilo usa siempre una fuente de letra de ancho fijo.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_note()} Establece el estilo \emph{Note}; para notificaciones especiales, como cambios en la puntuación del usuario. Está ideado como alternativa de aspecto para el estilo \emph{Important}.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_parser()} Establece el estilo \emph{Parser}; para mensajes del sistema. En realidad funciona a modo envoltorio de otro estilo diferente determinado por la constante \verb|TEXT_STYLE_PARSER_STYLE|.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_quote()} Establece el estilo \emph{Quote}; para citas u otros textos especiales.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_reversed()} Establece el estilo \emph{Reversed}, que intercambia los colores frontal y de fondo de la configuración por defecto. Para utilizarlo adecuadamente en Glulx es necesario invocar a la función \textbf{TextFormatter.initialise\_style\_hints()} antes de crear las ventanas de la interfaz gráfica.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_stressed()} Establece el estilo \emph{Stressed}; para indicar una acentuación enfatizada de un texto. Es análogo a las etiquetas \emph{em} en HTML. Los intérpretes suelen imprimir este estilo en itálica.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_upright()} Establece el estilo \emph{Upright}; usado por el cuerpo de texto normal. Es siempre el estilo de inicio de la aplicación.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_user1()} Establece el estilo \emph{User1}; ideado junto con \emph{User2} para ser redefinido libremente por el autor.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+	\item \textbf{use\_user2()} Establece el estilo \emph{User2}; ideado junto con \emph{User1} para ser redefinido libremente por el autor.
+	\begin{description}
+		\item{\textsc{Retorna: entero}} -- Código del estilo de texto registrado anteriormente en el formateador
+	\end{description}
+
+\end{itemize}
+
+%% Referencias.
+
+\begin{thebibliography}{4}
+
+	\bibitem[PLO02]{PLO02} Plotkin, Andrew (2002) \emph{The Game Author's Guide to Glulx Inform}. Consultado en https://www.eblong.com/zarf/glulx/inform-guide.txt
+
+	\bibitem[FIR06]{FIR06} Firth, Roger (2006) \emph{Inform 6: Frequently Asked Questions}. Consultado en http://www.firthworks.com/roger/informfaq/ii.html\#16
+
+	\bibitem[NF14]{NF14} Nelson, Graham \& Fillmore, David (2014, 24 Febrero) \emph{The Z-Machine Standards Document. Version 1.1}. Consultado en http://inform-fiction.org/zmachine/standards/z1point1/sect15.html\#set\_text\_style
+
+	\bibitem[PLO17]{PLO17} Plotkin, Andrew (2017) \emph{Glk API Specification. API version 0.7.5}. Consultado en https://www.eblong.com/zarf/glk/glk-spec-075\_5.html\#s.5
+
+\end{thebibliography}
+
+
+%% Final del documento:
+
+\end{document}
