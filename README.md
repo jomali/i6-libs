@@ -1,6 +1,7 @@
 # I6-EXTENSIONES
 
 
+Conjunto de extensiones y herramientas para el desarrollo de ficciones interactivas con el sistema Inform 6.
 Relación de extensiones incluidas:
 
 - **Aim and fire**: Sistema de apuntado y disparo a través de un mecanismo QTE (Quick Time Event). Utiliza la ventana de estado de la aventura para mostrar la animación de una retícula desplazándose de un extremo a otro de la ventana. El jugador debe detener la retí­cula lo más cerca posible del centro de la pantalla. El éxito o fracaso de la acción se determina en función de lo cerca o lejos del centro de la pantalla que el jugador haya acertado a detener la retícula. *Autor(es): J. Francisco Martín*.
@@ -19,9 +20,9 @@ Relación de extensiones incluidas:
 
 - **Spanish Library Messages**: Mensajes por defecto de la librería en español con inflexiones de género y número del actor y tiempo verbal del narrador. Basadas en la librería ``Spanish.h`` de INFSP6. *Autor(es): J. Francisco Martín*.
 
-- **Topic Inventory**: Sistema de conversación con selección de temas utilizando análisis no estricto de la entrada de usuario para el reconocimiento de patrones. Basada en las notas de Eric Eve sobre sistemas de conversación: <http://www.tads.org/howto/convbkg.htm>, y construida sobre la extensión ``NPC_Conversacion`` v1.0 de *Mastodon*. *Autor(es): J. Francisco Martín*.
+- **Text Styles**: Interfaz biplataforma para la selección de estilos de texto. Incluye reglas de impresión contextuales y la definición de estilo de texto para los mensajes del sistema. *Autor(es): J. Francisco Martín*
 
-- **Types**: Rutinas biplataforma (Máquina-Z/GLULX) para imprimir texto con diferentes estilos. Además de los estilos básicos: romana, itálica, negrita y monoespaciada; defne cuatro estilos abstractos que varían dependiendo del contexto: enfático, fuerte, código y parser. *Autor(es): J. Francisco Martín*.
+- **Topic Inventory**: Sistema de conversación con selección de temas utilizando análisis no estricto de la entrada de usuario para el reconocimiento de patrones. Basada en las notas de Eric Eve sobre sistemas de conversación: <http://www.tads.org/howto/convbkg.htm>, y construida sobre la extensión ``NPC_Conversacion`` v1.0 de *Mastodon*. *Autor(es): J. Francisco Martín*.
 
 Otras herramientas:
 
@@ -31,4 +32,4 @@ Otras herramientas:
 
 - **Preprocesador de texto**: Script Perl para preprocesar un archivo de texto. Sustituye ciertas etiquetas de texto por funciones definidas dentro del relato para manipular el estilo de los textos, listar objetos contenidos por otro objeto, o crear hipervínculos, por ejemplo. *Autor(es): J. Francisco Martín*.
 
-Incluye además un directorio *discarded* con algunas extensiones no analizadas, pero que pueden implementar conceptos y soluciones de interés.
+Incluye además un directorio *discarded* con algunas extensiones descartadas o de otros autores, que pueden implementar algunos conceptos o soluciones de interés.
