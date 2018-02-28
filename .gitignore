@@ -1,0 +1,5 @@
+# Excluye los ficheros creados al generar la documentación con 'pdflatex':
+*.aux
+*.log
+*.out
+*.pdf
