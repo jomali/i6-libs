@@ -68,6 +68,9 @@ Object	LOCALIDAD "Espacio de pruebas"
 ];
 
 [ Initialise;
+	AimingManager.set_grid_min_vx(300);
+	AimingManager.set_grid_max_vx_factor(4);
+
 	location = LOCALIDAD;
 	lookmode = 2;
 ];
