@@ -3,3 +3,10 @@
 *.log
 *.out
 *.pdf
+# Excluye los ejecutables de Máquina-Z y Glulx:
+*.z5
+*.z8
+*.zblorb
+*.ulx
+*.blb
+*.gblorb
