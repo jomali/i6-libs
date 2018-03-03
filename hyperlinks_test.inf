@@ -1,0 +1,145 @@
+!% +language_name=Spanish
+
+
+!!==============================================================================
+!!
+!!	HYPERLINKS: PRUEBAS
+!!	Marco para facilitar la interacción por hipervínculos
+!!
+!!==============================================================================
+!!
+!!	File:			hyperlinks_test.inf
+!!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Language:		ES (Español)
+!!	System:			Inform-INFSP 6
+!!	Platform:		Máquina-Z/Glulx
+!!	Versión:		0.0 - En desarrollo
+!!	Fecha:			2018/03/03
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	Copyright (c) 2018, J. Francisco Martín
+!!
+!!	Este programa es software libre: usted puede redistribuirlo y/o
+!!	modificarlo bajo los términos de la Licencia Pública General GNU
+!!	publicada por la Fundación para el Software Libre, ya sea la versión
+!!	3 de la Licencia, o (a su elección) cualquier versión posterior.
+!!
+!!	Este programa se distribuye con la esperanza de que sea útil, pero
+!!	SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o
+!!	de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia Pública General GNU para más información.
+!!
+!!	Debería haber recibido una copia de la Licencia Pública General GNU
+!!	junto a este programa. En caso contrario, consulte
+!!	<http://www.gnu.org/licenses/>.
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	HISTORIAL DE VERSIONES
+!!
+!!	1.0: 2018/03/XX	TODO
+!!
+!!------------------------------------------------------------------------------
+
+
+Constant Story
+"~Hyperlinks~: Pruebas";
+
+Constant Headline
+"^Marco para facilitar la interacción por hipervínculos^";
+
+Constant DEBUG_HYPERLINKS;
+
+Include "Parser.h";
+Include ">hyperlinks.h";
+Include "VerbLib.h";
+
+#Ifdef TARGET_GLULX;
+[ HandleGlkEvent ev context abortres
+	i;
+	if (HandleHyperlinkEvent(ev, context, abortres)) {
+		!! El autor puede imprimir aquí el input provocado por el hipervínculo:
+		glk($0086, 8); ! glk_set_style(style_Input);
+		for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
+			print (char) abortres->i;
+		}
+		glk($0086, 0); ! glk_set_style(style_Normal);
+		new_line;
+		!! Se debe retornar 2 para finalizar el turno:
+		return 2;
+	}
+];
+#Endif; ! TARGET_GLULX;
+
+[ Initialise;
+	#Ifdef TARGET_GLULX;
+	!! Establece la escucha de eventos glk para el uso de hipervínculos:
+	glk($0102, gg_mainwin); ! glk_request_hyperlink_event(gg_mainwin);
+	#Endif; ! TARGET_GLULX;
+
+	location = localidadPrueba;
+	lookmode = 2;
+];
+
+Object	localidadPrueba "Localidad de prueba"
+ with	description [;
+			print "Los hipervínculos sólo funcionan el Glulx. Tienen el
+			siguiente formato:^";
+			new_line;
+			#Ifdef TARGET_ZCODE;
+			font off;
+			#Ifnot; ! TARGET_GLULX;
+			glk($0086, 2);
+			#Endif; ! TARGET_
+			print "Hyperlink(Objeto|String, [String]);^";
+			new_line;
+			#Ifdef TARGET_ZCODE;
+			font on; style roman;
+			#Ifnot; ! TARGET_GLULX;
+			glk($0086, 0);
+			#Endif; ! TARGET_
+			print "- 0, 0: ";
+			Hyperlink(); new_line;
+			print "- 20, 2: ";
+			Hyperlink(20, 2); new_line;
+			print "- 0, ~alternativo~: ";
+			Hyperlink(0, "alternativo"); new_line;
+			print "- ~reza~, 0: ";
+			Hyperlink("reza"); new_line;
+			print "- ~texto~, 0: ";
+			Hyperlink("texto"); new_line;
+			print "- ~reza~, ~alternativo~: ";
+			Hyperlink("reza", "alternativo"); new_line;
+			print "- obj, 0: ";
+			Hyperlink(cosa); new_line;
+			print "- obj, ~alternativo~: ";
+			Hyperlink(cosa, "alternativo"); new_line;
+
+			return true;
+		],
+ has	light;
+
+Object	-> cosa "cosa"
+ with	name_f	'cosa',
+		name_m	'chisme' 'objeto',
+		gender	G_FEMENINO,
+		adjectives 'prueba',
+		description "La definición de algo indefinido.",
+ has	concealed female;
+
+Include "SpanishG.h";
+
+Verb meta	'test'
+	* number						-> Test
+;
+VerboIrregular "lanzar prueba" with imperativo 'test';
+
+[ TestSub;
+	switch (noun%3) {
+		0:	_hyperlinks_command = "examina";
+		1:	_hyperlinks_command = "huele";
+		2:	_hyperlinks_command = "coge";
+	}
+	"Acción de los hipervínculos: ~", (string) _hyperlinks_command, "~.";
+];

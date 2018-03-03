@@ -1,0 +1,247 @@
+\documentclass[a4paper,12pt]{article}
+
+%%
+%%	EXTENSIÓN 'HYPERLINKS'
+%%	Marco para facilitar la interacción por hipervínculos
+%%  J. Francisco Martín Lisaso
+%%
+
+%% ============================================================================
+
+%% Paquetes:
+
+%% *** LANGUAGE PACKAGES ******************************************************
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+%% *** MISC UTILITY PACKAGES **************************************************
+
+\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+%% *** GRAPHICS RELATED PACKAGES **********************************************
+
+\ifpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{{./res/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpeg,.jpg,.pdf,.png,.eps}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/tex-archive/info/epslatex/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+%% *** MATH TOOLS *************************************************************
+
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+
+\usepackage{amsmath}
+
+\numberwithin{equation}{section}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%% *** OTHER PACKAGES *********************************************************
+
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{fancyhdr}
+
+%% ============================================================================
+
+% Figures and tables captions:
+
+\RequirePackage[labelfont={bf,sf,small},%
+                labelsep=period,%
+                justification=raggedright]{caption}
+%\setlength{\abovecaptionskip}{0pt}
+%\setlength{\belowcaptionskip}{0pt}
+
+%% Título:
+
+\title{\vspace{-3cm}Extensión `Hyperlinks'\\
+    \Large{Marco para facilitar la interacción por hipervínculos}}
+\author{
+	\small{\textbf{Autor(es):} J. Francisco Martín}\\
+	\small{\textbf{Idioma:} ES (Español)}\\
+	\small{\textbf{Sistema:} Inform-INFSP 6}\\
+	\small{\textbf{Plataforma:} Máquina-Z/Glulx}\\
+	\small{\textbf{Versión (extensión):} 1.0}\\
+	\small{\textbf{Versión (documentación):} 1.0}\\
+	\small{\textbf{Última revisión del documento:} 2018/03/01}
+}
+\date{}
+
+%% Redefiniciones:
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\refname}{Referencias}
+
+%% Encabezado (fancyhdr):
+
+\pagestyle{fancy}
+\lhead{\footnotesize{Extensión ``Hyperlinks"}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+%% Inicio del documento:
+
+\begin{document}
+\maketitle
+
+%%
+
+\section{Introducción} \label{sec:introduccion}
+
+La máquina virtual Glulx, al incluir soporte nativo para la librería de entrada/salida Glk, ofrece un conjunto de funcionalidades adicionales a aquellas de Máquina-Z, la otra máquina virtual para la que pueden compilarse obras creadas con el sistema Inform. Entre estas funcionalidades se encuentra la posibilidad de responder a eventos de selección de hipervínculos\ref{PLO17}.
+
+El propósito de \textbf{hyperlinks} es ofrecer la infreaestructura para que el autor de ficción interactiva pueda incluir de un modo sencillo interacción por medio de hipervínculos en sus obras compiladas para Glulx. Aunque la funcionalidad de la extensión es exclusiva de Glulx, a fin de facilitar el desarrollo de obras biplataforma, \textbf{hyperlinks} puede utilizarse tanto en Glulx como en Máquina-Z. Al compilar para esta segunda máquina virtual simplemente no se dispondrá de la funcionalidad relacionada con los hipervínculos.
+
+%%
+
+\section{Instalación} \label{sec:instalacion}
+
+Para utilizar la extensión hay que añadir la siguiente línea en el fichero principal de la obra, inmediatamente después de la línea \verb|Include "Parser";|:
+
+\begin{verbatim}
+Include "hyperlinks";
+\end{verbatim}
+
+Son necesarias, además, otras dos consideraciones: por una parte, debe activarse la escucha de eventos glk de selección de hipervínculos en la ventana principal de la aplicación. Esto puede hacerse añadiendo la siguiente línea en el punto de entrada \verb|Initialise| ---se encierra entre directivas de compilación condicionales para permitir la compilación biplataforma---:
+
+\begin{verbatim}
+[ Initialise;
+	#Ifdef TARGET_GLULX;
+	!! Establece la escucha de eventos glk para el uso de hipervínculos:
+	glk($0102, gg_mainwin); ! glk_request_hyperlink_event();
+	#Endif; ! TARGET_GLULX;
+
+	!! Resto de contenidos del punto de entrada:
+	[...]
+];
+\end{verbatim}
+
+En segundo lugar hay que introducir la lógica encargada de capturar y responder a esos eventos Glk de selección de hipervínculos. Esta lógica debe encontrarse dentro del punto de entrada Glulx \verb|HandleGlkEvent| ---crearlo si no existe---:
+
+\begin{verbatim}
+#Ifdef TARGET_GLULX;
+[ HandleGlkEvent ev context abortres;
+	if (HandleHyperlinkEvent(ev, context, abortres)) return 2;
+];
+#Endif; ! TARGET_GLULX;
+\end{verbatim}
+
+El autor puede incluir su propio código adicional, por ejemplo para imprimir en pantalla el input real generado por el hipervínculo. Debe tenerse en cuenta que el punto de entrada debe retornar $2$ para indicar a la librería la finalización del turno.
+
+\begin{verbatim}
+#Ifdef TARGET_GLULX;
+[ HandleGlkEvent ev context abortres
+	i;
+	if (HandleHyperlinkEvent(ev, context, abortres)) {
+		!! El autor puede imprimir aquí el input provocado por el hipervínculo:
+		glk($0086, 8); ! glk_set_style(style_Input);
+		for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
+			print (char) abortres->i;
+		}
+		glk($0086, 0); ! glk_set_style(style_Normal);
+		new_line;
+		return 2; ! Para la finalización del turno
+	}
+];
+#Endif; ! TARGET_GLULX;
+\end{verbatim}
+
+%%
+
+
+
+
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{ll}
+\hline
+\textbf{Estilo Glulx}	& \textbf{Estilo Máquina-Z}		\\ \hline
+Normal					& Normal						\\
+Emphasized				& Italic						\\
+Preformatted			& Fixed-width					\\
+Header					& Bold							\\
+Subheader				& Bold							\\
+Alert					& Bold							\\
+Note					& Normal						\\
+BlockQuote				& \emph{sin correspondencia}	\\
+Input					& \emph{sin correspondencia}	\\ \hline
+\end{tabular}
+\caption{Correspondencias de estilos en la librería Inform biplataforma}
+\label{table:correspondencias-estilos-glulx-z}
+\end{table}
+
+%% Referencias.
+
+\begin{thebibliography}{4}
+
+	\bibitem[CAD02]{CAD02} Cadre, Adam (2002, 11 Mayo) \emph{Gull}. Consultado en http://adamcadre.ac/gull/gull-2o.html
+
+	\bibitem[FIR06]{FIR06} Firth, Roger (2006) \emph{Inform 6: Frequently Asked Questions}. Consultado en http://www.firthworks.com/roger/informfaq/ii.html\#16
+
+	\bibitem[NF14]{NF14} Nelson, Graham \& Fillmore, David (2014, 24 Febrero) \emph{The Z-Machine Standards Document. Version 1.1}. Consultado en http://inform-fiction.org/zmachine/standards/z1point1/sect15.html\#set\_text\_style
+
+	\bibitem[PLO17]{PLO17} Plotkin, Andrew (2017) \emph{Glk API Specification. API version 0.7.5}. Consultado en https://eblong.com/zarf/glk/glk-spec-075\_4.html\#s.8
+
+\end{thebibliography}
+
+
+%% Final del documento:
+
+\end{document}
