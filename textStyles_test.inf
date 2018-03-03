@@ -12,7 +12,7 @@
 !!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
 !!	Language:		ES (Español)
 !!	System:			Inform-INFSP 6
-!!	Platform:		Máquina-Z / GLULX
+!!	Platform:		Máquina-Z/Glulx
 !!	Version:		1.0
 !!	Released:		2018/02/28
 !!
@@ -33,6 +33,12 @@
 !!	Debería haber recibido una copia de la Licencia Pública General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	HISTORIAL DE VERSIONES
+!!
+!!	1.0: 2018/02/28	Versión inicial.
 !!
 !!------------------------------------------------------------------------------
 
