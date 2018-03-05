@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
-!!	Fecha:			2018/02/28
+!!	Versión:		1.1
+!!	Fecha:			2018/03/05
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2018/03/05	Corrección en las instrucciones de instalación.
 !!	1.0: 2018/02/28	Versión inicial.
 !!
 !!------------------------------------------------------------------------------
@@ -63,7 +64,7 @@
 !!		#Ifdef TARGET_GLULX;
 !!		[ InitGlkWindow winrock;
 !!		    !! Sugerencias de aspecto de 'textStyles':
-!!		    TextFormatter.set_style_hints(winrock);
+!!		    TextFormatter.initialise_style_hints(winrock);
 !!		    !! Espacio para sugerencias de aspecto del autor y
 !!		    !! para el resto de contenidos de InitGlkWindow:
 !!		    [...]
