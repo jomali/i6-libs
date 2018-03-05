@@ -6,24 +6,23 @@
 !!
 !!==============================================================================
 !!
-!!	File:			SpanishLM.inf
-!!	Author(s):		INFSP Task Team
-!!					J. Francisco Martín <jfm.lisaso@gmail.com>
-!!	Language:		ES (Castellano)
-!!	System:			Inform-INFSP 6
-!!	Platform:		Máquina-Z / GLULX
-!!	Version:		0.0
-!!	Released:		2017/08/03
+!!	Archivo:		SpanishLM.inf
+!!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Español)
+!!	Sistema:		Inform-INFSP 6
+!!	Plataforma:		Máquina-Z/Glulx
+!!	Versión:		0.0
+!!	Fecha:			2018/03/04
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# HISTORIAL DE VERSIONES
+!!	HISTORIAL DE VERSIONES
 !!
 !!	0.0: 2017/08/03	Versión en desarrollo de la extensión.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2017, J. Francisco Martín
+!!	Copyright (c) 2018, J. Francisco Martín
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
 !!	modificarlo bajo los términos de la Licencia Pública General GNU
@@ -41,7 +40,7 @@
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# NOTAS
+!!	NOTAS
 !!
 !!	Implementa el conjunto de mensajes por defecto de la librería Inform-INFSP,
 !!	incluyendo la posibilidad de modificar en tiempo de ejecución tanto el
@@ -58,7 +57,7 @@
 !!	una opción [1-9], modifica la flexión gramatical utilizada.
 !!
 !!
-!!	# UTILIZACIÓN
+!!	UTILIZACIÓN
 !!
 !!	A continuación se detallan los 3 pasos que deben seguirse para instalar la
 !!	extensión:
@@ -122,7 +121,7 @@ Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 !!==============================================================================
 !! La propiedad 'clarification' está ideada para aquellos objetos que no son
-!! localidades y que permiten al personaje controlado por el usuario (PJ)
+!! localidades y que permiten al personaje controlado por el usuario (PC)
 !! entrar en ellos (objetos con el atributo 'enterable'). Cuando un PJ se
 !! encuentra dentro de uno de estos objetos 'enterables', al imprimir la
 !! descripción de la localidad como resultado de la acción ##Look, se imprime
@@ -1151,19 +1150,32 @@ Verb	meta 'gramatica' 'grammar'
 	}
 	print "Cambio de flexión gramatical: ";
 	switch (_grammatical_inflection) {
-		FIRST_PERSON_PRESENT:	print "(1) presente 1a persona";
-		SECOND_PERSON_PRESENT:	print "(2) presente 2a persona";
-		THIRD_PERSON_PRESENT:	print "(3) presente 3a persona";
-		FIRST_PERSON_PAST:		print "(4) pasado 1a persona";
-		SECOND_PERSON_PAST:		print "(5) pasado 2a persona";
-		THIRD_PERSON_PAST:		print "(6) pasado 3a persona";
-		FIRST_PERSON_FUTURE:	print "(7) futuro 1a persona";
-		SECOND_PERSON_FUTURE:	print "(8) futuro 2a persona";
-		THIRD_PERSON_FUTURE:	print "(9) futuro 3a persona";
+		FIRST_PERSON_PRESENT:
+			print "(1) presente 1a persona";
+		SECOND_PERSON_PRESENT:
+			print "(2) presente 2a persona";
+		THIRD_PERSON_PRESENT:
+			print "(3) presente 3a persona";
+		FIRST_PERSON_PAST:
+			print "(4) pasado 1a persona";
+		SECOND_PERSON_PAST:
+			print "(5) pasado 2a persona";
+		THIRD_PERSON_PAST:
+			print "(6) pasado 3a persona";
+		FIRST_PERSON_FUTURE:
+			print "(7) futuro 1a persona";
+		SECOND_PERSON_FUTURE:
+			print "(8) futuro 2a persona";
+		THIRD_PERSON_FUTURE:
+			print "(9) futuro 3a persona";
 	}
 	".";
 ];
 #Endif; ! DEBUG;
+
+
+
+
 
 
 !!==============================================================================
@@ -4820,7 +4832,7 @@ Verb	meta 'gramatica' 'grammar'
 				" fatal.";
 			THIRD_PERSON_PAST:
 				if (IsPluralNoun(player)) print "Cantaban";
-				else print "Cantaban";
+				else print "Cantaba";
 				" fatal.";
 			FIRST_PERSON_FUTURE:
 				if (IsPluralNoun(player)) print "Nunca llegaremos";
