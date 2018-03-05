@@ -10,21 +10,21 @@
 !!	Author(s):		Emily Short <emshort@mindspring.com>
 !!					J. Francisco Martín <jfm.lisaso@gmail.com>
 !!					Mapache
-!!	Language:		ES (Castellano)
+!!	Language:		ES (Español)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Máquina-Z / GLULX
-!!	Version:		5.1
-!!	Released:		2017/08/04
+!!	Version:		5.2
+!!	Released:		2018/03/05
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# NOTAS
+!!	NOTAS
 !!
 !!	Basada en "ExpertGrammar.h", de Emily Short <emshort@mindspring.com>
 !!	y en su traducción al castellano "GramaticaExperta.h", de Mapache.
 !!
 !!
-!!	# DERECHOS
+!!	DERECHOS
 !!
 !!	Esta librería puede tratarse como de dominio público. Puede incluirse
 !!	con o sin citar al autor original. Puede ser modificada a discreción
@@ -32,7 +32,7 @@
 !!	fragmentos de la librería.
 !!
 !!
-!!	# INSTALACIÓN
+!!	INSTALACIÓN
 !!
 !!	Incluye "SpanishEG.h" después de SpanishG en tu archivo de juego.
 !!
@@ -45,22 +45,22 @@
 !!	los mensajes de "SpanishEG.h" se imprimen en presente y segunda persona.
 !!
 !!
-!!	# NUEVAS ACCIONES
+!!	NUEVAS ACCIONES
 !!
-!!	 -	Dance
-!!	 -	GoDown
-!!	 -	GoUp
-!!	 -	KnockOn
-!!	 -	Masturbate
-!!	 -	Read
-!!	 -	Shout
-!!	 -	Sit
-!!	 -	SleepWith
-!!	 -	StandUp
-!!	 -	Untie
-!!	 -	Use
-!!	 -	Write
-!!	 -	Xyzzy
+!!	o	Dance
+!!	o	GoDown
+!!	o	GoUp
+!!	o	KnockOn
+!!	o	Masturbate
+!!	o	Read
+!!	o	Shout
+!!	o	Sit
+!!	o	SleepWith
+!!	o	StandUp
+!!	o	Untie
+!!	o	Use
+!!	o	Write
+!!	o	Xyzzy
 !!
 !!------------------------------------------------------------------------------
 
@@ -77,7 +77,6 @@ Default THIRD_PERSON_PAST 6;
 Default FIRST_PERSON_FUTURE 7;
 Default SECOND_PERSON_FUTURE 8;
 Default THIRD_PERSON_FUTURE 9;
-
 Default	_grammatical_inflection 2;
 
 !!------------------------------------------------------------------------------
