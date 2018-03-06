@@ -7,13 +7,13 @@
 !!
 !!==============================================================================
 !!
-!!	Archivo:		textStyles.inf
+!!	Archivo:		textStyles.h
 !!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
-!!	Fecha:			2018/03/05
+!!	Versión:		2.0
+!!	Fecha:			2018/03/06
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,9 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	2.0: 2018/03/06	Sustituído el nombre de la regla de impresión 'emphasis'
+!!					por su sinónimo 'emph', para evitar incompatibilidades con
+!!					la extensión 'utility.h' de L. Ross Raszewski
 !!	1.1: 2018/03/05	Corrección en las instrucciones de instalación.
 !!	1.0: 2018/02/28	Versión inicial.
 !!
@@ -445,7 +448,7 @@ Object	TextFormatter "(Text Formatter)"
 
 !! Reglas de impresión:
 
-[ emphasis text
+[ emph text
 	previous_style;
 	if (metaclass(text) ~= String) return false;
 	previous_style = TextFormatter.get_current_style();
@@ -504,8 +507,6 @@ Object	TextFormatter "(Text Formatter)"
 
 !! Alias para las reglas de impresión:
 
-[ emph text; emphasis(text); ];
-
-[ em text; emphasis(text); ];
+[ em text; emph(text); ];
 
 #Endif; ! TEXT_STYLES;

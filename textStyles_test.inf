@@ -57,6 +57,36 @@ Include ">textStyles.h";
 Include "VerbLib.h";
 
 #Ifdef TARGET_GLULX;
+!!------------------------------------------------------------------------------
+!! Este punto de entrada es invocado por la librería cuando establece las
+!! ventanas estándar: la ventana de texto principal, la ventana de estado y, si
+!! se utilizan "cajas de citas", la ventana para citas. Las ventanas
+!! principal y de estado son creadas al inicio de la aplicación (antes del
+!! punto de entrada 'Initialise()'). La ventana para citas es creada y
+!! destruida según resulta necesario.
+!!
+!! Es importante tener en cuenta que la librería requiere de la existencia de
+!! una ventana de texto principal, registrada en la variable 'gg_mainwin'. Si
+!! se impide a la librería crear esta ventana y no se crea manualmente en su
+!! lugar, la aplicación se cerrará. Las ventanas de estado y la ventana para
+!! citas, en cambio, son opcionales.
+!!
+!!	@param {integer} winrock - Código numérico que indica la fase en que se
+!!		llama a la rutina: 0) inicio de la aplicación, antes incluso de
+!!		llamar al punto de entrada 'Initialise()'. GG_MAINWIN_ROCK) antes de
+!!		crear la ventana de texto principal. GG_STATUSWIN_ROCK) antes de crear
+!!		la ventana de estado. 1) final del proceso de establecimiento de las
+!!		ventanas estándar. Se trata de un momento adecuado para abrir otras
+!!		posibles ventanas no estándar. GG_QUOTEWIN_ROCK) antes de la creación
+!!		de la ventana para citas. A diferencias de las otras fases, esta
+!!		ventana no se crea en la inicialización de la obra, sino durante su
+!!		ejecución, al imprimir una cita, y es destruida un turno después. El
+!!		número de líneas objetivo de la ventana para citas está registrado en
+!!		'gg_arguments-->0'
+!!	@returns {integer} 0 para continuar con la ejecución normal de la librería.
+!!		1 para interrumpirla en alguna de las fases (cuando se quiere realizar
+!!		la creación manual de alguna de las ventanas)
+!!------------------------------------------------------------------------------
 [ InitGlkWindow winrock;
 	TextFormatter.initialise_style_hints(winrock);
 
