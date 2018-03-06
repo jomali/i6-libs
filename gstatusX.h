@@ -8,31 +8,16 @@
 !!==============================================================================
 !!
 !!	Archivo:		gstatusX.h
-!!	Autor(es):		J. Francisco MartÃ­n <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (Castellano)
+!!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		GLULX
-!!	Versión:		1.1
-!!	Fecha:			2014/10/20
-!!
-!!	GStatusXWin crea una línea de estado en la que se imprime el nombre,
-!!	centrado en la ventana, de la localidad actual del personaje protagonista.
-!!
-!!	Hereda de TextGrid.
+!!	Plataforma:		Glulx
+!!	Versión:		1.2
+!!	Fecha:			2018/03/05
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# HISTORIAL DE VERSIONES
-!!
-!!	1.1: 2014/10/20	Modificado el vector utilizado para tratar los contenidos
-!!					de la barra de estado, la rutina para imprimir el nombre de
-!!					la localidad en que se encuentra el personaje controlado
-!!					por el usuario, y la propiedad GStatusXWin.update.
-!!	1.0: 2014/06/06
-!!
-!!------------------------------------------------------------------------------
-!!
-!!	Copyright (c) 2014, J. Francisco Martín
+!!	Copyright (c) 2014, 2018, J. Francisco Martín
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
 !!	modificarlo bajo los términos de la Licencia Pública General GNU
@@ -49,11 +34,29 @@
 !!	<http://www.gnu.org/licenses/>.
 !!
 !!------------------------------------------------------------------------------
-
-#Ifndef GW_GSTATUS_H;
-
+!!
+!!	HISTORIAL DE VERSIONES
+!!
+!!	1.2: 2018/03/05	Constante de la extensión renombrada a GW_GSTATUSX.
+!!					Pequeñas modificaciones sobre la documentación
+!!	1.1: 2014/10/20	Modificado el vector utilizado para tratar los contenidos
+!!					de la barra de estado, la rutina para imprimir el nombre de
+!!					la localidad en que se encuentra el personaje controlado
+!!					por el usuario, y la propiedad GStatusXWin.update.
+!!	1.0: 2014/06/06	Versión inicial
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	'GStatusXWin' es un módulo para la librería GWindows de L. Ross Raszewski.
+!!	Añade un tipo de ventana de estado en la que se imprime el nombre, centrado
+!!	en la ventana, de la localidad actual del PC (player character, o personaje
+!!	controlado por el usuario).
+!!
+!!------------------------------------------------------------------------------
 System_file;
-Constant GW_GSTATUS_H;
+
+#Ifndef GW_GSTATUSX;
+Constant GW_GSTATUSX;
 
 !! Vector auxiliar para manejar los contenidos de la barra de estado:
 #Ifdef VN_1630;	! compilador 6.30 o superior
@@ -91,4 +94,4 @@ Class	GStatusXWin
 		stylehints style_Normal stylehint_Reversecolor 1,
  has	abssplit;
 
-#Endif; ! GW_GSTATUS_H;
+#Endif; ! GW_GSTATUSX;
