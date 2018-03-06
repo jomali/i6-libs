@@ -7,13 +7,13 @@
 !!
 !!==============================================================================
 !!
-!!	Archivo:		hyperlinks.inf
+!!	Archivo:		hyperlinks.h
 !!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		Glulx
+!!	Plataforma:		Máquina-Z/Glulx
 !!	Versión:		1.0
-!!	Fecha:			2018/03/05
+!!	Fecha:			2018/03/06
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -43,9 +43,12 @@
 !!
 !!	INSTALACIÓN
 !!
-!!	Para utilizar la extensión hay que añadir la siguiente línea en el fichero
-!!	principal de la obra, inmediatamente después de la línea
-!!	'Include "Parser";':
+!!	Es importante tener en cuenta que la utilización de hipervínculos sólo está
+!!	soportada por la máquina virtual Glulx. Aún así, la extensión puede
+!!	utilizarse tanto en Glulx como en Máquina-Z (en esta segunda, simplemente,
+!!	no es posible utilizar la funcionalidad). Para hacerlo hay que añadir la
+!!	siguiente línea en el fichero principal de la obra, inmediatamente después
+!!	de la línea 'Include "Parser";':
 !!
 !!		Include "hyperlinks";
 !!
@@ -102,8 +105,11 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!		no se utiliza
 !!	@param {integer} context - 0 si el evento se ha producido durante una
 !!		entrada de línea (comandos normales u otros usos de la función de la
-!!		librería 'KeyboardPrimitive()'). 1 si el evento se ha producido durante
-!!		una entrada de caracter (función de la librería 'KeyCharPrimitive()')
+!!		librería 'KeyboardPrimitive()'); la aplicación debe esperar a que el
+!!		usuario pulse INTRO antes de dar respuesta para la entrada. 1 si el
+!!		evento se ha producido durante una entrada de caracter (función de la
+!!		librería 'KeyCharPrimitive()'); la aplicación responde ante cada
+!!		pulsación de tecla, como en los menús, por ejemplo
 !!	@param {array} abortres - Utilizado para cancelar la entrada de texto y
 !!		forzar una entrada particular. La longitud de la nueva entrada se
 !!		registra en 'abortres-->0'. Si es diferente de 0, los caracteres del
@@ -112,7 +118,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!		inclusive). No pueden superarse los 256 caracteres
 !!	@returns {boolean} Verdadero para indicar que la entrada de usuario debe
 !!		ser ignorada y finalizar el turno con la nueva entrada indicada en el
-!!		parámetro 'abortres'.
+!!		parámetro 'abortres'
 !!------------------------------------------------------------------------------
 [ HandleHyperlinkEvent ev context abortres
 	length i;
@@ -133,7 +139,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 		!! string HYPERLINKS_COMMAND, el símbolo espacio ' ', y el nombre del
 		!! objeto:
 		if (metaclass(ev-->2) == Object) {
-			if (metaclass(HYPERLINK_COMMAND) == String) {
+			if (metaclass(HYPERLINKS_COMMAND) == String) {
 				PrintToBuffer(abortres, INPUT_BUFFER_LEN, HYPERLINKS_COMMAND);
 				#Ifdef DEBUG_HYPERLINKS;
 				print "** Acción del hipervínculo: ";
