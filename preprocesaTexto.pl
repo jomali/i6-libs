@@ -76,11 +76,11 @@ for (@lines) {
 	s/\[\s*lista\s+de\s+objetos\s+(en|sobre)\s+(.+?)\s*\]/";\nWriteListFrom(child(\2), ENGLISH_BIT + PARTINV_BIT);\nprint "/g;
 
 	# Hipervínculo asociado a un objeto, con un texto alternativo:
-	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nCreateLink(\1, "\2", \3);\nprint "/g;
-	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\)/";\nCreateLink(\1, "\2", 0);\nprint "/g;
+	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nHyperlink(\1, "\2", \3);\nprint "/g;
+	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\)/";\nHyperlink(\1, "\2", 0);\nprint "/g;
 	# Hipervínculo creado a partir de un texto:
-	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nCreateLink("\1", "\1", \2);\nprint "/g;
-	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)(?<!\\)\)/";\nCreateLink("\1", "\1", 0);\nprint "/g;
+	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nHyperlink("\1", "\1", \2);\nprint "/g;
+	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)(?<!\\)\)/";\nHyperlink("\1", "\1", 0);\nprint "/g;
 
 	# Imprime el nombre corto del objeto:
 	s/\[\s*(.+?)\s*\]/", (name) \1, "/g;
