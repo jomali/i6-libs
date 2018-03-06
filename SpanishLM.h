@@ -2478,15 +2478,26 @@ Verb	meta 'gramatica' 'grammar'
 		!!		pero ésta no tiene una propiedad "door_to" (probablemente un
 		!!		error de programación del juego).
 		switch (n) {
-			1:	print (lm_ttienes) player, " que ";
+			1:
+				PronounNotice(x1);
+				print (lm_ttienes) player, " que ";
 				if (x1 has supporter) print "bajar", (lm_te) player;
 				else print "salir";
 				" ", (del) x1, " antes.";
-			2:	"No ", (lm_puedes) player, " ir por ahí.";
-			3:	"", (lm_eeres) player, " incapaz de trepar por ", (the) x1, ".";
-			4:	"", (lm_eeres) player, " incapaz de bajar por ", (the) x1, ".";
-			5:	"No ", (lm_puedes) player, " pasar a través ", (del) x1, ".";
-			6:	print "No ", (lm_puedes) player, " ir porque ", (the) x1," no ";
+			2:
+				"No ", (lm_puedes) player, " ir por ahí.";
+			3:
+				PronounNotice(x1);
+				"", (lm_eeres) player, " incapaz de trepar por ", (the) x1, ".";
+			4:
+				PronounNotice(x1);
+				"", (lm_eeres) player, " incapaz de bajar por ", (the) x1, ".";
+			5:
+				PronounNotice(x1);
+				"No ", (lm_puedes) player, " pasar a través ", (del) x1, ".";
+			6:
+				PronounNotice(x1);
+				print "No ", (lm_puedes) player, " ir porque ", (the) x1," no ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
@@ -2840,9 +2851,10 @@ Verb	meta 'gramatica' 'grammar'
 		!! localidad. Junto a cada mensaje se comenta qué condiciones deben
 		!! darse en ese objeto para que se muestre ese mensaje aclaratorio.
 		switch (n) {
-			1:	print " (alumbrando)";
-			!! El objeto tiene "luz" y la localidad no
-			2:	switch (_grammatical_inflection) {
+			1:	!! El objeto tiene 'light' y la localidad no
+				print " (alumbrando)";
+			2:	!! El objeto tiene 'container' pero no 'open'
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2856,10 +2868,11 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print " (que estará", (n) x1, " cerrad", (o) x1, ")";
 				}
-			!! El objeto tiene "recipiente" pero no "abierto"
-			3:	print " (cerrad", (o) x1, " y alumbrando)";
-			!! Casos 2 y 1 juntos
-			4:	switch (_grammatical_inflection) {
+			3:	!! Casos 2 y 1 juntos
+				print " (cerrad", (o) x1, " y alumbrando)";
+			4:	!! El objeto es un recipiente abierto (o transparente) y no
+				!! tiene nada en su interior
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2873,11 +2886,11 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print " (que estará", (n) x1, " vací", (o) x1, ")";
 				}
-			!! El objeto es un recipiente abierto (o transparente) y no
-			!!! tiene nada en su interior
-			5:	print " (vací", (o) x1, " y alumbrando)";
-			!! Casos 1 y 4 juntos
-			6:	switch (_grammatical_inflection) {
+			5:	!! Casos 1 y 4 juntos
+				print " (vací", (o) x1, " y alumbrando)";
+			6:	!! El objeto tiene 'container', no 'open', pero
+				!! sí 'transparent'
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2894,11 +2907,9 @@ Verb	meta 'gramatica' 'grammar'
 						print " (que estará", (n) x1, " cerrad", (o) x1,
 						" y vací", (o) x1, ")";
 				}
-			!! El objeto tiene "recipiente", no "abierto", pero sí
-			!! "transparente"
-			7:	print " (cerrad", (o) x1, ", vací", (o) x1, " y
+			7:	!! Casos 1 y 6 juntos
+				print " (cerrad", (o) x1, ", vací", (o) x1, " y
 				alumbrando)";
-			!! Casos 1 y 6 juntos
 
 			!! Los casos siguientes son similares, pero se muestran cuando se
 			!! solicita a la rutina EscribirListaDesde la opción INFOTOTAL. La
@@ -2906,14 +2917,16 @@ Verb	meta 'gramatica' 'grammar'
 			!! deben llevar el cerrado de paréntesis al final, que lo añade la
 			!! propia librería. *** NO SE ACONSEJA CAMBIAR ESTOS ***
 
-			8:	print " (alumbrando y que llev", (lm_as) player,
+			8:	!! El objeto tiene 'light' y 'worn'
+				print " (alumbrando y que llev", (lm_as) player,
 				" puest", (o) x1;
-			!! El objeto tiene "luz" y "puesto"
-			9:	print " (alumbrando";
-			!! El objeto tiene "luz" pero no "puesto"
-			10:	print " (que llev", (lm_as) player, " puest", (o) x1;
-			!! El objeto tiene "puesto" pero no "luz"
-			11:	switch (_grammatical_inflection) {
+			9:	!! El objeto tiene 'light' pero no 'worn'
+				print " (alumbrando";
+			10:	!! El objeto no tiene 'light' pero sí 'worn'
+				print " (que llev", (lm_as) player, " puest", (o) x1;
+			11:	!! Mensaje introductorio para decir "que está
+				!! abierto / cerrado / vacio"...
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2927,20 +2940,22 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print " (que estará", (n) x1, " ";
 				}
-			!! Mensaje introductorio para decir "que está
-			!! abierto/cerrado/vacio"...
-			12:	print "abiert", (o) x1;
-			!! Objeto tiene "recipiente", "abrible" y "abierto" (y cosas dentro)
-			13:	print "abiert", (o) x1, ", pero vací", (o) x1;
-			!! Objeto tiene "recipiente", "abrible" y "abierto (pero vacio)
-			14:	print "cerrad", (o) x1;
-			!! Objeto tiene "recipiente", "abrible" y no "abierto"
-			15: print "cerrad", (o) x1, " con llave";
-			!! Objeto tiene "recipiente", "abrible" y "cerrojoechado" o
-			!! "cerrojo"
-			16:	print " vací", (o) x1;
-			!! Objeto tiene "recipiente", no "abrible" y "transparente"
-			17:	switch (_grammatical_inflection) {
+			12:	!! Objeto tiene 'container', 'openable' y 'open'
+				!! (y cosas dentro)
+				print "abiert", (o) x1;
+			13:	!! Objeto tiene 'container', 'openable' y 'open'
+ 				!! (pero vacio)
+				print "abiert", (o) x1, ", pero vací", (o) x1;
+			14:	!! Objeto tiene 'container', 'openable' y no 'open'
+				print "cerrad", (o) x1;
+			15:	!! Objeto tiene 'container', 'openable' y 'locked' o 'lockable'
+				print "cerrad", (o) x1, " con llave";
+			16:	!! Objeto tiene 'container', no 'openable' y 'transparent'
+				print " vací", (o) x1;
+			17:	!! Como el caso anterior, pero mensaje más "largo" (se activa
+				!! si 'WriteListFrom' es llamada sin el modo PARTINV_BIT)
+				!! TODO - Comprobar que se trata realmente del modo PARTINV_BIT
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2954,9 +2969,8 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print " (que estará", (n) x1, " vací", (o) x1, ")";
 				}
-			!! Como el caso anterior, pero mensaje más "largo" (que se activa
-			!! si EscribirListaDesde es llamada sin el modo BREVE_BIT)
-			18:	switch (_grammatical_inflection) {
+			18:	!! encabezado a la lista de lo que hay dentro del objeto
+				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT,
 					SECOND_PERSON_PRESENT,
 					THIRD_PERSON_PRESENT:
@@ -2970,20 +2984,20 @@ Verb	meta 'gramatica' 'grammar'
 					THIRD_PERSON_FUTURE:
 						print " que contendrá", (n) x1, " ";
 			}
-			!! encabezado a la lista de lo que hay dentro del objeto
-			19: print " (sobre ", (the) x1;
-			!! Si el objeto tiene "soporte", la librería va a listar sus
-			!! contenidos. Este es el encabezado de la lista
-			20: print ", encima ", (del) x1;
-			!! Como e l9, pero en otra modalidad (que se activa si
-			!! EscribirListaDesde es llamada sin el modo BREVE_BIT)
-			21: print " (en ", (the) x1;
-			!! Si el contenido tiene "recipiente" y puede verse su interior
-			!! y hay cosas, la librería va a mostrar sus contenidos. Este
-			!! es el encabezado de la lista
-			22: print ", dentro ", (del) x1;
-			!! Como el 21, pero en otra modalidad (que se activa si
-			!! EscribirListaDesde es llamada sin el modo BREVE_BIT)
+			19:	!! Si el objeto tiene 'supporter', la librería va a listar sus
+				!! contenidos. Este es el encabezado de la lista
+ 				print " (sobre ", (el_) x1;
+			20:	!! Como e l9, pero en otra modalidad (que se activa si
+				!! 'WriteListFrom' es llamada sin el modo PARTINV_BIT)
+				print ", encima ", (del_) x1;
+			21:	!! Si el contenido tiene 'container' y puede verse su interior
+				!! y hay cosas, la librería va a mostrar sus contenidos. Este
+				!! es el encabezado de la lista
+				print " (en ", (el_) x1;
+			22:	!! Como el 21, pero en otra modalidad (que se activa si
+				!! 'WriteListFrom' es llamada sin el modo PARTINV_BIT)
+				!! TODO - Comprobar que se trata realmente del modo PARTINV_BIT
+				print ", dentro ", (del_) x1;
 		}
 
  	LMode1:
@@ -4055,7 +4069,7 @@ Verb	meta 'gramatica' 'grammar'
 						if (IsPluralNoun(player)) print "Abrirán";
 						else print "Abrirá";
 				}
-				"", (the) x1, ".";
+				" ", (the) x1, ".";
 		}
 
 	Order:
