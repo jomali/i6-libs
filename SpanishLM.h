@@ -2751,7 +2751,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	3 y 4: [6/11]
 		switch (n) {
 			1:	print "No llev", (lm_as) player, " nada.";
-			2:	print "LLev", (lm_as) player;
+			2:	print "Llev", (lm_as) player;
 			3:	print ":^";
 			4:	print ".^";
 		}
