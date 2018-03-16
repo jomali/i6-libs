@@ -58,6 +58,8 @@ System_file;
 #Ifndef GW_GSTATUSX;
 Constant GW_GSTATUSX;
 
+Default GSTATUSX_JUSTIFIED 0; ! 0=left 1=center 2=right
+
 !! Vector auxiliar para manejar los contenidos de la barra de estado:
 #Ifdef VN_1630;	! compilador 6.30 o superior
 Array _gstatusx_buffer buffer 160; ! 150 y algo caracteres deberían bastar
@@ -72,8 +74,17 @@ Class	GStatusXWin
 		update [ pos i;
 			if (location == 0 || player == 0 || parent(player) == 0) return;
 			glk_set_window(self.winid);
-			pos = (self.width -
-				PrintToBuffer(_gstatusx_buffer, 160, self.locationName)) / 2;
+			switch (GSTATUSX_JUSTIFIED) {
+				0:
+					pos = 0;
+					PrintToBuffer(_gstatusx_buffer, 160, self.locationName);
+				2:
+					pos = self.width - PrintToBuffer(_gstatusx_buffer,
+						160, self.locationName);
+				default:
+					pos = (self.width - PrintToBuffer(_gstatusx_buffer,
+						160, self.locationName)) / 2;
+			}
 			glk_window_clear(self.winid);
 			glk_window_move_cursor(self.winid, pos, 0);
 			for (i=0 : i<_gstatusx_buffer-->0 : i++) {

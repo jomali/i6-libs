@@ -143,7 +143,63 @@
 
 \section{Introducción} \label{sec:introduccion}
 
-En el sistema Inform, la selección del estilo con el que se imprime texto no es un aspecto específico de su lenguaje de programación sino que está estrechamente ligado a la máquina virtual sobre la que se ejecuta el software. Así, no sólo los códigos de operación para cambiar de estilo en Máquina-Z y Glulx son distintos, sino que también lo es la cantidad total de estilos de texto disponibles en una y otra. De acuerdo con la especificación de la máquina virtual existe un total de cinco estilos en Máquina-Z\cite{NF14} (algunos intérpretes pueden reconocer combinaciones entre ellos, pero éstas no forman parte del estándar):
+En el sistema Inform, la selección del estilo con el que se imprime texto no es un aspecto específico de su lenguaje de programación sino que está estrechamente ligado a la máquina virtual sobre la que se ejecuta el software. Así, cuando un autor quiere seleccionar un estilo de texto en una obra biplataforma ---una obra que pueda ejecutarse tanto en Máquina-Z como en Glulx---, debe hacer uso de directivas condicionales de compilación. Por ejemplo, para seleccionar el estilo destacado que los intérpretes suelen mostrar con una fuente negrita:
+
+\begin{verbatim}
+#Ifdef TARGET_ZCODE;
+style bold;
+#Ifnot; ! TARGET_GLULX;
+glk($0086, 4);
+#Endif; ! TARGET_
+\end{verbatim}
+
+El objetivo de \textbf{textStyles} es crear una capa de abstracción sobre este proceso de selección de estilo y ofrecer al autor de ficción interactiva una interfaz trasparente con la que pueda trabajar sin necesidad de atender a la plataforma para la que está desarrollando la aplicación. De esta forma, el código del ejemplo anterior podría sustituirse simplemente por la línea:
+
+\begin{verbatim}
+UseTextStyle(TEXT_STYLE_IMPORTANT);
+\end{verbatim}
+
+%%
+
+\section{Instalación} \label{sec:instalacion}
+
+Para utilizar la extensión basta con añadir la siguiente línea en el fichero principal de la aplicación, inmediatamente después de la línea \verb|Include "Parser";|:
+
+\begin{verbatim}
+Include "textStyles";
+\end{verbatim}
+
+Opcionalmente en Glulx, además, es posible inicializar algunas sugerencias sobre el aspecto de los distintos estilos de texto de la extensión. Desde el propio sistema Inform no puede determinarse la apariencia final de los estilos de texto puesto que esta responsabilidad recae exclusivamente en el programa intérprete, pero sí es posible definir un conjunto de sugerencias que pueden ser tenidas en cuenta por él. Es necesario realizar estas sugerencias antes de la creación de la ventana principal de la obra; habitualmente se recomienda utilizar el punto de entrada Glk \verb|InitGlkWindow(winrock)|, invocado cada vez que la librería se encarga de establecer una de las ventanas estándar de la aplicación\cite{PLO02}:
+
+\begin{verbatim}
+#Ifdef TARGET_GLULX;
+[ InitGlkWindow winrock;
+    !! Sugerencias de aspecto de `textStyles':
+    TextFormatter.set_style_hints(winrock);
+    !! Espacio para sugerencias de aspecto del autor y
+    !! para el resto de contenidos de InitGlkWindow:
+    [...]
+    !! Se continúa con el proceso normal de la librería:
+    return false;
+];
+#Endif; ! TARGET_GLULX;
+\end{verbatim}
+
+%%
+
+\section{Relación de estilos en Máquina-Z y Glulx}
+
+Las dos máquinas virtuales para las que permite compilar código el sistema Inform, Máquina-Z y Glulx, utilizan códigos de operación distintos para la selección de estilo.
+
+Así, no sólo los códigos de operación para cambiar de estilo en Máquina-Z y Glulx son distintos, sino que también lo es la cantidad total de estilos de texto disponibles en una y otra.
+
+Cuando un autor quiere seleccionar el estilo de texto en una obra biplataforma ---obra que pueda compilarse tanto en Máquina-Z como en Glulx---
+
+
+
+
+
+ Así, no sólo los códigos de operación para cambiar de estilo en Máquina-Z y Glulx son distintos, sino que también lo es la cantidad total de estilos de texto disponibles en una y otra. De acuerdo con la especificación de la máquina virtual existe un total de cinco estilos en Máquina-Z\cite{NF14} (algunos intérpretes pueden reconocer combinaciones entre ellos, pero éstas no forman parte del estándar):
 
 \begin{itemize}
 	\item Normal.
@@ -191,32 +247,6 @@ Input					& \emph{sin correspondencia}	\\ \hline
 \end{table}
 
 El objetivo de \textbf{textStyles} es abstraer el proceso de selección de estilos y ofrecer al autor de ficción interactiva una interfaz trasparente con la que pueda trabajar sin necesidad de atender a la plataforma para la que está desarrollando la aplicación.
-
-%%
-
-\section{Instalación} \label{sec:instalacion}
-
-Para utilizar la extensión basta con añadir la siguiente línea en el fichero principal de la aplicación, inmediatamente después de la línea \verb|Include "Parser";|:
-
-\begin{verbatim}
-Include "textStyles";
-\end{verbatim}
-
-Opcionalmente en Glulx, además, es posible inicializar algunas sugerencias sobre el aspecto de los distintos estilos de texto de la extensión. Desde el propio sistema Inform no puede determinarse la apariencia final de los estilos de texto puesto que esta responsabilidad recae exclusivamente en el programa intérprete, pero sí es posible definir un conjunto de sugerencias que pueden ser tenidas en cuenta por él. Es necesario realizar estas sugerencias antes de la creación de la ventana principal de la obra; habitualmente se recomienda utilizar el punto de entrada Glk \verb|InitGlkWindow(winrock)|, invocado cada vez que la librería se encarga de establecer una de las ventanas estándar de la aplicación\cite{PLO02}:
-
-\begin{verbatim}
-#Ifdef TARGET_GLULX;
-[ InitGlkWindow winrock;
-    !! Sugerencias de aspecto de `textStyles':
-    TextFormatter.set_style_hints(winrock);
-    !! Espacio para sugerencias de aspecto del autor y
-    !! para el resto de contenidos de InitGlkWindow:
-    [...]
-    !! Se continúa con el proceso normal de la librería:
-    return false;
-];
-#Endif; ! TARGET_GLULX;
-\end{verbatim}
 
 
 %%

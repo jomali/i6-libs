@@ -207,11 +207,11 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!		hipervínculo. Si no se indica ninguno, como texto del hipervínculo se
 !!		utiliza el nombre del objeto o la cadena de caracteres del parámetro
 !!		'item'
-!!	@param {integer} [highlight = 0] - Código numérico indicando el estilo de
+!!	@param {integer} [style = 0] - Código numérico indicando el estilo de
 !!		texto con que se imprime el hipervínculo
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
-[ Hyperlink item alternative highlight
+[ Hyperlink item alternative style
 	auxiliary;
 	if (metaclass(item) ~= String or Object) return false;
 	!! Establece el inicio del hipervínculo:
@@ -219,7 +219,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	glk($0100, item); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
 	!! Selecciona el estilo de texto del hipervínculo:
-	auxiliary = HyperlinkSetStyle(highlight, item);
+	auxiliary = HyperlinkSetStyle(style, item);
 	!! Imprime el texto del hipervínculo:
 	if (metaclass(alternative) == String) item = alternative;
 	switch (metaclass(item)) {
@@ -235,7 +235,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	}
 	.hyperlinkTextPrinted;
 	!! Reestablece el estilo de texto de la obra:
-	HyperlinkSetStyle(auxiliary, item);
+	HyperlinkSetStyle(auxiliary);
 	!! Establece el final del hipervínculo:
 	#Ifdef TARGET_GLULX;
 	glk($0100, 0); ! glk_set_hyperlink
@@ -263,9 +263,9 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!		pasa como parámetro en la segunda. Así es posible inicar, desde la
 !!		llamada 1, el estilo final del texto una vez impreso el hipervínculo
 !!------------------------------------------------------------------------------
-[ HyperlinkSetStyle highlight item;
+[ HyperlinkSetStyle style item;
 	item++; ! (por evitar alertas del compilador)
-	switch (highlight) {
+	switch (style) {
 		1:	! Subrayado
 			#Ifdef TARGET_ZCODE;
 			font on; style roman;

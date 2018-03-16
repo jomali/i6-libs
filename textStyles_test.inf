@@ -8,13 +8,13 @@
 !!
 !!==============================================================================
 !!
-!!	File:			textStyles_test.inf
-!!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
-!!	Language:		ES (Español)
-!!	System:			Inform-INFSP 6
-!!	Platform:		Máquina-Z/Glulx
-!!	Version:		1.0
-!!	Released:		2018/02/28
+!!	Archivo:		textStyles_test.inf
+!!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Español)
+!!	Sistema:		Inform-INFSP 6
+!!	Platforma:		Máquina-Z/Glulx
+!!	Versión:		2.0
+!!	Fecha:			2018/03/XX
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -38,6 +38,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	2.0: 2018/03/XX
 !!	1.0: 2018/02/28	Versión inicial.
 !!
 !!------------------------------------------------------------------------------
@@ -49,11 +50,12 @@ Constant Story
 Constant Headline
 "^Interfaz biplataforma para la selección de estilos de texto^";
 
-Constant TEXT_STYLE_PARSER_PREFIX "-- ";
-Constant TEXT_STYLE_PARSER_STYLE TEXT_STYLE_MONOSPACED;
+Constant TEXT_STYLE_PARSER = TEXT_STYLE_MONOSPACED;
+Constant TEXT_STYLE_PARSER_PREFIX = "-- ";
 
 Include "Parser.h";
 Include ">textStyles.h";
+
 Include "VerbLib.h";
 
 #Ifdef TARGET_GLULX;
@@ -88,7 +90,7 @@ Include "VerbLib.h";
 !!		la creación manual de alguna de las ventanas)
 !!------------------------------------------------------------------------------
 [ InitGlkWindow winrock;
-	TextFormatter.initialise_style_hints(winrock);
+	InitialiseStyleHints(winrock);
 
 	return false;
 ];
@@ -100,47 +102,37 @@ Include "VerbLib.h";
 	new_line;
 
 	for (i = 0 : i <= TEXT_STYLE_USER2 : i++) {
+		UseTextStyle(i);
 		switch (i) {
 			TEXT_STYLE_HEADER:
-				TextFormatter.use_header();
-				print "Ejemplo de estilo ", (emphasis) "header";
+				print "Ejemplo de estilo ", (emph) "header";
 			TEXT_STYLE_IMPORTANT:
-				TextFormatter.use_important();
-				print "Ejemplo de estilo ", (emphasis) "important";
+				print "Ejemplo de estilo ", (emph) "important";
 			TEXT_STYLE_INPUT:
-				TextFormatter.use_input();
-				print "Ejemplo de estilo ", (emphasis) "input";
+				print "Ejemplo de estilo ", (emph) "input";
 			TEXT_STYLE_MONOSPACED:
-				TextFormatter.use_monospaced();
-				print "Ejemplo de estilo ", (emphasis) "monospaced";
+				print "Ejemplo de estilo ", (emph) "monospaced";
 			TEXT_STYLE_NOTE:
-				TextFormatter.use_note();
-				print "Ejemplo de estilo ", (emphasis) "note";
+				print "Ejemplo de estilo ", (emph) "note";
 			TEXT_STYLE_QUOTE:
-				TextFormatter.use_quote();
-				print "Ejemplo de estilo ", (emphasis) "quoted";
+				print "Ejemplo de estilo ", (emph) "quoted";
 			TEXT_STYLE_REVERSED:
-				TextFormatter.use_reversed();
-				print "Ejemplo de estilo ", (emphasis) "reversed";
+				print "Ejemplo de estilo ", (emph) "reversed";
 			TEXT_STYLE_STRESSED:
-				TextFormatter.use_stressed();
-				print "Ejemplo de estilo ", (emphasis) "stressed";
+				print "Ejemplo de estilo ", (emph) "stressed";
 			TEXT_STYLE_UPRIGHT:
-				TextFormatter.use_upright();
-				print "Ejemplo de estilo ", (emphasis) "upright";
+				print "Ejemplo de estilo ", (emph) "upright";
 			TEXT_STYLE_USER1:
-				TextFormatter.use_user1();
-				print "Ejemplo de estilo ", (emphasis) "user 1";
+				print "Ejemplo de estilo ", (emph) "user 1";
 			TEXT_STYLE_USER2:
-				TextFormatter.use_user2();
-				print "Ejemplo de estilo ", (emphasis) "user 2";
+				print "Ejemplo de estilo ", (emph) "user 2";
 		}
 		print " con el nombre del estilo enfatizado.^";
 	}
 	new_line;
 
 	for (i = 0 : i <= TEXT_STYLE_USER2 : i++) {
-		TextFormatter.use(i);
+		UseTextStyle(i);
 		print "Ejemplo de estilo ";
 		switch (i) {
 			TEXT_STYLE_HEADER:
@@ -154,7 +146,7 @@ Include "VerbLib.h";
 			TEXT_STYLE_NOTE:
 				print (strong) "note";
 			TEXT_STYLE_QUOTE:
-				print (strong) "quoted";
+				print (strong) "quote";
 			TEXT_STYLE_REVERSED:
 				print (strong) "reversed";
 			TEXT_STYLE_STRESSED:
@@ -168,6 +160,19 @@ Include "VerbLib.h";
 		}
 		print " con el nombre del estilo destacado.^";
 	}
+	new_line;
+
+	print "Regla de impresión ", (header) "header", ".^";
+	print "Regla de impresión ", (important) "important", ".^";
+	print "Regla de impresión ", (input) "input", ".^";
+	print "Regla de impresión ", (monospaced) "monospaced", ".^";
+	print "Regla de impresión ", (note) "note", ".^";
+	print "Regla de impresión ", (quote) "quote", ".^";
+	print "Regla de impresión ", (reversed) "reversed", ".^";
+	print "Regla de impresión ", (stressed) "stressed", ".^";
+	print "Regla de impresión ", (upright) "upright", ".^";
+	print "Regla de impresión ", (user1) "user1", ".^";
+	print "Regla de impresión ", (user2) "user2", ".^";
 	new_line;
 
 	print (parser) "Pulsa una tecla para salir.";

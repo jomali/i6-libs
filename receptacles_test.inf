@@ -1,0 +1,384 @@
+!% +language_name=Spanish
+
+
+!!==============================================================================
+!!
+!!	RECEPTACLES: PRUEBAS
+!!	Contenedores con límites de capacidad
+!!
+!!==============================================================================
+!!
+!!	Archivo:		receptacles_test.inf
+!!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Español)
+!!	Sistema:		Inform-INFSP 6
+!!	Platforma:		Máquina-Z / Glulx
+!!	Versión:		1.0
+!!	Fecha:			2018/03/08
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	Copyright (c) 2018, J. Francisco Martín
+!!
+!!	Este programa es software libre: usted puede redistribuirlo y/o
+!!	modificarlo bajo los términos de la Licencia Pública General GNU
+!!	publicada por la Fundación para el Software Libre, ya sea la versión
+!!	3 de la Licencia, o (a su elección) cualquier versión posterior.
+!!
+!!	Este programa se distribuye con la esperanza de que sea útil, pero
+!!	SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o
+!!	de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia Pública General GNU para más información.
+!!
+!!	Debería haber recibido una copia de la Licencia Pública General GNU
+!!	junto a este programa. En caso contrario, consulte
+!!	<http://www.gnu.org/licenses/>.
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	HISTORIAL DE VERSIONES
+!!
+!!	1.0: 2018/02/28	Versión inicial.
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	EJEMPLO #1
+!!
+!!	Creación de una caja con un volumen de 10 y una capacidad de volumen de 9,
+!!	y una piedra con un volumen de 2. El jugador puede poner hasta 4 piedras en
+!!	la caja (cuyo volumen total sería 2*4 = 8). Una quinta piedra no podría ser
+!!	introducida en la caja, puesto que su capacidad es 9 y el volumen total de
+!!	5 piedras sería de 10:
+!!
+!!		Receptacle -> box "caja"
+!!		 with	name 'caja',
+!!				volume 10,			! el volumen de la propia caja
+!!				capacity_volume 9,	! la capacidad de la caja
+!!		 has	container;
+!!
+!!		Object -> stone "piedra"
+!!		 with	name 'piedra',
+!!				volume 2;			! el volumen de la piedra
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	# EJEMPLO 2
+!!
+!!	El siguiente ejemplo crea una caja de madera y una caja de acero:
+!!
+!!		Receptacle -> wooden_box "caja de madera"
+!!		 with	name 'caja' 'madera',
+!!				volume 10,			! volumen del objeto
+!!				capacity_volume 9,	! capacidad de volumen del objeto
+!!		 has	container;
+!!
+!!		Receptacle -> stell_box "caja de acero"
+!!		 with	name 'caja' 'acero',
+!!				volume 8,			! volumen del objeto
+!!				capacity_volume 7,	! capacidad de volumen del objeto
+!!		 has	container;
+!!
+!!	El jugador puede introducir la caja de acero (volumen 8) dentro de la caja
+!!	de madera (capacidad 9), pero la caja de madera (volumen 10) no se puede
+!!	introducir en la caja de acero (capacidad 7). Si se introduce un objeto de
+!!	volumen igual o mayor a 2 dentro de la caja de madera (como la piedra del
+!!	EJEMPLO 1), ya no se podría introducir la caja de acero en su interior,
+!!	porque ésta requiere un espacio libre de 8 o más.
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	# EJEMPLO 3
+!!
+!!	El volumen y tamaño de los objetos contenidos en un receptáculo NO se
+!!	añaden a su volumen y tamaño total (se asume que los receptáculos no son
+!!	flexibles y tienen proporciones fijas). Si se desea crear una bolsa
+!!	flexible cuyo volumen aumente conforme se introducen objetos en su
+!!	interior, se debe implementar la rutina apropiada en su propiedad volume:
+!!
+!!		Receptacle -> bag "bolsa flexible"
+!!		 with	name 'bolsa' 'flexible',
+!!				capacity_volume 20,
+!!				capacity_size 5,
+!!				volume [ result i;
+!!					!! Volumen mínimo de la bolsa (cuando está vacía):
+!!					result = 1;
+!!					!! Se suman los volúmenes de los objetos que contiene:
+!!					objectloop (i in self)
+!!						result = result + VolumeOf(i);
+!!					!! Retorna el volumen total acumulado:
+!!					return result;
+!!				],
+!!				size [ result i;
+!!					!! Tamaño mínimo de la bolsa (cuando está vacía):
+!!					result = 1;
+!!					!! Se obtiene el objeto contenido de mayor tamaño:
+!!					objectloop(i in self)
+!!						if (SizeOf(i) > result) result = SizeOf(i);
+!!					!! El tamaño del mayor objeto contenido en ella determina
+!!					!! el tamaño actual de la bolsa:
+!!					return result;
+!!				],
+!!		 has	container;
+!!
+!!------------------------------------------------------------------------------
+!!
+!!	# EJEMPLO 4
+!!
+!!	Los pesos de los objetos contenidos en él se añaden automáticamente al peso
+!!	total del receptáculo. Se puede sobreescribir este comportamiento
+!!	definiendo la propiedad weight como una rutina. El siguiente ejemplo crea
+!!	una bolsa mágica cuyo peso total es sólo la mitad del peso de los objetos
+!!	contenidos en su interior:
+!!
+!!		Receptacle -> magic_bag "bolsa mágica"
+!!		 with	name 'bolsa' 'magica' 'maravillosa',
+!!				capcity_volume 100,
+!!				weight [ result i;
+!!					!! Peso base de la bolsa (cuando está vacía):
+!!					result = 1;
+!!					!! Se suman los pesos de los objetos que contiene:
+!!					objectloop(i in self)
+!!						result = result + WeightOf(i);
+!!					!! Retorna el 50% del peso total:
+!!					return (result/2);
+!!				],
+!!		 has	container;
+!!
+!!------------------------------------------------------------------------------
+
+
+Constant Story
+"~Text Styles~: Pruebas";
+
+Constant Headline
+"^Interfaz biplataforma para la selección de estilos de texto^";
+
+Include "Parser.h";
+Include ">receptacles.h";
+
+Include "VerbLib.h";
+
+[ Initialise;
+	location = ejemplo1;
+	lookmode = 2;
+];
+
+Include "SpanishG.h";
+
+Class	Room
+ private empty_inventory [;
+			if (child(player)) {
+				print "Se vacía el inventario.^";
+				while (child(player)) move child(player) to self;
+			}
+		],
+ has	light;
+
+!!------------------------------------------------------------------------------
+
+Room	ejemplo1 "Ejemplo 1"
+ with	description
+			"Una caja con un volumen de 10 y una capacidad de volumen de 9. Las piedras tienen un volumen de 2. El PC puede poner hasta 4 piedras en la caja (cuyo volumen total será 2*4 = 8). Al intentar meter una quinta piedra se producirá un error.",
+		n_to	[; self.empty_inventory(); return ejemplo2; ];
+
+Receptacle	-> ej1_caja "caja"
+ with	name_f	'caja',
+		gender	G_FEMENINO,
+		description [;
+			if (child(self)) {
+				print "Dentro hay ";
+				WriteListFrom(child(self), ENGLISH_BIT + PARTINV_BIT);
+				".";
+			}
+			"Una caja vacía.";
+		],
+		volume 10,			! el volumen de la propia caja
+		capacity_volume 9,	! la capacidad de la caja
+ has	container open static transparent;
+
+Object	-> ej1_piedra_amarilla "piedra amarilla"
+ with	name_f	'piedra' 'roca' 'amarilla',
+		gender	G_FEMENINO,
+		description "Una piedra amarilla con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+Object	-> ej1_piedra_roja "piedra roja"
+ with	name_f	'piedra' 'roca' 'roja',
+		gender	G_FEMENINO,
+		description "Una piedra roja con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+Object	-> ej1_piedra_azul "piedra azul"
+ with	name_f	'piedra' 'roca' 'azul',
+		gender	G_FEMENINO,
+		description "Una piedra azul con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+Object	-> ej1_piedra_verde "piedra verde"
+ with	name_f	'piedra' 'roca' 'verde',
+		gender	G_FEMENINO,
+		description "Una piedra verde con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+Object	-> ej1_piedra_morada "piedra morada"
+ with	name_f	'piedra' 'roca' 'morada',
+		gender	G_FEMENINO,
+		description "Una piedra morada con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+Object	-> ej1_piedra_naranja "piedra naranja"
+ with	name_f	'piedra' 'roca' 'naranja',
+		gender	G_FEMENINO,
+		description "Una piedra naranja con volumen 2.",
+		volume 2,			! el volumen de la piedra
+ has	female;
+
+ !!------------------------------------------------------------------------------
+
+ Room	ejemplo2 "Ejemplo 2"
+  with	description
+			"El PC puede introducir la caja de acero (volumen 8) dentro de la caja de madera (capacidad 9), pero la caja de madera (volumen 10) no se puede introducir en la caja de acero (capacidad 7). Si se introduce un objeto de volumen igual o mayor a 2 dentro de la caja de madera (como la piedra), ya no se podría introducir la caja de acero en su interior, porque ésta requiere un espacio libre de 8 o más.",
+		n_to	[; self.empty_inventory(); return ejemplo3; ],
+		s_to	[; self.empty_inventory(); return ejemplo1; ];
+
+Receptacle	-> ej2_caja_madera "caja de madera"
+ with	name_f	'caja' 'madera',
+		gender	G_FEMENINO,
+		description [;
+			if (child(self)) {
+				print "Dentro hay ";
+				WriteListFrom(child(self), ENGLISH_BIT + PARTINV_BIT);
+				".";
+			}
+			"Una caja vacía.";
+		],
+		volume 10,
+		capacity_volume 9,
+ has	container open transparent;
+
+Receptacle	-> ej2_caja_acero "caja de acero"
+ with	name_f	'caja' 'acero',
+		gender	G_FEMENINO,
+		description [;
+			if (child(self)) {
+				print "Dentro hay ";
+				WriteListFrom(child(self), ENGLISH_BIT + PARTINV_BIT);
+			}
+			"Una caja vacía.";
+		],
+		volume 8,
+		capacity_volume 7,
+ has	container open transparent;
+
+Object	-> ej2_piedra "piedra"
+ with	name_f	'piedra' 'roca',
+		gender	G_FEMENINO,
+		description "Una piedra con volumen 2.",
+		volume 2,
+ has	female;
+
+ !!------------------------------------------------------------------------------
+
+ Room	ejemplo3 "Ejemplo 3"
+  with	description
+			"El volumen y tamaño de los objetos contenidos en un receptáculo NO se añaden a su volumen y tamaño total (se asume que los receptáculos no son flexibles y tienen proporciones fijas). Si se desea crear una bolsa flexible cuyo volumen aumente conforme se introducen objetos en su interior, se debe implementar la rutina apropiada en su propiedad volume",
+		n_to	[; self.empty_inventory(); return ejemplo4; ],
+		s_to	[; self.empty_inventory(); return ejemplo2; ];
+
+Receptacle	-> ej3_bolsa "bolsa flexible"
+ with	name_f	'bolsa',
+		gender	G_FEMENINO,
+		adjectives 'flexible',
+		description [;
+			print "Una bolsa con tamaño ", self.size(), " y volumen ", self.volume(), ". ";
+			if (child(self)) {
+				print "Dentro hay ";
+				WriteListFrom(child(self), ENGLISH_BIT + PARTINV_BIT);
+				".";
+			}
+			"Está vacía.";
+		],
+		capacity_size 5,
+		capacity_volume 20,
+		size [
+			result obj;
+			!! Tamaño mínimo de la bolsa (cuando está vacía)
+			result = self.min_size;
+			!! Se obtiene el objeto contenido de mayor tamaño:
+			objectloop(obj in self) {
+				if (SizeOf(obj) > result) result = SizeOf(obj);
+			}
+			!! Retorna el tamaño:
+			return result;
+		],
+		volume [
+			result obj;
+			!! Volumen mínimo de la bolsa (cuando está vacía)
+			result = self.min_volume;
+			!! Se agregan los volúmenes de los objetos contenidos en ella:
+			objectloop(obj in self) {
+				result = result + VolumeOf(obj);
+			}
+			!! Retorna el volumen total acumulado:
+			return result;
+		],
+ private
+		min_size 1,
+		min_volume 1,
+ has	container open transparent;
+
+Object	-> ej3_piedra "piedra"
+ with	name_f	'piedra' 'roca',
+		gender	G_FEMENINO,
+		description "Una piedra con volumen 2 y tamaño 2.",
+		size 2,
+		volume 2,
+ has	female;
+
+Object	-> ej3_palo "palo"
+ with	name_m	'palo',
+		gender	G_MASCULINO,
+		description "Un palo con volumen 1 y tamaño 4.",
+		size 4,
+		volume 1,
+ has	female;
+
+ !!------------------------------------------------------------------------------
+
+ Room	ejemplo4 "Ejemplo 4"
+  with	description
+			"Los pesos de los objetos contenidos en un contenedor/soporte se añaden automáticamente a su peso total. Se puede sobreescribir este comportamiento definiendo la propiedad 'weight' como una rutina. La bolsa de este ejemplo es una bolsa mágica cuyo peso total es sólo la mitad del peso de los objetos contenidos en su interior:",
+		s_to	[; self.empty_inventory(); return ejemplo3; ];
+
+Receptacle	-> ej4_bolsa "bolsa mágica"
+ with	name_f	'bolsa',
+		gender	G_FEMENINO,
+		adjectives 'magica',
+		description [;
+			print "Una bolsa con peso ", self.weight(), ". ";
+			if (child(self)) {
+				print "Dentro hay ";
+				WriteListFrom(child(self), ENGLISH_BIT + PARTINV_BIT);
+				".";
+			}
+			"Está vacía.";
+		],
+		weight [
+			result obj;
+			!! Peso mínimo de la bolsa (cuando está vacía):
+			result = self.min_weight;
+			!! Se suman los pesos e los objetos que contiene:
+			objectloop(obj in self) {
+				result = result + WeightOf(obj);
+			}
+			!! Retorna el 50% del peso total:
+			return (result/2);
+		],
+ private
+		min_weight 1,
+ has	container open transparent;

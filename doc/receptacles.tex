@@ -1,0 +1,250 @@
+\documentclass[a4paper,12pt]{article}
+
+%%
+%%	EXTENSIÓN 'HYPERLINKS'
+%%	Marco para facilitar la interacción por hipervínculos
+%%  J. Francisco Martín Lisaso
+%%
+
+%% ============================================================================
+
+%% Paquetes:
+
+%% *** LANGUAGE PACKAGES ******************************************************
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+%% *** MISC UTILITY PACKAGES **************************************************
+
+\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+%% *** GRAPHICS RELATED PACKAGES **********************************************
+
+\ifpdf
+  \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  \graphicspath{{./res/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  \DeclareGraphicsExtensions{.jpeg,.jpg,.pdf,.png,.eps}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/tex-archive/info/epslatex/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+%% *** MATH TOOLS *************************************************************
+
+\usepackage{mathtools}
+
+\DeclarePairedDelimiter\bra{\langle}{\rvert}
+\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+
+\usepackage{amsmath}
+
+\numberwithin{equation}{section}
+
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+%% *** OTHER PACKAGES *********************************************************
+
+\usepackage{hyperref}
+\usepackage{color}
+\usepackage{fancyhdr}
+
+%% ============================================================================
+
+% Figures and tables captions:
+
+\RequirePackage[labelfont={bf,sf,small},%
+                labelsep=period,%
+                justification=raggedright]{caption}
+%\setlength{\abovecaptionskip}{0pt}
+%\setlength{\belowcaptionskip}{0pt}
+
+%% Título:
+
+\title{\vspace{-3cm}Extensión `Receptacles'\\
+    \Large{Contenedores con límites de capacidad}}
+\author{
+	\small{\textbf{Autor():} Peer Schaefer (por el original `recept.h')}\\
+	\small{\textbf{Autor:} J. Francisco Martín (por la traducción)}\\
+	\small{\textbf{Idioma:} ES (Español)}\\
+	\small{\textbf{Sistema:} Inform-INFSP 6}\\
+	\small{\textbf{Plataforma:} Máquina-Z / Glulx}\\
+	\small{\textbf{Versión (extensión):} 2.X}\\
+	\small{\textbf{Versión (documentación):} 1.0}\\
+	\small{\textbf{Última revisión del documento:} 2018/03/08}
+}
+\date{}
+
+%% Redefiniciones:
+
+\renewcommand{\familydefault}{\sfdefault}
+\renewcommand{\refname}{Referencias}
+
+%% Encabezado (fancyhdr):
+
+\pagestyle{fancy}
+\lhead{\footnotesize{Extensión ``Receptacles"}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+
+%% Inicio del documento:
+
+\begin{document}
+\maketitle
+
+%%
+
+\section{Introducción} \label{sec:introduccion}
+
+La extensión \textbf{receptacles} implementa una nueva clase de objeto llamada \emph{Receptacle}, que permite definir contenedores en el mundo de juego con un comportamiento más complejo que el contemplado por defecto por la librería Inform. Los contenedores \emph{Receptacle} incluyen límites de capacidad de peso, volumen y tamaño, además del límite de número de objetos definido ya por la librería, de forma que cada vez que se intenta colocar un objeto dentro de un \emph{Receptacle} se comprueba antes si tiene capacidad suficiente para el nuevo objeto y muestra un mensaje de error adecuado si no es así.
+
+Se basa en la extensión \textbf{recept} de Peer Schaefer.
+
+%%
+
+\section{Instalación} \label{sec:instalacion}
+
+Para utilizar la extensión hay que añadir la siguiente línea en el fichero principal de la obra, entre las líneas \verb|Include "Parser";| y \verb|Include "VerbLib";|:
+
+\begin{verbatim}
+Include "receptacles";
+\end{verbatim}
+
+%%
+
+\section{Límites de capacidad y nuevas propiedades} \label{sec:limites-y-propiedades}
+
+\subsection{Nuevas propiedades para el modelo de mundo} \label{sec:nuevas-propiedades}
+
+Para que los nuevos límites de capacidad de peso, volumen y tamaño de los contenedores definidos en \textbf{receptacles} tengan sentido, se hace necesario definir objetos con nuevas propiedades de peso, volumen y tamaño. A continuación es hace una relación de estas nuevas propiedades utilizadas por la extensión (son propiedades \textbf{opcionales}; el autor es libre de implementarlas o no):
+
+\begin{itemize}
+
+\item \textbf{weight}: Peso del objeto. (Cuando se intenta introducir un objeto con peso en un contenedor con límite de peso, se comprueba si el peso agregado de todos los elementos ya contenidos en el \emph{Receptacle} más el peso del nuevo objeto superan el límite).
+
+\item \textbf{volume}: Volumen del objeto. (Cuando se intenta introducir un objeto con volumen en un contenedor con límite de volumen, igual que ocurre con el peso, se comprueba si el volumen agregado de todos los elementos más el volumen del nuevo objeto superan el límite del contenedor).
+
+\item \textbf{size}: Longitud máxima del objeto en cualquiera de sus ejes. Por ejemplo, la longitud de una flecha o de un bastón. (Cuando se intenta introducir un objeto con tamaño definido en un contenedor con límite de tamaño, se comprueba si el límite es suficiente como para aceptar el tamaño del objeto.)
+\end{itemize}
+
+Cada una de estas tres propiedades puede ser un valor numérico o una rutina que retorne un valor numérico. Si el autor no define alguna de estas propiedades o tiene el valor cero, \textbf{receptacles} interpreta que esa característica del objeto es 0 ---se entiende que el objeto carece de peso, volumen o tamaño, o que se trata de una medida despreciables---.
+
+Las tres nuevas propiedades \emph{weight}, \emph{volume} y \emph{size}, se miden en unidades abstractas. Si la unidad se refiere, por ejemplo, a un gramo, una libra, una tonelada, o la masa del sol, es decisión libre del programador.
+
+\subsection{Límites de capacidad} \label{sec:limites-capacidad}
+
+Para crear un contenedor que compruebe automáticamente si tiene capacidad de peso, volumen o tamaño suficientes para los objetos que se intenta introducir en él, se definen otras tres nuevas propiedades opcionales:
+
+\begin{itemize}
+
+\item \textbf{capacity_weight}: Peso total que puede soportar el contenedor.
+
+\item \textbf{capcity_volume}: Volumen total que puede almacenar.
+
+\item \textbf{capacity_size}: Tamaño máximo del contenedor. Cualquier objeto con un tamaño superior simplemente no cabría.
+\end{itemize}
+
+\end{itemize}
+
+Cada una de estas tres propiedades, de nuevo, puede ser un valor numérico o una rutina que retorne un valor numérico. Si alguna de estas propiedades no está definida o tiene el valor \verb|INFINITE_CAPACITY| (una constante predefinida por la extensión), la capacidad respectiva para esa medida del receptáculo se considerará infinita.
+
+Desde luego, los contenedores \emph{Receptacle} pueden tener también definidas propiedades de peso, volumen y tamaño, ya que no se tratan sólo de contenedores si no también de objetos que pueden ser colocados a su vez dentro de otros contenedores.
+
+\subsection{Resumen sobre los límites de capacidad y nuevas propiedades} \label{sec:resumen-limites-y-propiedades}
+
+Recapitulando lo expuesto anteriormente:
+
+\begin{itemize}
+
+\item Pueden almacenarse múltiples objetos con peso en un \emph{Receptacle}, siempre que el peso total (\emph{weight} agregado de todos ellos) no exceda el límite \emph{capacity_weight} del contenedor. Es decir, \emph{capacity_weight} se va ``agotando" conforme se añade peso al contenedor.
+
+\item Pueden almacenarse múltiples objetos con volumen en un \emph{Receptacle}, siempre que el volumen total (\emph{volume} agregado de todos ellos) no exceda el límite \emph{capacity_volume} del contenedor. Es decir, \emph{capacity_volume} se va ``agotando" conforme se añade volumen al contenedor.
+
+\item Pueden almacenarse múltiples objetos con tamaño en un \emph{Receptacle}, siempre que sean más pequeños que el límite \emph{capacity_size} del contenedor (\emph{size} $<$ \emph{capacity_size}). Es decir, la capacidad del contenedor no se va ``agotando" conforme se añaden objetos.
+
+\end{itemize}
+
+Además, como habitualmente, los contenedores \emph{Receptacle} pueden definir también la propiedad \emph{capacity} contemplada por defecto por la librería Inform. Esta propiedad indica cuántos objetos (como máximo) se pueden almacenar dentro del contenedor.
+
+%%
+
+\section{Detalles técnicos} \label{sec:detalles-tecnicos}
+
+\begin{itemize}
+
+\item Calcular el peso de un contenedor/soporte \emph{Receptacle} es un proceso recursivo; los pesos de todos los objetos contenidos inmediatamente en él se añaden al peso del propio contenedor/soporte. Si éste se encuentra a su vez en otro contenedor/soporte, su peso total se añade, junto con el resto de objetos también contenidos, al de éste (y así sucesivamente).
+
+\item Si el peso de un objeto viene dado por una rutina, esta rutina debe devolver el peso \textbf{total} del objeto, incluyendo los pesos de todos los objetos que alberga directa e indirectamente en él. En este caso, los pesos pesos de los objetos contenidos en el contenedor \textbf{no} se calculan automáticamente. Esto añade flexibilidad a la hora de crear contenedores especiales (por ejemplo, una bolsa mágica cuyo peso sea menor al de los pesos de los objetos que contenga en su interior).
+
+\item El volumen y los tamaños de los objetos que alberga un receptáculo \textbf{no} se añaden al volumen o tamaño del contenedor \emph{Receptacle} (se asume que un contenedor estándar no es flexible y que tiene unas proporciones fijas y predeterminadas). Para reescribir este comportamiento se pueden
+\end{itemize}
+
+
+
+
+%% Referencias.
+
+\begin{thebibliography}{4}
+
+	\bibitem[CAD02]{CAD02} Cadre, Adam (2002, 11 Mayo) \emph{Gull}. Consultado en http://adamcadre.ac/gull/gull-2o.html
+
+	\bibitem[FIR06]{FIR06} Firth, Roger (2006) \emph{Inform 6: Frequently Asked Questions}. Consultado en http://www.firthworks.com/roger/informfaq/ii.html\#16
+
+	\bibitem[NF14]{NF14} Nelson, Graham \& Fillmore, David (2014, 24 Febrero) \emph{The Z-Machine Standards Document. Version 1.1}. Consultado en http://inform-fiction.org/zmachine/standards/z1point1/sect15.html\#set\_text\_style
+
+	\bibitem[PLO17]{PLO17} Plotkin, Andrew (2017) \emph{Glk API Specification. API version 0.7.5}. Consultado en https://eblong.com/zarf/glk/glk-spec-075\_4.html\#s.8
+
+\end{thebibliography}
+
+
+%% Final del documento:
+
+\end{document}
