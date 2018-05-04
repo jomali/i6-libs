@@ -64,80 +64,50 @@
 !!------------------------------------------------------------------------------
 
 !! Objeto de datos.
+#Ifndef GUIConfig;
+Constant GUICONFIG_MARGIN_COLOR $FFFFFF;
 Object	GUIConfig "(GUI Configuration)"
  with	!!----------------------------------------------------------------------
-		!! Valores generales
+		graphic_window_flag true,	! estado de las ventanas gráficas
+		status_bar_height 1,		! altura de la barra de estado (en filas)
 		!!----------------------------------------------------------------------
-		graphic_win_flag true,	! estado de la ventana gráfica
-		margin_bottom_height 0,	! altura del margen inferior (en px)
-		margin_top_height 0,	! altura del margen superior (en px)
-		padding_bottom_height 2, ! altura del padding inferior (en px)
-		status_bar_height 1,	! altura de la barra de estado (en filas)
-		!!----------------------------------------------------------------------
-		!! Las ventanas internas de la interfaz pueden variar su tamaño en
-		!! función del ancho de la ventana principal de la aplicación. Existen
-		!! en total 7 configuraciones de tamaños modificables. La configuración
-		!! concreta que se utiliza en un momento dado se selecciona comparando
-		!! el ancho actual de la ventana principal con el ancho prefijado de
-		!! cada configuración, de mayor a menor ---desde la configuración 7
-		!! hasta la 1---, de tal forma que si la ventana tiene un ancho
-		!! superior al límite de la configuración 7, la utiliza; en caso
-		!! contrario, compara el ancho con el límite de la configuración 6, y
-		!! así sucesivamente. De esta forma, aunque los valores de
-		!! configuración pueden ser modificados libremente, para que la
-		!! interfaz se comporte correctamente conviene establecer siempre los
-		!! límites de mayor a menor. Es decir; lím.7 > lím.6 > ... > lím.1. Tal
-		!! y como se hace con los valores por defecto.
-		!!----------------------------------------------------------------------
-		!! Configuración por defecto 7. Ancho de ventana: >= 1400px
-		!!----------------------------------------------------------------------
-		configuration_limit_7 1400,
-		graphic_window_width_7 225,
-		margin_7 46 0,
-		padding_7 0 20,
-		!!----------------------------------------------------------------------
-		!! Configuración 6. Ancho de ventana: (1400, 1224]px
-		!!----------------------------------------------------------------------
-		configuration_limit_6 1224,
-		graphic_window_width_6 225,
-		margin_6 36 0,
-		padding_6 0 20,
-		!!----------------------------------------------------------------------
-		!! Configuración 5. Ancho de ventana: (1224, 1050]px
-		!!----------------------------------------------------------------------
-		configuration_limit_5 1050,
-		graphic_window_width_5 225,
-		margin_5 28 0,
-		padding_5 0 20,
-		!!----------------------------------------------------------------------
-		!! Configuración 4. Ancho de ventana: (1050, 900]px
-		!!----------------------------------------------------------------------
-		configuration_limit_4 900,
-		graphic_window_width_4 225,
-		margin_4 18 0,
-		padding_4 0 20,
-		!!----------------------------------------------------------------------
-		!! Configuración 3. Ancho de ventana: (900, 660]px
-		!!----------------------------------------------------------------------
-		configuration_limit_3 660,
-		graphic_window_width_3 225,
-		margin_3 6 0,
-		padding_3 0 20,
-		!!----------------------------------------------------------------------
-		!! Configuración 2. Ancho de ventana: (660, 460]px
-		!!----------------------------------------------------------------------
-		configuration_limit_2 460,
-		graphic_window_width_2 0,
-		margin_2 6 6,
-		padding_2 0 0,
-		!!----------------------------------------------------------------------
-		!! Configuración 1. Ancho de ventana: (460, 0]px
-		!!----------------------------------------------------------------------
-		configuration_limit_1 0,
-		graphic_window_width_1 0,
-		margin_1 0 0,
-		padding_1 0 0,
+		!! Configuración por defecto A. Ancho de ventana >= threshold_A
+		graphic_width_A 0 0,	! (px)
+		margin_A 0 0,			! (%)
+		padding_A 0 0 8 0,		! (px)
+		threshold_A 0,			! (px)
+		!! Configuración por defecto B. Ancho de ventana >= threshold_B
+		graphic_width_B 0 0,	! (px)
+		margin_B 0 6,			! (%)
+		padding_B 0 0 8 0,		! (px)
+		threshold_B 460,		! (px)
+		!! Configuración por defecto C. Ancho de ventana >= threshold_C
+		graphic_width_C 0 0,	! (px)
+		margin_C 0 12,			! (%)
+		padding_C 0 0 8 0,		! (px)
+		threshold_C 660,		! (px)
+		!! Configuración por defecto D. Ancho de ventana >= threshold_D
+		graphic_width_D 0 0,	! (px)
+		margin_D 0 18,			! (%)
+		padding_D 0 0 8 0,		! (px)
+		threshold_D 900,		! (px)
+		!! Configuración por defecto E. Ancho de ventana >= threshold_E
+		graphic_width_E 0 0,	! (px)
+		margin_E 0 22,			! (%)
+		padding_E 0 0 8 0,		! (px)
+		threshold_E 1050,		! (px)
+		!! Configuración por defecto F. Ancho de ventana >= threshold_F
+		graphic_width_F 0 0,	! (px)
+		margin_F 0 25,			! (%)
+		padding_F 0 0 8 0,		! (px)
+		threshold_F 1224,		! (px)
+		!! Configuración por defecto G. Ancho de ventana >= threshold_G
+		graphic_width_G 0 0,	! (px)
+		margin_G 0 30,			! (%)
+		padding_G 0 0 8 0,		! (px)
+		threshold_G 1400,		! (px)
 ;
+#Endif;
 
 
 !!==============================================================================
@@ -158,23 +128,25 @@ Include "gtile.h";				! GWindows: Tiled Image Window Widget
 !!------------------------------------------------------------------------------
 !!
 !!	+---------------------------------------+	> A: textWindow
-!!	|					I					|	> B: paddingLeft
-!!	+---+---------------------------+---+---+	> C: paddingRight
-!!	|   |			  D				|	|   |	> D: statusBar
-!!	|   +---------------------------+	|   |	> E: paddingBottom
-!!	|   |   |					|   |   |   |	> F: graphicWindow
-!!	|   |   |					|	|   |   |	> G: marginLeft
-!!	|   |   |					|	|   |   |	> H: marginRight
-!!	|   |   |					|	|   |   |	> I: marginTop
-!!	| G | B |		  A 		| C | F | H |	> J: marginBottom
-!!	|   |   |					|	|   |   |
-!!	|   |   |					|	|   |   |
-!!	|   |   |					|	|   |   |
-!!	|   |   |					|	|   |   |
-!!	|	|---+-----------------------+	|	|
-!!	|   |   		  E				|	|   |
-!!	+---+---------------------------+---+---+
-!!	|					J					|
+!!	|					K					|	> B: statusBar
+!!	+---+---+-----------------------+---+---+	> C: paddingLeft
+!!	|	|	|			E			|	|	|	> D: paddingRight
+!!	|	|	+---+---------------+---+	|	|	> E: paddingTop
+!!	|	|	|	|		B		|	|	|	|	> F: paddingBottom
+!!	|	|	|	+---------------+   |	|	|	> G: graphicWindowLeft
+!!	|	|	|	|				|	|	|	|	> H: graphicWindowRight
+!!	|	|	|	|				|	|	|	|	> I: marginLeft
+!!	|	|	|	|				|	|	|	|	> J: marginRight
+!!	|	|	|	|				|	|	|	|	> K: marginTop
+!!	| I | G | C |		A		| D	| H | J |	> L: marginBottom
+!!	|	|	|	|				|	|	|	|
+!!	|	|	|	|				|	|	|	|
+!!	|	|	|	|				|	|	|	|
+!!	|	|	|	|				|	|	|	|
+!!	|	|	+---+---------------+---+	|	|
+!!	|	|	|			F			|	|	|
+!!	+---+---+-----------------------+---+---+
+!!	|					L					|
 !!	+---------------------------------------+
 !!
 !!------------------------------------------------------------------------------
@@ -188,163 +160,302 @@ WindowPair -> -> -> -> -> secondaryAreaE;
 WindowPair -> -> -> -> -> -> secondaryAreaF;
 WindowPair -> -> -> -> -> -> -> secondaryAreaG;
 WindowPair -> -> -> -> -> -> -> -> secondaryAreaH;
+WindowPair -> -> -> -> -> -> -> -> -> secondaryAreaI;
+WindowPair -> -> -> -> -> -> -> -> -> -> secondaryAreaJ;
 
-TextBuffer -> -> -> -> -> -> -> -> -> textWindow;
+TextBuffer -> -> -> -> -> -> -> -> -> -> -> textWindow;
+
+GStatusXWin -> -> -> -> -> -> -> -> -> -> -> statusBar
+ with	split 0,
+		split_dir winmethod_Above;
+
+GraphWin -> -> -> -> -> -> -> -> -> -> paddingRight
+ with	split 0,
+		split_dir winmethod_Right,
+ has	abssplit;
 
 GraphWin -> -> -> -> -> -> -> -> -> paddingLeft
  with	split 0,
- 		split_dir winmethod_Left,
+		split_dir winmethod_Left,
  has	abssplit;
 
-GraphWin -> -> -> -> -> -> -> -> paddingRight
-  with	split 0,
+GraphWin -> -> -> -> -> -> -> -> paddingTop
+ with	split 0,
+		split_dir winmethod_Above,
+ has	abssplit;
+
+GraphWin -> -> -> -> -> -> -> paddingBottom
+ with	split 0,
+		split_dir winmethod_Below,
+ has	abssplit;
+
+GImageWin -> -> -> -> -> -> graphicWindowRight
+ with	split 0,
 		split_dir winmethod_Right,
-  has	abssplit;
-
-GStatusXWin -> -> -> -> -> -> -> statusBar
-  with	split 0,
-		split_dir winmethod_Above;
-
-GraphWin -> -> -> -> -> -> paddingBottom
-  with	split 0,
-		split_dir winmethod_Below;
-
-GImageWin -> -> -> -> -> graphicWindow
-  with	split 0,
-		split_dir winmethod_Right,
-		col $222222,
+		col GUICONFIG_MARGIN_COLOR,
 		click_event [; cmd_override="mirar"; ],
-  has	abssplit on;
+ has	abssplit on;
 
-GraphWin -> -> -> -> marginLeft
-  with	split 0,
-		split_dir winmethod_Left;
+GImageWin -> -> -> -> -> graphicWindowLeft
+ with	split 0,
+		split_dir winmethod_Left,
+		col GUICONFIG_MARGIN_COLOR,
+		click_event [; cmd_override="mirar"; ],
+ has	abssplit on;
 
-GraphWin -> -> -> marginRight
-  with	split 0,
+GImageWin -> -> -> -> marginRight
+ with	split 0,
+		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Right;
 
-GraphWin -> -> marginTop
+GImageWin -> -> -> marginLeft
+ with	split 0,
+		col GUICONFIG_MARGIN_COLOR,
+		split_dir winmethod_Left;
+
+GImageWin -> -> marginTop
   with	split 0,
+		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Above;
 
-GraphWin -> marginBottom
+GImageWin -> marginBottom
   with	split 0,
+		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Below,
 		redraw [
-			graph_width mleft_width mright_width pleft_width pright_width;
-			if (self.width > GUIConfig.configuration_limit_7) {
-				graph_width = GUIConfig.graphic_window_width_7;
-				mleft_width = GUIConfig.&margin_7-->0;
-				mright_width = GUIConfig.&margin_7-->1;
-				pleft_width = GUIConfig.&padding_7-->0;
-				pright_width = GUIConfig.&padding_7-->1;
-			} else if (self.width > GUIConfig.configuration_limit_6) {
-				graph_width = GUIConfig.graphic_window_width_6;
-				mleft_width = GUIConfig.&margin_6-->0;
-				mright_width = GUIConfig.&margin_6-->1;
-				pleft_width = GUIConfig.&padding_6-->0;
-				pright_width = GUIConfig.&padding_6-->1;
-			} else if (self.width > GUIConfig.configuration_limit_5) {
-				graph_width = GUIConfig.graphic_window_width_5;
-				mleft_width = GUIConfig.&margin_5-->0;
-				mright_width = GUIConfig.&margin_5-->1;
-				pleft_width = GUIConfig.&padding_5-->0;
-				pright_width = GUIConfig.&padding_5-->1;
-			} else if (self.width > GUIConfig.configuration_limit_4) {
-				graph_width = GUIConfig.graphic_window_width_4;
-				mleft_width = GUIConfig.&margin_4-->0;
-				mright_width = GUIConfig.&margin_4-->1;
-				pleft_width = GUIConfig.&padding_4-->0;
-				pright_width = GUIConfig.&padding_4-->1;
-			} else if (self.width > GUIConfig.configuration_limit_3) {
-				graph_width = GUIConfig.graphic_window_width_3;
-				mleft_width = GUIConfig.&margin_3-->0;
-				mright_width = GUIConfig.&margin_3-->1;
-				pleft_width = GUIConfig.&padding_3-->0;
-				pright_width = GUIConfig.&padding_3-->1;
-			} else if (self.width > GUIConfig.configuration_limit_2) {
-				graph_width = GUIConfig.graphic_window_width_2;
-				mleft_width = GUIConfig.&margin_2-->0;
-				mright_width = GUIConfig.&margin_2-->1;
-				pleft_width = GUIConfig.&padding_2-->0;
-				pright_width = GUIConfig.&padding_2-->1;
+			graphic_left graphic_right margin_top margin_right margin_bottom
+			margin_left padding_top padding_right padding_bottom padding_left;
+			if (self.width > GUIConfig.threshold_G) {
+				graphic_right	= GUIConfig.&graphic_width_G-->0;
+				graphic_left	= GUIConfig.&graphic_width_G-->1;
+				margin_top		= (GUIConfig.&margin_G-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_G-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_G / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_G-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_G-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_G-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_G-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_G-->0;
+				padding_right	= GUIConfig.&padding_G-->1;
+				if ((GUIConfig.#padding_G / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_G-->0;
+					padding_left	= GUIConfig.&padding_G-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_G-->2;
+					padding_left	= GUIConfig.&padding_G-->3;
+				}
+			} else if (self.width > GUIConfig.threshold_F) {
+				graphic_right	= GUIConfig.&graphic_width_F-->0;
+				graphic_left	= GUIConfig.&graphic_width_F-->1;
+				margin_top		= (GUIConfig.&margin_F-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_F-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_F / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_F-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_F-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_F-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_F-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_F-->0;
+				padding_right	= GUIConfig.&padding_F-->1;
+				if ((GUIConfig.#padding_F / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_F-->0;
+					padding_left	= GUIConfig.&padding_F-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_F-->2;
+					padding_left	= GUIConfig.&padding_F-->3;
+				}
+			} else if (self.width > GUIConfig.threshold_E) {
+				graphic_right	= GUIConfig.&graphic_width_E-->0;
+				graphic_left	= GUIConfig.&graphic_width_E-->1;
+				margin_top		= (GUIConfig.&margin_E-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_E-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_E / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_E-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_E-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_E-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_E-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_E-->0;
+				padding_right	= GUIConfig.&padding_E-->1;
+				if ((GUIConfig.#padding_E / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_E-->0;
+					padding_left	= GUIConfig.&padding_E-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_E-->2;
+					padding_left	= GUIConfig.&padding_E-->3;
+				}
+			} else if (self.width > GUIConfig.threshold_D) {
+				graphic_right	= GUIConfig.&graphic_width_D-->0;
+				graphic_left	= GUIConfig.&graphic_width_D-->1;
+				margin_top		= (GUIConfig.&margin_D-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_D-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_D / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_D-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_D-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_D-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_D-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_D-->0;
+				padding_right	= GUIConfig.&padding_D-->1;
+				if ((GUIConfig.#padding_D / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_D-->0;
+					padding_left	= GUIConfig.&padding_D-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_D-->2;
+					padding_left	= GUIConfig.&padding_D-->3;
+				}
+			} else if (self.width > GUIConfig.threshold_C) {
+				graphic_right	= GUIConfig.&graphic_width_C-->0;
+				graphic_left	= GUIConfig.&graphic_width_C-->1;
+				margin_top		= (GUIConfig.&margin_C-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_C-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_C / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_C-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_C-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_C-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_C-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_C-->0;
+				padding_right	= GUIConfig.&padding_C-->1;
+				if ((GUIConfig.#padding_C / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_C-->0;
+					padding_left	= GUIConfig.&padding_C-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_C-->2;
+					padding_left	= GUIConfig.&padding_C-->3;
+				}
+			} else if (self.width > GUIConfig.threshold_B) {
+				graphic_right	= GUIConfig.&graphic_width_B-->0;
+				graphic_left	= GUIConfig.&graphic_width_B-->1;
+				margin_top		= (GUIConfig.&margin_B-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_B-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_B / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_B-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_B-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_B-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_B-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_B-->0;
+				padding_right	= GUIConfig.&padding_B-->1;
+				if ((GUIConfig.#padding_B / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_B-->0;
+					padding_left	= GUIConfig.&padding_B-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_B-->2;
+					padding_left	= GUIConfig.&padding_B-->3;
+				}
 			} else {
-				graph_width = GUIConfig.graphic_window_width_1;
-				mleft_width = GUIConfig.&margin_1-->0;
-				mright_width = GUIConfig.&margin_1-->1;
-				pleft_width = GUIConfig.&padding_1-->0;
-				pright_width = GUIConfig.&padding_1-->1;
+				graphic_right	= GUIConfig.&graphic_width_A-->0;
+				graphic_left	= GUIConfig.&graphic_width_A-->1;
+				margin_top		= (GUIConfig.&margin_A-->0 * self.height) / 100;
+				margin_right	= (GUIConfig.&margin_A-->1 * self.width) / 100;
+				if ((GUIConfig.#margin_A / WORDSIZE) == 2) {
+					margin_bottom = (GUIConfig.&margin_A-->0*self.height)/100;
+					margin_left = (GUIConfig.&margin_A-->1*self.width)/100;
+				} else {
+					margin_bottom = (GUIConfig.&margin_A-->2*self.height)/100;
+					margin_left = (GUIConfig.&margin_A-->3*self.width)/100;
+				}
+				padding_top		= GUIConfig.&padding_A-->0;
+				padding_right	= GUIConfig.&padding_A-->1;
+				if ((GUIConfig.#padding_A / WORDSIZE) == 2) {
+					padding_bottom	= GUIConfig.&padding_A-->0;
+					padding_left	= GUIConfig.&padding_A-->1;
+				} else {
+					padding_bottom	= GUIConfig.&padding_A-->2;
+					padding_left	= GUIConfig.&padding_A-->3;
+				}
 			}
-			self.rearrange_window_configuration(mleft_width, mright_width,
-				pleft_width, pright_width, graph_width);
+			self.rearrange_window_configuration(graphic_left, graphic_right,
+				margin_top, margin_right, margin_bottom, margin_left,
+ 				padding_top, padding_right, padding_bottom, padding_left);
 			glk_window_get_size(statusBar.winid,
 				statusBar.&width,
 				statusBar.&height);
 			statusBar.update();
 		],
  private
-		rearrange_window_configuration [ marginLeftValue marginRightValue
-			paddingLeftValue paddingRightValue graphicWindowWidth;
-			!! Comprueba que la ventana gráfica esté activada:
-			if (~~GUIConfig.graphic_win_flag()) {
-				graphicWindowWidth = 0;
-				paddingLeftValue = 0;
-				paddingRightValue = 0;
+		rearrange_window_configuration [ graphic_left_width graphic_right_width
+ 			margin_top_width margin_right_width margin_bottom_width
+			margin_left_width padding_top_width padding_right_width
+			padding_bottom_width padding_left_width;
+			!! Comprueba si las ventanas gráficas están activadas:
+			if (~~GUIConfig.graphic_window_flag()) {
+				graphic_left_width = 0;
+				graphic_right_width = 0;
 			}
-			!! Redimensiona el padding interior izquierdo:
-			glk_window_set_arrangement(parent(paddingLeft).winid,
-				winmethod_Left | winmethod_Fixed,
-				paddingLeftValue,
-				paddingLeft.winid);
-			paddingLeft.split = paddingLeftValue;
-			!! Redimensiona el padding interior derecho:
-			glk_window_set_arrangement(parent(paddingRight).winid,
-				winmethod_Right | winmethod_Fixed,
-				paddingRightValue,
-				paddingRight.winid);
-			paddingRight.split = paddingRightValue;
-			!! Redimensiona el padding interior inferior:
-			glk_window_set_arrangement(parent(paddingBottom).winid,
-				winmethod_Below | winmethod_Proportional,
-				GUIConfig.padding_bottom_height(),
-				paddingBottom.winid);
-			paddingBottom.split = GUIConfig.padding_bottom_height();
 			!! Redimensiona la barra de estado:
 			glk_window_set_arrangement(parent(statusBar).winid,
 				winmethod_Above | winmethod_Fixed,
 				GUIConfig.status_bar_height(),
 				statusBar.winid);
 			statusBar.split = GUIConfig.status_bar_height();
-			!! Redimensiona la ventana gráfica:
-			glk_window_set_arrangement(parent(graphicWindow).winid,
+			!! Redimensiona el padding izquierdo:
+			glk_window_set_arrangement(parent(paddingLeft).winid,
+				winmethod_Left | winmethod_Fixed,
+				padding_left_width,
+				paddingLeft.winid);
+			paddingLeft.split = padding_left_width;
+			!! Redimensiona el padding derecho:
+			glk_window_set_arrangement(parent(paddingRight).winid,
 				winmethod_Right | winmethod_Fixed,
-				graphicWindowWidth,
-				graphicWindow.winid);
-			graphicWindow.split = graphicWindowWidth;
+				padding_right_width,
+				paddingRight.winid);
+			paddingRight.split = padding_right_width;
+			!! Redimensiona el padding superior:
+			glk_window_set_arrangement(parent(paddingTop).winid,
+				winmethod_Above | winmethod_Fixed,
+				padding_top_width,
+				paddingTop.winid);
+			paddingTop.split = padding_top_width;
+			!! Redimensiona el padding inferior:
+			glk_window_set_arrangement(parent(paddingBottom).winid,
+				winmethod_Below | winmethod_Fixed,
+				padding_bottom_width,
+				paddingBottom.winid);
+			paddingBottom.split = padding_bottom_width;
+			!! Redimensiona la ventana gráfica izquierda:
+			glk_window_set_arrangement(parent(graphicWindowLeft).winid,
+				winmethod_Left | winmethod_Fixed,
+				graphic_left_width,
+				graphicWindowLeft.winid);
+			graphicWindowLeft.split = graphic_left_width;
+			!! Redimensiona la ventana gráfica derecha:
+			glk_window_set_arrangement(parent(graphicWindowRight).winid,
+				winmethod_Right | winmethod_Fixed,
+				graphic_right_width,
+				graphicWindowRight.winid);
+			graphicWindowRight.split = graphic_right_width;
 			!! Redimensiona el margen izquierdo
 			glk_window_set_arrangement(parent(marginLeft).winid,
-				winmethod_Left | winmethod_Proportional,
-				marginLeftValue,
+				winmethod_Left | winmethod_Fixed,
+				margin_left_width,
 				marginLeft.winid);
-			marginLeft.split = marginLeftValue;
+			marginLeft.split = margin_left_width;
 			!! Redimensiona el margen derecho
 			glk_window_set_arrangement(parent(marginRight).winid,
-				winmethod_Right | winmethod_Proportional,
-				marginRightValue,
+				winmethod_Right | winmethod_Fixed,
+				margin_right_width,
 				marginRight.winid);
-			marginRight.split = marginRightValue;
+			marginRight.split = margin_right_width;
 			!! Redimensiona el margen superior:
 			glk_window_set_arrangement(parent(marginTop).winid,
-				winmethod_Above | winmethod_Proportional,
-				GUIConfig.margin_top_height(),
+				winmethod_Above | winmethod_Fixed,
+				margin_top_width,
 				marginTop.winid);
-			marginTop.split = GUIConfig.margin_top_height();
+			marginTop.split = margin_top_width;
 			!! Redimensiona el margen inferior:
 			glk_window_set_arrangement(parent(marginBottom).winid,
-				winmethod_Below | winmethod_Proportional,
-				GUIConfig.margin_bottom_height(),
+				winmethod_Below | winmethod_Fixed,
+				margin_bottom_width,
 				marginBottom.winid);
-			marginBottom.split = GUIConfig.margin_bottom_height();
+			marginBottom.split = margin_bottom_width;
 		],
 ;
