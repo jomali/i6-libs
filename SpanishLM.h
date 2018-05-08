@@ -2271,7 +2271,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!	3:	Éxito, el usuario sale/baja del objeto
 		!!	4:	Error, más específico. [6/11]
 		switch (n) {
-			1:	print "No ", (lm_estas) player, " en ningún sitio del que ";
+			1:	print "No est", (lm_estas) player, " en ningún sitio del que ";
 				switch (_grammatical_inflection) {
 					FIRST_PERSON_PRESENT:
 						if (IsPluralNoun(player)) print "debamos";
@@ -2693,7 +2693,7 @@ Verb	meta 'gramatica' 'grammar'
 			4:	"", (lm_ttienes) player, " que quitár", (lm_te) player, "",
 				(lo) x1, " antes.";
 			5:	"No ",(lm_puedes) player," poner un objeto dentro de sí mismo.";
-			6:	"(Primero ", (lm_te) player, "", (lo) x1, " quit",
+			6:	"(Primero ", (lm_te) player, " ", (lo) x1, " quit",
 				(lm_as_) player, ").^";
 			7:	print "No ";
 				switch (_grammatical_inflection) {
@@ -4458,7 +4458,7 @@ Verb	meta 'gramatica' 'grammar'
 						else print "Le faltará";
 				}
 				" destreza.";
-			5:	"(Primero ", (lm_te) player, " ", (lo) x1, "quit",
+			5:	"(Primero ", (lm_te) player, " ", (lo) x1, " quit",
 				(lm_as_) player, ").^";
 			6:	print "No ";
 				switch (_grammatical_inflection) {
