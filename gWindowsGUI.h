@@ -37,7 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.0: 2018/03/XX	Versión inicial de la extensión.
+!!	1.0: 2018/05/05	Versión inicial de la extensión.
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -380,6 +380,8 @@ GImageWin -> marginBottom
 				statusBar.&width,
 				statusBar.&height);
 			statusBar.update();
+			GW_ForceRedraw(graphicWindowLeft);
+			GW_ForceRedraw(graphicWindowRight);
 		],
  private
 		rearrange_window_configuration [ graphic_left_width graphic_right_width
