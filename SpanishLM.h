@@ -3757,7 +3757,6 @@ Verb	meta 'gramatica' 'grammar'
 				en este caso. ¿Cuál exactamente?]^";
 				PreguntaCualExactamente=1;
 			48:
-				! TODO - Editar mensaje: "Tienes que indicar a quién..."
 				!! El usuario ha escrito una frase u orden a PSI incompleta,
 				!! como BESA (verbo aplicado sobre PSIs normalmente). El parser
 				!! le pregunta para que complete la frase.
@@ -3770,7 +3769,6 @@ Verb	meta 'gramatica' 'grammar'
 				print "?";
 				new_line;
 			49:
-				! TODO - Editar mensaje: "Tienes que indicar a quién..."
 				!! El usuario ha escrito una frase u orden incompleta, como
 				!! COGE (verbo aplicado sobre objetos normalmente). El parser
 				!! le pregunta para que complete la frase.
