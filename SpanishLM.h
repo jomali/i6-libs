@@ -386,9 +386,9 @@ Property inhibit_object_list; ! boolean
 
 !!==============================================================================
 !! Similar a la rutina 'lm_as()', con el verbo 'estar'.
-!! FIXME - Modificar rutinas lm_estas y lm_eres para que se comporten igual
-!! (imprimir el verbo completo o la terminación, crear formas con la primera
-!! letra en mayúscula...)
+!! FIXME - Modificar rutinas lm_estas, lm_puedes y lm_eres para que se
+!! comporten igua (imprimir el verbo completo o la terminación, crear formas
+!! con la primera letra en mayúscula...)
 !!
 !!	@param {Object} obj
 !!	@param {boolean} [pastSimple=false] - Activado (==true) para utilizar el
@@ -1810,7 +1810,7 @@ Verb	meta 'gramatica' 'grammar'
 		!!		al usuario en el objeto desde el cual pueda acceder al que el
 		!!		usuario le ha indicado.
 		switch (n) {
-			1:	print "Ya ", (lm_estas) player, " ";
+			1:	print "Ya est", (lm_estas) player, " ";
 				if (x1 has supporter) print "sobre ";
 				else print "en ";
 				"", (the) x1, ".";
@@ -2391,7 +2391,8 @@ Verb	meta 'gramatica' 'grammar'
 						}
 				}
 				" ", (del) x1, ".";
-			4:	print "No ", (lm_puedes) player, ". No ", (lm_estas) player," ";
+			4:	print "No ", (lm_puedes) player, ". No est",
+				(lm_estas) player," ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
 				" ", (del) x1, ".";
@@ -2426,7 +2427,7 @@ Verb	meta 'gramatica' 'grammar'
 		!! objeto indicado, se genera el siguiente mensaje de error. Si está,
 		!! la librería generará una acción Salir, por lo que el mensaje de
 		!! éxito será el de Salir.
-		"No ", (lm_puedes) player, ". No ", (lm_estas) player, " en ",
+		"No ", (lm_puedes) player, ". No est", (lm_estas) player, " en ",
 		(the) x1, ".";
 
 	Give:
@@ -4861,7 +4862,7 @@ Verb	meta 'gramatica' 'grammar'
 			}
 
 	Sleep:
-		"No ", (lm_estas) player, " especialmente somnolient", (o) player, ".";
+		"No est", (lm_estas) player, " especialmente somnolient", (o) player, ".";
 
 	Smell:
 		print "No ";
