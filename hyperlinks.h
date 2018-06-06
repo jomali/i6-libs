@@ -38,9 +38,10 @@
 !!	HISTORIAL DE VERSIONES
 !!
 !!	1.1: 2018/06/06	Nueva función 'ListenHyperlinkEvents()' para activar la
-!!					escucha de eventos de tipo pulsación de hipervínculo y
-!!					añadidas comprobaciones de las capacidades del intérprete
-!!					antes de definir un hipervínculo en 'Hyperlink()'.
+!!					escucha de eventos de tipo pulsación de hipervínculo.
+!!					Añadidas comprobaciones de las capacidades del intérprete
+!!					antes de definir un hipervínculo en 'Hyperlink()'. Añadido
+!!					'eco' a la entrada de usuario al utilizar hipervínculos.
 !!	1.0: 2018/03/05	Versión inicial de la extensión.
 !!
 !!------------------------------------------------------------------------------
@@ -132,7 +133,6 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 		!! también al inicio de la obra (en el punto de entrada 'Initialise()',
 		!! por ejemplo):
 		ListenHyperlinkEvents();
-
 		!! Se cancelan los inputs de teclado:
 		glk($00D3, gg_mainwin);		! glk_cancel_char_event
 		glk($00D1, gg_mainwin, 0);	! glk_cancel_line_event
@@ -172,6 +172,11 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			}
 			print " **^";
 			#Endif; ! DEBUG_HYPERLINKS;
+			!! Imprime el eco de la entrada de texto:
+			glk($0086, 8); ! style_Input
+			glk($0084, buffer+WORDSIZE, buffer-->0);
+			glk($0086, 0); ! style_Normal
+			new_line;
 			return true;
 		}
 		!! 2) Si el hipervínculo se ha creado sobre un string, la entrada de
@@ -186,8 +191,21 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			}
 			print " **^";
 			#Endif; ! DEBUG_HYPERLINKS;
+			!! Imprime el eco de la entrada de texto:
+			glk($0086, 8); ! style_Input
+			glk($0084, buffer+WORDSIZE, buffer-->0);
+			glk($0086, 0); ! style_Normal
+			new_line;
 			return true;
 		}
+	}
+	if (ev-->0 == 3) { ! evtype_LineInput
+		!! Imprime el eco de la entrada de texto:
+		glk($0086, 8); ! style_Input
+		glk($0084, buffer+WORDSIZE, buffer-->0);
+		glk($0086, 0); ! style_Normal
+		new_line;
+		return true;
 	}
 	context++; ! (por evitar alertas del compilador)
 	return false;
@@ -308,18 +326,18 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !! para la selección de hipervínculos en las ventanas principal de la
 !! aplicación.
 !!
-!! Se utilizan las siguientes dos llamadas glk:
-!!	-	glk($0004, 11, 0)	-> glk_gestalt(gestalt_Hyperlinks, 0)
-!!	-	glk($0102, win)		-> glk_request_hyperlink_event(win)
-!!
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
 [ ListenHyperlinkEvents;
 	#Ifdef TARGET_GLULX;
-	!! Activa la escucha de selección de hipervínculos en la ventana principal:
-	if (glk($0004, 11, 0)) glk($0102, gg_mainwin);
-	!! Activa la escucha de selección de hipervínculos en la ventana de estado:
-	if (glk($0004, 11, 0)) glk($0102, gg_statuswin);
+	if (glk($0004, 11, 0)) { ! glk_gestalt(gestalt_Hyperlinks, 0)
+		!! Activa escucha de hipervínculos en la ventana principal:
+		glk($0102, gg_mainwin); ! glk_request_hyperlink_event
+		!! Activa escucha de hipervínculos en la ventana de estado:
+		glk($0102, gg_statuswin); ! glk_request_hyperlink_event
+		!! Desactiva el eco automático de la entrada en la ventana principal:
+		glk($0150, gg_mainwin, 0); ! glk_set_echo_line_event
+	}
 	#Endif; ! TARGET_GLULX;
 ];
 

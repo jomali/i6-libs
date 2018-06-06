@@ -13,8 +13,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Platforma:		Máquina-Z/Glulx
-!!	Versión:		0.0 - En desarrollo
-!!	Fecha:			2018/03/03
+!!	Versión:		1.0
+!!	Fecha:			2018/06/06
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -38,7 +38,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.0: 2018/03/XX	TODO
+!!	1.0: 2018/06/06
 !!
 !!------------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ Constant Story
 Constant Headline
 "^Marco para facilitar la interacción por hipervínculos^";
 
-Constant DEBUG_HYPERLINKS;
+!! Constant DEBUG_HYPERLINKS;
 Global _hyperlinks_command = "examina";
 
 Include "Parser.h";
