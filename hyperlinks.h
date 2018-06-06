@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
-!!	Fecha:			2018/03/06
+!!	Versión:		1.1
+!!	Fecha:			2018/06/06
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,10 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2018/06/06	Nueva función 'ListenHyperlinkEvents()' para activar la
+!!					escucha de eventos de tipo pulsación de hipervínculo y
+!!					añadidas comprobaciones de las capacidades del intérprete
+!!					antes de definir un hipervínculo en 'Hyperlink()'.
 !!	1.0: 2018/03/05	Versión inicial de la extensión.
 !!
 !!------------------------------------------------------------------------------
@@ -44,37 +48,32 @@
 !!	INSTALACIÓN
 !!
 !!	Es importante tener en cuenta que la utilización de hipervínculos sólo está
-!!	soportada por la máquina virtual Glulx. Aún así, la extensión puede
-!!	utilizarse tanto en Glulx como en Máquina-Z (en esta segunda, simplemente,
+!!	soportada por la máquina virtual Glulx, y que no todos los intérpretes de
+!!	Glulx implementan esta funcionalidad. Aún así, la extensión puede
+!!	utilizarse tanto en Glulx como en Máquina-Z (en esta segunda ---o en
+!!	aquellos intérpretes Glulx que no soporten hipervínculos--- simplemente
 !!	no es posible utilizar la funcionalidad). Para hacerlo hay que añadir la
 !!	siguiente línea en el fichero principal de la obra, inmediatamente después
 !!	de la línea 'Include "Parser";':
 !!
 !!		Include "hyperlinks";
 !!
-!!	Son necesarias, además, otras dos consideraciones: por una parte, debe
+!!	Son necesarias, además, otras dos consideraciones: Por una parte, 1) debe
 !!	activarse la escucha de eventos glk de selección de hipervínculos en las
-!!	ventanas principales de la aplicación. Para hacer esto se deben incluir las
-!!	siguientes declaraciones dentro del punto de entrada 'Initialise()' ---el
-!!	ejemplo utiliza directivas de compilación condicionales para permitir la
-!!	compilación biplataforma---:
+!!	ventanas principales de la aplicación. Para ello, basta con invocar a la
+!!	función 'ListenHyperlinkEvents()' en el punto de entrada 'Initialise()':
 !!
 !! 		[ Initialise;
-!! 			#Ifdef TARGET_GLULX;
-!! 			!! Escucha de hipervínculos en la ventana princiapl:
-!! 			glk($0102, gg_mainwin); ! glk_request_hyperlink_event();
-!!			!! Escucha de hipervínculos en la ventana de estado:
-!!			glk($0102, gg_statuswin); ! glk_request_hyperlink_event();
-!! 			#Endif; ! TARGET_GLULX;
+!!			ListenHyperlinkEvents();
 !!
 !! 			!! Resto de contenidos del punto de entrada:
 !! 			[...]
 !! 		];
 !!
-!!	Por último, hay que introducir la lógica encargada de capturar y responder
-!!	a esos eventos Glk de tipo hipervínculo. Esta lógica debe encontrarse
-!!	dentro del punto de entrada Glulx 'HandleGlkEvent()' ---crearlo si no
-!!	existe---:
+!!	Por último, 2) hay que introducir la lógica encargada de capturar y
+!!	responder a esos eventos Glk de tipo hipervínculo. Esta lógica debe
+!!	encontrarse dentro del punto de entrada Glulx 'HandleGlkEvent()' ---crearlo
+!!	si no existe---:
 !!
 !! 		#Ifdef TARGET_GLULX;
 !! 		[ HandleGlkEvent ev context abortres;
@@ -82,13 +81,16 @@
 !! 		];
 !! 		#Endif; ! TARGET_GLULX;
 !!
+!!	NOTA: Señalar cómo el último ejemplo utiliza directivas de compilación
+!!	condicionales para permitir la compilación biplataforma.
+!!
 !!------------------------------------------------------------------------------
 System_file;
 
 #Ifndef HYPERLINKS;
 Constant HYPERLINKS;
 
-Default HYPERLINKS_COMMAND = "examina";
+Default _hyperlinks_command = "examina";
 Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 
 #Ifdef TARGET_GLULX;
@@ -129,20 +131,21 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
  		!! estos eventos por primera vez es necesario activar su escucha
 		!! también al inicio de la obra (en el punto de entrada 'Initialise()',
 		!! por ejemplo):
-		glk($0102, gg_mainwin);		! glk_request_hyperlink_event
-		glk($0102, gg_statuswin);	! glk_request_hyperlink_event
+		ListenHyperlinkEvents();
+
 		!! Se cancelan los inputs de teclado:
 		glk($00D3, gg_mainwin);		! glk_cancel_char_event
 		glk($00D1, gg_mainwin, 0);	! glk_cancel_line_event
 		!! 1) Si el hipervínculo se ha creado sobre un objeto, la entrada de
 		!! usuario se genera como la combinación de la orden registrada en el
-		!! string HYPERLINKS_COMMAND, el símbolo espacio ' ', y el nombre del
+		!! string _hyperlinks_command, el símbolo espacio ' ', y el nombre del
 		!! objeto:
 		if (metaclass(ev-->2) == Object) {
-			if (metaclass(HYPERLINKS_COMMAND) == String) {
-				PrintToBuffer(abortres, INPUT_BUFFER_LEN, HYPERLINKS_COMMAND);
+			if (metaclass(_hyperlinks_command) == String) {
+				PrintToBuffer(abortres, INPUT_BUFFER_LEN, _hyperlinks_command);
 				#Ifdef DEBUG_HYPERLINKS;
 				print "** Acción del hipervínculo: ";
+				print "(tam = ", (abortres-->0), ") ";
 				for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
 					print (char) abortres->i;
 				}
@@ -163,8 +166,9 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			}
 			#Ifdef DEBUG_HYPERLINKS;
 			print "** Comando completo del hipervínculo: ";
+			print "(tam = ", (abortres-->0), ") ";
 			for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
-				print (char) abortres-->i;
+				print (char) abortres->i;
 			}
 			print " **^";
 			#Endif; ! DEBUG_HYPERLINKS;
@@ -176,8 +180,9 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			PrintToBuffer(abortres, INPUT_BUFFER_LEN, ev-->2);
 			#Ifdef DEBUG_HYPERLINKS;
 			print "** Comando completo del hipervínculo: ";
+			print "(tam = ", (abortres-->0), ") ";
 			for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
-				print (char) abortres-->i;
+				print (char) abortres->i;
 			}
 			print " **^";
 			#Endif; ! DEBUG_HYPERLINKS;
@@ -200,9 +205,9 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!
 !!	@param {Object|String} item - Objeto o cadena de caracteres sobre la que se
 !!		genera el hipervínculo. Si es un objeto, la entrada que se genera al
-!!		seleccionarlo es un comando con el verbo definido en HYPERLINKS_COMMAND
-!!		y el objeto. Si es una cadena de caracteres, la entrada que se genera
-!!		es ella misma
+!!		seleccionarlo es un comando con el verbo definido en
+!!		'_hyperlinks_command' y el objeto. Si es una cadena de caracteres, la
+!!		entrada que se genera es ella misma
 !!	@param {String} [alternative] - Texto alternativo con que se imprime el
 !!		hipervínculo. Si no se indica ninguno, como texto del hipervínculo se
 !!		utiliza el nombre del objeto o la cadena de caracteres del parámetro
@@ -216,7 +221,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	if (metaclass(item) ~= String or Object) return false;
 	!! Establece el inicio del hipervínculo:
 	#Ifdef TARGET_GLULX;
-	glk($0100, item); ! glk_set_hyperlink();
+	if (glk($0004, 11, 0)) glk($0100, item); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
 	!! Selecciona el estilo de texto del hipervínculo:
 	auxiliary = HyperlinkSetStyle(style, item);
@@ -238,7 +243,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	HyperlinkSetStyle(auxiliary);
 	!! Establece el final del hipervínculo:
 	#Ifdef TARGET_GLULX;
-	glk($0100, 0); ! glk_set_hyperlink
+	if (glk($0004, 11, 0)) glk($0100, 0); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
 ];
 
@@ -296,6 +301,26 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	}
 	!! Garantiza que tras el hipervínculo se utilice el estilo Normal:
 	return 0;
+];
+
+!!------------------------------------------------------------------------------
+!! Si el intérprete utilizado los soporta, activa la escucha de eventos glk
+!! para la selección de hipervínculos en las ventanas principal de la
+!! aplicación.
+!!
+!! Se utilizan las siguientes dos llamadas glk:
+!!	-	glk($0004, 11, 0)	-> glk_gestalt(gestalt_Hyperlinks, 0)
+!!	-	glk($0102, win)		-> glk_request_hyperlink_event(win)
+!!
+!!	@returns {boolean} Verdadero
+!!------------------------------------------------------------------------------
+[ ListenHyperlinkEvents;
+	#Ifdef TARGET_GLULX;
+	!! Activa la escucha de selección de hipervínculos en la ventana principal:
+	if (glk($0004, 11, 0)) glk($0102, gg_mainwin);
+	!! Activa la escucha de selección de hipervínculos en la ventana de estado:
+	if (glk($0004, 11, 0)) glk($0102, gg_statuswin);
+	#Endif; ! TARGET_GLULX;
 ];
 
 #Endif; ! HYPERLINKS;

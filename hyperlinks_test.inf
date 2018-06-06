@@ -50,33 +50,24 @@ Constant Headline
 "^Marco para facilitar la interacción por hipervínculos^";
 
 Constant DEBUG_HYPERLINKS;
+Global _hyperlinks_command = "examina";
 
 Include "Parser.h";
 Include ">hyperlinks.h";
 Include "VerbLib.h";
 
 #Ifdef TARGET_GLULX;
-[ HandleGlkEvent ev context abortres
-	i;
+[ HandleGlkEvent ev context abortres;
+	!! Gestión de los eventos de selección de hipervínculo:
 	if (HandleHyperlinkEvent(ev, context, abortres)) {
-		!! El autor puede imprimir aquí el input provocado por el hipervínculo:
-		glk($0086, 8); ! glk_set_style(style_Input);
-		for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
-			print (char) abortres->i;
-		}
-		glk($0086, 0); ! glk_set_style(style_Normal);
-		new_line;
-		!! Se debe retornar 2 para finalizar el turno:
-		return 2;
+		return 2; ! finaliza el turno
 	}
 ];
 #Endif; ! TARGET_GLULX;
 
 [ Initialise;
-	#Ifdef TARGET_GLULX;
 	!! Establece la escucha de eventos glk para el uso de hipervínculos:
-	glk($0102, gg_mainwin); ! glk_request_hyperlink_event(gg_mainwin);
-	#Endif; ! TARGET_GLULX;
+	ListenHyperlinkEvents();
 
 	location = localidadPrueba;
 	lookmode = 2;
