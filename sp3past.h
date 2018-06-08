@@ -108,7 +108,7 @@
 
 	Climb:
 		print "No era algo a lo que ";
-		if (IsPluralNoun(player)) print "pudiésen";
+		if (IsPluralNoun(player)) print "pudiesen";
 		else print "pudiese";
 		print " ";
 		LanguageVerb(verb_word);
@@ -226,7 +226,7 @@
 				print "No ", (lo) x1, " ";
 				if (IsPluralNoun(player)) print "tenían";
 				else print "tenía";
-				"", (contigo) player, ".";
+				" ", (contigo) player, ".";
 			3:
 				print "(Primero ";
 				if (IsPluralNoun(player)) print "se quitaron";
@@ -922,7 +922,6 @@
 				if (real_location provides inhibit_object_list)
 					if (real_location.inhibit_object_list)
 						return true;
-
 				new_line;
 				if (x1 ~= location) {
 					if (x1 has supporter) print "Sobre ";
@@ -1024,6 +1023,7 @@
 				!! mensaje [Miscellany,5]
 				"[Por favor, introduce una de las respuestas anteriores].";
 			9:
+				!! TODO - Modificar
 				!! Mensaje cuando se detecta, al final del turno, que ya no hay
 				!! una fuente de luz en la localidad actual.
 				print "^¡";
@@ -1455,6 +1455,7 @@
 		"", (The) x1, " tenía", (n) x1, " mejores cosas que hacer.";
 
 	Places:
+		!! FIXME - Introducir flexiones
 		!! El verbo "LUGARES" muestra un listado de los lugares que el usuario
 		!! ha visitado. Aquí debemos escribir el texto introductorio a esa
 		!! lista.
@@ -1596,8 +1597,8 @@
 				" destreza.";
 			5:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "se ", (lo) x1, "quitaron";
-				else print "se ", (lo) x1, "quitó";
+				if (IsPluralNoun(player)) print "se ", (lo) x1, " quitaron";
+				else print "se ", (lo) x1, " quitó";
 				").^";
 			6:
 				"No quedaba sitio en ", (the) x1, " para poner nada más.";
@@ -1627,12 +1628,12 @@
 		!!	2:	El objeto no está dentro del recipiente que el usuario ha dicho.
 		!!	3:	Éxito.
 		switch (n) {
-			1:
+			1:	!! TODO - modificar
 				"Por desgracia ", (the) parent(x1), " estaba", (n) parent(x1),
 				" cerrad", (o) parent(x1), ".";
 			2:	!! TODO - Modificar
 				if (second has animate)
-					"¡Pero si no ", (lo) x1, " tenía", (n) second,"!";
+					"¡Pero si no ", (lo) x1, " tenía", (n) second, "!";
 				else
 					"¡Pero si no estaba", (n) x1, " ahí en aquel momento!";
 			3:
@@ -1928,7 +1929,7 @@
 				" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 			4:
 				if (IsPluralNoun(player)) print "Tenían";
-				else print "tenía";
+				else print "Tenía";
 				print " que ";
 				if (x1 has supporter) {
 					if (IsPluralNoun(player)) print "bajarse";
@@ -2054,7 +2055,7 @@
 		!!		abierto.
 		!!	4:	Éxito. El <objeto> se abre (con <objeto2> si éste ha sido
 		!!		especificado, el cual podemos encontrarlo en la variable
-		!! "otro".
+		!!		"otro".
 		switch (n) {
 			1:
 				"No parecía", (n) x1, " tener ningún tipo de cerrojo.";
@@ -2095,7 +2096,7 @@
 	Wait:
 		"Pasaba el tiempo...";
 
-	Wake:
+	Wake: !! TODO - Modificar
 		"La cruda realidad es que aquello no era un sueño.";
 
 	WakeOther:
@@ -2109,7 +2110,7 @@
 				print "No l", (o) x1, " ";
 				if (IsPluralNoun(player)) print "tenían";
 				else print "tenía";
-				"", (contigo) player, ".";
+				" ", (contigo) player, ".";
 			2:
 				if (IsPluralNoun(player)) print "Se sentían";
 				else print "Se sentía";

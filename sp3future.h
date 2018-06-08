@@ -144,7 +144,7 @@
 				print "No ", (lo) x1, " ";
 				if (IsPluralNoun(player)) print "tendrán";
 				else print "tendrá";
-				"", (contigo) player, ".";
+				" ", (contigo) player, ".";
 			3:
 				print "(Primero ";
 				if (IsPluralNoun(player)) print "se quitarán";
@@ -749,8 +749,8 @@
 				" destreza.";
 			5:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "se ", (lo) x1, "quitarán";
-				else print "se ", (lo) x1, "quitará";
+				if (IsPluralNoun(player)) print "se ", (lo) x1, " quitarán";
+				else print "se ", (lo) x1, " quitará";
 				").^";
 			6:
 				"No quedará sitio en ", (the) x1, " para poner nada más.";
@@ -1047,7 +1047,7 @@
 				print "No l", (o) x1, " ";
 				if (IsPluralNoun(player)) print "tendrán";
 				else print "tendrá";
-				"", (contigo) player, ".";
+				" ", (contigo) player, ".";
 			2:
 				if (IsPluralNoun(player)) print "Se sentirán";
 				else print "Se sentirá";
