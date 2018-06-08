@@ -984,13 +984,14 @@
 				!! la lista del parser está vacía.
 				"[No se pudo determinar a qué objetos te has referido].";
 			3:
-				!! Mensaje de fin del relato. Has muerto.
-				if (IsPluralNoun(player)) print " Habían muerto ";
-				else print " Había muerto ";
+				!! Mensaje de fin del relato. Muerte del personaje.
+				!! En realidad se trata de un mensaje del parser, pero tiene
+				!! su propio formato.
+				print " Has perdido ";
 			4:
 				!! Mensaje de fin del relato. Victoria.
-				if (IsPluralNoun(player)) print " Habían ganado ";
-				else print " Había ganado ";
+				!! Como el anterior, se trata de un mensaje del parser.
+				print " Has ganado ";
 			5:
 				!! Mensaje a mostrar tras el fin del juego, para pedir al
 				!! usuario si quiere reniciar, recuperar, anular, puntuación,
@@ -1396,10 +1397,7 @@
 		!!		casos anteriores).
 		switch (n) {
 			1:
-				print "Objectos que ";
-				if (IsPluralNoun(player)) print "habían";
-				else print "había";
-				" manejado:^";
+				print "[Objectos que has manejado:]^";
 			2:
 				"Ninguno.";
 			3:

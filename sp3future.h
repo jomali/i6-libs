@@ -584,12 +584,6 @@
 
 	Miscellany:
 		switch (n) {
-			3:
-				if (IsPluralNoun(player)) print " Habrán muerto ";
-				else print " Habrá muerto ";
-			4:
-				if (IsPluralNoun(player)) print " Habrán ganado ";
-				else print " Habrá ganado ";
 			9:
 				print "^¡";
 				if (IsPluralNoun(player)) print "Se habrán";
@@ -636,10 +630,7 @@
 	Objects:
 		switch (n) {
 			1:
-				print "Objectos que ";
-				if (IsPluralNoun(player)) print "habrán";
-				else print "habrá";
-				" manejado:^";
+				print "[Objectos que has manejado:]^";
 			2:
 				"Ninguno.";
 			3:
