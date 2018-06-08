@@ -79,8 +79,8 @@
 
 	Climb:
 		print "No será algo a lo que ";
-		if (IsPluralNoun(player)) print "podrán";
-		else print "podrá";
+		if (IsPluralNoun(player)) print "puedan";
+		else print "pueda";
 		print " ";
 		LanguageVerb(verb_word);
 		".";
@@ -88,7 +88,7 @@
 	Close:
 		switch (n) {
 			1:
-				"No será algo que se podrá cerrar.";
+				"No será algo que se pueda cerrar.";
 			2:
 				"Ya estará", (n) x1, " cerrad", (o) x1, ".";
 			3:
@@ -198,8 +198,8 @@
 				if (IsPluralNoun(x1)) print "serán";
 				else print "será";
 				print " algo donde ";
-				if (IsPluralNoun(player)) print "podrán";
-				else print "podrá";
+				if (IsPluralNoun(player)) print "puedan";
+				else print "pueda";
 				print " ";
 				LanguageVerb(verb_word);
 				".";
