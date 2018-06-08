@@ -421,7 +421,7 @@
 			6:
 				print "(Primero ";
 				if (IsPluralNoun(player)) print "se ", (lo) x1, " quitarán";
-				else print "se ", (lo) x1, "quitará";
+				else print "se ", (lo) x1, " quitará";
 				").^";
 			7:
 				"No quedará sitio en ", (the) x1, ".";
@@ -936,9 +936,9 @@
 				"", (The) x1, " no estará", (n) x1, " abiert", (o) x1, ".";
 			10:
 				print "Difícilmente ";
-				if (IsPluralNoun(player)) print "podrán";
-				else print "podrá";
-				" llevarse aquello.";
+				if (IsPluralNoun(player)) print "podrán llevarse";
+				else print "podrá llevarse";
+				" aquello.";
 			11:
 				"", (The) x1, "estará", (n) x1, " fij", (o) x1,
 				" en el sitio.";
@@ -1036,7 +1036,7 @@
 		"Pasará el tiempo...";
 
 	Wake:
-		"La cruda realidad será que eso no será un sueño.";
+		"La cruda realidad es que eso no será un sueño.";
 
 	WakeOther:
 		"No parecerá necesario hacer eso.";

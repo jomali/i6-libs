@@ -421,7 +421,7 @@
 			6:
 				print "(Primero ";
 				if (IsPluralNoun(player)) print "se ", (lo) x1, " quitan";
-				else print "se ", (lo) x1, "quita";
+				else print "se ", (lo) x1, " quita";
 				").^";
 			7:
 				"No queda sitio en ", (the) x1, ".";
@@ -936,9 +936,9 @@
 				"", (The) x1, " no está", (n) x1, " abiert", (o) x1, ".";
 			10:
 				print "Difícilmente ";
-				if (IsPluralNoun(player)) print "podrían";
-				else print "podría";
-				" llevarse aquello.";
+				if (IsPluralNoun(player)) print "podrían llevarse";
+				else print "podría llevarse";
+				" aquello.";
 			11:
 				"", (The) x1, "está", (n) x1, " fij", (o) x1,
 				" en el sitio.";
