@@ -904,8 +904,8 @@
 				else print "Tendrás";
 				print " que ";
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "bajarse";
-					else print "bajarse";
+					if (IsPluralNoun(player)) print "bajaros";
+					else print "bajarte";
 				}
 				else print "salir";
 				"", (del) x1, " antes.";
