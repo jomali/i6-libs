@@ -13,13 +13,13 @@
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
 !!	Versión:		0.0
-!!	Fecha:			2018/06/06
+!!	Fecha:			2018/06/08
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	0.0: 2018/06/06	Versión en desarrollo.
+!!	0.0: 2018/06/08	Versión en desarrollo.
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -1396,7 +1396,10 @@
 		!!		casos anteriores).
 		switch (n) {
 			1:
-				"Objetos que has manejado:^";
+				print "Objectos que ";
+				if (IsPluralNoun(player)) print "habían";
+				else print "había";
+				" manejado:^";
 			2:
 				"Ninguno.";
 			3:
@@ -1627,7 +1630,7 @@
 			1:
 				"Por desgracia ", (the) parent(x1), " estaba", (n) parent(x1),
 				" cerrad", (o) parent(x1), ".";
-			2:
+			2:	!! TODO - Modificar
 				if (second has animate)
 					"¡Pero si no ", (lo) x1, " tenía", (n) second,"!";
 				else
@@ -1793,7 +1796,7 @@
 				"", (The) x1, " no mostraba", (n) x1, " ningún interés.";
 		}
 
-	Sing:
+	Sing: !! TODO - Modificar
 		if (IsPluralNoun(player)) print "Cantaban";
 		else print "Cantaba";
 		" fatal.";
@@ -1992,7 +1995,7 @@
 				" ninguna reacción.";
 		}
 
-	Think:
+	Think: !! TODO - Modificar
 		print "Si, eso ";
 		if (IsPluralNoun(player)) print "intentaban";
 		else print "intentaba";
@@ -2005,9 +2008,9 @@
 			1:
 				"No hubiese servido de nada.";
 			2:
-				print "En el último momento se ";
-				if (IsPluralNoun(player)) print "echaron";
-				else print "echó";
+				print "En el último momento ";
+				if (IsPluralNoun(player)) print "se echaron";
+				else print "se echó";
 				" atrás.";
 		}
 

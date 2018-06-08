@@ -636,7 +636,10 @@
 	Objects:
 		switch (n) {
 			1:
-				"Objetos que has manejado:^";
+				print "Objectos que ";
+				if (IsPluralNoun(player)) print "habrán";
+				else print "habrá";
+				" manejado:^";
 			2:
 				"Ninguno.";
 			3:
@@ -982,9 +985,9 @@
 			1:
 				"No irá a servir de nada.";
 			2:
-				print "En el último momento se ";
-				if (IsPluralNoun(player)) print "echarán";
-				else print "echará";
+				print "En el último momento ";
+				if (IsPluralNoun(player)) print "se echarán";
+				else print "se echará";
 				" atrás.";
 		}
 
