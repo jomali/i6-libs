@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
-!!	Fecha:			2018/06/06
+!!	Versión:		1.2
+!!	Fecha:			2018/06/12
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.2: 2018/06/12	Añadida opción de desactivar los hipervínculos.
 !!	1.1: 2018/06/06	Nueva función 'ListenHyperlinkEvents()' para activar la
 !!					escucha de eventos de tipo pulsación de hipervínculo.
 !!					Añadidas comprobaciones de las capacidades del intérprete
@@ -235,14 +236,16 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
 [ Hyperlink item alternative style
-	auxiliary;
+	code;
 	if (metaclass(item) ~= String or Object) return false;
-	!! Establece el inicio del hipervínculo:
-	#Ifdef TARGET_GLULX;
-	if (glk($0004, 11, 0)) glk($0100, item); ! glk_set_hyperlink();
-	#Endif; ! TARGET_GLULX;
 	!! Selecciona el estilo de texto del hipervínculo:
-	auxiliary = HyperlinkSetStyle(style, item);
+	code = HyperlinkSetStyle(style, item);
+	#Ifdef TARGET_GLULX;
+	!! Establece el inicio del hipervínculo:
+	if (code >= 0 && glk($0004, 11, 0)) {
+		glk($0100, item); ! glk_set_hyperlink();
+	}
+	#Endif; ! TARGET_GLULX;
 	!! Imprime el texto del hipervínculo:
 	if (metaclass(alternative) == String) item = alternative;
 	switch (metaclass(item)) {
@@ -257,37 +260,45 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			print (object) item;
 	}
 	.hyperlinkTextPrinted;
-	!! Reestablece el estilo de texto de la obra:
-	HyperlinkSetStyle(auxiliary);
-	!! Establece el final del hipervínculo:
 	#Ifdef TARGET_GLULX;
-	if (glk($0004, 11, 0)) glk($0100, 0); ! glk_set_hyperlink();
+	!! Establece el final del hipervínculo:
+	if (code >= 0 && glk($0004, 11, 0)) {
+		glk($0100, 0); ! glk_set_hyperlink();
+	}
 	#Endif; ! TARGET_GLULX;
+	!! Reestablece el estilo de texto de la obra:
+	if (code >= 0) HyperlinkSetStyle(code);
+	return true;
 ];
 
 !!------------------------------------------------------------------------------
 !! Selecciona el estilo de texto utilizado por la rutina para crear
 !! hipervínculos. Puede ser sobreescrita por el autor desde el fichero original
 !! (por medio de una sentencia 'Replace HyperlinkSetStyle'), para definir un
-!! comportamiento más complejo ---utilizar el tipo de objeto pasado como
-!! parámetro para determinar el estilo de texto aplicado en el hipervínculo,
-!! por ejemplo---.
+!! comportamiento más complejo ---como utilizar el objeto que se pasa como
+!! parámetro para, en base a él, determinar el estilo de texto a utilizar, por
+!! ejemplo---.
 !!
-!!	@param {integer} highlight - Código numérico para identificar el estilo de
+!! Es invocada 2 veces dentro de la función Hyperlink(). En la primera ocasión
+!! ---etapa 1)--- selecciona el estilo de texto utilizado para imprimir el
+!! hipervínculo. Si aquí la rutina retorna un número negativo, se cancela la
+!! creación del hipervínculo. En la etapa 2) debe reestablecer el estilo de
+!! texto normal de la obra y el valor de retorno resulta indiferente.
+!!
+!!	@param {integer} style - Código numérico para identificar el estilo de
 !!		texto a utilizar, utilizando como referencia los estilos de texto de
 !!		Máquina-Z: 0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
-!!	@param {Object|String} item - Objeto o cadena de caracteres sobre el que se
-!!		genera el hipervínculo. Originalmente no se utiliza, pero puede ser
-!!		interesante si el autor decide sobreescribir la rutina y tener en
-!!		cuenta este 'item' para seleccionar el estilo de texto utilizado
-!!	@returns {integer} Código numérico que identifica los estilos de texto. La
-!!		rutina se invoca 2 veces, antes y después de imprimir el texto del
-!!		hipervínculo, de tal forma que el resultado de la primera llamada se
-!!		pasa como parámetro en la segunda. Así es posible inicar, desde la
-!!		llamada 1, el estilo final del texto una vez impreso el hipervínculo
+!!	@param {Object|String} [item = 0] - En la etapa 1) es el objeto o cadena de
+!!		caracteres sobre el que se genera el hipervínculo. En la etapa 2) el
+!!		parámetro está vacío
+!!	@returns {integer} Código numérico que identifica los estilos de texto.
+!!		Puede retornar -1 durante la etapa 1) para cancelar la creación del
+!!		hipervínculo. En cualquier otro caso, la etapa 1) debe retornar el
+!!		código del estilo de texto que se pasa como parámetro en la etapa 2),
+!!		para reestablecer el estilo de texto de la obra tras la impresión del
+!!		del hipervínculo
 !!------------------------------------------------------------------------------
 [ HyperlinkSetStyle style item;
-	item++; ! (por evitar alertas del compilador)
 	switch (style) {
 		1:	! Subrayado
 			#Ifdef TARGET_ZCODE;
@@ -317,7 +328,6 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			glk($0086, 0); ! style_Normal
 			#Endif; ! TARGET_
 	}
-	!! Garantiza que tras el hipervínculo se utilice el estilo Normal:
 	return 0;
 ];
 
