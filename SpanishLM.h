@@ -107,6 +107,8 @@
 !! Definición de constantes, variables y propiedades
 !!------------------------------------------------------------------------------
 
+Default PS1 = "^> ";
+
 Constant FIRST_PERSON_PRESENT	= 1;
 Constant SECOND_PERSON_PRESENT	= 2;
 Constant THIRD_PERSON_PRESENT	= 3;
