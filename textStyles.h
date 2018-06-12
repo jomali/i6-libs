@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		2.1
-!!	Fecha:			2018/06/11
+!!	Versión:		2.2
+!!	Fecha:			2018/06/12
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -38,7 +38,7 @@
 !!	HISTORIAL DE VERSIONES
 !!
 !!	2.1: 2018/06/11	Añadidas recomendaciones de aspecto en la función
-!!					InitialiseStyleHints() para todos los estilos de texto en
+!!					'InitialiseStyleHints()' para todos los estilos de texto en
 !!					Glulx, a fin de intentar dar mayor uniformidad al aspecto
 !!					en diferentes intérpretes.
 !!	2.0: 2018/03/07	Modificación del enfoque basado en el uso de un objeto
@@ -353,14 +353,11 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 	switch (st) {
 		TEXT_STYLE_HEADER:
 			_current_text_style	= st;
-			#Ifdef TARGET_ZCODE;
 			is_proportional	= false;
 			is_bold			= true;
 			is_underline	= false;
 			is_reverse		= false;
-			#Ifnot; ! TARGET_GLULX;
 			glulx_code		= 3; ! style_Header
-			#Endif; ! TARGET_
 		TEXT_STYLE_IMPORTANT:
 			_current_text_style	= st;
 			is_proportional	= false;
