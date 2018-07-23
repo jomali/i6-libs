@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.2
-!!	Fecha:			2018/06/12
+!!	Versión:		1.3
+!!	Fecha:			2018/07/23
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,10 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.3: 2018/07/23 Añadido nuevo modo de funcionamiento de los hipervínculos
+!!					generados con una cadena de texto alternativa. Consultar el
+!!					apartado COMPORTAMIENTO AL UTILIZAR CADENAS DE TEXTO
+!!					ALTERNATIVAS de la documentación para más información.
 !!	1.2: 2018/06/12	Añadida opción de desactivar los hipervínculos,
 !!					configurable por el usuario a través de la redefinición de
 !!					la nueva rutina 'HyperlinkStatus()'.
@@ -85,8 +89,41 @@
 !! 		];
 !! 		#Endif; ! TARGET_GLULX;
 !!
-!!	NOTA: Señalar cómo el último ejemplo utiliza directivas de compilación
-!!	condicionales para permitir la compilación biplataforma.
+!!	NOTA: Destacar la utilización de directivas de compilación condicionales
+!!	en el último ejemplo para permitir la compilación biplataforma.
+!!
+!!
+!!	COMPORTAMIENTO AL UTILIZAR CADENAS DE TEXTO ALTERNATIVAS
+!!
+!!	Al generar un hipervínculo con la rutina 'Hyperlink()' se puede incluir una
+!!	cadena de texto alternativa además del elemento (objeto o cadena de texto)
+!!	sobre el que se genera el hipervínculo. Esta cadena de texto alternativa se
+!!	imprimirá en el lugar del elemento a la hora de crear el hipervínculo. Hay,
+!!	además, dos modos de funcionamiento posibles al seleccionar un hipervínculo
+!!	creado utilizando una cadena de texto alternativa:
+!!
+!!	1)	Por defecto, al seleccionar el hipervínculo se lanza el comando
+!!		guardado en la variable '_hyperlinks_command', sobre la cadena de texto
+!!		alternativa. Se entiende que esta cadena de texto debe ser un sinónimo
+!!		del nombre del elemento. Así, si se crea un hipervínculo sobre un
+!!		hipotético objeto de nombre 'piedra' de la siguiente manera:
+!!
+!!			Hyperlink(piedra, "roca");
+!!
+!!		En pantalla se imprimirá la cadena alternativa "roca", y al seleccionar
+!!		dicho hipervínculo se lanzará el comando "<_hyperlinks_command> ROCA".
+!!		Debe asegurarse que el objeto 'piedra' esté definido con el sinónimo
+!!		'roca'. De lo contrario el comando no reconocerá ningún objeto.
+!!
+!!	2)	Para evitar este último comportamiento, es posible utilizar un segundo
+!!		modo de funcionamiento definiendo la constante 'HYPERLINKS_ALT_MODE'
+!!		como verdadera. Así, el hipervínculo del ejemplo anterior se imprimirá
+!!		en pantalla igualmente con la cadena alternativa "roca" pero, al
+!!		seleccionarlo, se lanzaría en cambio el comando:
+!!		"<_hyperlinks_command> PIEDRA". Este modo de funcionamiento garantiza
+!!		que no se generen comandos que no sean reconocidos por la falta de
+!!		definición de algún sinónimo (también rompe ligeramente cierta
+!!		coherencia de la interfaz).
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -104,7 +141,13 @@ System_file;
 #Ifndef HYPERLINKS;
 Constant HYPERLINKS;
 
+!! Comportamiento de los hipervínculos generados con un texto alternativo:
+Default HYPERLINKS_ALT_MODE = false;
+
+!! Comando por defecto al seleccionar un hipervínculo:
 Default _hyperlinks_command = "examina";
+
+!! Array de apoyo para la gestión de los eventos de selección de hipervínculos:
 Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 
 #Ifdef TARGET_GLULX;
@@ -259,7 +302,11 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	#Ifdef TARGET_GLULX;
 	!! Establece el inicio del hipervínculo:
 	if (hyperlink_active && glk($0004, 11, 0)) {
-		glk($0100, item); ! glk_set_hyperlink();
+		if (~~HYPERLINKS_ALT_MODE && metaclass(alternative) == string) {
+			glk($0100, alternative); ! glk_set_hyperlink();
+		} else {
+			glk($0100, item); ! glk_set_hyperlink();
+		}
 	}
 	#Endif; ! TARGET_GLULX;
 	!! Imprime el texto del hipervínculo:
