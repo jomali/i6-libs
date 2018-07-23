@@ -928,7 +928,7 @@
 				else print "podrías llevarte";
 				" aquello.";
 			11:
-				"", (The) x1, "está", (n) x1, " fij", (o) x1,
+				"", (The) x1, " está", (n) x1, " fij", (o) x1,
 				" en el sitio.";
 			12:
 				print "Ya ";

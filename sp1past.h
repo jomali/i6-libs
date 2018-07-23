@@ -929,7 +929,7 @@
 				else print "hubiese podido llevarme";
 				" aquello.";
 			11:
-				"", (The) x1, "estaba", (n) x1, " fij", (o) x1,
+				"", (The) x1, " estaba", (n) x1, " fij", (o) x1,
 				" en el sitio.";
 			12:
 				print "Ya ";
