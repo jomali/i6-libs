@@ -302,7 +302,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	#Ifdef TARGET_GLULX;
 	!! Establece el inicio del hipervínculo:
 	if (hyperlink_active && glk($0004, 11, 0)) {
-		if (~~HYPERLINKS_ALT_MODE && metaclass(alternative) == string) {
+		if (HYPERLINKS_ALT_MODE == false && metaclass(alternative) == string) {
 			glk($0100, alternative); ! glk_set_hyperlink();
 		} else {
 			glk($0100, item); ! glk_set_hyperlink();
