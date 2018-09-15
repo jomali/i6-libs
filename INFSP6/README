@@ -1,0 +1,4 @@
+Librería INFSP6 (Spanish Inform Library) versión 0.9, por INFSP Task Team
+Incluye modificaciones mínimas de J. Francisco Martín (marcadas con 'XXX'):
+	-	En la definición de la gramática para la acción ##Go/##Enter en
+		SpanishG.h. Se elimina el verbo vuelve/volver como sinónimo.
