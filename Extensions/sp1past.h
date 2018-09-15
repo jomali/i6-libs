@@ -3,11 +3,11 @@
 !!==============================================================================
 !!
 !!	MENSAJES DE LA LIBRERÍA EN ESPAÑOL
-!!	Narrador en segunda persona, tiempo pasado
+!!	Narrador en primera persona, tiempo pasado
 !!
 !!==============================================================================
 !!
-!!	Archivo:		sp2pasado.inf
+!!	Archivo:		sp1pasado.inf
 !!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
@@ -41,7 +41,7 @@
 !!
 !!------------------------------------------------------------------------------
 
-[ SecondPersonPast_ES n x1;
+[ FirstPersonPast_ES n x1;
 
 	Answer, Ask, AskFor:
 		"No había respuesta.";
@@ -49,8 +49,8 @@
 	Attack:
 		if (x1 == player) {
 			print "No ";
-			if (IsPluralNoun(player)) print "os hubieseis autolesionado";
-			else print "te hubieses autolesionado";
+			if (IsPluralNoun(player)) print "nos hubiésemos autolesionado";
+			else print "me hubiese autolesionado";
 			" a propósito.";
 		}
 		print "No hubiese servido de nada tratar de ";
@@ -58,29 +58,29 @@
 		" ", (the) x1, ".";
 
 	Blow:
-		if (IsPluralNoun(player)) print "Vuestro";
-		else print "Tu";
+		if (IsPluralNoun(player)) print "Nuestro";
+		else print "Mi";
 		" soplido no produjo ningún efecto.";
 
 	Burn:
 		print "Aquella era una idea peligrosa con la que no ";
-		if (IsPluralNoun(player)) print "hubieseis logrado";
-		else print "hubieses logrado";
+		if (IsPluralNoun(player)) print "hubiésemos logrado";
+		else print "hubiese logrado";
 		" nada en cualquier caso.";
 
 	Buy:
 		if (x1 == 0) "No había nada en venta.";
 		else {
 			print "No ";
-			if (IsPluralNoun(player)) print "podíais";
-			else print "podías";
+			if (IsPluralNoun(player)) print "podíamos";
+			else print "podía";
 			" comprar ", (the) x1, ".";
 		}
 
 	Climb:
 		print "No era algo a lo que ";
-		if (IsPluralNoun(player)) print "pudieseis";
-		else print "pudieses";
+		if (IsPluralNoun(player)) print "pudiésemos";
+		else print "pudiese";
 		print " ";
 		LanguageVerb(verb_word);
 		".";
@@ -92,27 +92,27 @@
 			2:
 				"Ya estaba", (n) x1, " cerrad", (o) x1, ".";
 			3:
-				if (IsPluralNoun(player)) print "Cerrasteis";
-				else print "Cerraste";
+				if (IsPluralNoun(player)) print "Cerramos";
+				else print "Cerré";
 				" ", (the) x1, ".";
 		}
 
 	Consult:
 		print "No ";
-		if (IsPluralNoun(player)) print "descubristeis";
-		else print "descubriste";
+		if (IsPluralNoun(player)) print "descubrimos";
+		else print "descubrí";
 		" nada interesante en ", (the) x1, " sobre aquel tema.";
 
 	Cut:
 		print "Cortándo", (lo) x1, " no ";
-		if (IsPluralNoun(player)) print "hubieseis logrado";
-		else print "hubieses logrado";
+		if (IsPluralNoun(player)) print "hubiésemos logrado";
+		else print "hubiese logrado";
 		" gran cosa.";
 
 	Dig:
 		print "No hubiese servido de nada que ";
-		if (IsPluralNoun(player)) print "os pusieseis";
-		else print "te pusieses";
+		if (IsPluralNoun(player)) print "nos pusiésemos";
+		else print "me pusiese";
 		print " a ";
 		LanguageVerb(verb_word);
 		" allí.";
@@ -121,12 +121,12 @@
 		switch (n) {
 			1:
 				print "No ", (lo) x1, " ";
-				if (IsPluralNoun(player)) print "llevabais";
-				else print "llevabas";
+				if (IsPluralNoun(player)) print "llevábamos";
+				else print "llevaba";
 				" puest", (o) x1, ".";
 			2:
-				if (IsPluralNoun(player)) print "Os quitasteis";
-				else print "Te quitaste";
+				if (IsPluralNoun(player)) print "Nos quitamos";
+				else print "Me quité";
 				" ", (the) x1, ".";
 		}
 
@@ -137,18 +137,18 @@
 		switch (n) {
 			1:
 				print "Para poder dejar ", (the) x1, " ";
-				if (IsPluralNoun(player)) print "hubieseis debido";
-				else print "hubieses debido";
+				if (IsPluralNoun(player)) print "hubiésemos debido";
+				else print "hubiese debido";
 				" tener", (lo) x1, ".";
 			2:
 				print "No ", (lo) x1, " ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" ", (contigo) player, ".";
 			3:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "os quitasteis";
-				else print "te quitaste";
+				if (IsPluralNoun(player)) print "nos quitamos";
+				else print "me quité";
 				" ", (the) x1, ".)";
 			4:
 				"Dejad", (o) x1, ".";
@@ -159,8 +159,8 @@
 			1:
 				"Aquello no parecía comestible.";
 			2:
-				if (IsPluralNoun(player)) print "Os comisteis";
-				else print "Te comiste";
+				if (IsPluralNoun(player)) print "Nos comimos";
+				else print "Me comí";
 				" ", (the) x1, ".";
 		}
 
@@ -170,16 +170,16 @@
  				"", (The) x1, " no podía", (n) x1, " tener cosas dentro.";
 			2:
 				print "No ";
- 				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+ 				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" hacerlo porque ", (the) x1, " estaba", (n) x1,
 				" cerrad", (o) x1, ".";
 			3:
 				"", (The) x1, " ya estaba", (n) x1, " vací", (o) x1, ".";
 			4:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" vaciar un objeto sobre sí mismo.";
 		}
 
@@ -187,8 +187,8 @@
 		switch (n) {
 			1:
 				print "Ya ";
-				if (IsPluralNoun(player)) print "estabais";
-				else print "estabas";
+				if (IsPluralNoun(player)) print "estábamos";
+				else print "estaba";
 				print " ";
 				if (x1 has supporter) print "sobre";
 				else print "en";
@@ -198,61 +198,61 @@
 				if (IsPluralNoun(x1)) print "eran";
 				else print "era";
 				print " algo donde ";
-				if (IsPluralNoun(player)) print "pudieseis";
-				else print "pudieses";
+				if (IsPluralNoun(player)) print "pudiésemos";
+				else print "pudiese";
 				print " ";
 				LanguageVerb(verb_word);
 				".";
 			3:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				print " ";
 				LanguageVerb(verb_word);
 				print " en ", (the) x1, " porque estaba", (n) x1,
 				" cerrad", (o) x1, ".";
 			4:
 				print "No ";
-				if (IsPluralNoun(player)) print "ibais a poder";
-				else print "ibas a poder";
+				if (IsPluralNoun(player)) print "íbamos a poder";
+				else print "iba a poder";
 				print " ";
 				LanguageVerb(verb_word);
 				print " ahí mientras no ", (lo) x1, " ";
-				if (IsPluralNoun(player)) print "soltaseis";
-				else print "soltases";
+				if (IsPluralNoun(player)) print "soltásemos";
+				else print "soltase";
 				" primero.";
 			5:
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "Subisteis";
-					else print "Subiste";
+					if (IsPluralNoun(player)) print "Subimos";
+					else print "Subí";
 					print " ", (al) x1;
 				} else {
-					if (IsPluralNoun(player)) print "Entrasteis";
-					else print "Entraste";
+					if (IsPluralNoun(player)) print "Entramos";
+					else print "Entré";
 					print " en ", (the) x1;
 				}
 				".";
 			6:
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "(Os bajasteis";
-					else print "(Te bajaste";
+					if (IsPluralNoun(player)) print "(Nos bajamos";
+					else print "(Me bajé";
 				} else {
-					if (IsPluralNoun(player)) print "(Salisteis";
-					else print "(Saliste";
+					if (IsPluralNoun(player)) print "(Salimos";
+					else print "(Salí";
 				}
 				" ", (del) x1, ").";
 			7:
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "(Os subisteis";
-					else print "(Te subiste";
+					if (IsPluralNoun(player)) print "(Nos subimos";
+					else print "(Me subí";
 					" ", (al) x1, ").^";
 				} else if (x1 has container) {
-					if (IsPluralNoun(player)) print "(Os metisteis";
-					else print "(Te metiste";
+					if (IsPluralNoun(player)) print "(Nos metimos";
+					else print "(Me metí";
 					" en ", (the) x1, ").^";
 				} else {
-					if (IsPluralNoun(player)) print "(Entrasteis";
-					else print "(Entraste";
+					if (IsPluralNoun(player)) print "(Entramos";
+					else print "(Entré";
 					" en ", (the) x1, ").^";
 				}
 		}
@@ -261,13 +261,13 @@
 		switch (n) {
 			1:
 				print "Estaba demasiado oscuro. No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" ver nada.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "observasteis";
-				else print "observaste";
+				if (IsPluralNoun(player)) print "observamos";
+				else print "observé";
 				"  nada especial en ", (the) x1, ".";
 			3:
 				print (The) x1, " estaba", (n) x1;
@@ -280,36 +280,36 @@
 		switch (n) {
 			1:
 				print "No ";
-				if (IsPluralNoun(player)) print "estabais";
-				else print "estabas";
+				if (IsPluralNoun(player)) print "estábamos";
+				else print "estaba";
  				print " en ningún sitio del que ";
-				if (IsPluralNoun(player)) print "debieseis";
-				else print "debieses";
+				if (IsPluralNoun(player)) print "debiésemos";
+				else print "debiese";
 				print " ";
 				LanguageVerb(verb_word);
 				".";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" salir ", (del) x1, " porque estaba", (n) x1,
 				" cerrad", (o) x1, ".";
 			3:
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "Bajasteis";
-					else print "Bajaste";
+					if (IsPluralNoun(player)) print "Bajamos";
+					else print "Bajé";
 				} else {
-					if (IsPluralNoun(player)) print "Salisteis";
-					else print "Saliste";
+					if (IsPluralNoun(player)) print "Salimos";
+					else print "Salí";
 				}
 				" ", (del) x1, ".";
 			4:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				print ". No ";
-				if (IsPluralNoun(player)) print "estabais";
-				else print "estabas";
+				if (IsPluralNoun(player)) print "estábamos";
+				else print "estaba";
 				print " ";
 				if (x1 has supporter) print "encima";
 				else print "dentro";
@@ -318,29 +318,29 @@
 
 	Fill:
 		print "No ";
-		if (IsPluralNoun(player)) print "podíais";
-		else print "podías";
+		if (IsPluralNoun(player)) print "podíamos";
+		else print "podía";
 		" llenar", (lo) x1, ".";
 
 	GetOff:
 		print "No ";
-		if (IsPluralNoun(player)) print "podíais";
-		else print "podías";
+		if (IsPluralNoun(player)) print "podíamos";
+		else print "podía";
 		print ". No ";
-		if (IsPluralNoun(player)) print "estabais";
-		else print "estabas";
+		if (IsPluralNoun(player)) print "estábamos";
+		else print "estaba";
 		" en ", (the) x1, ".";
 
 	Give:
 		switch (n) {
 			1:
 				print "No ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" ", (the) x1, ".";
 			2:
-				if (IsPluralNoun(player)) print "Manoseasteis";
-				else print "Manoseaste";
+				if (IsPluralNoun(player)) print "Manoseamos";
+				else print "Manoseé";
 				" ", (the) x1, " durante unos momentos, sin conseguir nada.";
 			3:
 				"", (The) x1, " no parecía", (n) x1, " interesad", (o) x1, ".";
@@ -350,41 +350,41 @@
 		switch (n) {
 			1:
 				PronounNotice(x1);
-				if (IsPluralNoun(player)) print "Teníais";
-				else print "Tenías";
+				if (IsPluralNoun(player)) print "Teníamos";
+				else print "Tenía";
 				print " que ";
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "bajaros";
-					else print "bajarte";
+					if (IsPluralNoun(player)) print "bajarnos";
+					else print "bajarme";
 				}
 				else print "salir";
 				" ", (del) x1, " antes.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" ir por ahí.";
 			3:
 				PronounNotice(x1);
-				if (IsPluralNoun(player)) print "Erais incapaces";
-				else print "Eras incapaz";
+				if (IsPluralNoun(player)) print "Éramos incapaces";
+				else print "Era incapaz";
 				" de trepar por ", (the) x1, ".";
 			4:
 				PronounNotice(x1);
-				if (IsPluralNoun(player)) print "Erais incapaces";
-				else print "Eras incapaz";
+				if (IsPluralNoun(player)) print "Éramos incapaces";
+				else print "Era incapaz";
 				" de bajar por ", (the) x1, ".";
 			5:
 				PronounNotice(x1);
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" pasar a través ", (del) x1, ".";
 			6:
 				PronounNotice(x1);
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" ir porque ", (the) x1, " no llevaba", (n) x1,
 				" a ningún sitio.";
 		}
@@ -394,14 +394,14 @@
 			1:
 				if (x1 has animate) {
 					if (IsPluralNoun(player))
-						"Antes teníais que ", (coge)"r", (lo) x1,
-						" y no sabíais si se hubiese", (n) x1, " dejado.";
+						"Antes teníamos que ", (coge)"r", (lo) x1,
+						" y no sabíamos si se hubiese", (n) x1, " dejado.";
 					else
-						"Antes tenías que ", (coge)"r", (lo) x1,
-						" y no sabías si se hubiese", (n) x1, " dejado.";
+						"Antes tenía que ", (coge)"r", (lo) x1,
+						" y no sabía si se hubiese", (n) x1, " dejado.";
 				} else {
-					if (IsPluralNoun(player)) print "Necesitabais";
-					else print "Necesitabas";
+					if (IsPluralNoun(player)) print "Necesitábamos";
+					else print "Necesitaba";
 					" tener ", (the) x1, " para poder meter", (lo) x1,
 					" donde fuese.";
 				}
@@ -410,26 +410,26 @@
 			3:
 				"", (The) x1, " estaba", (n) x1, " cerrad", (o) x1, ".";
 			4:
-				if (IsPluralNoun(player)) print "Teníais que quitáros";
-				else print "Tenías que quitárte";
+				if (IsPluralNoun(player)) print "Teníamos que quitárnos";
+				else print "Tenía que quitárme";
 				"", (lo) x1, " antes.";
 			5:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" poner un objeto dentro de sí mismo.";
 			6:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "os ", (lo) x1, " quitasteis";
-				else print "te ", (lo) x1, " quitaste";
+				if (IsPluralNoun(player)) print "nos ", (lo) x1, " quitamos";
+				else print "me ", (lo) x1, " quité";
 				").^";
 			7:
 				"No quedaba sitio en ", (the) x1, ".";
 			8:
 				"Hecho.";
 			9:
-				if (IsPluralNoun(player)) print "Metisteis";
-				else print "Metiste";
+				if (IsPluralNoun(player)) print "Metimos";
+				else print "Metí";
 				" ", (the) x1, " dentro ", (del) second, ".";
 		}
 
@@ -437,12 +437,12 @@
 		switch (n) {
 			1:
 				print "No ";
-				if (IsPluralNoun(player)) print "llevabais";
-				else print "llevabas";
+				if (IsPluralNoun(player)) print "llevábamos";
+				else print "llevaba";
 				" nada.";
 			2:
-				if (IsPluralNoun(player)) print "Llevabais";
-				else print "Llevabas";
+				if (IsPluralNoun(player)) print "Llevábamos";
+				else print "Llevaba";
 			3:
 				print ":^";
 			4:
@@ -450,26 +450,26 @@
 		}
 
 	Jump:
-		if (IsPluralNoun(player)) print "Saltasteis";
-		else print "Saltaste";
+		if (IsPluralNoun(player)) print "Saltamos";
+		else print "Salté";
 		" en el sitio, sin ningún resultado.";
 
 	JumpOver, Tie:
 		print "No ";
-		if (IsPluralNoun(player)) print "hubieseis conseguido";
-		else print "hubieses conseguido";
+		if (IsPluralNoun(player)) print "hubiésemos conseguido";
+		else print "hubiese conseguido";
 		" nada así.";
 
 	Kiss:
 		print "No ";
-		if (IsPluralNoun(player)) print "se os hubiese ocurrido";
-		else print "se te hubiese ocurrido";
+		if (IsPluralNoun(player)) print "se nos hubiese ocurrido";
+		else print "se me hubiese ocurrido";
 		" hacer algo así en aquel momento.";
 
 	Listen:
 		print "No ";
-		if (IsPluralNoun(player)) print "escuchasteis";
-		else print "escuchaste";
+		if (IsPluralNoun(player)) print "escuchamos";
+		else print "escuché";
 		" nada fuera de lo común.";
 
 	ListMiscellany:
@@ -483,13 +483,13 @@
 				" y vací", (o) x1, ")";
 			8:
 				print " (alumbrando y que ";
-				if (IsPluralNoun(player)) print "llevabais";
-				else print "llevabas";
+				if (IsPluralNoun(player)) print "llevábamos";
+				else print "llevaba";
 				print " puest", (o) x1;
 			10:
 				print " (que ";
-				if (IsPluralNoun(player)) print "llevabais";
-				else print "llevabas";
+				if (IsPluralNoun(player)) print "llevábamos";
+				else print "llevaba";
 				print " puest", (o) x1;
 			11:
 				print " (que estaba", (n) x1, " ";
@@ -515,25 +515,25 @@
 				}
 			3:
 				print "Primero ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
  				" que cerrar ", (the) x1, ".";
 			4:
 				if (second) {
 					"No parecía", (n) x1, " encajar en la cerradura.";
 				} else {
-					if (IsPluralNoun(player)) print "Necesitabais";
-					else print "Necesitabas";
+					if (IsPluralNoun(player)) print "Necesitábamos";
+					else print "Necesitaba";
 					" algún tipo de llave.";
 				}
 			5:
 				if (second) {
-					if (IsPluralNoun(player)) print "Cerrasteis";
-					else print "Cerraste";
+					if (IsPluralNoun(player)) print "Cerramos";
+					else print "Cerré";
 					" ", (the) x1, " con ", (the) second, ".";
 				} else {
-					if (IsPluralNoun(player)) print "Echasteis";
-					else print "Echaste";
+					if (IsPluralNoun(player)) print "Echamos";
+					else print "Eché";
 					" el cerrojo ", (al) x1, ".";
 				}
 		}
@@ -549,12 +549,12 @@
 					if (x1 has supporter) print "Sobre ";
 					else print "En ";
 					print (the) x1, " ";
-					if (IsPluralNoun(player)) print "podíais";
-					else print "podías";
+					if (IsPluralNoun(player)) print "podíamos";
+					else print "podía";
 					print " ver ";
 				} else {
-					if (IsPluralNoun(player)) print "Podíais";
-					else print "Podías";
+					if (IsPluralNoun(player)) print "Podíamos";
+					else print "Podía";
 					print " ver ";
 				}
 				if (n==5) print "también ";
@@ -564,8 +564,8 @@
 				".";
 			7:
 				print "No ";
-				if (IsPluralNoun(player)) print "observasteis";
-				else print "observaste";
+				if (IsPluralNoun(player)) print "observamos";
+				else print "observé";
 				" nada digno de mención al mirar hacia ", (the) x1, ".";
 			default:
 				ThirdPersonPast_ES(n, x1);
@@ -577,8 +577,8 @@
 				"Estaba demasiado oscuro como para poder ver algo.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "visteis";
-				else print "viste";
+				if (IsPluralNoun(player)) print "vimos";
+				else print "vi";
 				" nada destacable.";
 		}
 
@@ -586,32 +586,32 @@
 		switch (n) {
 			9:
 				print "^¡";
-				if (IsPluralNoun(player)) print "Os habíais";
-				else print "Te habías";
+				if (IsPluralNoun(player)) print "Nos habíamos";
+				else print "Me había";
 				" quedado a oscuras!";
 			17:
 				"Estaba demasiado oscuro como para poder ver algo.";
 			18:
-				if (IsPluralNoun(player)) print "vosotr", (o) player;
-				else print "tú";
+				if (IsPluralNoun(player)) print "nosotr", (o) player;
+				else print "yo";
 				print " mism", (o) player;
 			19:
 				"Tan buen aspecto como siempre.";
 			26:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "tratasteis";
-				else print "trataste";
+				if (IsPluralNoun(player)) print "tratamos";
+				else print "traté";
 				" de ", (coge) "r ", (the) x1, ".)";
 			32:
 				print "No ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" eso.";
 			44:
 				if (action_to_be == ##Drop) {
 					print "[No ";
-					if (IsPluralNoun(player)) print "teníais";
-					else print "tenías";
+					if (IsPluralNoun(player)) print "teníamos";
+					else print "tenía";
 					print " nada que ";
 					LanguageVerb(verb_word);
 					"].";
@@ -657,8 +657,8 @@
 			3:
 				"Ya estaba", (n) x1, " abiert", (o) x1, ".";
 			4:
-				if (IsPluralNoun(player)) print "Abristeis";
-				else print "Abriste";
+				if (IsPluralNoun(player)) print "Abrimos";
+				else print "Abrí";
 				print " ", (the) x1, ", descubriendo ";
 				if (WriteListFrom(child(x1),
 					ENGLISH_BIT + TERSE_BIT + CONCEAL_BIT) == 0) {
@@ -666,8 +666,8 @@
 				}
 				".";
 			5:
-				if (IsPluralNoun(player)) print "Abristeis";
-				else print "Abriste";
+				if (IsPluralNoun(player)) print "Abrimos";
+				else print "Abrí";
 				" ", (the) x1, ".";
 		}
 
@@ -683,8 +683,8 @@
 				"Estaba", (n) x1, " firmemente sujet", (o) x1, ".";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "fuisteis capaces";
-				else print "fuiste capaz";
+				if (IsPluralNoun(player)) print "fuimos capaces";
+				else print "fui capaz";
 				".";
 			3:
 				"No ocurrió nada, aparentemente.";
@@ -696,15 +696,15 @@
 		switch (n) {
 			1:
 				print "En realidad no ";
-				if (IsPluralNoun(player)) print "creíais";
-				else print "creías";
+				if (IsPluralNoun(player)) print "creíamos";
+				else print "creía";
 				" que empujar", (lo) x1, " hubiese servido de nada.";
 			2:
 				"Aquello no era una dirección.";
 			3:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" empujar", (lo) x1, " en esa dirección.";
 		}
 
@@ -713,41 +713,41 @@
 			1:
 				if (x1 has animate) {
 					if (IsPluralNoun(player))
-						"Antes teníais que ", (coge)"r", (lo) x1,
-						" y no sabíais si se hubiese", (n) x1,
+						"Antes teníamos que ", (coge)"r", (lo) x1,
+						" y no sabíamos si se hubiese", (n) x1,
 						" dejado.";
 					else
-						"Antes tenías que ", (coge)"r", (lo) x1,
-						" y no sabías si se hubiese", (n) x1, " dejado.";
+						"Antes tenía que ", (coge)"r", (lo) x1,
+						" y no sabía si se hubiese", (n) x1, " dejado.";
 				} else {
-					if (IsPluralNoun(player)) print "Necesitabais";
-					else print "Necesitabas";
+					if (IsPluralNoun(player)) print "Necesitábamos";
+					else print "Necesitaba";
 					" tener ", (the) x1, " para poder poner", (lo) x1,
 					" donde fuese.";
 				}
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" poner un objeto sobre sí mismo.";
 			3:
 				"Poner cosas sobre ", (the) x1, " no hubiese servido de nada.";
 			4:
-				if (IsPluralNoun(player)) print "Os faltaba";
-				else print "Te faltaba";
+				if (IsPluralNoun(player)) print "Nos faltaba";
+				else print "Me faltaba";
 				" destreza.";
 			5:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "os ", (lo) x1, " quitasteis";
-				else print "te ", (lo) x1, " quitaste";
+				if (IsPluralNoun(player)) print "nos ", (lo) x1, " quitamos";
+				else print "me ", (lo) x1, " quité";
 				").^";
 			6:
 				"No quedaba sitio en ", (the) x1, " para poner nada más.";
 			7:
 				"Hecho.";
 			8:
-				if (IsPluralNoun(player)) print "Colocasteis";
-				else print "Colocaste";
+				if (IsPluralNoun(player)) print "Colocamos";
+				else print "Coloqué";
 				" ", (the) x1, " sobre ", (the) second, ".";
 		}
 
@@ -782,13 +782,13 @@
 				".";
 			4:
 				print "No ";
-				if (IsPluralNoun(player)) print "encontrasteis";
-				else print "encontraste";
+				if (IsPluralNoun(player)) print "encontramos";
+				else print "encontré";
 				" nada interesante.";
 			5:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais";
-				else print "podías";
+				if (IsPluralNoun(player)) print "podíamos";
+				else print "podía";
 				" ver lo que había dentro ", (del) x1, " porque
 				estaba", (n) x1, " cerrad", (o) x1, ".";
 			6:
@@ -802,8 +802,8 @@
 
 	Set:
 		print "No, no ";
-		if (IsPluralNoun(player)) print "podíais";
-		else print "podías";
+		if (IsPluralNoun(player)) print "podíamos";
+		else print "podía";
  		".";
 
 	SetTo:
@@ -813,41 +813,41 @@
 		switch (n) {
 			1:
 				print "No ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" ", (the) x1, ".";
 			2:
 				"", (The) x1, " no mostraba", (n) x1, " ningún interés.";
 		}
 
 	Sing:
-		if (IsPluralNoun(player)) print "Cantabais";
-		else print "Cantabas";
+		if (IsPluralNoun(player)) print "Cantábamos";
+		else print "Cantaba";
 		" fatal.";
 
 	Sleep:
 		print "No ";
-		if (IsPluralNoun(player)) print "estabais";
-		else print "estabas";
+		if (IsPluralNoun(player)) print "estábamos";
+		else print "estaba";
 		" especialmente somnolient", (o) player, ".";
 
 	Smell:
 		print "No ";
-		if (IsPluralNoun(player)) print "olisteis";
-		else print "oliste";
+		if (IsPluralNoun(player)) print "olimos";
+		else print "olí";
 		" nada extraño.";
 
 	Squeeze:
 		switch (n) {
 			1:
 				print "En realidad no ";
-				if (IsPluralNoun(player)) print "se os hubiese ocurrido";
-				else print "se te hubiese ocurrido";
+				if (IsPluralNoun(player)) print "se nos hubiese ocurrido";
+				else print "se me hubiese ocurrido";
 				" hacer algo así.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "conseguisteis";
-				else print "conseguiste";
+				if (IsPluralNoun(player)) print "conseguimos";
+				else print "conseguí";
 				" nada haciendo eso.";
 		}
 
@@ -856,8 +856,8 @@
 
 	Swing:
 		print "No parecía", (n) x1, " el lugar más adecuado en el que ";
-		if (IsPluralNoun(player)) print "columpiaros";
-		else print "columpiarte";
+		if (IsPluralNoun(player)) print "columpiarnos";
+		else print "columpiarme";
 		".";
 
 	SwitchOff:
@@ -867,8 +867,8 @@
 			2:
 				"Ya estaba", (n) x1, "apagad", (o) x1, ".";
 			3:
-				if (IsPluralNoun(player)) print "Apagasteis";
-				else print "Apagaste";
+				if (IsPluralNoun(player)) print "Apagamos";
+				else print "Apagué";
 				" ", (the) x1, ".";
 		}
 
@@ -879,8 +879,8 @@
 			2:
 				"Ya estaba", (n) x1, " encendid", (o) x1, ".";
 			3:
-				if (IsPluralNoun(player)) print "Encendisteis";
-				else print "Encendiste";
+				if (IsPluralNoun(player)) print "Encendimos";
+				else print "Encendí";
 				" ", (the) x1, ".";
 		}
 
@@ -892,28 +892,28 @@
 				"", (o) noun, ".";
 			2:
 				print "Siempre ";
-				if (IsPluralNoun(player)) print "os teníais";
-				else print "te tenías";
+				if (IsPluralNoun(player)) print "nos teníamos";
+				else print "me tenía";
  				" a ", (string) YOURSELF__TX, ".";
 			3:
 				print "En realidad no ";
-				if (IsPluralNoun(player)) print "creíais";
-				else print "creías";
+				if (IsPluralNoun(player)) print "creíamos";
+				else print "creía";
 				" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 			4:
-				if (IsPluralNoun(player)) print "Teníais";
-				else print "Tenías";
+				if (IsPluralNoun(player)) print "Teníamos";
+				else print "Tenía";
 				print " que ";
 				if (x1 has supporter) {
-					if (IsPluralNoun(player)) print "bajaros";
-					else print "bajarte";
+					if (IsPluralNoun(player)) print "bajarnos";
+					else print "bajarme";
 				}
 				else print "salir";
 				"", (del) x1, " antes.";
 			5:
 				print "Ya ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" ", (the) x1, ".";
 			6:
 				"Parecía", (n) noun, " pertenecer ", (al) x1, ".";
@@ -925,48 +925,48 @@
 				"", (The) x1, " no estaba", (n) x1, " abiert", (o) x1, ".";
 			10:
 				print "Difícilmente ";
-				if (IsPluralNoun(player)) print "hubieseis podido llevaros";
-				else print "hubieses podido llevarte";
+				if (IsPluralNoun(player)) print "hubiésemos podido llevarnos";
+				else print "hubiese podido llevarme";
 				" aquello.";
 			11:
-				"", (The) x1, " estaba", (n) x1, " fij", (o) x1,
+				"", (The) x1, "estaba", (n) x1, " fij", (o) x1,
 				" en el sitio.";
 			12:
 				print "Ya ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" las manos ocupadas con demasiadas cosas.";
 			13:
 				print "(Primero ";
-				if (IsPluralNoun(player)) print "colocasteis";
-				else print "colocaste";
+				if (IsPluralNoun(player)) print "colocamos";
+				else print "coloqué";
 				" ", (the) x1, " en ", (the) SACK_OBJECT,
 				" para hacer sitio).";
 		}
 
 	Taste:
 		print "No ";
-		if (IsPluralNoun(player)) print "saboreasteis";
-		else print "saboreaste";
+		if (IsPluralNoun(player)) print "saboreamos";
+		else print "saboreé";
 		" nada inesperado.";
 
 	Tell:
 		switch (n) {
 			1:
-				if (IsPluralNoun(player)) print "Hablasteis";
-				else print "Hablaste";
+				if (IsPluralNoun(player)) print "Hablamos";
+				else print "Hablé";
 				" sol", (o) player, " durante un rato.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "provocasteis";
-				else print "provocaste";
+				if (IsPluralNoun(player)) print "provocamos";
+				else print "provoqué";
 				" ninguna reacción.";
 		}
 
 	Think:
 		print "Si, eso ";
-		if (IsPluralNoun(player)) print "intentabais";
-		else print "intentabas";
+		if (IsPluralNoun(player)) print "intentábamos";
+		else print "intentaba";
 		".";
 
 	ThrowAt:
@@ -975,8 +975,8 @@
 				"No hubiese servido de nada.";
 			2:
 				print "En el último momento ";
-				if (IsPluralNoun(player)) print "os echasteis";
-				else print "te echaste";
+				if (IsPluralNoun(player)) print "nos echamos";
+				else print "me eché";
 				" atrás.";
 		}
 
@@ -984,18 +984,18 @@
 		switch (n) {
 			1:
 				print "En realidad no ";
-				if (IsPluralNoun(player)) print "creíais";
-				else print "creías";
+				if (IsPluralNoun(player)) print "creíamos";
+				else print "creía";
 				" que ", (al) x1, " le", (s) x1, " hubiese gustado.";
 			2:
 				print "No ";
-				if (IsPluralNoun(player)) print "notasteis";
-				else print "notaste";
+				if (IsPluralNoun(player)) print "notamos";
+				else print "noté";
 				" nada extraño al tacto.";
 			3:
 				print "En realidad no ";
-				if (IsPluralNoun(player)) print "creíais";
-				else print "creías";
+				if (IsPluralNoun(player)) print "creíamos";
+				else print "creía";
 				" que algo así hubiese servido de nada.";
     	}
 
@@ -1009,13 +1009,13 @@
 				if (second) {
 					"No parecía", (n) x1, " encajar en la cerradura.";
 				} else {
-					if (IsPluralNoun(player)) print "Necesitabais";
-					else print "Necesitabas";
+					if (IsPluralNoun(player)) print "Necesitábamos";
+					else print "Necesitaba";
 					" algún tipo de llave.";
 				}
 			4:
-				if (IsPluralNoun(player)) print "Quitasteis";
-				else print "Quitaste";
+				if (IsPluralNoun(player)) print "Quitamos";
+				else print "Quité";
 				print " el cerrojo ", (al) x1;
 				if (second) print " con ", (the) second;
 				".";
@@ -1034,40 +1034,40 @@
 		switch (n) {
 			1:
 				print "No l", (o) x1, " ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
 				" ", (contigo) player, ".";
 			2:
-				if (IsPluralNoun(player)) print "Os sentíais";
-				else print "Te sentías";
+				if (IsPluralNoun(player)) print "Nos sentíamos";
+				else print "Me sentía";
 				" ridícul", (o) player, " agitando ", (the) x1, ".";
 		}
 
 	WaveHands:
-		if (IsPluralNoun(player)) print "Os encontrabais";
-		else print "Te encontrabas";
+		if (IsPluralNoun(player)) print "Nos encontrábamos";
+		else print "Me encontraba";
 		" ridícul", (o) player, " gesticulando así.";
 
 	Wear:
 		switch (n) {
 			1:
 				print "No ";
-				if (IsPluralNoun(player)) print "podíais poneros";
-				else print "podías ponerte";
+				if (IsPluralNoun(player)) print "podíamos ponernos";
+				else print "podía ponerme";
 				" aquello.";
 			2:
 				print "No ", (lo) x1, " ";
-				if (IsPluralNoun(player)) print "teníais";
-				else print "tenías";
+				if (IsPluralNoun(player)) print "teníamos";
+				else print "tenía";
  				".";
 			3:
 				print "Ya ", (lo) x1;
-				if (IsPluralNoun(player)) print "llevabais";
-				else print "llevabas";
+				if (IsPluralNoun(player)) print "llevábamos";
+				else print "llevaba";
 				" puest", (o) x1, ".";
 			4:
-				if (IsPluralNoun(player)) print "Os pusisteis";
-				else print "Te pusiste";
+				if (IsPluralNoun(player)) print "Nos pusimos";
+				else print "Me puse";
 				" ", (the) x1, ".";
 		}
 

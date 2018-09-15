@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		2.2
-!!	Fecha:			2018/06/12
+!!	Versión:		2.0
+!!	Fecha:			2018/03/07
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,11 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	2.1: 2018/06/11	Añadidas recomendaciones de aspecto en la función
-!!					'InitialiseStyleHints()' para todos los estilos de texto en
-!!					Glulx, a fin de intentar dar mayor uniformidad al aspecto
-!!					en diferentes intérpretes.
-!!	2.0: 2018/03/07	Modificación del enfoque basado en el uso de un objeto
+!!	2.0: 2018/03/XX	Modificación del enfoque basado en el uso de un objeto
 !!					gestor TextFormatter con estado interno, por un enfoque
 !!					basado en rutinas independientes y variables globales. Por
 !!					reducir la carga de la pila al encadenar llamadas a
@@ -73,13 +69,13 @@
 !!
 !!		Include "textStyles";
 !!
-!!	Opcionalmente en Glulx, además, es posible inicializar sugerencias sobre el
-!!	aspecto por defecto de los distintos estilos de texto de la extensión.
-!!	Desde el propio sistema Inform no puede determinarse la apariencia final de
-!!	los estilos de texto puesto que esta responsabilidad recae exclusivamente
-!!	en el programa intérprete, pero sí es posible definir un conjunto de
-!!	sugerencias que pueden ser tenidas en cuenta por él. Es necesario realizar
-!!	estas sugerencias antes de la creación de la ventana principal de la obra;
+!!	Opcionalmente en Glulx, además, es posible inicializar algunas sugerencias
+!!	sobre el aspecto de los distintos estilos de texto de la extensión. Desde
+!!	el propio sistema Inform no puede determinarse la apariencia final de los
+!!	estilos de texto puesto que esta responsabilidad recae exclusivamente en el
+!!	programa intérprete, pero sí es posible definir un conjunto de sugerencias
+!!	que pueden ser tenidas en cuenta por él. Es necesario realizar estas
+!!	sugerencias antes de la creación de la ventana principal de la obra;
 !!	habitualmente se recomienda utilizar el punto de entrada Glk
 !!	'InitGlkWindow(winrock)', invocado cada vez que la librería se encarga de
 !!	establecer una de las ventanas estándar de la aplicación [PLO02]:
@@ -88,8 +84,8 @@
 !!		[ InitGlkWindow winrock;
 !!		    !! Sugerencias de aspecto de 'textStyles':
 !!		    InitialiseStyleHints(winrock);
-!!		    !! Espacio para otras sugerencias de aspecto definidas por el
-!!			!! autor y para el resto de contenidos de InitGlkWindow:
+!!		    !! Espacio para sugerencias de aspecto del autor y
+!!		    !! para el resto de contenidos de InitGlkWindow:
 !!		    [...]
 !!		    !! Se continúa con el proceso normal de la librería:
 !!		    return false;
@@ -155,183 +151,38 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 !! extensión. No garantiza el aspecto real con que se visualizará cada estilo
 !! puesto que al final es siempre decisión del intérprete ignorar o reescribir
 !! esta información. Debe invocarse antes de crear las ventanas gráficas, por
-!! ejemplo en el punto de entrada 'InitGlkWindow(winrock)'. Estas propuestas se
-!! establecen con la función:
-!!
-!!	void glk_stylehint_set(
-!!		glui32 wintype, glui32 styl, glui32 hint, glsi32 val);
-!!
-!! A continuación se listan todas las propuestas de aspecto posibles, ordenadas
-!! por su código de operación (descripciones extraídas de la especificación de
-!! la API Glk <https://www.eblong.com/zarf/glk/glk-spec-075_5.html>):
-!!
-!!	0)	stylehint_Indentation: How much to indent lines of text in the given
-!!		style. May be a negative number, to shift the text out (left) instead
-!!		of in (right). The exact metric isn't precisely specified; you can
-!!		assume that +1 is the smallest indentation possible which is clearly
-!!		visible to the player.
-!!	1)	stylehint_ParaIndentation: How much to indent the first line of each
-!!		paragraph. This is in addition to the indentation specified by
-!!		stylehint_Indentation. This too may be negative, and is measured in the
-!!		same units as stylehint_Indentation.
-!!	2)	stylehint_Justification: The value of this hint must be one of the
-!!		constants 0:stylehint_just_LeftFlush, 1:stylehint_just_LeftRight (full
-!!		justification), 2:stylehint_just_Centered, or
-!!		3:stylehint_just_RightFlush.
-!!	3)	stylehint_Size: How much to increase or decrease the font size. This is
-!!		relative; 0 means the interpreter's default font size will be used,
-!!		positive numbers increase it, and negative numbers decrease it. Again,
-!!		+1 is the smallest size increase which is easily visible. [The amount
-!!		of this increase may not be constant. +1 might increase an 8-point font
-!!		to 9-point, but a 16-point font to 18-point.]
-!!	4)	stylehint_Weight: The value of this hint must be 1 for heavy-weight
-!!		fonts (boldface), 0 for normal weight, and -1 for light-weight fonts.
-!!	5)	stylehint_Oblique: The value of this hint must be 1 for oblique fonts
-!!		(italic), or 0 for normal angle.
-!!	6)	stylehint_Proportional: The value of this hint must be 1 for
-!!		proportional-width fonts, or 0 for fixed-width.
-!!	7)	stylehint_TextColor: The foreground color of the text. This is encoded
-!!		in the 32-bit hint value: the top 8 bits must be zero, the next 8 bits
-!!		are the red value, the next 8 bits are the green value, and the bottom
-!!		8 bits are the blue value. Color values range from 0 to 255. [So
-!!		0x00000000 is black, 0x00FFFFFF is white, and 0x00FF0000 is bright
-!!		red.]
-!!	8)	stylehint_BackColor: The background color behind the text. This is
-!!		encoded the same way as stylehint_TextColor.
-!!	9)	stylehint_ReverseColor: The value of this hint must be 0 for normal
-!!		printing (TextColor on BackColor), or 1 for reverse printing (BackColor
-!!		on TextColor). [Some libraries may support this hint but not the
-!!		TextColor and BackColor hints. Other libraries may take the opposite
-!!		tack; others may support both, or neither.]
+!! ejemplo en el punto de entrada 'InitGlkWindow(winrock)'.
 !!
 !!	@param {integer} winrock - Código con que se indica en qué fase se ha
 !!		invocado al punto de entrada 'InitGlkWindow()'. Si la rutina se utiliza
 !!		desde un sitio diferente a este punto de entrada es necesario hacer que
 !!		el parámetro tome el valor GG_MAINWIN_ROCK para que la operaión se siga
 !!		llevando a cabo efectivamente
-!!	@param {integer} [wintype=0] - Código numérico con el tipo de ventana sobre
-!!		el que se apican las propuestas de aspecto (0: wintype_AllTypes,
-!!		1: wintype_Pair, 2: wintype_Blank, 3: wintype_TextBuffer,
-!!		4: wintype_TextGrid, 5: wintype_Graphics)
 !!	@returns {boolean} Verdadero si 'winrock == GG_MAINWIN_ROCK' y las
 !!		sugerencias se establecen correctamente. Falso en caso
 !!		contrario
 !!------------------------------------------------------------------------------
-[ InitialiseStyleHints winrock wintype;
+[ InitialiseStyleHints winrock;
 	#Ifdef TARGET_GLULX;
 	if (winrock ~= GG_MAINWIN_ROCK) return false;
-
-	!! Indicaciones de aspecto: estilo HEADER (style_Header)
-	glk($00B0, wintype, 3, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 3, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 3, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 3, 3, 1); ! stylehint_Size
-	glk($00B0, wintype, 3, 4, 1); ! stylehint_Weight
-	glk($00B0, wintype, 3, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 3, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 3, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo IMPORTANT (style_Subheader)
-	glk($00B0, wintype, 4, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 4, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 4, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 4, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 4, 4, 1); ! stylehint_Weight
-	glk($00B0, wintype, 4, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 4, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 4, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo INPUT (style_Input)
-	glk($00B0, wintype, 8, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 8, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 8, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 8, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 8, 4, 1); ! stylehint_Weight
-	glk($00B0, wintype, 8, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 8, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 8, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo MONOSPACED (style_Preformatted)
-	glk($00B0, wintype, 2, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 2, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 2, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 2, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 2, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 2, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 2, 6, 0); ! stylehint_Proportional
-	glk($00B0, wintype, 2, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo NOTE (style_Note)
-	glk($00B0, wintype, 6, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 6, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 6, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 6, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 6, 4, 1); ! stylehint_Weight
-	glk($00B0, wintype, 6, 5, 1); ! stylehint_Oblique
-	glk($00B0, wintype, 6, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 6, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo QUOTE (style_BlockQuote)
-	glk($00B0, wintype, 7, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 7, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 7, 2, 3); ! stylehint_Justification
-	glk($00B0, wintype, 7, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 7, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 7, 5, 1); ! stylehint_Oblique
-	glk($00B0, wintype, 7, 6, 0); ! stylehint_Proportional
-	glk($00B0, wintype, 7, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo REVERSED (style_Alert)
-	glk($00B0, wintype, 5, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 5, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 5, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 5, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 5, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 5, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 5, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 5, 9, 1); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo STRESSED (style_Emphasized)
-	glk($00B0, wintype, 1, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 1, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 1, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 1, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 1, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 1, 5, 1); ! stylehint_Oblique
-	glk($00B0, wintype, 1, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 1, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo UPRIGHT (style_Normal)
-	glk($00B0, wintype, 0, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 0, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 0, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 0, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 0, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 0, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 0, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 0, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo USER1 (style_User1)
-	glk($00B0, wintype, 9, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 9, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 9, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 9, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 9, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 9, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 9, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 9, 8, $FFFF00); ! stylehint_BackColor #FFFF00
-	glk($00B0, wintype, 9, 9, 0); ! stylehint_ReverseColor
-
-	!! Indicaciones de aspecto: estilo USER2 (style_User2)
-	glk($00B0, wintype, 10, 0, 0); ! stylehint_Indentation
-	glk($00B0, wintype, 10, 1, 0); ! stylehint_ParaIndentation
-	glk($00B0, wintype, 10, 2, 0); ! stylehint_Justification
-	glk($00B0, wintype, 10, 3, 0); ! stylehint_Size
-	glk($00B0, wintype, 10, 4, 0); ! stylehint_Weight
-	glk($00B0, wintype, 10, 5, 0); ! stylehint_Oblique
-	glk($00B0, wintype, 10, 6, 1); ! stylehint_Proportional
-	glk($00B0, wintype, 10, 7, $808080); ! stylehint_TextColor #808080
-	glk($00B0, wintype, 10, 9, 0); ! stylehint_ReverseColor
+	!! Indicaciones de aspecto: estilo Header:
+	glk($00B0, 3, 3, 4, 1); ! Header, weight, 1 (heavy)
+	glk($00B0, 3, 3, 5, 0); ! Header, oblique, 0 (false)
+	!! Indicaciones de aspecto: estilo Important:
+	glk($00B0, 3, 4, 4, 1); ! Subheader, weight, 1 (heavy)
+	glk($00B0, 3, 4, 5, 0); ! Subheader, oblique, 0 (false)
+	!! Indicaciones de aspecto: estilo Reversed
+	glk($00B0, 3, 5, 5, 0); ! Alert, oblique, 0 (false)
+	glk($00B0, 3, 5, 9, 1); ! Alert, ReverseColor, 1 (reverse)
+	!! Indicaciones de aspecto: estilo Note:
+	glk($00B0, 3, 6, 4, 1); ! Note, weight, 1 (heavy)
+	glk($00B0, 3, 6, 5, 1); ! Note, oblique, 1 (true)
+	!! Indicaciones de aspecto: estilo Quote:
+	glk($00B0, 3, 7, 6, 0); ! BlockQuote, Proportional, 0 (false)
+	!! Indicaciones de aspecto: estilo	 User1:
+	glk($00B0, 3, 9, 8, $FFFF00); ! User1, background, #FFFF00
+	!! Indicaciones de aspecto: estilo User2:
+	glk($00B0, 3, 10, 7, $808080); ! User2, foreground, #808080
 	#Endif; ! TARGET_GLULX;
 	winrock++; ! (por evitar alertas del compilador en Máquina-Z)
 	return true;

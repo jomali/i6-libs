@@ -13,8 +13,8 @@
 !!	Language:		ES (Español)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Máquina-Z / GLULX
-!!	Version:		5.3
-!!	Released:		2018/07/02
+!!	Version:		5.2
+!!	Released:		2018/03/05
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -47,20 +47,20 @@
 !!
 !!	NUEVAS ACCIONES
 !!
-!!	<>	Dance
-!!	<>	GoDown
-!!	<>	GoUp
-!!	<>	KnockOn
-!!	<>	Masturbate
-!!	<>	Read
-!!	<>	Shout
-!!	<>	Sit
-!!	<>	SleepWith
-!!	<>	StandUp
-!!	<>	Untie
-!!	<>	Use
-!!	<>	Write
-!!	<>	Xyzzy
+!!	o	Dance
+!!	o	GoDown
+!!	o	GoUp
+!!	o	KnockOn
+!!	o	Masturbate
+!!	o	Read
+!!	o	Shout
+!!	o	Sit
+!!	o	SleepWith
+!!	o	StandUp
+!!	o	Untie
+!!	o	Use
+!!	o	Write
+!!	o	Xyzzy
 !!
 !!------------------------------------------------------------------------------
 
@@ -299,14 +299,14 @@ Verb	'asciende'
 
 Extend only 'golpea' first
 	* door							-> KnockOn
-	* 'a//' door					-> KnockOn
+	* 'a' door						-> KnockOn
 ;
 
 Verb	'llama'
 	* door							-> KnockOn
-	* 'a//' door					-> KnockOn
+	* 'a' door						-> KnockOn
 	* animate						-> Tell
-	* 'a//' animate					-> Tell
+	* 'a' animate					-> Tell
 ;
 
 [ KnockOnSub;
@@ -1074,21 +1074,21 @@ Verb	'escribe'
 					"Ahora no tenemos nada que escribir.";
 			}
 		SECOND_PERSON_PRESENT:
-			switch (gna) {
+		2:	switch (gna) {
 				0, 1, 6, 7:
 					"Ahora no tienes nada que escribir.";
 				3, 4, 9, 10:
 					"Ahora no teneis nada que escribir.";
 			}
 		THIRD_PERSON_PRESENT:
-			switch (gna) {
+		3:	switch (gna) {
 				0, 1, 6, 7:
 					"Ahora no tiene nada que escribir.";
 				3, 4, 9, 10:
 					"Ahora no tienen nada que escribir.";
 			}
 		FIRST_PERSON_PAST:
-			switch (gna) {
+		4:	switch (gna) {
 				0, 1, 6, 7:
 					"No tenía nada que escribir en aquel momento.";
 				3, 4, 9, 10:

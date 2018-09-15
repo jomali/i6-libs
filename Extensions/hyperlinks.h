@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.3
-!!	Fecha:			2018/07/23
+!!	Versión:		1.1
+!!	Fecha:			2018/06/06
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,13 +37,6 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.3: 2018/07/23 Añadido nuevo modo de funcionamiento de los hipervínculos
-!!					generados con una cadena de texto alternativa. Consultar el
-!!					apartado COMPORTAMIENTO AL UTILIZAR CADENAS DE TEXTO
-!!					ALTERNATIVAS de la documentación para más información.
-!!	1.2: 2018/06/12	Añadida opción de desactivar los hipervínculos,
-!!					configurable por el usuario a través de la redefinición de
-!!					la nueva rutina 'HyperlinkStatus()'.
 !!	1.1: 2018/06/06	Nueva función 'ListenHyperlinkEvents()' para activar la
 !!					escucha de eventos de tipo pulsación de hipervínculo.
 !!					Añadidas comprobaciones de las capacidades del intérprete
@@ -89,51 +82,8 @@
 !! 		];
 !! 		#Endif; ! TARGET_GLULX;
 !!
-!!	NOTA: Destacar la utilización de directivas de compilación condicionales
-!!	en el último ejemplo para permitir la compilación biplataforma.
-!!
-!!
-!!	COMPORTAMIENTO AL UTILIZAR CADENAS DE TEXTO ALTERNATIVAS
-!!
-!!	Al generar un hipervínculo con la rutina 'Hyperlink()' se puede incluir una
-!!	cadena de texto alternativa además del elemento (objeto o cadena de texto)
-!!	sobre el que se genera el hipervínculo. Esta cadena de texto alternativa se
-!!	imprimirá en el lugar del elemento a la hora de crear el hipervínculo. Hay,
-!!	además, dos modos de funcionamiento posibles al seleccionar un hipervínculo
-!!	creado utilizando una cadena de texto alternativa:
-!!
-!!	1)	Por defecto, al seleccionar el hipervínculo se lanza el comando
-!!		guardado en la variable '_hyperlinks_command', sobre la cadena de texto
-!!		alternativa. Se entiende que esta cadena de texto debe ser un sinónimo
-!!		del nombre del elemento. Así, si se crea un hipervínculo sobre un
-!!		hipotético objeto de nombre 'piedra' de la siguiente manera:
-!!
-!!			Hyperlink(piedra, "roca");
-!!
-!!		En pantalla se imprimirá la cadena alternativa "roca", y al seleccionar
-!!		dicho hipervínculo se lanzará el comando "<_hyperlinks_command> ROCA".
-!!		Debe asegurarse que el objeto 'piedra' esté definido con el sinónimo
-!!		'roca'. De lo contrario el comando no reconocerá ningún objeto.
-!!
-!!	2)	Para evitar este último comportamiento, es posible utilizar un segundo
-!!		modo de funcionamiento definiendo la constante 'HYPERLINKS_ALT_MODE'
-!!		como verdadera. Así, el hipervínculo del ejemplo anterior se imprimirá
-!!		en pantalla igualmente con la cadena alternativa "roca" pero, al
-!!		seleccionarlo, se lanzaría en cambio el comando:
-!!		"<_hyperlinks_command> PIEDRA". Este modo de funcionamiento garantiza
-!!		que no se generen comandos que no sean reconocidos por la falta de
-!!		definición de algún sinónimo (también rompe ligeramente cierta
-!!		coherencia de la interfaz).
-!!
-!!------------------------------------------------------------------------------
-!!
-!!	TABLA DE CONTENIDOS
-!!
-!!	<>	HandleHyperlinkEvent()
-!!	<>	Hyperlink()
-!!	<>	HyperlinkSetStyle()
-!!	<>	HyperlinkStatus()
-!!	<>	ListenHyperlinkEvents()
+!!	NOTA: Señalar cómo el último ejemplo utiliza directivas de compilación
+!!	condicionales para permitir la compilación biplataforma.
 !!
 !!------------------------------------------------------------------------------
 System_file;
@@ -141,13 +91,7 @@ System_file;
 #Ifndef HYPERLINKS;
 Constant HYPERLINKS;
 
-!! Comportamiento de los hipervínculos generados con un texto alternativo:
-Default HYPERLINKS_ALT_MODE = false;
-
-!! Comando por defecto al seleccionar un hipervínculo:
 Default _hyperlinks_command = "examina";
-
-!! Array de apoyo para la gestión de los eventos de selección de hipervínculos:
 Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 
 #Ifdef TARGET_GLULX;
@@ -269,50 +213,40 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 #Endif; ! TARGET_GLULX;
 
 !!------------------------------------------------------------------------------
-!! Crea un hipervínculo a partir del objeto o la cadena de caracteres pasado
-!! como parámetro, de forma que el texto impreso del hipervínculo es el nombre
-!! corto del objeto o la propia cadena de caracteres. Admite dos parámetros
-!! opcionales; 1) una cadena de caracteres con un texto alternativo que se
-!! imprime en lugar del nombre corto del objeto o de la cadena, 2) un parámetro
-!! extra que puede ser utilizado libremente en las rutinas: 'HyperlinkStatus()'
-!! e 'HyperlinkSetStyle()'.
+!! Genera un hipervínculo de tipo texto a partir del objeto o la cadena de
+!! caracteres pasado como parámetro, de forma que el texto impreso del
+!! hipervínculo es el nombre del objeto o la propia cadena de caracteres.
+!! Admite dos parámetros opcionales; en primer lugar una cadena de caracteres
+!! con un texto alternativo que se imprime en lugar del nombre del objeto o de
+!! la cadena, y un valor numérico que se identifica con el estilo de texto
+!! utilizado para imprimir el hipervínculo.
 !!
 !!	@param {Object|String} item - Objeto o cadena de caracteres sobre la que se
-!!		genera el hipervínculo. Si es un objeto, la entrada que se ejecuta al
-!!		seleccionar el hipervínculo es un comando con el verbo definido en
+!!		genera el hipervínculo. Si es un objeto, la entrada que se genera al
+!!		seleccionarlo es un comando con el verbo definido en
 !!		'_hyperlinks_command' y el objeto. Si es una cadena de caracteres, la
-!!		entrada que se ejecuta es ella misma
+!!		entrada que se genera es ella misma
 !!	@param {String} [alternative] - Texto alternativo con que se imprime el
 !!		hipervínculo. Si no se indica ninguno, como texto del hipervínculo se
 !!		utiliza el nombre del objeto o la cadena de caracteres del parámetro
 !!		'item'
-!!	@param extra1 - Parámetro libre para controlar la lógica de la rutina
-!!		'HyperlinkSetStyle()'
-!!	@param extra2 - Parámetro libre para controlar la lógica de la rutina
-!!		'HyperlinkStatus()'
+!!	@param {integer} [style = 0] - Código numérico indicando el estilo de
+!!		texto con que se imprime el hipervínculo
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
-[ Hyperlink item alternative extra1 extra2
-	previous_style hyperlink_active;
-	if (metaclass(item) ~= string or Object) return false;
-	!! Establece el estilo del hipervínculo:
-	previous_style = HyperlinkSetStyle(item, extra1);
-	!! Determina si el hipervínculo se debe desactivar o no:
-	hyperlink_active = HyperlinkStatus(item, extra2);
-	#Ifdef TARGET_GLULX;
+[ Hyperlink item alternative style
+	auxiliary;
+	if (metaclass(item) ~= String or Object) return false;
 	!! Establece el inicio del hipervínculo:
-	if (hyperlink_active && glk($0004, 11, 0)) {
-		if (HYPERLINKS_ALT_MODE == false && metaclass(alternative) == string) {
-			glk($0100, alternative); ! glk_set_hyperlink();
-		} else {
-			glk($0100, item); ! glk_set_hyperlink();
-		}
-	}
+	#Ifdef TARGET_GLULX;
+	if (glk($0004, 11, 0)) glk($0100, item); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
+	!! Selecciona el estilo de texto del hipervínculo:
+	auxiliary = HyperlinkSetStyle(style, item);
 	!! Imprime el texto del hipervínculo:
-	if (metaclass(alternative) == string) item = alternative;
+	if (metaclass(alternative) == String) item = alternative;
 	switch (metaclass(item)) {
-		string:
+		String:
 			print (string) item;
 		Object:
 			if (indef_mode && item.&short_name_indef ~= 0
@@ -323,44 +257,37 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			print (object) item;
 	}
 	.hyperlinkTextPrinted;
-	#Ifdef TARGET_GLULX;
+	!! Reestablece el estilo de texto de la obra:
+	HyperlinkSetStyle(auxiliary);
 	!! Establece el final del hipervínculo:
-	if (hyperlink_active && glk($0004, 11, 0)) {
-		glk($0100, 0); ! glk_set_hyperlink();
-	}
+	#Ifdef TARGET_GLULX;
+	if (glk($0004, 11, 0)) glk($0100, 0); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
-	!! Reestablece el estilo de texto normal:
-	HyperlinkSetStyle(0, previous_style);
-	return true;
 ];
 
 !!------------------------------------------------------------------------------
-!! Selecciona el estilo de texto utilizado por los hipervínculos. Por defecto
-!! utiliza los mismos estilos de texto presentes en Máquina-Z, pero puede ser
-!! reescrita para definir un comportamiento más complejo o aumentar el número
-!! de estilos disponibles utilizando una sentencia 'Replace HyperlinkSetStyle;'
-!! antes de incluir la extensión.'Hyperlink()' invoca a esta rutina 2 veces:
+!! Selecciona el estilo de texto utilizado por la rutina para crear
+!! hipervínculos. Puede ser sobreescrita por el autor desde el fichero original
+!! (por medio de una sentencia 'Replace HyperlinkSetStyle'), para definir un
+!! comportamiento más complejo ---utilizar el tipo de objeto pasado como
+!! parámetro para determinar el estilo de texto aplicado en el hipervínculo,
+!! por ejemplo---.
 !!
-!!	1)	Antes de crear el hipervínculo, para establecer el estilo con el que
-!!		se imprime. En esta etapa el valor del parámetro 'item' es distinto de
-!!		0 (item ~= 0).
-!!	2)	Tras la creación del hipervínculo, para reestablecer el estilo normal
-!!		de la obra. En esta estapa el valor de 'item' es siempre 0 (item == 0).
-!!
-!!	@param {Object|String} item - En la etapa (1) contiene al objeto o la
-!!		cadena de caracteres sobre la que se va a generar el hipervínculo. En
-!!		la etapa (2) siempre es 0
-!!	@param {integer} style - Código numérico para identificar el estilo de
-!!		texto a utilizar, en base a los estilos de texto de Máquina-Z:
-!!		0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
-!!	@returns {integer} Código numérico que identifica el estilo de texto
-!!		utilizado antes de invocar a la rutina. El resultado retornado durante
-!!		la etapa (1) se pasa como parámetro en la etapa (2) para reestablecer
-!!		el estilo de texto que había en la obra antes de imprimir el
-!!		hipervínculo
+!!	@param {integer} highlight - Código numérico para identificar el estilo de
+!!		texto a utilizar, utilizando como referencia los estilos de texto de
+!!		Máquina-Z: 0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
+!!	@param {Object|String} item - Objeto o cadena de caracteres sobre el que se
+!!		genera el hipervínculo. Originalmente no se utiliza, pero puede ser
+!!		interesante si el autor decide sobreescribir la rutina y tener en
+!!		cuenta este 'item' para seleccionar el estilo de texto utilizado
+!!	@returns {integer} Código numérico que identifica los estilos de texto. La
+!!		rutina se invoca 2 veces, antes y después de imprimir el texto del
+!!		hipervínculo, de tal forma que el resultado de la primera llamada se
+!!		pasa como parámetro en la segunda. Así es posible inicar, desde la
+!!		llamada 1, el estilo final del texto una vez impreso el hipervínculo
 !!------------------------------------------------------------------------------
-[ HyperlinkSetStyle item style;
-	item = style; ! (por evitar alertas del compilador)
+[ HyperlinkSetStyle style item;
+	item++; ! (por evitar alertas del compilador)
 	switch (style) {
 		1:	! Subrayado
 			#Ifdef TARGET_ZCODE;
@@ -390,25 +317,8 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			glk($0086, 0); ! style_Normal
 			#Endif; ! TARGET_
 	}
-	!! Retorna 0 para reestablecer el estilo de texto normal en la etapa (2):
+	!! Garantiza que tras el hipervínculo se utilice el estilo Normal:
 	return 0;
-];
-
-!!------------------------------------------------------------------------------
-!! Determina si el próximo hipervínculo está o no activado. Por defecto siempre
-!! retorna verdadero ---los hipervínculos están siempre activados---, pero
-!! puede ser reescrita utilizando una sentencia 'Replace HyperlinkStatus;'
-!! antes de incluir la extensión.
-!!
-!!	@param {Object|String} item - Contiene al objeto o la cadena de caracteres
-!!		sobre la que se va a generar el hipervínculo
-!!	@param extra - Parámetro libre para controlar la lógica de la rutina
-!!	@returns {boolean} Verdadero para indicar que el hipervínculo está
-!!		activado. Falso en caso contrario
-!!------------------------------------------------------------------------------
-[ HyperlinkStatus item extra;
-	item = extra; ! (por evitar alertas del compilador)
-	return true;
 ];
 
 !!------------------------------------------------------------------------------

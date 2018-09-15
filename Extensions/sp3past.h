@@ -1098,7 +1098,7 @@
 				!! Hay palabras no comprendidas entre el nombre de un PNJ y la
 				!! coma, ej: PEPE ZAFDSRGG, SALTA.
 				"[Para iniciar una conversación, intenta órdenes del tipo:
-				@<<PERSONAJE, HOLA@>>].";
+				PERSONAJE, HOLA].";
 			26:
 				!! La gramática especifica que una acción debe efectuarse sobre
 				!! un objeto en poder del usuario (token 'held'), pero el
@@ -1453,6 +1453,7 @@
 		"", (The) x1, " tenía", (n) x1, " mejores cosas que hacer.";
 
 	Places:
+		!! FIXME - Introducir flexiones
 		!! El verbo "LUGARES" muestra un listado de los lugares que el usuario
 		!! ha visitado. Aquí debemos escribir el texto introductorio a esa
 		!! lista.
@@ -1468,7 +1469,8 @@
 		!! El prompt aparece justo antes de pedir una nueva línea al usuario.
 		!! Puede definirse para que sea una frase, o se genere una frase
 		!! aleatoria en cada turno, por ejemplo.
-		print (string) PS1;
+		new_line;
+		print "> ";
 
 	Pronouns:
 		!! Esta acción (generada por el verbo PRONOMBRES) muestra una lista
@@ -1952,7 +1954,7 @@
 				else print "hubiese podido llevarse";
 				" aquello.";
 			11:
-				"", (The) x1, " estaba", (n) x1, " fij", (o) x1,
+				"", (The) x1, "estaba", (n) x1, " fij", (o) x1,
 				" en el sitio.";
 			12:
 				print "Ya ";
