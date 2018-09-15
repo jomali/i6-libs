@@ -1,0 +1,126 @@
+===========================================================================
+ LIB. GWINDOWS v1.0, ACONDICIONADA PARA INFORM 6/11 Y LIB. ESPAÑOLA INFSP6
+
+  <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <> <>
+
+ Distribucion DA-Gwindows v1.2x  /	Por: Eliuk Blau (DreamBytes Adventures)
+===========================================================================
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+LISTA DE CAMBIOS:
+
+  <> Pueden verse los cambios efectuados en cada archivo buscando
+     'NOTA DE ELIUK BLAU' luego del comentario de cabecera y tambien
+     en los comentarios dentro del codigo concreto, encabezados por
+     el nombre "Eliuk". Además, se han introducido algunos cambios mínimos
+	 sobre la versión 1.2 original para evitar conflictos con diferentes
+	 implementaciones de la rutina Banner(). Estos cambios están marcados
+	 con la anotación XXX en los comentarios de código.
+
+  * Version 1.2x - Eliminación de la rutina Banner(), porque puede entrar  
+    (2014/01/21)   en conflicto con otras implementaciones de la función.
+                   Archivos modificados: gcdefs.h, gcore.h
+
+  * Version 1.2  - Actualizacion "tonta" :) No se actualiza realmente
+    (2009/01/15)   ningun archivo de GWindows, sino que se incluye una
+                   nueva version (v3) de la Plantilla de Ejemplo para
+                   Lib. Inform 6/11 + Lib. INFSP6 + Lib. GWindows.
+
+  * Version 1.1  - Se corrige error de run-time si se usa para compilar
+    (2008/05/30)   libreria InfGlk.h v0.7.0 (08/31/2006).
+                 - Se incluye adicionalmente la libreria InfGlk.h v0.7.0
+                   en la distribucion, para comodidad del programador.
+                 - En los directorios 'GREX', 'GRTS' y 'GSound' se
+                   incluyen copias 'actualizadas' (tomadas desde
+                   el mismo directorio 'lib') de cada una de estas
+                   librerias adicionales. Las copias que venian
+                   en el paquete original estaban viejas.
+                   > Lista de Archivos Corregidos:
+                     + gwindows.h
+
+  * Version 1.0  - Release inicial. Adaptacion a Lib. 6/11 + INFSP6.
+    (sin fechar)   > Lista de Archivos Corregidos:
+                     + gwincls.h
+                     + gwindows.h
+                     + gstatus.h
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+INSTALACION:
+
+  * Los archivos de la Libreria Gwindows estan dentro del
+    directorio 'lib'. Copialos todos en el directorio donde
+    guardas tus extensiones y librerias para Inform6. Lo mejor,
+    en todo caso, es copiar la libreria GWindows en un directorio
+    propio y aparte para que su archivos no se revuelvan con los
+    de otras librerias y extensiones que utilices.
+
+  * La libreria InfGlk.h no forma parte de GWindows, pero
+    es requerida por esta ultima para compilar. Se incluye
+    una copia de la ultima version de InfGlk.h para que no
+    tengas que buscarla por Internet.
+
+  * Se incluye una Plantilla diseñada por Eliuk Blau con
+    el esquema ideal que debe tener el codigo fuente de
+    una ficcion interactiva para que compile correctamente
+    con Lib. Inform 6/11 + Lib. INFSP6 + Lib. GWindows.
+    La plantilla esta muy ordenada y va desde los aspectos
+    de programacion mas basicos hasta otros un poco mas
+    avanzados; ademas, en cada seccion tiene una buena
+    cantidad de comentarios aclaratorios. Se insta al
+    programador a usar esta plantilla como esqueleto
+    para su codigo fuente.
+
+  * La Documentacion en ingles de la libreria GWindows se
+    encuentra en el directorio 'doc'. A su vez, las librerias
+    GREX, GRTS y GSound tienen copias 'aisladas' en directorios
+    con los mismos nombres por si quieres usar solo alguna de
+    estas y no la libreria GWindows completa.
+
+---------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+
+SOBRE ESTA 'DISTRIBUCION' DE LA LIBRERIA GWINDOWS:
+
+  La libreria GWindows extiende las capacidades de la libreria Inform
+  relacionadas con la programacion en Glulx. Asi, proporciona un marco
+  de trabajo sencillo de usar (aunque potentisimo) para controlar todas
+  las funcionalidades que implementa esta moderna maquina virtual para
+  juegos de ficcion interactiva.
+
+  La presente es una 'distribucion' de la libreria GWindows
+  especialmente acondicionada para su perfecto funcionamiento con
+  la Libreria Inform 6/11 en conjunto con la Libreria Española INFSP6.
+
+  Esta 'acondicionada' porque la libreria GWindows v1.0 corre sin
+  ningun cambio sobre la Libreria Inform 6/11 e INFSP6. Sin embargo,
+  arroja un par de warnings al compilar y existen unos cuantos BUGs
+  por despistes (absolutamente justificables, por cierto) del autor
+  original. En esta 'distribucion' de la libreria se corrigen esos
+  BUGs, ademas de implementar minimas modificaciones en el codigo
+  de algunos archivos de la libreria para actualizarlos con las
+  nuevas funcionalidades y prestaciones de la Lib. Inform 6/11.
+
+  El autor original de la Libreria GWindows es L. Ross Raszewski
+  y el credito por la creacion de la misma debe serle otorgado
+  exclusivamente a el.
+
+  Eliuk Blau es el autor de esta 'distribucion' de la libreria
+  GWindows, realizada con el fin de permitir el uso de esta
+  excelente utilidad a los programadores que utilizan la
+  Libreria Española INFSP6.
+
+  Si realizas una correccion o modificacion del codigo de la
+  Lib. GWindows presente en esta 'distribucion', por favor
+  enviame los cambios a mi e-Mail para incorporarlos en
+  futuros releases.
+
+  Ante cualquier duda, comentario, correccion o reporte de BUGs
+  sientete en la libertad de escribirme a mi e-Mail.
+
+  Atte. Eliuk Blau.
+  e-Mail: eliukblau (AT) gmail.com
