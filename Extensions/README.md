@@ -7,6 +7,10 @@ Salvo aquellas en las que se especifica una autoría diferente, las siguientes e
 
    Sistema de apuntado y disparo a través de un mecanismo QTE (*Quick Time Event*). Utiliza la ventana de estado de la obra para mostrar la animación de una retícula desplazándose de un extremo a otro de la ventana. El usuario debe detener la retícula lo más cerca posible del centro de la pantalla. El éxito o fracaso de la acción se determina en función de lo cerca o lejos del centro de la pantalla que el jugador haya acertado a detener la retícula.
 
+- **arrays.h**
+
+   Rutinas de utilidad para el manejo de arrays.
+
 - **capacities.h**
 
    Nuevo conjunto de reglas de capacidad para contenedores y soportes del modelo de mundo. Al de introducir objetos sobre un contenedor, o colocarlos sobre un soporte, se comprueba antes que no se vulneren los límites de peso, volumen, tamaño o número de objetos máximo permitido. Basada en la extensión **Rrecept.h** de Peer Schaefer.
