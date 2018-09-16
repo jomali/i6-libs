@@ -3,102 +3,100 @@
 # Versión: 2.0 (2018/09/16)
 
 # Rutas:
-fichero_librerias="/usr/share/inform/6.31/module"
-fichero_extensiones="/usr/share/inform/6.31/include"
-fichero_sintaxis_gtksourceview="/usr/share/gtksourceview-3.0/language-specs"
-fichero_paquetes_atom=$HOME"/.atom/packages"
+directorio_librerias="/usr/share/inform/6.31/module"
+directorio_extensiones="/usr/share/inform/6.31/include"
+directorio_sintaxis_gtksourceview="/usr/share/gtksourceview-3.0/language-specs"
+directorio_paquetes_atom=$HOME"/.atom/packages"
 
 sudo true
 
 # Resaltado de sintaxis para GtkSourceView:
 echo -n "Copiando archivo de resaltado de sintaxis para GtkSourceView..."
-sudo cp inform6.lang $fichero_sintaxis_gtksourceview
+sudo cp inform6.lang $directorio_sintaxis_gtksourceview
 echo " hecho."
-read key
 
 # Definición parcial de la gramática de Inform 6 para Atom:
 echo -n "Copiando archivos de gramática para Atom..."
-if [ -d $fichero_paquetes_atom]; then
-	if [ -d $fichero_paquetes_atom/language-inform6]; then
-		sudo rm -r $fichero_paquetes_atom/language-inform6
+if [ -d $directorio_paquetes_atom]; then
+	if [ -d $directorio_paquetes_atom/language-inform6]; then
+		sudo rm -r $directorio_paquetes_atom/language-inform6
 	fi
-	sudo cp language-inform6 $fichero_paquetes_atom/language-inform6
+	sudo cp language-inform6 $directorio_paquetes_atom/language-inform6
 fi
 echo " hecho."
-read key
 
 # Librerías Inform 6 e INFSP 6:
 echo -n "Copiando archivos de las librerías Inform 6 e INFSP 6..."
-if [ -d $fichero_librerias ]; then
-	sudo rm -r $fichero_librerias
+if [ -d $directorio_librerias ]; then
+	sudo rm -r $directorio_librerias
 fi
-sudo mkdir $fichero_librerias
-sudo cp InformLibrary/*.h $fichero_librerias/
-sudo cp INFSP6/*.h $fichero_librerias/
+sudo mkdir $directorio_librerias
+sudo cp InformLibrary/*.h $directorio_librerias/
+sudo cp INFSP6/*.h $directorio_librerias/
 cp InformLibrary/README README_temp
 echo " " >> README_temp
 cat INFSP6/README >> README_temp
-sudo mv README_temp $fichero_librerias/README
+sudo mv README_temp $directorio_librerias/README
 echo " hecho."
-read key
 
 # Librería GWindows (DA-Gwindows v1.2):
 echo -n "Copiando archivos de la librería GWindows (DA-Gwindows v1.2)..."
-if [ -d $fichero_extensiones/gwindows ]; then
-	sudo rm -r $fichero_extensiones/gwindows
+if [ -d $directorio_extensiones/gwindows ]; then
+	sudo rm -r $directorio_extensiones/gwindows
 fi
-sudo mkdir $fichero_extensiones/gwindows
-sudo cp DaGWindows/* $fichero_extensiones/gwindows/
+sudo mkdir $directorio_extensiones/gwindows
+sudo cp DaGWindows/* $directorio_extensiones/gwindows/
 # Extensión de barra de estado para GWindows:
-sudo cp Extensions/gstatusX.h $fichero_extensiones/gwindows/
+sudo cp Extensions/gstatusX.h $directorio_extensiones/gwindows/
 echo " hecho."
-read key
 
 # Librería Vorple para Inform 6:
 echo -n "Copiando archivos de la librería Vorple para Inform 6..."
-if [ -d $fichero_extensiones/vorple ]; then
-	sudo rm -r $fichero_extensiones/vorple
+if [ -d $directorio_extensiones/vorple ]; then
+	sudo rm -r $directorio_extensiones/vorple
 fi
-sudo mkdir $fichero_extensiones/vorple
-sudo cp Vorple6/*.h $fichero_extensiones/vorple/
-sudo cp Vorple6/JustEnoughGlulx/JustEnoughGlulx.h $fichero_extensiones/vorple/
+sudo mkdir $directorio_extensiones/vorple
+sudo cp Vorple6/*.h $directorio_extensiones/vorple/
+sudo cp Vorple6/JustEnoughGlulx/JustEnoughGlulx.h $directorio_extensiones/vorple/
 echo " hecho."
-read key
 
 # Otras extensiones:
 echo -n "Copiando archivos de otras extensiones..."
-if [ -d $fichero_extensiones/other ]; then
-	sudo rm -r $fichero_extensiones/other
+if [ -d $directorio_extensiones/other ]; then
+	sudo rm -r $directorio_extensiones/other
 fi
-sudo mkdir $fichero_extensiones/other
-sudo cp Extensions/*.h $fichero_extensiones/other/
-sudo ln -s $fichero_extensiones/other/dainunek.h $fichero_extensiones/other/Dainunek.h
-sudo ln -s $fichero_extensiones/other/damusix.h $fichero_extensiones/other/Damusix.h
+sudo mkdir $directorio_extensiones/other
+sudo cp Extensions/*.h $directorio_extensiones/other/
+sudo ln -s $directorio_extensiones/other/dainunek.h $directorio_extensiones/other/Dainunek.h
+sudo ln -s $directorio_extensiones/other/damusix.h $directorio_extensiones/other/Damusix.h
 sudo ln -s $directorio_extensiones/other/infglk.h $directorio_extensiones/other/InfGlk.h
 echo " hecho."
-read key
 echo " "
 
-ln -s compila.sh ../
+# Script de compilación:
+if [ -f ../compila.sh ]; then
+	rm ../compila.sh
+fi
+cp compila.sh ../
 
-echo $fichero_librerias
-sudo ls --color=auto $fichero_librerias
+echo $directorio_librerias
+sudo ls --color=auto $directorio_librerias
 echo " "
 
-echo $fichero_extensiones
-sudo ls --color=auto $fichero_extensiones
+echo $directorio_extensiones
+sudo ls --color=auto $directorio_extensiones
 echo " "
 
-echo $fichero_extensiones/gwindows
-sudo ls --color=auto $fichero_extensiones/gwindows/
+echo $directorio_extensiones/gwindows
+sudo ls --color=auto $directorio_extensiones/gwindows/
 echo " "
 
-echo $fichero_extensiones/vorple
-sudo ls --color=auto $fichero_extensiones/vorple/
+echo $directorio_extensiones/vorple
+sudo ls --color=auto $directorio_extensiones/vorple/
 echo " "
 
-echo $fichero_extensiones/other
-sudo ls --color=auto $fichero_extensiones/other/
+echo $directorio_extensiones/other
+sudo ls --color=auto $directorio_extensiones/other/
 echo " "
 
 #sudo -k
