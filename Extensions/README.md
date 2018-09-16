@@ -27,6 +27,10 @@ Salvo aquellas en las que se especifica una autoría diferente, las siguientes e
 
    Autor(es): *Eliuk Blau*.
 
+- **infglk.h**
+
+   Facilita el acceso de las funciones glk en Glulx para el desarrollo con Inform 6.
+
 - **gstatusX.h**
 
    Módulo de ventana de estado para la librería **GWindows**, de *L. Ross Raszewski*. Define una ventana de estado en la que únicamente se imprime el nombre de la localidad actual del personaje controlado por el usuario.

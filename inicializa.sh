@@ -1,12 +1,12 @@
 #! /bin/sh
-# Script de inicialización de librerías y extensiones para Inform 6.
-# Versión: 2.0 (2018/09/16)
+# Script de inicializaciÃ³nn de librerÃ­as y extensiones para Inform 6.
+# VersiÃ³n: 2.0 (2018/09/16)
 
 # Rutas:
 fichero_librerias="/usr/share/inform/6.31/module"
 fichero_extensiones="/usr/share/inform/6.31/include"
 fichero_sintaxis_gtksourceview="/usr/share/gtksourceview-3.0/language-specs"
-fichero_paquetes_atom="$HOME/.atom/packages"
+fichero_paquetes_atom=$HOME"/.atom/packages"
 
 sudo true
 
@@ -14,9 +14,10 @@ sudo true
 echo -n "Copiando archivo de resaltado de sintaxis para GtkSourceView..."
 sudo cp inform6.lang $fichero_sintaxis_gtksourceview
 echo " hecho."
+read key
 
-# Definición de la gramática de Inform 6 para Atom:
-echo -n "Copiando archivos de gramática para Atom..."
+# DefiniciÃ³n parcial de la gramÃ¡tica de Inform 6 para Atom:
+echo -n "Copiando archivos de gramÃ¡tica para Atom..."
 if [ -d $fichero_paquetes_atom]; then
 	if [ -d $fichero_paquetes_atom/language-inform6]; then
 		sudo rm -r $fichero_paquetes_atom/language-inform6
@@ -24,9 +25,10 @@ if [ -d $fichero_paquetes_atom]; then
 	sudo cp language-inform6 $fichero_paquetes_atom/language-inform6
 fi
 echo " hecho."
+read key
 
-# Librerías Inform 6 e INFSP 6:
-echo -n "Copiando archivos de las librerías Inform 6 e INFSP 6..."
+# LibrerÃ­as Inform 6 e INFSP 6:
+echo -n "Copiando archivos de las librerÃ­as Inform 6 e INFSP 6..."
 if [ -d $fichero_librerias ]; then
 	sudo rm -r $fichero_librerias
 fi
@@ -38,31 +40,34 @@ echo " " >> README_temp
 cat INFSP6/README >> README_temp
 sudo mv README_temp $fichero_librerias/README
 echo " hecho."
+read key
 
-# Librería GWindows (DA-Gwindows v1.2):
-echo -n "Copiando archivos de la librería GWindows (DA-Gwindows v1.2)..."
+# LibrerÃ­a GWindows (DA-Gwindows v1.2):
+echo -n "Copiando archivos de la librerÃ­a GWindows (DA-Gwindows v1.2)..."
 if [ -d $fichero_extensiones/gwindows ]; then
 	sudo rm -r $fichero_extensiones/gwindows
 fi
 sudo mkdir $fichero_extensiones/gwindows
 sudo cp DaGWindows/* $fichero_extensiones/gwindows/
-# Extensión de barra de estado para GWindows:
+# ExtensiÃ³n de barra de estado para GWindows:
 sudo cp Extensions/gstatusX.h $fichero_extensiones/gwindows/
 echo " hecho."
+read key
 
-# Librería Vorple para Inform 6:
-echo -n "Copiando archivos de la librería Vorple para Inform 6..."
+# LibrerÃ­a Vorple para Inform 6:
+echo -n "Copiando archivos de la librerÃ­a Vorple para Inform 6..."
 if [ -d $fichero_extensiones/vorple ]; then
 	sudo rm -r $fichero_extensiones/vorple
 fi
 sudo mkdir $fichero_extensiones/vorple
 sudo cp Vorple6/*.h $fichero_extensiones/vorple/
-sudo cp Vorple6/JustEnoughGlulx.h $fichero_extensiones/vorple/
+sudo cp Vorple6/JustEnoughGlulx/JustEnoughGlulx.h $fichero_extensiones/vorple/
 echo " hecho."
+read key
 
 # Otras extensiones:
 echo -n "Copiando archivos de otras extensiones..."
-if [ -d fichero_extensiones/other ]; then
+if [ -d $fichero_extensiones/other ]; then
 	sudo rm -r $fichero_extensiones/other
 fi
 sudo mkdir $fichero_extensiones/other
@@ -71,7 +76,10 @@ sudo ln -s $fichero_extensiones/other/dainunek.h $fichero_extensiones/other/Dain
 sudo ln -s $fichero_extensiones/other/damusix.h $fichero_extensiones/other/Damusix.h
 sudo ln -s $directorio_extensiones/other/infglk.h $directorio_extensiones/other/InfGlk.h
 echo " hecho."
+read key
 echo " "
+
+ln -s compila.sh ../
 
 echo $fichero_librerias
 sudo ls --color=auto $fichero_librerias
