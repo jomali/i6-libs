@@ -3,9 +3,14 @@
 Conjunto de librerías, extensiones y otras herramientas de utilidad para el desarrollo de obras de ficción interactiva con el sistema **Inform 6**.
 
 
-## InformLibrary
+## Inform6/library611
 
 Versión ``6/11`` de la librería Inform, por Graham Nelson. Incluye correcciones y parches de Ricardo Pérez.
+
+
+## Inform6/library612
+
+Versión ``6/12`` de la librería Inform, por Graham Nelson y David Griffith.
 
 
 ## INFSP6
