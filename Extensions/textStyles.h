@@ -3,33 +3,33 @@
 !!==============================================================================
 !!
 !!	TEXT STYLES
-!!	Interfaz biplataforma para la selecciÛn de estilos de texto
+!!	Interfaz biplataforma para la selecci√≥n de estilos de texto
 !!
 !!==============================================================================
 !!
 !!	Archivo:		textStyles.h
-!!	Autor(es):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (EspaÒol)
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa√±ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		M·quina-Z/Glulx
-!!	VersiÛn:		2.0
-!!	Fecha:			2018/03/07
+!!	Plataforma:		M√°quina-Z/Glulx
+!!	Versi√≥n:		2.1
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco MartÌn
+!!	Copyright (c) 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,48 +37,50 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	2.0: 2018/03/XX	ModificaciÛn del enfoque basado en el uso de un objeto
+!!	2.1: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	2.0: 2018/03/07	Modificaci√≥n del enfoque basado en el uso de un objeto
 !!					gestor TextFormatter con estado interno, por un enfoque
 !!					basado en rutinas independientes y variables globales. Por
 !!					reducir la carga de la pila al encadenar llamadas a
 !!					rutinas (especialmente cuando se utilizan directivas de
-!!					depuraciÛn: 'acciones', 'mensajes'..., que pueden
+!!					depuraci√≥n: 'acciones', 'mensajes'..., que pueden
 !!					desencadenar errores de tipo "Stack overflow in callstub").
-!!					La regla de impresiÛn 'emphasis' se reemplaza por su
-!!					sinÛnimo 'emph', para evitar incompatibilidades con la
-!!					extensiÛn 'utility.h' de L. Ross Raszewski
-!!	1.1: 2018/03/05	CorrecciÛn en las instrucciones de instalaciÛn.
-!!	1.0: 2018/02/28	VersiÛn inicial.
+!!					La regla de impresi√≥n 'emphasis' se reemplaza por su
+!!					sin√≥nimo 'emph', para evitar incompatibilidades con la
+!!					extensi√≥n 'utility.h' de L. Ross Raszewski
+!!	1.1: 2018/03/05	Correcci√≥n en las instrucciones de instalaci√≥n.
+!!	1.0: 2018/02/28	Versi√≥n inicial.
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	TABLA DE CONTENIDOS
 !!
-!!	1)	DefiniciÛn de constantes y variables
-!!	2)	Rutinas de selecciÛn del estilo de texto
-!!	3)	Reglas de impresiÛn normales
-!!	4)	Reglas de impresiÛn contextuales
+!!	1)	Definici√≥n de constantes y variables
+!!	2)	Rutinas de selecci√≥n del estilo de texto
+!!	3)	Reglas de impresi√≥n normales
+!!	4)	Reglas de impresi√≥n contextuales
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	INSTALACI”N
+!!	INSTALACI√ìN
 !!
-!!	Para utilizar la extensiÛn basta con aÒadir la siguiente lÌnea en el
-!!	fichero principal de la aplicaciÛn, inmediatamente despuÈs de la lÌnea
+!!	Para utilizar la extensi√≥n basta con a√±adir la siguiente l√≠nea en el
+!!	fichero principal de la aplicaci√≥n, inmediatamente despu√©s de la l√≠nea
 !!	'Include "Parser";
 !!
 !!		Include "textStyles";
 !!
-!!	Opcionalmente en Glulx, adem·s, es posible inicializar algunas sugerencias
-!!	sobre el aspecto de los distintos estilos de texto de la extensiÛn. Desde
+!!	Opcionalmente en Glulx, adem√°s, es posible inicializar algunas sugerencias
+!!	sobre el aspecto de los distintos estilos de texto de la extensi√≥n. Desde
 !!	el propio sistema Inform no puede determinarse la apariencia final de los
 !!	estilos de texto puesto que esta responsabilidad recae exclusivamente en el
-!!	programa intÈrprete, pero sÌ es posible definir un conjunto de sugerencias
-!!	que pueden ser tenidas en cuenta por Èl. Es necesario realizar estas
-!!	sugerencias antes de la creaciÛn de la ventana principal de la obra;
+!!	programa int√©rprete, pero s√≠ es posible definir un conjunto de sugerencias
+!!	que pueden ser tenidas en cuenta por √©l. Es necesario realizar estas
+!!	sugerencias antes de la creaci√≥n de la ventana principal de la obra;
 !!	habitualmente se recomienda utilizar el punto de entrada Glk
-!!	'InitGlkWindow(winrock)', invocado cada vez que la librerÌa se encarga de
-!!	establecer una de las ventanas est·ndar de la aplicaciÛn [PLO02]:
+!!	'InitGlkWindow(winrock)', invocado cada vez que la librer√≠a se encarga de
+!!	establecer una de las ventanas est√°ndar de la aplicaci√≥n [PLO02]:
 !!
 !!		#Ifdef TARGET_GLULX;
 !!		[ InitGlkWindow winrock;
@@ -87,7 +89,7 @@
 !!		    !! Espacio para sugerencias de aspecto del autor y
 !!		    !! para el resto de contenidos de InitGlkWindow:
 !!		    [...]
-!!		    !! Se contin˙a con el proceso normal de la librerÌa:
+!!		    !! Se contin√∫a con el proceso normal de la librer√≠a:
 !!		    return false;
 !!		];
 !!		#Endif; ! TARGET_GLULX;
@@ -104,12 +106,12 @@ Constant TEXT_STYLES;
 
 !!==============================================================================
 !!
-!!	1)	DefiniciÛn de constantes y variables
+!!	1)	Definici√≥n de constantes y variables
 !!
 !!------------------------------------------------------------------------------
 
 Constant TEXT_STYLE_UPRIGHT		= 0;	! Estilo: Recto (Upright)
-Constant TEXT_STYLE_STRESSED	= 1;	! Estilo: Enf·tico (Stressed)
+Constant TEXT_STYLE_STRESSED	= 1;	! Estilo: Enf√°tico (Stressed)
 Constant TEXT_STYLE_IMPORTANT	= 2;	! Estilo: Importante (Important)
 Constant TEXT_STYLE_MONOSPACED	= 3;	! Estilo: Monoespaciada (Monospaced)
 Constant TEXT_STYLE_REVERSED	= 4;	! Estilo: Invertido (Reversed)
@@ -120,7 +122,7 @@ Constant TEXT_STYLE_INPUT		= 8;	! Estilo: Entrada (Input)
 Constant TEXT_STYLE_USER1		= 9;	! Estilo: Usuario 1 (User 1)
 Constant TEXT_STYLE_USER2		= 10;	! Estilo: Usuario 2 (User 2)
 
-!! CÛdigo del estilo de texto utilizado por los mensajes del sistema:
+!! C√≥digo del estilo de texto utilizado por los mensajes del sistema:
 Default TEXT_STYLE_PARSER = TEXT_STYLE_UPRIGHT;
 
 !! Prefijo de los mensajes del sistema:
@@ -129,11 +131,11 @@ Default TEXT_STYLE_PARSER_PREFIX = "";
 !! Sufijo de los mensajes del sistema:
 Default TEXT_STYLE_PARSER_SUFIX = "";
 
-!! CÛdigo numÈrico entero que representa el ˙ltimo estilo de texto establecido
-!! por la extensiÛn. Es importante tener en cuenta que si la ˙ltima vez que se
+!! C√≥digo num√©rico entero que representa el √∫ltimo estilo de texto establecido
+!! por la extensi√≥n. Es importante tener en cuenta que si la √∫ltima vez que se
 !! ha modificado el estilo de texto ha sido por medios distintos a los
-!! ofrecidos por 'textStyles' ---utilizando directamente los cÛdigos de
-!! operaciÛn de las m·quinas virtuales, por ejemplo---, este valor puede NO
+!! ofrecidos por 'textStyles' ---utilizando directamente los c√≥digos de
+!! operaci√≥n de las m√°quinas virtuales, por ejemplo---, este valor puede NO
 !! CORRESPONDERSE en realidad con el estilo de texto utilizado actualmente en
 !! la obra:
 Global _current_text_style = TEXT_STYLE_UPRIGHT;
@@ -141,22 +143,22 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 
 !!==============================================================================
 !!
-!!	2)	Rutinas de selecciÛn del estilo de texto
+!!	2)	Rutinas de selecci√≥n del estilo de texto
 !!
 !!------------------------------------------------------------------------------
 
 !!------------------------------------------------------------------------------
-!! (S”LO PARA GLULX. NO TIENE NING⁄N EFECTO EN M¡QUINA-Z). Establece las
+!! (S√ìLO PARA GLULX. NO TIENE NING√öN EFECTO EN M√ÅQUINA-Z). Establece las
 !! propuestas de aspecto por defecto para los estilos definidos por la
-!! extensiÛn. No garantiza el aspecto real con que se visualizar· cada estilo
-!! puesto que al final es siempre decisiÛn del intÈrprete ignorar o reescribir
-!! esta informaciÛn. Debe invocarse antes de crear las ventanas gr·ficas, por
+!! extensi√≥n. No garantiza el aspecto real con que se visualizar√° cada estilo
+!! puesto que al final es siempre decisi√≥n del int√©rprete ignorar o reescribir
+!! esta informaci√≥n. Debe invocarse antes de crear las ventanas gr√°ficas, por
 !! ejemplo en el punto de entrada 'InitGlkWindow(winrock)'.
 !!
-!!	@param {integer} winrock - CÛdigo con que se indica en quÈ fase se ha
+!!	@param {integer} winrock - C√≥digo con que se indica en qu√© fase se ha
 !!		invocado al punto de entrada 'InitGlkWindow()'. Si la rutina se utiliza
 !!		desde un sitio diferente a este punto de entrada es necesario hacer que
-!!		el par·metro tome el valor GG_MAINWIN_ROCK para que la operaiÛn se siga
+!!		el par√°metro tome el valor GG_MAINWIN_ROCK para que la operai√≥n se siga
 !!		llevando a cabo efectivamente
 !!	@returns {boolean} Verdadero si 'winrock == GG_MAINWIN_ROCK' y las
 !!		sugerencias se establecen correctamente. Falso en caso
@@ -184,19 +186,19 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 	!! Indicaciones de aspecto: estilo User2:
 	glk($00B0, 3, 10, 7, $808080); ! User2, foreground, #808080
 	#Endif; ! TARGET_GLULX;
-	winrock++; ! (por evitar alertas del compilador en M·quina-Z)
+	winrock++; ! (por evitar alertas del compilador en M√°quina-Z)
 	return true;
 ];
 
 !!------------------------------------------------------------------------------
-!! Establece el estilo que se corresponde con el cÛdigo numÈrico pasado como
-!! par·metro.
+!! Establece el estilo que se corresponde con el c√≥digo num√©rico pasado como
+!! par√°metro.
 !!
-!!	@param {integer} st - CÛdigo numÈrico del estilo que se desea utilizar
-!!		en la obra. Si el cÛdigo no se corresponde con un valor v·lido, no se
-!!		produce ning˙n efecto
-!!	@returns {integer} CÛdigo del estilo de texto registrado anteriormente por
-!!		la extensiÛn
+!!	@param {integer} st - C√≥digo num√©rico del estilo que se desea utilizar
+!!		en la obra. Si el c√≥digo no se corresponde con un valor v√°lido, no se
+!!		produce ning√∫n efecto
+!!	@returns {integer} C√≥digo del estilo de texto registrado anteriormente por
+!!		la extensi√≥n
 !!------------------------------------------------------------------------------
 [ UseTextStyle st
 	is_proportional is_bold is_underline is_reverse glulx_code result;
@@ -284,7 +286,7 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 		#Ifdef TARGET_ZCODE;
 		!! Se reinicia el estilo para evitar combinaciones indeseadas:
 		font on; style roman;
-		!! Se aplican los estilos seg˙n corresponda:
+		!! Se aplican los estilos seg√∫n corresponda:
 		if (is_proportional) font off;
 		if (is_bold) style bold;
 		if (is_underline) style underline;
@@ -299,18 +301,18 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 
 !!==============================================================================
 !!
-!!	3)	Reglas de impresiÛn
+!!	3)	Reglas de impresi√≥n
 !!
 !!------------------------------------------------------------------------------
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Header'; para introducir secciones
-!! principales de la obra como su propio tÌtulo o tÌtulos de posibles
-!! capÌtulos, por ejemplo.
+!! Regla de impresi√≥n que utiliza el estilo 'Header'; para introducir secciones
+!! principales de la obra como su propio t√≠tulo o t√≠tulos de posibles
+!! cap√≠tulos, por ejemplo.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ header text
 	previous_style;
@@ -323,14 +325,14 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Important'; para indicar una
-!! importancia destacada, un asunto serio, o urgencia en un texto. Es an·logo a
-!! las etiquetas <strong> en HTML5. Los intÈrpretes suelen imprimir este estilo
+!! Regla de impresi√≥n que utiliza el estilo 'Important'; para indicar una
+!! importancia destacada, un asunto serio, o urgencia en un texto. Es an√°logo a
+!! las etiquetas <strong> en HTML5. Los int√©rpretes suelen imprimir este estilo
 !! en negrita.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ important text
 	previous_style;
@@ -343,12 +345,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Input'; para la entrada de
-!! usuario. No se recomienda su utilizaciÛn salvo en casos excepcionales.
+!! Regla de impresi√≥n que utiliza el estilo 'Input'; para la entrada de
+!! usuario. No se recomienda su utilizaci√≥n salvo en casos excepcionales.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ input text
 	previous_style;
@@ -361,12 +363,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Monospaced'. En un intÈrprete bien
+!! Regla de impresi√≥n que utiliza el estilo 'Monospaced'. En un int√©rprete bien
 !! configurado este estilo usa siempre una fuente de letra de ancho fijo.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ monospaced text
 	previous_style;
@@ -379,13 +381,13 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo Note'; para notificaciones
-!! especiales, como cambios en la puntuaciÛn del usuario. Est· ideado como
+!! Regla de impresi√≥n que utiliza el estilo Note'; para notificaciones
+!! especiales, como cambios en la puntuaci√≥n del usuario. Est√° ideado como
 !! alternativa de aspecto para el estilo 'Important'.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ note text
 	previous_style;
@@ -398,15 +400,15 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Parser'; para mensajes del
+!! Regla de impresi√≥n que utiliza el estilo 'Parser'; para mensajes del
 !! sistema. En realidad funciona a modo envoltorio de otro estilo diferente
-!! determinado por la constante TEXT_STYLE_PARSER. La regla imprime adem·s el
+!! determinado por la constante TEXT_STYLE_PARSER. La regla imprime adem√°s el
 !! prefijo y el sufijo definidos en las constantes TEXT_STYLE_PARSER_PREFIX y
 !! TEXT_STYLE_PARSER_SUFIX, respectivamente.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ parser text
 	previous_style;
@@ -421,12 +423,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Quote'; para citas u otros textos
+!! Regla de impresi√≥n que utiliza el estilo 'Quote'; para citas u otros textos
 !! especiales.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ quote text
 	previous_style;
@@ -439,14 +441,14 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Reversed'; intercambia los colores
-!! frontal y de fondo de la configuraciÛn por defecto. Para utilizarlo
-!! adecuadamente en Glulx es necesario invocar a la funciÛn
-!! 'InitialiseStyleHints()' antes de crear las ventanas de la interfaz gr·fica.
+!! Regla de impresi√≥n que utiliza el estilo 'Reversed'; intercambia los colores
+!! frontal y de fondo de la configuraci√≥n por defecto. Para utilizarlo
+!! adecuadamente en Glulx es necesario invocar a la funci√≥n
+!! 'InitialiseStyleHints()' antes de crear las ventanas de la interfaz gr√°fica.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ reversed text
 	previous_style;
@@ -459,13 +461,13 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Stressed'; para indicar una
-!! acentuaciÛn enfatizada de un texto. Es an·logo a las etiquetas <em> en
-!! HTML5. Los intÈrpretes suelen imprimir este estilo en it·lica.
+!! Regla de impresi√≥n que utiliza el estilo 'Stressed'; para indicar una
+!! acentuaci√≥n enfatizada de un texto. Es an√°logo a las etiquetas <em> en
+!! HTML5. Los int√©rpretes suelen imprimir este estilo en it√°lica.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ stressed text
 	previous_style;
@@ -478,12 +480,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'Upright'; usado por el cuerpo de
-!! texto normal. Es siempre el estilo de inicio de la aplicaciÛn.
+!! Regla de impresi√≥n que utiliza el estilo 'Upright'; usado por el cuerpo de
+!! texto normal. Es siempre el estilo de inicio de la aplicaci√≥n.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ upright text
 	previous_style;
@@ -496,12 +498,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'User1'; ideado junto con 'User2'
+!! Regla de impresi√≥n que utiliza el estilo 'User1'; ideado junto con 'User2'
 !! para ser redefinido libremente por el autor.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ user1 text
 	previous_style;
@@ -514,12 +516,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn que utiliza el estilo 'User2'; ideado junto con 'User1'
+!! Regla de impresi√≥n que utiliza el estilo 'User2'; ideado junto con 'User1'
 !! para ser redefinido libremente por el autor.
 !!
 !!	@param {String} text - Texto a imprimir
-!!	@returns {boolean} Verdadero si el texto se imprime con Èxito. Falso si el
-!!		par·metro 'text' no es una cadena de caracteres
+!!	@returns {boolean} Verdadero si el texto se imprime con √©xito. Falso si el
+!!		par√°metro 'text' no es una cadena de caracteres
 !!------------------------------------------------------------------------------
 [ user2 text
 	previous_style;
@@ -531,15 +533,15 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 	return true;
 ];
 
-!! Reglas de impresiÛn contextuales:
+!! Reglas de impresi√≥n contextuales:
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn contextual. Imprime el texto con un estilo enfatizado
+!! Regla de impresi√≥n contextual. Imprime el texto con un estilo enfatizado
 !! con respecto al estilo utilizado actualmente.
 !!
 !!	@param {String} text - Texto a imprimir
 !!	@returns {boolean} Verdadero si el texto se imprime con estilo enfatizado.
-!!		Falso si el par·metro 'text' no es una cadena de caracteres y no puede
+!!		Falso si el par√°metro 'text' no es una cadena de caracteres y no puede
 !!		imprimirse, o si el texto se imprime sin modificar el estilo
 !!------------------------------------------------------------------------------
 [ emph text;
@@ -563,7 +565,7 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 ];
 
 !!------------------------------------------------------------------------------
-!! Regla de impresiÛn contextual. Imprime el texto con un estilo destacado
+!! Regla de impresi√≥n contextual. Imprime el texto con un estilo destacado
 !! con respecto al estilo utilizado actualmente.
 !!------------------------------------------------------------------------------
 [ strong text;
@@ -589,11 +591,11 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 !! Alias:
 
 !!------------------------------------------------------------------------------
-!! SinÛnimo para la regla de impresiÛn 'emph'.
+!! Sin√≥nimo para la regla de impresi√≥n 'emph'.
 !!
 !!	@param {String} text - Texto a imprimir
 !!	@returns {boolean} Verdadero si el texto se imprime con estilo enfatizado.
-!!		Falso si el par·metro 'text' no es una cadena de caracteres y no puede
+!!		Falso si el par√°metro 'text' no es una cadena de caracteres y no puede
 !!		imprimirse, o si el texto se imprime sin modificar el estilo
 !!------------------------------------------------------------------------------
 [ em text; return emph(text); ];

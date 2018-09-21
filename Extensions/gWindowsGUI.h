@@ -3,33 +3,33 @@
 !!==============================================================================
 !!
 !!	GWINDOWS GUI
-!!	Aproximaci髇 de interfaz gr醘ica adaptativa con GWindows
+!!	Aproximaci贸n de interfaz gr谩fica adaptativa con GWindows
 !!
 !!==============================================================================
 !!
 !!	Archivo:		gWindowsGUI.h
-!!	Autor(es):		J. Francisco Mart韓 <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (Espa駉l)
+!!	Autor(es):		J. Francisco Mart铆n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa帽ol)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Glulx
-!!	Versi髇:		0.0
-!!	Fecha:			2018/03/XX
+!!	Versi贸n:		1.1
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco Mart韓
+!!	Copyright (c) 2018, J. Francisco Mart铆n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los t閞minos de la Licencia P鷅lica General GNU
-!!	publicada por la Fundaci髇 para el Software Libre, ya sea la versi髇
-!!	3 de la Licencia, o (a su elecci髇) cualquier versi髇 posterior.
+!!	modificarlo bajo los t茅rminos de la Licencia P煤blica General GNU
+!!	publicada por la Fundaci贸n para el Software Libre, ya sea la versi贸n
+!!	3 de la Licencia, o (a su elecci贸n) cualquier versi贸n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea 鷗il, pero
-!!	SIN GARANT虯 ALGUNA; ni siquiera la garant韆 impl韈ita MERCANTIL o
-!!	de APTITUD PARA UN PROP覵ITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P鷅lica General GNU para m醩 informaci髇.
+!!	Este programa se distribuye con la esperanza de que sea 煤til, pero
+!!	SIN GARANT脥A ALGUNA; ni siquiera la garant铆a impl铆cita MERCANTIL o
+!!	de APTITUD PARA UN PROP脫SITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P煤blica General GNU para m谩s informaci贸n.
 !!
-!!	Deber韆 haber recibido una copia de la Licencia P鷅lica General GNU
+!!	Deber铆a haber recibido una copia de la Licencia P煤blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,20 +37,22 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.0: 2018/05/05	Versi髇 inicial de la extensi髇.
+!!	1.1: 2018/09/21	Modificada la codificaci贸n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi贸n 6.34 o superior del compilador).
+!!	1.0: 2018/05/05	Versi贸n inicial de la extensi贸n.
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	TABLA DE CONTENIDOS
 !!
-!!		INSTALACI覰
-!!	1)	Configuraci髇 de la interfaz
-!!	2)	Librer韆s y extensiones
-!!	3)	Definici髇 de la interfaz
+!!		INSTALACI脫N
+!!	1)	Configuraci贸n de la interfaz
+!!	2)	Librer铆as y extensiones
+!!	3)	Definici贸n de la interfaz
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	INSTALACI覰
+!!	INSTALACI脫N
 !!
 !!	TODO
 !!
@@ -59,7 +61,7 @@
 
 !!==============================================================================
 !!
-!!	1)	Configuraci髇 de la interfaz
+!!	1)	Configuraci贸n de la interfaz
 !!
 !!------------------------------------------------------------------------------
 
@@ -68,40 +70,40 @@
 Constant GUICONFIG_MARGIN_COLOR $FFFFFF;
 Object	GUIConfig "(GUI Configuration)"
  with	!!----------------------------------------------------------------------
-		graphic_window_flag true,	! estado de las ventanas gr醘icas
+		graphic_window_flag true,	! estado de las ventanas gr谩ficas
 		status_bar_height 1,		! altura de la barra de estado (en filas)
 		!!----------------------------------------------------------------------
-		!! Configuraci髇 por defecto A. Ancho de ventana >= threshold_A
+		!! Configuraci贸n por defecto A. Ancho de ventana >= threshold_A
 		graphic_width_A 0 0,	! (px)
 		margin_A 0 0,			! (%)
 		padding_A 0 0 8 0,		! (px)
 		threshold_A 0,			! (px)
-		!! Configuraci髇 por defecto B. Ancho de ventana >= threshold_B
+		!! Configuraci贸n por defecto B. Ancho de ventana >= threshold_B
 		graphic_width_B 0 0,	! (px)
 		margin_B 0 6,			! (%)
 		padding_B 0 0 8 0,		! (px)
 		threshold_B 460,		! (px)
-		!! Configuraci髇 por defecto C. Ancho de ventana >= threshold_C
+		!! Configuraci贸n por defecto C. Ancho de ventana >= threshold_C
 		graphic_width_C 0 0,	! (px)
 		margin_C 0 12,			! (%)
 		padding_C 0 0 8 0,		! (px)
 		threshold_C 660,		! (px)
-		!! Configuraci髇 por defecto D. Ancho de ventana >= threshold_D
+		!! Configuraci贸n por defecto D. Ancho de ventana >= threshold_D
 		graphic_width_D 0 0,	! (px)
 		margin_D 0 18,			! (%)
 		padding_D 0 0 8 0,		! (px)
 		threshold_D 900,		! (px)
-		!! Configuraci髇 por defecto E. Ancho de ventana >= threshold_E
+		!! Configuraci贸n por defecto E. Ancho de ventana >= threshold_E
 		graphic_width_E 0 0,	! (px)
 		margin_E 0 22,			! (%)
 		padding_E 0 0 8 0,		! (px)
 		threshold_E 1050,		! (px)
-		!! Configuraci髇 por defecto F. Ancho de ventana >= threshold_F
+		!! Configuraci贸n por defecto F. Ancho de ventana >= threshold_F
 		graphic_width_F 0 0,	! (px)
 		margin_F 0 25,			! (%)
 		padding_F 0 0 8 0,		! (px)
 		threshold_F 1224,		! (px)
-		!! Configuraci髇 por defecto G. Ancho de ventana >= threshold_G
+		!! Configuraci贸n por defecto G. Ancho de ventana >= threshold_G
 		graphic_width_G 0 0,	! (px)
 		margin_G 0 30,			! (%)
 		padding_G 0 0 8 0,		! (px)
@@ -112,7 +114,7 @@ Object	GUIConfig "(GUI Configuration)"
 
 !!==============================================================================
 !!
-!!	2)	Librer韆s y extensiones
+!!	2)	Librer铆as y extensiones
 !!
 !!------------------------------------------------------------------------------
 
@@ -123,7 +125,7 @@ Include "gtile.h";				! GWindows: Tiled Image Window Widget
 
 !!==============================================================================
 !!
-!!	3)	Definici髇 de la interfaz
+!!	3)	Definici贸n de la interfaz
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -388,7 +390,7 @@ GImageWin -> marginBottom
  			margin_top_width margin_right_width margin_bottom_width
 			margin_left_width padding_top_width padding_right_width
 			padding_bottom_width padding_left_width;
-			!! Comprueba si las ventanas gr醘icas est醤 activadas:
+			!! Comprueba si las ventanas gr谩ficas est谩n activadas:
 			if (~~GUIConfig.graphic_window_flag()) {
 				graphic_left_width = 0;
 				graphic_right_width = 0;
@@ -423,13 +425,13 @@ GImageWin -> marginBottom
 				padding_bottom_width,
 				paddingBottom.winid);
 			paddingBottom.split = padding_bottom_width;
-			!! Redimensiona la ventana gr醘ica izquierda:
+			!! Redimensiona la ventana gr谩fica izquierda:
 			glk_window_set_arrangement(parent(graphicWindowLeft).winid,
 				winmethod_Left | winmethod_Fixed,
 				graphic_left_width,
 				graphicWindowLeft.winid);
 			graphicWindowLeft.split = graphic_left_width;
-			!! Redimensiona la ventana gr醘ica derecha:
+			!! Redimensiona la ventana gr谩fica derecha:
 			glk_window_set_arrangement(parent(graphicWindowRight).winid,
 				winmethod_Right | winmethod_Fixed,
 				graphic_right_width,

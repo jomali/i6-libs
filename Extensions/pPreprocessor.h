@@ -7,23 +7,25 @@
 !!==============================================================================
 !!
 !!	File:			pPreprocessor.h
-!!	Author(s):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
+!!	Author(s):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.3
-!!	Released:		2017/09/18
+!!	Version:		1.4
+!!	Released:		2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	# HISTORIAL DE VERSIONES
 !!
-!!	1.3: 2017/09/18	ActualizaciÛn de la rutina 'CompareWord' a la versiÛn 1.2.
-!!	1.2: 2017/08/04	RevisiÛn y formateo de comentarios de la extensiÛn.
-!!	1.1: 2014/07/29	Ante objetos con el mismo Ìndice de coincidencia, ahora se
+!!	1.4: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	1.3: 2017/09/18	Actualizaci√≥n de la rutina 'CompareWord' a la versi√≥n 1.2.
+!!	1.2: 2017/08/04	Revisi√≥n y formateo de comentarios de la extensi√≥n.
+!!	1.1: 2014/07/29	Ante objetos con el mismo √≠ndice de coincidencia, ahora se
 !!					da preferencia a aquellos que se encuentren en el foco del
 !!					jugador.
-!!	1.0: 2014/05/29	VersiÛn preliminar.
+!!	1.0: 2014/05/29	Versi√≥n preliminar.
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -42,15 +44,15 @@
 !!	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. Or see
 !!	<http://www.gnu.org/licenses/>.
 !!
-!!	Copyright (C) 2014, 2017, J. Francisco MartÌn
+!!	Copyright (C) 2014, 2017, J. Francisco Mart√≠n
 !!
 !!------------------------------------------------------------------------------
 System_file;
 
-!! Descomentar para obtener info. de depuraciÛn del preprocesador:
+!! Descomentar para obtener info. de depuraci√≥n del preprocesador:
 !Constant DEBUG_PARSING_PREPROCESSOR;
 
-!! Descomentar para obtener info. de depuraciÛn de la rutina CompareWord():
+!! Descomentar para obtener info. de depuraci√≥n de la rutina CompareWord():
 !Constant DEBUG_COMPARE_WORD_ROUTINE;
 
 #Ifndef _COMPARE_WORD_ROUTINE_;
@@ -59,10 +61,10 @@ Constant _COMPARE_WORD_ROUTINE_;
 Array compare_word_tmp_text -> 64;
 !!==============================================================================
 !! Compara una palabra de la entrada del usuario con una de las palabras de
-!! diccionario. La palabra de entrada se pasa a la funciÛn a travÈs de
-!! 'num_word_prompt', un n˙mero que indica el orden de la palabra en el vector
-!! de entrada, y la palabra de diccionario se pasa a travÈs de 'dictword'
-!! (hay que volcarla en un vector antes de hacer la comprobaciÛn).
+!! diccionario. La palabra de entrada se pasa a la funci√≥n a trav√©s de
+!! 'num_word_prompt', un n√∫mero que indica el orden de la palabra en el vector
+!! de entrada, y la palabra de diccionario se pasa a trav√©s de 'dictword'
+!! (hay que volcarla en un vector antes de hacer la comprobaci√≥n).
 !!
 !!	@param {integer} num_word_prompt - Indica el orden de la palabra en el
 !!		vector de entrada
@@ -86,11 +88,11 @@ Array compare_word_tmp_text -> 64;
 
 	length = compare_word_tmp_text->(WORDSIZE-1);
 
-	!! B) Si el ultimo car·cter es una coma, se elimina para evitar conflictos
-	!! con la conversiÛn de infinitivos y los diccionarios en informATE --> NO
+	!! B) Si el ultimo car√°cter es una coma, se elimina para evitar conflictos
+	!! con la conversi√≥n de infinitivos y los diccionarios en informATE --> NO
 	!! DEBE HABER NUNCA PALABRAS EN INFINITIVO EN EL DICCIONARIO. No vale para
-	!! palabras que antes de ponerles la coma tengan 9 o m·s caracteres
-	!! (limitaciÛn de Inform):
+	!! palabras que antes de ponerles la coma tengan 9 o m√°s caracteres
+	!! (limitaci√≥n de Inform):
 
 	if (compare_word_tmp_text->(length+WORDSIZE-1) == ',') {
 		!! Se elimina el caracter del buffer:
@@ -108,15 +110,15 @@ Array compare_word_tmp_text -> 64;
 	#Endif; ! DEBUG_COMPARE_WORD_ROUTINE;
 
 	!! Si la longitud de las palabras no es igual, se retorna NO coincidente.
-	!! (NOTA: Hay que contemplar el caso especial de palabras de m·s de 9
+	!! (NOTA: Hay que contemplar el caso especial de palabras de m√°s de 9
 	!! caracteres por las limitaciones de Inform):
 	if (WordLength(num_word_prompt) ~= length &&
 			~~(WordLength(num_word_prompt) > 9 && length == 9)) {
 		return 0;
 	}
 
-	!! Si las palabras tienen la misma longitud, se comparan car·cter a
-	!! car·cter y se retorna NO coincidente si se encuentra una diferencia:
+	!! Si las palabras tienen la misma longitud, se comparan car√°cter a
+	!! car√°cter y se retorna NO coincidente si se encuentra una diferencia:
 	for (i = 0: i < length: i++) {
 		if (WordAddress(num_word_prompt)->i ~=
 				compare_word_tmp_text->(i+WORDSIZE)) {
@@ -130,15 +132,15 @@ Array compare_word_tmp_text -> 64;
 
 #Ifdef DEBUG_COMPARE_WORD_ROUTINE;
 !!==============================================================================
-!!	Funciones de depuraciÛn
+!!	Funciones de depuraci√≥n
 !!------------------------------------------------------------------------------
-!! FunciÛn para pintar un String Array
+!! Funci√≥n para pintar un String Array
 [ PrintStringArray the_array i;
 	print "(", the_array-->0, ")";
 	for (i = WORDSIZE : i < (the_array-->0) + WORDSIZE : i++)
 		print (char) the_array->i;
 ];
-!! FunciÛn para pintar una palabra del Prompt de entrada del jugador
+!! Funci√≥n para pintar una palabra del Prompt de entrada del jugador
 [ PrintPromptWord num_word dir i;
 	dir = WordAddress(num_word);
 	for (i = 0 : i < WordLength(num_word) : i++)
@@ -156,7 +158,7 @@ Array compare_word_tmp_text -> 64;
 !!------------------------------------------------------------------------------
 Object	ParsingPreprocessor "(Parsing preprocessor)"
  with	!!----------------------------------------------------------------------
-		!!	@returns {Object} ⁄ltimo objeto reconocido por el preprocesador en
+		!!	@returns {Object} √öltimo objeto reconocido por el preprocesador en
 		!!		la entrada del usuario
  		!!----------------------------------------------------------------------
  		get_selected_object [;
@@ -164,13 +166,13 @@ Object	ParsingPreprocessor "(Parsing preprocessor)"
 		],
 		!!----------------------------------------------------------------------
 		!! Comprueba la entrada del usuario y trata de reconocer patrones en
-		!! ella mediante an·lisis no estricto para identificar si puede
+		!! ella mediante an√°lisis no estricto para identificar si puede
 		!! referirse a alguno de los objetos definidos en el modelo del mundo.
 		!!----------------------------------------------------------------------
 		run [
 			obj i j n m valid hits max_hits;
 
-			!! A) Inicializaciones del mÈtodo:
+			!! A) Inicializaciones del m√©todo:
 			self.selected_object = 0;
 
 			!! B) Da un repaso a los objetos presentes en el relato,
@@ -231,19 +233,19 @@ Object	ParsingPreprocessor "(Parsing preprocessor)"
 				}
 				if (n ~= 0) n = n+m;
 
-				!! Se calcula el n˙mero de coincidencias del objeto actual en
-				!! relaciÛn al total de palabras (%):
+				!! Se calcula el n√∫mero de coincidencias del objeto actual en
+				!! relaci√≥n al total de palabras (%):
 				hits = (n*100) / num_words;
 
-				!! Si el objeto actual tiene m·s coincidencias que el mejor
+				!! Si el objeto actual tiene m√°s coincidencias que el mejor
 				!! candidato hasta ahora lo sustituye:
 				if ((valid) && (hits > max_hits)) {
 					self.selected_object = obj;
 					max_hits = hits;
 				}
 				!! Si el objeto actual y el mejor candidato hasta ahora tienen
-				!! el mismo n˙mero de coincidencias, comprueba si el actual se
-				!! encuentra en el foco del jugador y si es asÌ se lo
+				!! el mismo n√∫mero de coincidencias, comprueba si el actual se
+				!! encuentra en el foco del jugador y si es as√≠ se lo
 				!! selecciona como candidato:
 				else if ((valid) && (hits == max_hits)) {
 					if (TestScope(obj, player)) {

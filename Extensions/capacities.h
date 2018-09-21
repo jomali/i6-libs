@@ -3,34 +3,34 @@
 !!==============================================================================
 !!
 !!	CAPACITIES
-!!	ExtensiÛn a las reglas de capacidad para contenedores y soportes
+!!	Extensi√≥n a las reglas de capacidad para contenedores y soportes
 !!
 !!==============================================================================
 !!
 !!	Archivo:		capacities.h
-!!	Autor(es):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
 !!					Peer Schaefer
-!!	Idioma:			ES (EspaÒol)
+!!	Idioma:			ES (Espa√±ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		M·quina-Z/Glulx
-!!	VersiÛn:		1.0
-!!	Fecha:			2018/03/08
+!!	Plataforma:		M√°quina-Z/Glulx
+!!	Versi√≥n:		1.1
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco MartÌn
+!!	Copyright (c) 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -38,22 +38,24 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.0: 2018/03/08	VersiÛn inicial de la extensiÛn.
+!!	1.1: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	1.0: 2018/03/08	Versi√≥n inicial de la extensi√≥n.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	INTRODUCCI”N
+!!	INTRODUCCI√ìN
 !!
-!!	La extensiÛn 'capacities.h' implementa un conjunto de rutinas que extienden
-!!	el comportamiento por defecto de la librerÌa para tratar las reglas de
-!!	capacidad de contenedores y soportes. En concreto, adem·s del lÌmite de la
-!!	librerÌa que establece el n˙mero m·ximo de objetos que pueden ser
-!!	contenidos por un contenedor/soporte, se aÒade lÛgica para tratar lÌmites
-!!	de peso, volumen y tamaÒo. Est· basada en la extensiÛn 'recept.h' de Peer
+!!	La extensi√≥n 'capacities.h' implementa un conjunto de rutinas que extienden
+!!	el comportamiento por defecto de la librer√≠a para tratar las reglas de
+!!	capacidad de contenedores y soportes. En concreto, adem√°s del l√≠mite de la
+!!	librer√≠a que establece el n√∫mero m√°ximo de objetos que pueden ser
+!!	contenidos por un contenedor/soporte, se a√±ade l√≥gica para tratar l√≠mites
+!!	de peso, volumen y tama√±o. Est√° basada en la extensi√≥n 'recept.h' de Peer
 !!	Schaefer <peer@wolldingwacht.de>.
 !!
-!!	Para utilizar la extensiÛn hay que aÒadir la siguiente lÌnea en el fichero
-!!	principal de la obra, despuÈs de la lÌnea 'Include "Parser";':
+!!	Para utilizar la extensi√≥n hay que a√±adir la siguiente l√≠nea en el fichero
+!!	principal de la obra, despu√©s de la l√≠nea 'Include "Parser";':
 !!
 !!		Include "capacities";
 !!
@@ -71,7 +73,7 @@ Constant CAPACITIES_VOLUME		2;
 Constant CAPACITIES_WEIGHT		3;
 
 !! Clase falsa para definir las 6 nuevas propiedades utilizadas por la
-!! extensiÛn sin consumir memoria adicional:
+!! extensi√≥n sin consumir memoria adicional:
 
 Class	capacities_dummy
  with	capacity_size 0,
@@ -82,19 +84,19 @@ Class	capacities_dummy
 		weight 0;
 
 !!------------------------------------------------------------------------------
-!! Calcula el n˙mero de objetos contenidos por Èl, el tamaÒo, volumen o el peso
-!! de un objeto dado. La medida concreta que se calcula depende del cÛdigo
-!! pasado como par·metro.
+!! Calcula el n√∫mero de objetos contenidos por √©l, el tama√±o, volumen o el peso
+!! de un objeto dado. La medida concreta que se calcula depende del c√≥digo
+!! pasado como par√°metro.
 !!
-!!	@param {integer} measure_code - CÛdigo que identifica la medida concreta
+!!	@param {integer} measure_code - C√≥digo que identifica la medida concreta
 !!		que se quiere calcular. Sus posibles valores son:
-!!		0.	N˙mero de objetos contenidos directamente por 'obj'
-!!		1.	TamaÒo de 'obj'
+!!		0.	N√∫mero de objetos contenidos directamente por 'obj'
+!!		1.	Tama√±o de 'obj'
 !!		2.	Volumen de 'obj'
 !!		3.	Peso total de 'obj' (incluye el peso de los objetos contenidos)
 !!	@param {Object} obj - Objeto del que se desea calcular una medida
-!!	@returns {integer} N˙mero de objetos contenidos por 'obj', su tamaÒo,
-!!		volumen o su peso total, en funciÛn del cÛdigo 'measure_code'
+!!	@returns {integer} N√∫mero de objetos contenidos por 'obj', su tama√±o,
+!!		volumen o su peso total, en funci√≥n del c√≥digo 'measure_code'
 !!------------------------------------------------------------------------------
 [ GetMeasure measure_code obj
 	i result;
@@ -133,19 +135,19 @@ Class	capacities_dummy
 ];
 
 !!------------------------------------------------------------------------------
-!! Calcula la capacidad de n˙mero de objetos, tamaÒo, volumen o peso de un
+!! Calcula la capacidad de n√∫mero de objetos, tama√±o, volumen o peso de un
 !! objeto dado. La medida de capacidad concreta que se calcula depende del
-!! cÛdigo pasado como par·metro.
+!! c√≥digo pasado como par√°metro.
 !!
-!!	@param {integer} measure_code - CÛdigo que identifica la capacidad concreta
+!!	@param {integer} measure_code - C√≥digo que identifica la capacidad concreta
 !!		que se quiere calcular. Sus posibles valores son:
-!!		0.	N˙mero de objetos total que puede contener 'obj'
-!!		1.	TamaÒo m·ximo de los objetos que puede contener 'obj'
-!!		2.	Volumen m·ximo total que puede contener 'obj'
-!!		3.	Peso m·ximo total que puede contener 'obj'
-!!	@param {Object} obj - Objeto del que se quiere conocer un lÌm. de capacidad
-!!	@returns {integer} Capacidad de 'obj' en n˙mero de objetos, tamaÒo, volumen
-!!		o peso, en funciÛn del cÛdigo 'measure_code'
+!!		0.	N√∫mero de objetos total que puede contener 'obj'
+!!		1.	Tama√±o m√°ximo de los objetos que puede contener 'obj'
+!!		2.	Volumen m√°ximo total que puede contener 'obj'
+!!		3.	Peso m√°ximo total que puede contener 'obj'
+!!	@param {Object} obj - Objeto del que se quiere conocer un l√≠m. de capacidad
+!!	@returns {integer} Capacidad de 'obj' en n√∫mero de objetos, tama√±o, volumen
+!!		o peso, en funci√≥n del c√≥digo 'measure_code'
 !!------------------------------------------------------------------------------
 [ GetCapacity measure_code obj
 	result;
@@ -185,35 +187,35 @@ Class	capacities_dummy
 
 !!------------------------------------------------------------------------------
 !! Comprueba si un objeto tiene capacidad suficiente para albergar a otro,
-!! pasados ambos como par·metro. El resultado es un cÛdigo numÈrico positivo
+!! pasados ambos como par√°metro. El resultado es un c√≥digo num√©rico positivo
 !! si tiene capacidad suficiente, o negativo en caso contrario.
 !!
 !!	@param {Object} receiver - Objeto del que se comprueba si tiene capacidad
 !!		suficiente para albergar a 'obj'
-!!	@param {Object} obj - Objeto con posibles propiedades de tamaÒo, volumen y
-!!		peso que se compara con los lÌmites de capacidad de 'receiver'
-!!	@returns {integer} CÛdigo numÈrico con el resultado de la comprobaciÛn:
+!!	@param {Object} obj - Objeto con posibles propiedades de tama√±o, volumen y
+!!		peso que se compara con los l√≠mites de capacidad de 'receiver'
+!!	@returns {integer} C√≥digo num√©rico con el resultado de la comprobaci√≥n:
 !!		 1)	'receiver' puede albergar al objeto 'obj'
-!!		-1)	se supera la cantidad m·xima de objetos que puede tener 'receiver'
-!!		-2) 'obj' supera el tamaÒo m·ximo admitido por 'receiver'
-!!		-3) 'obj' supera el volumen m·ximo admitido por 'receiver'
+!!		-1)	se supera la cantidad m√°xima de objetos que puede tener 'receiver'
+!!		-2) 'obj' supera el tama√±o m√°ximo admitido por 'receiver'
+!!		-3) 'obj' supera el volumen m√°ximo admitido por 'receiver'
 !!		-4) el volumen agregado supera el volumen total admitido por 'receiver'
-!!		-5)	'obj' supera el peso m·ximo admitido por 'receiver'
+!!		-5)	'obj' supera el peso m√°ximo admitido por 'receiver'
 !!		-6) el peso agregado supera el peso total admitido por 'receiver'
 !!------------------------------------------------------------------------------
 [ CheckIfObjectFits receiver obj
 	receiver_capacity measure i;
-	!! 0) Se comprueba la cantidad m·xima de objetos admitida:
+	!! 0) Se comprueba la cantidad m√°xima de objetos admitida:
 	receiver_capacity = GetCapacity(CAPACITIES_NUMBER, receiver);
 	measure = 1;
 	objectloop(i in receiver) measure++;
 	if (measure > receiver_capacity) return -1;
-	!! 1) Se comprueba el lÌmite de tamaÒo:
+	!! 1) Se comprueba el l√≠mite de tama√±o:
 	receiver_capacity = GetCapacity(CAPACITIES_SIZE, receiver);
 	if (receiver_capacity ~= CAPACITIES_INFINITE) {
 		if (GetMeasure(CAPACITIES_SIZE, obj) > receiver_capacity) return -2;
 	}
-	!! 2) Se comprueba el lÌmite de volumen:
+	!! 2) Se comprueba el l√≠mite de volumen:
 	receiver_capacity = GetCapacity(CAPACITIES_VOLUME, receiver);
 	if (receiver_capacity ~= CAPACITIES_INFINITE) {
 		measure = GetMeasure(CAPACITIES_VOLUME, obj);
@@ -225,7 +227,7 @@ Class	capacities_dummy
 			if (measure > receiver_capacity) return -4;
 		}
 	}
-	!! 3) Se comprueba el lÌmite de peso:
+	!! 3) Se comprueba el l√≠mite de peso:
 	receiver_capacity = GetCapacity(CAPACITIES_WEIGHT, receiver);
 	if (receiver_capacity ~= CAPACITIES_INFINITE) {
 		measure = GetMeasure(CAPACITIES_WEIGHT, obj);
@@ -248,7 +250,7 @@ Verb meta	'capacidad' 'capacity'	* noun -> DebugCapacity;
 
 [ DebugMeasureSub;
 	print (The) noun, ":^";
-	spaces(6); print "TamaÒo: ", GetMeasure(CAPACITIES_SIZE, noun), " ud(s)^";
+	spaces(6); print "Tama√±o: ", GetMeasure(CAPACITIES_SIZE, noun), " ud(s)^";
 	spaces(6); print "Volumen: ", GetMeasure(CAPACITIES_VOLUME, noun)," ud(s)^";
 	spaces(6); print "Peso: ", GetMeasure(CAPACITIES_WEIGHT, noun), " ud(s)^";
 	return true;
@@ -258,11 +260,11 @@ Verb meta	'capacidad' 'capacity'	* noun -> DebugCapacity;
 	i;
 	print (The) noun, ":^";
 	i = GetCapacity(CAPACITIES_NUMBER);
-	spaces(6); print "Capacidad (n˙mero de objetos): ";
+	spaces(6); print "Capacidad (n√∫mero de objetos): ";
 	if (i == CAPACITIES_INFINITE) print "infinita^";
 	else print i, "^";
 	i = GetCapacity(CAPACITIES_SIZE);
-	spaces(6); print "Capacidad (tamaÒo): ";
+	spaces(6); print "Capacidad (tama√±o): ";
 	if (i == CAPACITIES_INFINITE) print "infinita^";
 	else print i, "^";
 	i = GetCapacity(CAPACITIES_VOLUME);

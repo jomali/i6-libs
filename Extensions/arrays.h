@@ -8,28 +8,28 @@
 !!==============================================================================
 !!
 !!	Archivo:		arrays.h
-!!	Autor(es):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (EspaÒol)
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa√±ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		M·quina-Z/Glulx
-!!	VersiÛn:		1.0
-!!	Fecha:			2018/06/19
+!!	Plataforma:		M√°quina-Z/Glulx
+!!	Versi√≥n:		1.1
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco MartÌn
+!!	Copyright (c) 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,7 +37,9 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.0: 2018/06/19	VersiÛn inicial de la extensiÛn.
+!!	1.1: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	1.0: 2018/06/19	Versi√≥n inicial de la extensi√≥n.
 !!
 !!------------------------------------------------------------------------------
 System_file;
@@ -49,12 +51,12 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 
 !!------------------------------------------------------------------------------
 !! Dado un array de caracteres, capitaliza la primera letra de cada palabra de
-!! Èste ---˙til por ejemplo si el array almacena el nombre de una persona
+!! √©ste ---√∫til por ejemplo si el array almacena el nombre de una persona
 !! (Paul O'Brian, Jean-Paul Sartre,...) o de una localidad (Weston-Super-Mare,
 !! Los Angeles,...)---.
 !!
 !!	@param {Array} character_array - El array de caracteres sobre el que se
-!!		realizar· la capitalizaciÛn
+!!		realizar√° la capitalizaci√≥n
 !!	@returns {boolean} Verdadero
 !!	@version 1.0
 !!------------------------------------------------------------------------------
@@ -72,15 +74,15 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 
 !!------------------------------------------------------------------------------
 !! Dados dos arrays de caracteres: 'array_a' y 'array_b', modifica el primero
-!! de forma que se convierte en la concatenaciÛn de los dos. Puede
-!! especificarse adem·s un caracter extra opcional que ser· introducido como
+!! de forma que se convierte en la concatenaci√≥n de los dos. Puede
+!! especificarse adem√°s un caracter extra opcional que ser√° introducido como
 !! delimitador entre los dos arrays (si no se especifica este caracter extra,
-!! el segundo array se aÒade inmediatamente a continuaciÛn del primero).
+!! el segundo array se a√±ade inmediatamente a continuaci√≥n del primero).
 !!
 !!	@param {Array} array_a - Primer array de caracteres; sobre el que queda el
-!!		resultado de la concatenaciÛn
+!!		resultado de la concatenaci√≥n
 !!	@param {Array} array_b - Segundo array de caracteres; el que se concatena
-!!		a continuaciÛn de 'array_a'
+!!		a continuaci√≥n de 'array_a'
 !!	@param {char} [c=false] - Caracter opcional que puede introducirse como
 !!		delimitador de los dos arrays
 !!	@returns {boolean} Verdadero

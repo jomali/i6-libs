@@ -3,33 +3,33 @@
 !!==============================================================================
 !!
 !!	HYPERLINKS
-!!	Rutinas para facilitar la interacciÛn por hipervÌnculos
+!!	Rutinas para facilitar la interacci√≥n por hiperv√≠nculos
 !!
 !!==============================================================================
 !!
 !!	Archivo:		hyperlinks.h
-!!	Autor(es):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (EspaÒol)
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa√±ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		M·quina-Z/Glulx
-!!	VersiÛn:		1.1
-!!	Fecha:			2018/06/06
+!!	Plataforma:		M√°quina-Z/Glulx
+!!	Versi√≥n:		1.2
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco MartÌn
+!!	Copyright (c) 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,32 +37,34 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.1: 2018/06/06	Nueva funciÛn 'ListenHyperlinkEvents()' para activar la
-!!					escucha de eventos de tipo pulsaciÛn de hipervÌnculo.
-!!					AÒadidas comprobaciones de las capacidades del intÈrprete
-!!					antes de definir un hipervÌnculo en 'Hyperlink()'. AÒadido
-!!					'eco' a la entrada de usuario al utilizar hipervÌnculos.
-!!	1.0: 2018/03/05	VersiÛn inicial de la extensiÛn.
+!!	1.2: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	1.1: 2018/06/06	Nueva funci√≥n 'ListenHyperlinkEvents()' para activar la
+!!					escucha de eventos de tipo pulsaci√≥n de hiperv√≠nculo.
+!!					A√±adidas comprobaciones de las capacidades del int√©rprete
+!!					antes de definir un hiperv√≠nculo en 'Hyperlink()'. A√±adido
+!!					'eco' a la entrada de usuario al utilizar hiperv√≠nculos.
+!!	1.0: 2018/03/05	Versi√≥n inicial de la extensi√≥n.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	INSTALACI”N
+!!	INSTALACI√ìN
 !!
-!!	Es importante tener en cuenta que la utilizaciÛn de hipervÌnculos sÛlo est·
-!!	soportada por la m·quina virtual Glulx, y que no todos los intÈrpretes de
-!!	Glulx implementan esta funcionalidad. A˙n asÌ, la extensiÛn puede
-!!	utilizarse tanto en Glulx como en M·quina-Z (en esta segunda ---o en
-!!	aquellos intÈrpretes Glulx que no soporten hipervÌnculos--- simplemente
-!!	no es posible utilizar la funcionalidad). Para hacerlo hay que aÒadir la
-!!	siguiente lÌnea en el fichero principal de la obra, inmediatamente despuÈs
-!!	de la lÌnea 'Include "Parser";':
+!!	Es importante tener en cuenta que la utilizaci√≥n de hiperv√≠nculos s√≥lo est√°
+!!	soportada por la m√°quina virtual Glulx, y que no todos los int√©rpretes de
+!!	Glulx implementan esta funcionalidad. A√∫n as√≠, la extensi√≥n puede
+!!	utilizarse tanto en Glulx como en M√°quina-Z (en esta segunda ---o en
+!!	aquellos int√©rpretes Glulx que no soporten hiperv√≠nculos--- simplemente
+!!	no es posible utilizar la funcionalidad). Para hacerlo hay que a√±adir la
+!!	siguiente l√≠nea en el fichero principal de la obra, inmediatamente despu√©s
+!!	de la l√≠nea 'Include "Parser";':
 !!
 !!		Include "hyperlinks";
 !!
-!!	Son necesarias, adem·s, otras dos consideraciones: Por una parte, 1) debe
-!!	activarse la escucha de eventos glk de selecciÛn de hipervÌnculos en las
-!!	ventanas principales de la aplicaciÛn. Para ello, basta con invocar a la
-!!	funciÛn 'ListenHyperlinkEvents()' en el punto de entrada 'Initialise()':
+!!	Son necesarias, adem√°s, otras dos consideraciones: Por una parte, 1) debe
+!!	activarse la escucha de eventos glk de selecci√≥n de hiperv√≠nculos en las
+!!	ventanas principales de la aplicaci√≥n. Para ello, basta con invocar a la
+!!	funci√≥n 'ListenHyperlinkEvents()' en el punto de entrada 'Initialise()':
 !!
 !! 		[ Initialise;
 !!			ListenHyperlinkEvents();
@@ -71,8 +73,8 @@
 !! 			[...]
 !! 		];
 !!
-!!	Por ˙ltimo, 2) hay que introducir la lÛgica encargada de capturar y
-!!	responder a esos eventos Glk de tipo hipervÌnculo. Esta lÛgica debe
+!!	Por √∫ltimo, 2) hay que introducir la l√≥gica encargada de capturar y
+!!	responder a esos eventos Glk de tipo hiperv√≠nculo. Esta l√≥gica debe
 !!	encontrarse dentro del punto de entrada Glulx 'HandleGlkEvent()' ---crearlo
 !!	si no existe---:
 !!
@@ -82,8 +84,8 @@
 !! 		];
 !! 		#Endif; ! TARGET_GLULX;
 !!
-!!	NOTA: SeÒalar cÛmo el ˙ltimo ejemplo utiliza directivas de compilaciÛn
-!!	condicionales para permitir la compilaciÛn biplataforma.
+!!	NOTA: Se√±alar c√≥mo el √∫ltimo ejemplo utiliza directivas de compilaci√≥n
+!!	condicionales para permitir la compilaci√≥n biplataforma.
 !!
 !!------------------------------------------------------------------------------
 System_file;
@@ -96,55 +98,55 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 
 #Ifdef TARGET_GLULX;
 !!------------------------------------------------------------------------------
-!! Gestiona la respuesta a los eventos Glk de tipo hipervÌnculo. Ideada para
+!! Gestiona la respuesta a los eventos Glk de tipo hiperv√≠nculo. Ideada para
 !! ser invocada desde el punto de entrada 'HandleGlkEvent()'.
 !!
 !!	@param {array} ev - Array de 4 palabras que describe el evento. ev-->0
-!!		registra un cÛdigo numÈrico con que se determina el tipo de evento. La
-!!		rutina sÛlo act˙a si se trata de un evento de tipo hipervÌnculo
+!!		registra un c√≥digo num√©rico con que se determina el tipo de evento. La
+!!		rutina s√≥lo act√∫a si se trata de un evento de tipo hiperv√≠nculo
 !!		(ev-->0 == 8); ev-->1 indica la ventana sobre la que se ha producido el
 !!		evento; ev-->2 el objeto o cadena de caracteres sobre el que se ha
-!!		creado el hipervÌnculo; ev-->3, reservado para informaciÛn adicional,
+!!		creado el hiperv√≠nculo; ev-->3, reservado para informaci√≥n adicional,
 !!		no se utiliza
 !!	@param {integer} context - 0 si el evento se ha producido durante una
-!!		entrada de lÌnea (comandos normales u otros usos de la funciÛn de la
-!!		librerÌa 'KeyboardPrimitive()'); la aplicaciÛn debe esperar a que el
+!!		entrada de l√≠nea (comandos normales u otros usos de la funci√≥n de la
+!!		librer√≠a 'KeyboardPrimitive()'); la aplicaci√≥n debe esperar a que el
 !!		usuario pulse INTRO antes de dar respuesta para la entrada. 1 si el
-!!		evento se ha producido durante una entrada de caracter (funciÛn de la
-!!		librerÌa 'KeyCharPrimitive()'); la aplicaciÛn responde ante cada
-!!		pulsaciÛn de tecla, como en los men˙s, por ejemplo
+!!		evento se ha producido durante una entrada de caracter (funci√≥n de la
+!!		librer√≠a 'KeyCharPrimitive()'); la aplicaci√≥n responde ante cada
+!!		pulsaci√≥n de tecla, como en los men√∫s, por ejemplo
 !!	@param {array} abortres - Utilizado para cancelar la entrada de texto y
 !!		forzar una entrada particular. La longitud de la nueva entrada se
 !!		registra en 'abortres-->0'. Si es diferente de 0, los caracteres del
-!!		comando deben escribirse en el array secuencialmente desde la posiciÛn
+!!		comando deben escribirse en el array secuencialmente desde la posici√≥n
 !!		'abortres->WORDSIZE' hasta 'abortres->(WORDSIZE+length)' (no
 !!		inclusive). No pueden superarse los 256 caracteres
 !!	@returns {boolean} Verdadero para indicar que la entrada de usuario debe
 !!		ser ignorada y finalizar el turno con la nueva entrada indicada en el
-!!		par·metro 'abortres'
+!!		par√°metro 'abortres'
 !!------------------------------------------------------------------------------
 [ HandleHyperlinkEvent ev context abortres
 	length i;
 	if (ev-->0 == 8) { ! evtype_Hyperlink
-		!! Tras capturar con Èxito el evento de selecciÛn de un hipervÌnculo la
-		!! aplicaciÛn deja de esperar nuevos eventos de este tipo, de modo que
+		!! Tras capturar con √©xito el evento de selecci√≥n de un hiperv√≠nculo la
+		!! aplicaci√≥n deja de esperar nuevos eventos de este tipo, de modo que
 		!! es necesario activar de nuevo su escucha. Para poder capturar uno de
  		!! estos eventos por primera vez es necesario activar su escucha
-		!! tambiÈn al inicio de la obra (en el punto de entrada 'Initialise()',
+		!! tambi√©n al inicio de la obra (en el punto de entrada 'Initialise()',
 		!! por ejemplo):
 		ListenHyperlinkEvents();
 		!! Se cancelan los inputs de teclado:
 		glk($00D3, gg_mainwin);		! glk_cancel_char_event
 		glk($00D1, gg_mainwin, 0);	! glk_cancel_line_event
-		!! 1) Si el hipervÌnculo se ha creado sobre un objeto, la entrada de
-		!! usuario se genera como la combinaciÛn de la orden registrada en el
-		!! string _hyperlinks_command, el sÌmbolo espacio ' ', y el nombre del
+		!! 1) Si el hiperv√≠nculo se ha creado sobre un objeto, la entrada de
+		!! usuario se genera como la combinaci√≥n de la orden registrada en el
+		!! string _hyperlinks_command, el s√≠mbolo espacio ' ', y el nombre del
 		!! objeto:
 		if (metaclass(ev-->2) == Object) {
 			if (metaclass(_hyperlinks_command) == String) {
 				PrintToBuffer(abortres, INPUT_BUFFER_LEN, _hyperlinks_command);
 				#Ifdef DEBUG_HYPERLINKS;
-				print "** AcciÛn del hipervÌnculo: ";
+				print "** Acci√≥n del hiperv√≠nculo: ";
 				print "(tam = ", (abortres-->0), ") ";
 				for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
 					print (char) abortres->i;
@@ -165,7 +167,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 				(abortres->(WORDSIZE-1))++;
 			}
 			#Ifdef DEBUG_HYPERLINKS;
-			print "** Comando completo del hipervÌnculo: ";
+			print "** Comando completo del hiperv√≠nculo: ";
 			print "(tam = ", (abortres-->0), ") ";
 			for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
 				print (char) abortres->i;
@@ -179,12 +181,12 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			new_line;
 			return true;
 		}
-		!! 2) Si el hipervÌnculo se ha creado sobre un string, la entrada de
-		!! usuario es Èl mismo:
+		!! 2) Si el hiperv√≠nculo se ha creado sobre un string, la entrada de
+		!! usuario es √©l mismo:
 		if (metaclass(ev-->2) == String) {
 			PrintToBuffer(abortres, INPUT_BUFFER_LEN, ev-->2);
 			#Ifdef DEBUG_HYPERLINKS;
-			print "** Comando completo del hipervÌnculo: ";
+			print "** Comando completo del hiperv√≠nculo: ";
 			print "(tam = ", (abortres-->0), ") ";
 			for (i = WORDSIZE : i < (abortres-->0) + WORDSIZE : i++) {
 				print (char) abortres->i;
@@ -213,37 +215,37 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 #Endif; ! TARGET_GLULX;
 
 !!------------------------------------------------------------------------------
-!! Genera un hipervÌnculo de tipo texto a partir del objeto o la cadena de
-!! caracteres pasado como par·metro, de forma que el texto impreso del
-!! hipervÌnculo es el nombre del objeto o la propia cadena de caracteres.
-!! Admite dos par·metros opcionales; en primer lugar una cadena de caracteres
+!! Genera un hiperv√≠nculo de tipo texto a partir del objeto o la cadena de
+!! caracteres pasado como par√°metro, de forma que el texto impreso del
+!! hiperv√≠nculo es el nombre del objeto o la propia cadena de caracteres.
+!! Admite dos par√°metros opcionales; en primer lugar una cadena de caracteres
 !! con un texto alternativo que se imprime en lugar del nombre del objeto o de
-!! la cadena, y un valor numÈrico que se identifica con el estilo de texto
-!! utilizado para imprimir el hipervÌnculo.
+!! la cadena, y un valor num√©rico que se identifica con el estilo de texto
+!! utilizado para imprimir el hiperv√≠nculo.
 !!
 !!	@param {Object|String} item - Objeto o cadena de caracteres sobre la que se
-!!		genera el hipervÌnculo. Si es un objeto, la entrada que se genera al
+!!		genera el hiperv√≠nculo. Si es un objeto, la entrada que se genera al
 !!		seleccionarlo es un comando con el verbo definido en
 !!		'_hyperlinks_command' y el objeto. Si es una cadena de caracteres, la
 !!		entrada que se genera es ella misma
 !!	@param {String} [alternative] - Texto alternativo con que se imprime el
-!!		hipervÌnculo. Si no se indica ninguno, como texto del hipervÌnculo se
-!!		utiliza el nombre del objeto o la cadena de caracteres del par·metro
+!!		hiperv√≠nculo. Si no se indica ninguno, como texto del hiperv√≠nculo se
+!!		utiliza el nombre del objeto o la cadena de caracteres del par√°metro
 !!		'item'
-!!	@param {integer} [style = 0] - CÛdigo numÈrico indicando el estilo de
-!!		texto con que se imprime el hipervÌnculo
+!!	@param {integer} [style = 0] - C√≥digo num√©rico indicando el estilo de
+!!		texto con que se imprime el hiperv√≠nculo
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
 [ Hyperlink item alternative style
 	auxiliary;
 	if (metaclass(item) ~= String or Object) return false;
-	!! Establece el inicio del hipervÌnculo:
+	!! Establece el inicio del hiperv√≠nculo:
 	#Ifdef TARGET_GLULX;
 	if (glk($0004, 11, 0)) glk($0100, item); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
-	!! Selecciona el estilo de texto del hipervÌnculo:
+	!! Selecciona el estilo de texto del hiperv√≠nculo:
 	auxiliary = HyperlinkSetStyle(style, item);
-	!! Imprime el texto del hipervÌnculo:
+	!! Imprime el texto del hiperv√≠nculo:
 	if (metaclass(alternative) == String) item = alternative;
 	switch (metaclass(item)) {
 		String:
@@ -259,7 +261,7 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 	.hyperlinkTextPrinted;
 	!! Reestablece el estilo de texto de la obra:
 	HyperlinkSetStyle(auxiliary);
-	!! Establece el final del hipervÌnculo:
+	!! Establece el final del hiperv√≠nculo:
 	#Ifdef TARGET_GLULX;
 	if (glk($0004, 11, 0)) glk($0100, 0); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
@@ -267,24 +269,24 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 
 !!------------------------------------------------------------------------------
 !! Selecciona el estilo de texto utilizado por la rutina para crear
-!! hipervÌnculos. Puede ser sobreescrita por el autor desde el fichero original
+!! hiperv√≠nculos. Puede ser sobreescrita por el autor desde el fichero original
 !! (por medio de una sentencia 'Replace HyperlinkSetStyle'), para definir un
-!! comportamiento m·s complejo ---utilizar el tipo de objeto pasado como
-!! par·metro para determinar el estilo de texto aplicado en el hipervÌnculo,
+!! comportamiento m√°s complejo ---utilizar el tipo de objeto pasado como
+!! par√°metro para determinar el estilo de texto aplicado en el hiperv√≠nculo,
 !! por ejemplo---.
 !!
-!!	@param {integer} highlight - CÛdigo numÈrico para identificar el estilo de
+!!	@param {integer} highlight - C√≥digo num√©rico para identificar el estilo de
 !!		texto a utilizar, utilizando como referencia los estilos de texto de
-!!		M·quina-Z: 0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
+!!		M√°quina-Z: 0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
 !!	@param {Object|String} item - Objeto o cadena de caracteres sobre el que se
-!!		genera el hipervÌnculo. Originalmente no se utiliza, pero puede ser
+!!		genera el hiperv√≠nculo. Originalmente no se utiliza, pero puede ser
 !!		interesante si el autor decide sobreescribir la rutina y tener en
 !!		cuenta este 'item' para seleccionar el estilo de texto utilizado
-!!	@returns {integer} CÛdigo numÈrico que identifica los estilos de texto. La
-!!		rutina se invoca 2 veces, antes y despuÈs de imprimir el texto del
-!!		hipervÌnculo, de tal forma que el resultado de la primera llamada se
-!!		pasa como par·metro en la segunda. AsÌ es posible inicar, desde la
-!!		llamada 1, el estilo final del texto una vez impreso el hipervÌnculo
+!!	@returns {integer} C√≥digo num√©rico que identifica los estilos de texto. La
+!!		rutina se invoca 2 veces, antes y despu√©s de imprimir el texto del
+!!		hiperv√≠nculo, de tal forma que el resultado de la primera llamada se
+!!		pasa como par√°metro en la segunda. As√≠ es posible inicar, desde la
+!!		llamada 1, el estilo final del texto una vez impreso el hiperv√≠nculo
 !!------------------------------------------------------------------------------
 [ HyperlinkSetStyle style item;
 	item++; ! (por evitar alertas del compilador)
@@ -317,25 +319,25 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			glk($0086, 0); ! style_Normal
 			#Endif; ! TARGET_
 	}
-	!! Garantiza que tras el hipervÌnculo se utilice el estilo Normal:
+	!! Garantiza que tras el hiperv√≠nculo se utilice el estilo Normal:
 	return 0;
 ];
 
 !!------------------------------------------------------------------------------
-!! Si el intÈrprete utilizado los soporta, activa la escucha de eventos glk
-!! para la selecciÛn de hipervÌnculos en las ventanas principal de la
-!! aplicaciÛn.
+!! Si el int√©rprete utilizado los soporta, activa la escucha de eventos glk
+!! para la selecci√≥n de hiperv√≠nculos en las ventanas principal de la
+!! aplicaci√≥n.
 !!
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
 [ ListenHyperlinkEvents;
 	#Ifdef TARGET_GLULX;
 	if (glk($0004, 11, 0)) { ! glk_gestalt(gestalt_Hyperlinks, 0)
-		!! Activa escucha de hipervÌnculos en la ventana principal:
+		!! Activa escucha de hiperv√≠nculos en la ventana principal:
 		glk($0102, gg_mainwin); ! glk_request_hyperlink_event
-		!! Activa escucha de hipervÌnculos en la ventana de estado:
+		!! Activa escucha de hiperv√≠nculos en la ventana de estado:
 		glk($0102, gg_statuswin); ! glk_request_hyperlink_event
-		!! Desactiva el eco autom·tico de la entrada en la ventana principal:
+		!! Desactiva el eco autom√°tico de la entrada en la ventana principal:
 		glk($0150, gg_mainwin, 0); ! glk_set_echo_line_event
 	}
 	#Endif; ! TARGET_GLULX;

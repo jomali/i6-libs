@@ -8,13 +8,13 @@
 !!==============================================================================
 !!
 !!	File:			choiceSet.h
-!!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
+!!	Author(s):		J. Francisco MartÃ­n <jfm.lisaso@gmail.com>
 !!					Mastodon
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.0
-!!	Released:		2017/09/18
+!!	Version:		1.2
+!!	Released:		2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -34,76 +34,78 @@
 !!	<http://www.gnu.org/licenses/>.
 !!
 !!	Copyright (c) 2009, Mastodon
-!!	Copyright (C) 2017, J. Francisco Martín
+!!	Copyright (c) 2018, J. Francisco MartÃ­n
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# HISTORIAL DE VERSIONES
+!!	HISTORIAL DE VERSIONES
 !!
-!!	1.1: 2017/12/28	Corrección en el cambio de estilo de texto en Máquina-Z
-!!	1.0: 2017/09/21	Versión inicial.
-!!	0.0: 2016/07/24	Inicio de la adaptación de la extensión 'topicInventory'
-!!					v2.2 para generalizar el sistema de conversación con
+!!	1.2: 2018/09/21	Modificada la codificaciÃ³n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versiÃ³n 6.34 o superior del compilador).
+!!	1.1: 2017/12/28	CorrecciÃ³n en el cambio de estilo de texto en MÃ¡quina-Z
+!!	1.0: 2017/09/21	VersiÃ³n inicial.
+!!	0.0: 2016/07/24	Inicio de la adaptaciÃ³n de la extensiÃ³n 'topicInventory'
+!!					v2.2 para generalizar el sistema de conversaciÃ³n con
 !!					inventario de temas.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# INTRODUCCIÓN
+!!	INTRODUCCIÃ“N
 !!
-!!	La extensión CHOICE SET permite implementar sistemas de conversación con
+!!	La extensiÃ³n CHOICE SET permite implementar sistemas de conversaciÃ³n con
 !!	inventario de temas ---y, en general, cualquier otro sistema que utilice
-!!	un mecanismo de selección de opciones de entre un conjunto dado---
-!!	utilizando análisis no estricto de la entrada de usuario para el
-!!	reconocimiento de patrones. Está basada en las notas de Eric Eve sobre
-!!	sistemas de conversación: <http://www.tads.org/howto/convbkg.htm>, y
-!!	construída sobre las extensiones NPC_Conversacion v1.0 de Mastodon, y
-!!	TOPIC INVENTORY v2.1 ---CHOICE SET es una generalización actualizada de
-!!	sobre ésta última---. Permite interacciones del tipo:
+!!	un mecanismo de selecciÃ³n de opciones de entre un conjunto dado---
+!!	utilizando anÃ¡lisis no estricto de la entrada de usuario para el
+!!	reconocimiento de patrones. EstÃ¡ basada en las notas de Eric Eve sobre
+!!	sistemas de conversaciÃ³n: <http://www.tads.org/howto/convbkg.htm>, y
+!!	construÃ­da sobre las extensiones NPC_Conversacion v1.0 de Mastodon, y
+!!	TOPIC INVENTORY v2.1 ---CHOICE SET es una generalizaciÃ³n actualizada de
+!!	sobre Ã©sta Ãºltima---. Permite interacciones del tipo:
 !!
-!!		Te detienes un momento a pensar en qué hacer esta tarde...
-!!		(Puedes escoger entre escribir documentación, salir a tomar algo o ver
-!!		una película.)
+!!		Te detienes un momento a pensar en quÃ© hacer esta tarde...
+!!		(Puedes escoger entre escribir documentaciÃ³n, salir a tomar algo o ver
+!!		una pelÃ­cula.)
 !!
 !!		> lo de la peli
 !!
 !!
-!!	# APLICACIONES
+!!	APLICACIONES
 !!
 !!	CHOICE SET permite listar ante el usuario un conjunto de opciones de entre
 !!	las que puede seleccionar una introduciendo alguna de las palabras clave de
-!!	la opción; una funcionalidad que facilita, por ejemplo, la construcción de
+!!	la opciÃ³n; una funcionalidad que facilita, por ejemplo, la construcciÃ³n de
 !!	CONVERSACIONES utilizando un sistema de INVENTARIO DE TEMAS. Estos sistemas
-!!	de conversación están ideados con el objetivo de esquivar los problemas que
-!!	suelen presentar los sistemas de conversación más habituales en los relatos
+!!	de conversaciÃ³n estÃ¡n ideados con el objetivo de esquivar los problemas que
+!!	suelen presentar los sistemas de conversaciÃ³n mÃ¡s habituales en los relatos
 !!	interactivos; dificultades para adivinar la palabra clave en sistemas
-!!	basados en acciones ASK/TELL, simplificación excesiva en sistemas basados
-!!	en la acción TALK TO, o falta de libertad y ruptura de la interfaz textual
-!!	en sistemas de menús.
+!!	basados en acciones ASK/TELL, simplificaciÃ³n excesiva en sistemas basados
+!!	en la acciÃ³n TALK TO, o falta de libertad y ruptura de la interfaz textual
+!!	en sistemas de menÃºs.
 !!
 !!	Al utilizar un inventario de temas, en esencia, se presenta al usuario una
-!!	lista de temas de conversación sugeridos basándose en el conocimiento del
+!!	lista de temas de conversaciÃ³n sugeridos basÃ¡ndose en el conocimiento del
 !!	personaje protagonista. De esta forma, el usuario puede hacer referencia a
 !!	los temas que quiera lanzar utilizando una interfaz similar a la de los
-!!	sistemas ASK/TELL, pero sin necesidad de tener que adivinar por sí mismo la
+!!	sistemas ASK/TELL, pero sin necesidad de tener que adivinar por sÃ­ mismo la
 !!	palabra clave que lanza el tema.
 !!
-!!	En concreto, el sistema se podría presentar de una forma similar a la
+!!	En concreto, el sistema se podrÃ­a presentar de una forma similar a la
 !!	del siguiente ejemplo (las diferentes opciones posibles se ordenan
 !!	aleatoriamente con cada listado):
 !!
 !!		> hablar con el programador
 !!		---Disculpe...
 !!		El programador levanta la vista de la pantalla de su ordenador y se
-!!		quita las gafas. ---¿Si?
+!!		quita las gafas. ---Â¿Si?
 !!
 !!		(Puedes preguntar por sus aficiones, hablarle del proyecto en que
 !!		trabaja o hablar del tema que nunca se acaba.)
 !!
 !!		> hablar del proyecto
-!!		---He oído que llevas un tiempo trabajando en el proyecto de un relato
+!!		---He oÃ­do que llevas un tiempo trabajando en el proyecto de un relato
 !!		interactivo... ---empiezas.
-!!		El hombre se pone muy nervioso de pronto. ---¿Quién te ha hablado de
-!!		eso? Ese proyecto está aparcado desde hace años. Después de aquel... de
+!!		El hombre se pone muy nervioso de pronto. ---Â¿QuiÃ©n te ha hablado de
+!!		eso? Ese proyecto estÃ¡ aparcado desde hace aÃ±os. DespuÃ©s de aquel... de
 !!		aquel asunto.
 !!
 !!		> hablar al programador
@@ -113,8 +115,8 @@
 !!		preguntar por sus aficiones.)
 !!
 !!		> asunto
-!!		---¿A qué asunto te refieres?
-!!		Él se coloca las gafas y vuelve de nuevo su atención al ordenador,
+!!		---Â¿A quÃ© asunto te refieres?
+!!		Ã‰l se coloca las gafas y vuelve de nuevo su atenciÃ³n al ordenador,
 !!		claramente agitado. ---T-tengo mucho trabajo que hacer. Si me
 !!		disculpas...
 !!
@@ -122,42 +124,42 @@
 !!		del tema que nunca se acaba.)
 !!
 !!		> tema interminable
-!!		---Tío, ¿dónde está mi coche?
-!!		---¿Y tu coche, tío?
+!!		---TÃ­o, Â¿dÃ³nde estÃ¡ mi coche?
+!!		---Â¿Y tu coche, tÃ­o?
 !!
 !!		(Puedes hablar del tema que nunca se acaba, preguntar por sus aficiones
 !!		o insistir en el asunto.)
 !!
-!!	Además de para conversaciones, el sistema se puede utilizar en general para
-!!	crear cualquier otra interacción similar con un objeto cualquiera. Por
+!!	AdemÃ¡s de para conversaciones, el sistema se puede utilizar en general para
+!!	crear cualquier otra interacciÃ³n similar con un objeto cualquiera. Por
 !!	ejemplo:
 !!
 !!		> abrir nevera
 !!		Abres la nevera buscando algo que comer.
 !!
-!!		(Puedes prepararte un sandwich o hacerte un cocido montañés.)
+!!		(Puedes prepararte un sandwich o hacerte un cocido montaÃ±Ã©s.)
 !!
 !!		> cocido
 !!		[...]
 !!
 !!
-!!	# ANÁLISIS NO ESTRICTO
+!!	ANÃLISIS NO ESTRICTO
 !!
 !!	El reconocimiento de patrones entre la entrada de usuario y las palabras
-!!	clave de cada elección se lleva a cabo por medio de análisis no estricto;
+!!	clave de cada elecciÃ³n se lleva a cabo por medio de anÃ¡lisis no estricto;
 !!	si entre todas las palabras introducidas por el usuario se reconocen claves
-!!	de una o más elecciones, se lanza aquella con más coincidencias, ignorando
+!!	de una o mÃ¡s elecciones, se lanza aquella con mÃ¡s coincidencias, ignorando
 !!	el resto de la entrada.
 !!
 !!
-!!	# SOBRE EL FORMATO DE LOS MENSAJES
+!!	SOBRE EL FORMATO DE LOS MENSAJES
 !!
 !!	El formato con el que se imprime el listado de opciones se puede modificar.
 !!	Para ello, el autor cuenta con 8 constantes diferentes que puede definir
 !!	libremente:
 !!
 !!	 -	CSET_STYLE [0-3]: Define el estilo con el que se imprime el listado de
-!!		opciones: 0 -> romana, 1 -> itálica, 2 -> negrita, 3 -> monoespaciada.
+!!		opciones: 0 -> romana, 1 -> itÃ¡lica, 2 -> negrita, 3 -> monoespaciada.
 !!
 !!	 -	CSET_PREFIX: Cadena de texto previa al listado de elecciones.
 !!
@@ -165,49 +167,49 @@
 !!
 !!	 -	CSET_MSG1: Antecede al conjunto de elecciones cuando son listadas.
 !!
-!!	 -	CSET_MSG2: Si hay más de una elección en el conjunto, se imprime entre
+!!	 -	CSET_MSG2: Si hay mÃ¡s de una elecciÃ³n en el conjunto, se imprime entre
 !!		CSET_MSG1 y el conjunto de elecciones cuando son listadas.
 !!
 !!	 -	CSET_COMMA: Separador general de las elecciones del conjunto cuando son
 !!		listadas.
 !!
-!!	 -	CSET_OR: Separador de las dos últimas elecciones del conjunto cuando
+!!	 -	CSET_OR: Separador de las dos Ãºltimas elecciones del conjunto cuando
 !!		son listadas.
 !!
 !!	 -	CSET_NO_MSG: Mensaje cuando se hace un listado si no hay elecciones en
 !!		el conjunto.
 !!
-!!	La configuración por defecto de estas constantes: CSET_STYLE=1,
+!!	La configuraciÃ³n por defecto de estas constantes: CSET_STYLE=1,
 !!	CSET_PREFIX="(", CSET_SUFIX=".)", CSET_MSG1="Puedes ", CSET_MSG2="escoger
 !!	entre ", CSET_COMMA=", ", CSET_OR=" o ", CSET_NO_MSG="Listado de opciones
-!!	vacío", imprime listados en estilo romana del tipo*:
+!!	vacÃ­o", imprime listados en estilo romana del tipo*:
 !!
-!!		(Puedes escoger entre la opción 1, la opción 2 o la opción 3.)
+!!		(Puedes escoger entre la opciÃ³n 1, la opciÃ³n 2 o la opciÃ³n 3.)
 !!
-!!	*.- El último separador en la configuración por defecto es la cadena " o ".
-!!	Cabe señalar que ante opciones que empiecen igualmente por 'o', el
-!!	separador debería ser " u ", en lugar de " o ". Aunque hacer esto
-!!	automáticamente es técnicamente posible, la manipulación de cadenas de
-!!	caracteres en Inform resulta muy engorrosa y requeriría transformar cada
+!!	*.- El Ãºltimo separador en la configuraciÃ³n por defecto es la cadena " o ".
+!!	Cabe seÃ±alar que ante opciones que empiecen igualmente por 'o', el
+!!	separador deberÃ­a ser " u ", en lugar de " o ". Aunque hacer esto
+!!	automÃ¡ticamente es tÃ©cnicamente posible, la manipulaciÃ³n de cadenas de
+!!	caracteres en Inform resulta muy engorrosa y requerirÃ­a transformar cada
 !!	una de las opciones del listado en vectores de caracteres primero, y luego
 !!	realizar las comprobaciones oportunas antes de imprimir el separador
 !!	correcto. En lugar de todo esto, se insta al autor a no utilizar opciones
 !!	que empiecen por la letra 'o' si utiliza ese " o " por defecto como
 !!	separador final del listado. (En el listado del ejemplo, en lugar de
-!!	"opción 1", "opción 2", etc, se ha utilizado: "LA opción 1", "LA opción
-!!	2"... No así en el próximo ejemplo, más abajo).
+!!	"opciÃ³n 1", "opciÃ³n 2", etc, se ha utilizado: "LA opciÃ³n 1", "LA opciÃ³n
+!!	2"... No asÃ­ en el prÃ³ximo ejemplo, mÃ¡s abajo).
 !!
-!!	Se podría, por ejemplo, cambiar por la siguiente configuración alternativa:
+!!	Se podrÃ­a, por ejemplo, cambiar por la siguiente configuraciÃ³n alternativa:
 !!	CSET_STYLE=1, CSET_PREFIX="[", CSET_SUFIX="]", CSET_MSG1="Escoge: ",
 !!	CSET_MSG2="", CSET_COMMA=" / ", CSET_OR=" / ", CSET_NO_MSG="Listado de
-!!	opciones vacío", para imprimir listados en cursiva con el siguiente formato:
+!!	opciones vacÃ­o", para imprimir listados en cursiva con el siguiente formato:
 !!
-!!		[Escoge: opción 1 / opción 2 / opción 3]
+!!		[Escoge: opciÃ³n 1 / opciÃ³n 2 / opciÃ³n 3]
 !!
 !!
-!!	# UTILIZACIÓN
+!!	UTILIZACIÃ“N
 !!
-!!	Para usar la librería únicamente hay que incluir la siguiente línea en la
+!!	Para usar la librerÃ­a Ãºnicamente hay que incluir la siguiente lÃ­nea en la
 !!	rutina BeforeParsing (crearla si no existe):
 !!
 !!		[ BeforeParsing;
@@ -215,12 +217,12 @@
 !!		];
 !!
 !!
-!!	# LIMITACIONES Y POSIBLES MEJORAS
+!!	LIMITACIONES Y POSIBLES MEJORAS
 !!
-!!	Podría ser interesante contemplar la posibilidad de crear elecciones
-!!	ocultas ('concealed') que no aparezcan sugeridas automáticamente al
-!!	imprimir el conjunto de elecciones disponibles. Permitiría implementar, por
-!!	ejemplo, temas de conversación ocultos.
+!!	PodrÃ­a ser interesante contemplar la posibilidad de crear elecciones
+!!	ocultas ('concealed') que no aparezcan sugeridas automÃ¡ticamente al
+!!	imprimir el conjunto de elecciones disponibles. PermitirÃ­a implementar, por
+!!	ejemplo, temas de conversaciÃ³n ocultos.
 !!
 !!------------------------------------------------------------------------------
 System_file;
@@ -228,16 +230,16 @@ System_file;
 Constant _CHOICE_SET_;
 Message "[Including <choiceSet>]";
 
-!! Descomentar para obtener info. de depuración del controlador:
+!! Descomentar para obtener info. de depuraciÃ³n del controlador:
 !Constant DEBUG_CHOICE_SET;
 
-!! Descomentar para obtener info. de depuración de la rutina 'CompareWord()'':
+!! Descomentar para obtener info. de depuraciÃ³n de la rutina 'CompareWord()'':
 !Constant DEBUG_COMPARE_WORD_ROUTINE;
 
-!! Descomentar y compilar para probar la extensión:
+!! Descomentar y compilar para probar la extensiÃ³n:
 !Constant TEST_CHOICE_SET;
 
-!! Estilo y textos por defecto de la extensión:
+!! Estilo y textos por defecto de la extensiÃ³n:
 Default CSET_STYLE	1; ! [0-3]
 Default CSET_PREFIX	"(";
 Default CSET_SUFIX	".)";
@@ -245,9 +247,9 @@ Default CSET_MSG1	"Puedes ";
 Default CSET_MSG2	"escoger entre ";
 Default CSET_COMMA	", ";
 Default CSET_OR		" o ";
-Default CSET_NO_MSG	"Listado de opciones vacío";
+Default CSET_NO_MSG	"Listado de opciones vacÃ­o";
 
-!! Objeto de apoyo para reordenar los temas de una conversación:
+!! Objeto de apoyo para reordenar los temas de una conversaciÃ³n:
 Object	ChoiceBag "(ChoiceSet Bag)";
 
 
@@ -257,10 +259,10 @@ Constant _COMPARE_WORD_ROUTINE_;
 Array compare_word_tmp_text -> 64;
 !!==============================================================================
 !! Compara una palabra de la entrada del usuario con una de las palabras de
-!! diccionario. La palabra de entrada se pasa a la función a través de
-!! 'num_word_prompt', un número que indica el orden de la palabra en el vector
-!! de entrada, y la palabra de diccionario se pasa a través de 'dictword'
-!! (hay que volcarla en un vector antes de hacer la comprobación).
+!! diccionario. La palabra de entrada se pasa a la funciÃ³n a travÃ©s de
+!! 'num_word_prompt', un nÃºmero que indica el orden de la palabra en el vector
+!! de entrada, y la palabra de diccionario se pasa a travÃ©s de 'dictword'
+!! (hay que volcarla en un vector antes de hacer la comprobaciÃ³n).
 !!
 !!	@param {integer} num_word_prompt - Indica el orden de la palabra en el
 !!		vector de entrada
@@ -284,11 +286,11 @@ Array compare_word_tmp_text -> 64;
 
 	length = compare_word_tmp_text->(WORDSIZE-1);
 
-	!! B) Si el ultimo carácter es una coma, se elimina para evitar conflictos
-	!! con la conversión de infinitivos y los diccionarios en informATE --> NO
+	!! B) Si el ultimo carÃ¡cter es una coma, se elimina para evitar conflictos
+	!! con la conversiÃ³n de infinitivos y los diccionarios en informATE --> NO
 	!! DEBE HABER NUNCA PALABRAS EN INFINITIVO EN EL DICCIONARIO. No vale para
-	!! palabras que antes de ponerles la coma tengan 9 o más caracteres
-	!! (limitación de Inform):
+	!! palabras que antes de ponerles la coma tengan 9 o mÃ¡s caracteres
+	!! (limitaciÃ³n de Inform):
 
 	if (compare_word_tmp_text->(length+WORDSIZE-1) == ',') {
 		!! Se elimina el caracter del buffer:
@@ -306,15 +308,15 @@ Array compare_word_tmp_text -> 64;
 	#Endif; ! DEBUG_COMPARE_WORD_ROUTINE;
 
 	!! Si la longitud de las palabras no es igual, se retorna NO coincidente.
-	!! (NOTA: Hay que contemplar el caso especial de palabras de más de 9
+	!! (NOTA: Hay que contemplar el caso especial de palabras de mÃ¡s de 9
 	!! caracteres por las limitaciones de Inform):
 	if (WordLength(num_word_prompt) ~= length &&
 			~~(WordLength(num_word_prompt) > 9 && length == 9)) {
 		return 0;
 	}
 
-	!! Si las palabras tienen la misma longitud, se comparan carácter a
-	!! carácter y se retorna NO coincidente si se encuentra una diferencia:
+	!! Si las palabras tienen la misma longitud, se comparan carÃ¡cter a
+	!! carÃ¡cter y se retorna NO coincidente si se encuentra una diferencia:
 	for (i = 0: i < length: i++) {
 		if (WordAddress(num_word_prompt)->i ~=
 				compare_word_tmp_text->(i+WORDSIZE)) {
@@ -328,15 +330,15 @@ Array compare_word_tmp_text -> 64;
 
 #Ifdef DEBUG_COMPARE_WORD_ROUTINE;
 !!==============================================================================
-!!	Funciones de depuración
+!!	Funciones de depuraciÃ³n
 !!------------------------------------------------------------------------------
-!! Función para pintar un String Array
+!! FunciÃ³n para pintar un String Array
 [ PrintStringArray the_array i;
 	print "(", the_array-->0, ")";
 	for (i = WORDSIZE : i < (the_array-->0) + WORDSIZE : i++)
 		print (char) the_array->i;
 ];
-!! Función para pintar una palabra del Prompt de entrada del jugador
+!! FunciÃ³n para pintar una palabra del Prompt de entrada del jugador
 [ PrintPromptWord num_word dir i;
 	dir = WordAddress(num_word);
 	for (i = 0 : i < WordLength(num_word) : i++)
@@ -347,12 +349,12 @@ Array compare_word_tmp_text -> 64;
 
 
 !!==============================================================================
-!!	Representa una elección que puede ser seleccionada por el usuario.
+!!	Representa una elecciÃ³n que puede ser seleccionada por el usuario.
 !!------------------------------------------------------------------------------
 Class	ChoiceSetItem
  with	!!----------------------------------------------------------------------
-		!! Determina el número de coincidencias entre la entrada del usuario y
-		!! el ítem.
+		!! Determina el nÃºmero de coincidencias entre la entrada del usuario y
+		!! el Ã­tem.
 		!!----------------------------------------------------------------------
 		compare_prompt [
 			i j;
@@ -371,33 +373,33 @@ Class	ChoiceSetItem
 		!! Otras propiedades:
 		!!----------------------------------------------------------------------
 		!! Indica si el turno en que se trata este tema debe finalizar
-		!! mostrando el inventario de temas restantes de la conversación de la
+		!! mostrando el inventario de temas restantes de la conversaciÃ³n de la
 		!! que forma parte.
 		append_choice_set false,
-		!! Descripción del ítem. Es el texto que se imprime al mostrar el
+		!! DescripciÃ³n del Ã­tem. Es el texto que se imprime al mostrar el
 		!! listado de elecciones de un conjunto:
 		entry 0,
-		!! Indica si el ítem pone fin a la selección:
+		!! Indica si el Ã­tem pone fin a la selecciÃ³n:
 		final_choice false,
-   		!! Número de coincidencias de la entrada del usuario con el ítem:
+   		!! NÃºmero de coincidencias de la entrada del usuario con el Ã­tem:
    		hits 0,
-		!! Palabras clave con las que el usuario puede hacer alusión al ítem:
+		!! Palabras clave con las que el usuario puede hacer alusiÃ³n al Ã­tem:
 		keys 0,
-		!! Indica si el ítem es persistente. Cuando el gestor trata un ítem no
-		!! persistente, automáticamente le da el atributo 'visited' para
-		!! marcarlo como ítem ya seleccionado y luego lo elimina del conjunto
+		!! Indica si el Ã­tem es persistente. Cuando el gestor trata un Ã­tem no
+		!! persistente, automÃ¡ticamente le da el atributo 'visited' para
+		!! marcarlo como Ã­tem ya seleccionado y luego lo elimina del conjunto
 		!! (junto con todos sus parientes):
 		persistent false,
-		!! Rutina a ejecutar después de seleccionar el ítem:
+		!! Rutina a ejecutar despuÃ©s de seleccionar el Ã­tem:
 		reaction 0,
-		!! Array de ítems relacionados. Cuando éste se elimina, todos sus
-		!! parientes se eliminan a su vez (y son marcados como tratados si éste
-		!! ha sido marcado también):
+		!! Array de Ã­tems relacionados. Cuando Ã©ste se elimina, todos sus
+		!! parientes se eliminan a su vez (y son marcados como tratados si Ã©ste
+		!! ha sido marcado tambiÃ©n):
 		relatives 0,
-		!! Rutina a ejecutar cuando se selecciona el ítem:
+		!! Rutina a ejecutar cuando se selecciona el Ã­tem:
 		reply 0,
-		!! Array de ítems que se añaden al conjunto de elecciones tras tratar
-		!! éste:
+		!! Array de Ã­tems que se aÃ±aden al conjunto de elecciones tras tratar
+		!! Ã©ste:
 		subchoices 0,
 ;
 
@@ -408,25 +410,25 @@ Class	ChoiceSetItem
 !!------------------------------------------------------------------------------
 Class	ChoiceSet
  with	!!----------------------------------------------------------------------
-		!! Añade un ítem al conjunto de elecciones (a menos que el ítem pasado
-		!! como parámetro esté marcado como tratado ---atributo 'visited'---,
-		!! en cuyo caso no hace nada). Los otros dos parámetros de la función
-		!! son opcionales y permiten añadir ítems temporales. Si se invoca con
-		!! 'temp_flag' como verdadero, el ítem formará parte del conjunto de
-		!! elecciones únicamente durante una cantidad 'countdown' de turnos (si
-		!! no se especifica un valor, se considera una cuenta atrás de 1).
+		!! AÃ±ade un Ã­tem al conjunto de elecciones (a menos que el Ã­tem pasado
+		!! como parÃ¡metro estÃ© marcado como tratado ---atributo 'visited'---,
+		!! en cuyo caso no hace nada). Los otros dos parÃ¡metros de la funciÃ³n
+		!! son opcionales y permiten aÃ±adir Ã­tems temporales. Si se invoca con
+		!! 'temp_flag' como verdadero, el Ã­tem formarÃ¡ parte del conjunto de
+		!! elecciones Ãºnicamente durante una cantidad 'countdown' de turnos (si
+		!! no se especifica un valor, se considera una cuenta atrÃ¡s de 1).
 		!!
-		!!	@param {ChoiceSetItem} choice - Elección a añadir al conjunto
-		!!	@param {boolean} [temp_flag=false] - Indica si la nueva elección es
+		!!	@param {ChoiceSetItem} choice - ElecciÃ³n a aÃ±adir al conjunto
+		!!	@param {boolean} [temp_flag=false] - Indica si la nueva elecciÃ³n es
 		!!		temporal o no
 		!!	@param {integer} [countdown=0} - Cantidad de turnos que ha de
-		!!		permanecer la elección en el conjunto (en caso de tratarse de
-		!!		una elección temporal)
-		!!	@returns {boolean} Verdadero si la elección se añade correctamente
+		!!		permanecer la elecciÃ³n en el conjunto (en caso de tratarse de
+		!!		una elecciÃ³n temporal)
+		!!	@returns {boolean} Verdadero si la elecciÃ³n se aÃ±ade correctamente
 		!!		al conjunto. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		add_choice [ choice temp_flag countdown;
-			!! Se comprueba que el tema pasado sea válido:
+			!! Se comprueba que el tema pasado sea vÃ¡lido:
 			if (choice == 0) return false;
 			if (~~(choice ofclass ChoiceSetItem)) return false;
 			if (choice has visited) return false;
@@ -437,31 +439,31 @@ Class	ChoiceSet
 				StopTimer(self);
 				StartTimer(self, countdown);
 			}
-			!! Se añade a la conversación:
+			!! Se aÃ±ade a la conversaciÃ³n:
 			move choice to self;
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! Invoca a la función 'add_choice() para añadir un ítem temporal a
-		!! partir de los parámetros dados.
+		!! Invoca a la funciÃ³n 'add_choice() para aÃ±adir un Ã­tem temporal a
+		!! partir de los parÃ¡metros dados.
 		!!
-		!!	@param {ChoiceSetItem} choice - Elección a añadir al conjunto como
-		!!		elección temporal
+		!!	@param {ChoiceSetItem} choice - ElecciÃ³n a aÃ±adir al conjunto como
+		!!		elecciÃ³n temporal
 		!!	@param {integer} [countdown=1] - Cantidad de turnos que ha de
-		!!		permanecer la elección en el conjunto
-		!!	@returns {boolean} Verdadero si la elección se añade correctamente
-		!!		al conjunto como elección temporal. Falso en caso contrario
+		!!		permanecer la elecciÃ³n en el conjunto
+		!!	@returns {boolean} Verdadero si la elecciÃ³n se aÃ±ade correctamente
+		!!		al conjunto como elecciÃ³n temporal. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		add_temporal_choice [ choice countdown;
 			return self.add_choice(choice, true, countdown);
 		],
 		!!----------------------------------------------------------------------
-		!! Añade al conjunto las sub-elecciones (si tiene alguna) de aquella
-		!! pasada como parámetro.
+		!! AÃ±ade al conjunto las sub-elecciones (si tiene alguna) de aquella
+		!! pasada como parÃ¡metro.
 		!!
-		!!	@param {ChoiceSetItem} choice - Se añaden las sub-elecciones
+		!!	@param {ChoiceSetItem} choice - Se aÃ±aden las sub-elecciones
 		!!		definidas para 'choice'
-		!!	@returns {boolean} Verdadero si los sub-ítems se añaden con éxito.
+		!!	@returns {boolean} Verdadero si los sub-Ã­tems se aÃ±aden con Ã©xito.
 		!!		Falso en caso contrario
 		!!----------------------------------------------------------------------
 		add_subchoices [ choice
@@ -476,50 +478,50 @@ Class	ChoiceSet
 		],
 		!!----------------------------------------------------------------------
 		!! Marca un conjunto de elecciones como agotado. (Para hacerlo se
-		!! utiliza el atributo 'general' contemplado por la librería Inform.)
+		!! utiliza el atributo 'general' contemplado por la librerÃ­a Inform.)
 		!!
 		!!	@returns {boolean} Verdadero para indicar que el conjunto se ha
-		!!		marcado como agotado con éxito
+		!!		marcado como agotado con Ã©xito
 		!!----------------------------------------------------------------------
 		end [;
 			give self general;
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! Indica si el conjunto de elecciones está o no agotado.
+		!! Indica si el conjunto de elecciones estÃ¡ o no agotado.
 		!!
-		!!	@returns {boolean} Verdadero si el conjunto está agotado. Falso en
+		!!	@returns {boolean} Verdadero si el conjunto estÃ¡ agotado. Falso en
 		!!		caso contrario
 		!!----------------------------------------------------------------------
 		has_ended [;
 			return (self has general);
 		],
 		!!----------------------------------------------------------------------
-		!! Indica si el conjunto de elecciones tiene la elección concreta
-		!! pasada como parámetro.
+		!! Indica si el conjunto de elecciones tiene la elecciÃ³n concreta
+		!! pasada como parÃ¡metro.
 		!!
 		!!	@param {ChoiceSetItem} choice
-		!!	@returns {boolean} Verdadero si el conjunto tiene la elección dada.
+		!!	@returns {boolean} Verdadero si el conjunto tiene la elecciÃ³n dada.
 		!!		Falso en caso contrario
 		!!----------------------------------------------------------------------
 		has_choice [ choice;
 			return parent(choice) == self;
 		],
 		!!----------------------------------------------------------------------
-		!! Elimina un ítem del conjunto de elecciones. Si se invoca con
-		!! 'visited_flag' verdadero, se fuerza además que el ítem quede marcado
+		!! Elimina un Ã­tem del conjunto de elecciones. Si se invoca con
+		!! 'visited_flag' verdadero, se fuerza ademÃ¡s que el Ã­tem quede marcado
 		!! como tratado aunque no haya llegado a mostrarse al usuario en
 		!! realidad.
 		!!
-		!!	@returns {boolean} Verdadero si la elección se elimina con éxito
+		!!	@returns {boolean} Verdadero si la elecciÃ³n se elimina con Ã©xito
 		!!		del conjunto. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		remove_choice [ choice visited_flag
 			obj i x;
 			if ((choice == 0) || (parent(choice) ~= self)) return false;
 			if (visited_flag) give choice visited;
-			!! Se marca a los parientes de la elección como tratados (si
-			!! procede), y se eliminan del conjunto (si están en él):
+			!! Se marca a los parientes de la elecciÃ³n como tratados (si
+			!! procede), y se eliminan del conjunto (si estÃ¡n en Ã©l):
 			if (choice.relatives ~= 0) {
 				for (i=0 : i<(choice.#relatives)/WORDSIZE : i++) {
 					x = choice.&relatives-->i;
@@ -532,14 +534,14 @@ Class	ChoiceSet
 					}
 				}
 			}
-			!! Se elimina la elección:
+			!! Se elimina la elecciÃ³n:
 			remove choice;
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! Si hay alguna elección temporal en el conjunto, la elimina.
+		!! Si hay alguna elecciÃ³n temporal en el conjunto, la elimina.
 		!!
-		!!	@returns {boolean} Verdadero si elimina la elección temporal del
+		!!	@returns {boolean} Verdadero si elimina la elecciÃ³n temporal del
 		!!		conjunto correctamente. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		remove_temporal_choice [
@@ -555,9 +557,9 @@ Class	ChoiceSet
 			return false;
 		],
 		!!----------------------------------------------------------------------
-		!! Retorna el número de elecciones del conjunto.
+		!! Retorna el nÃºmero de elecciones del conjunto.
 		!!
-		!!	@returns {integer} Número de elecciones del conjunto
+		!!	@returns {integer} NÃºmero de elecciones del conjunto
 		!!----------------------------------------------------------------------
 		get_size [
 			choice size;
@@ -567,15 +569,15 @@ Class	ChoiceSet
 		],
 		!!----------------------------------------------------------------------
 		!! Ordena aleatoriamente e imprime un listado con el conjunto de
-		!! elecciones. Si la entidad tiene definida la propiedad 'title', ésta
+		!! elecciones. Si la entidad tiene definida la propiedad 'title', Ã©sta
 		!! se imprime antes de mostrar el resto del listado.
 		!!----------------------------------------------------------------------
 		show_choice_set [
 			choice size i n;
 			!! XXX - Puesto que el temporizador comprueba si se deben eliminar
 			!! las elecciones temporales al finalizar el turno (es decir, justo
-			!! después de mostrar el conjunto de elecciones), puede ocurrir que
-			!! algunas de las elecciones del listado no estén en realidad
+			!! despuÃ©s de mostrar el conjunto de elecciones), puede ocurrir que
+			!! algunas de las elecciones del listado no estÃ©n en realidad
 			!! disponibles. Por ello, antes de imprimir el listado, si procede
 			!! se eliminan las elecciones temporales.
 			if (self.time_left == 0) self.remove_temporal_choice();
@@ -590,7 +592,7 @@ Class	ChoiceSet
 				print ": ";
 			}
 
-			!! Se calcula el número de temas de la conversación:
+			!! Se calcula el nÃºmero de temas de la conversaciÃ³n:
 			size = self.get_size();
 
 			!! Se imprimen los mensajes previos al inventario:
@@ -601,7 +603,7 @@ Class	ChoiceSet
 			if ((size > 1) && (CSET_MSG2 ~= 0))
 				print (string) CSET_MSG2;
 
-			!! Se recolocan los temas en la conversación de forma aleatoria:
+			!! Se recolocan los temas en la conversaciÃ³n de forma aleatoria:
 			for (i = size : i > 0 : i--) {
 				n = random(i);
 				choice = child(self);
@@ -613,7 +615,7 @@ Class	ChoiceSet
 			}
 			while (child(ChoiceBag)) move child(ChoiceBag) to self;
 
-			!! Por último se imprime el listado de ítems:
+			!! Por Ãºltimo se imprime el listado de Ã­tems:
 			for (choice = child(self) : choice~=nothing
 					: choice = sibling(choice)) {
 				PrintOrRun(choice, entry, true);
@@ -634,19 +636,19 @@ Class	ChoiceSet
 		!!----------------------------------------------------------------------
 		!! Otras propiedades:
 		!!----------------------------------------------------------------------
-		!! Acción al intentar activar un conjunto de elecciones agotado:
+		!! AcciÃ³n al intentar activar un conjunto de elecciones agotado:
 		final_action 0,
-		!! Acción al activar un conjunto de elecciones:
+		!! AcciÃ³n al activar un conjunto de elecciones:
 		initial_action 0,
-		!! Acción al intentar activar un conjunto de elecciones ya activado:
+		!! AcciÃ³n al intentar activar un conjunto de elecciones ya activado:
 		inter_action 0,
-		!! Permite indicar un título para el conjunto que se imprimirá junto
+		!! Permite indicar un tÃ­tulo para el conjunto que se imprimirÃ¡ junto
 		!! con el listado de elecciones:
 		title 0,
 		!! La siguiente propiedad ofrece soporte para bloquear el conjunto, de
 		!! forma que mientras un conjunto se encuentre bloqueado se fuerce al
 		!! usuario a seleccionar una de las elecciones sin posibilidad de
-		!! hacer ninguna otra interacción. Para implementar esta funcionalidad
+		!! hacer ninguna otra interacciÃ³n. Para implementar esta funcionalidad
 		!! se debe incluir incluir una rutina 'react_before' en el objeto que
 		!! lanza el sistema CHOICE SET. (Consultar TEST para ver un ejemplo de
 		!! uso de un conjunto bloqueado.)
@@ -660,7 +662,7 @@ Class	ChoiceSet
 
 
 !!==============================================================================
-!!	Objeto gestor que controla la lógica del sistema. Su función principal,
+!!	Objeto gestor que controla la lÃ³gica del sistema. Su funciÃ³n principal,
 !!	run(), debe invocarse desde el punto de entrada *BeforeParsing()* (crear
 !!	este punto de entrada si no existe):
 !!
@@ -671,7 +673,7 @@ Class	ChoiceSet
 Object ChoiceSetManager "(ChoiceSet Manager)"
  with	!!----------------------------------------------------------------------
 		!! Retorna el valor de la propiedad 'choice_set_flag' utilizado por la
-		!! acción 'CSETSelected' para determinar si debe listar o no el
+		!! acciÃ³n 'CSETSelected' para determinar si debe listar o no el
 		!! conjunto de elecciones activo.
 		!!
 		!!	@returns {boolean} Propiedad 'choice_set_flag' del objeto
@@ -680,14 +682,14 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			return self.choice_set_flag;
 		],
 		!!----------------------------------------------------------------------
-		!! Indica si el conjunto de elecciones pasado como parámetro está o no
-		!! activado en el gestor. Si no se pasa ningún parámetro, indica si hay
+		!! Indica si el conjunto de elecciones pasado como parÃ¡metro estÃ¡ o no
+		!! activado en el gestor. Si no se pasa ningÃºn parÃ¡metro, indica si hay
 		!! activado un conjunto de elecciones cualquiera.
 		!!
-		!!	@param {ChoiceSet} [choiceSet] - Si se especifica uno, la función
-		!!		indica si el conjunto 'choiceSet' está activado en el gestor
-		!!	@returns {boolean} Verdadero si el conjunto pasado como parámetro
-		!!		está activo (si no se ha especificado uno, retorna verdadero en
+		!!	@param {ChoiceSet} [choiceSet] - Si se especifica uno, la funciÃ³n
+		!!		indica si el conjunto 'choiceSet' estÃ¡ activado en el gestor
+		!!	@returns {boolean} Verdadero si el conjunto pasado como parÃ¡metro
+		!!		estÃ¡ activo (si no se ha especificado uno, retorna verdadero en
 		!!		caso de que haya un conjunto cualquiera activado en el gestor).
 		!!		Falso en caso contrario
 		!!----------------------------------------------------------------------
@@ -697,20 +699,20 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			} else return self.current_choice_set ~= nothing;
 		],
 		!!----------------------------------------------------------------------
-		!! Función principal del gestor. Comprueba si la entrada de usuario se
+		!! FunciÃ³n principal del gestor. Comprueba si la entrada de usuario se
 		!! refiere a alguna de las elecciones disponibles en el conjunto
-		!! activo y lanza la acción adecuada para tratarla si es así. Debe
+		!! activo y lanza la acciÃ³n adecuada para tratarla si es asÃ­. Debe
 		!! invocarse desde el punto de entrada 'BeforeParsing()'.
 		!!
-		!!	@returns {boolean} Falso, para que el flujo de ejecución del relato
-		!!		interactivo continúe normalmente
+		!!	@returns {boolean} Falso, para que el flujo de ejecuciÃ³n del relato
+		!!		interactivo continÃºe normalmente
 		!!----------------------------------------------------------------------
 		run [
 			o o_tmp_hits;
 			if (self.current_choice_set) {
 				if (self.current_choice_set.has_ended()) return false;
 
-				!! A) Inicializaciones del método:
+				!! A) Inicializaciones del mÃ©todo:
 				self.choice_set_flag = false;
 				self.hits = 0;
 				self.selected_choice = 0;
@@ -722,8 +724,8 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 					print "Probando: ", (string) o.entry, "... ";
 					#Endif; ! DEBUG_CHOICE_SET;
 
-					!! Se calcula el número de coincidencias de la elección en
-					!! relación al total de palabras de la entrada (en %):
+					!! Se calcula el nÃºmero de coincidencias de la elecciÃ³n en
+					!! relaciÃ³n al total de palabras de la entrada (en %):
 					o.compare_prompt();
 					o_tmp_hits = (o.hits*100) / num_words;
 
@@ -732,7 +734,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 					o.#keys / WORDSIZE, " palabras: ", o_tmp_hits, "%^";
 					#Endif; ! DEBUG_CHOICE_SET;
 
-					!! Si la elección coincide con más exactitud que la
+					!! Si la elecciÃ³n coincide con mÃ¡s exactitud que la
 					!! mejor provisional:
 					if (o_tmp_hits > self.hits) {
 						self.hits = o_tmp_hits;
@@ -740,33 +742,33 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 					}
 				}
 
-				!! C) Si se ha seleccionado una elección, se ejecutan las
+				!! C) Si se ha seleccionado una elecciÃ³n, se ejecutan las
 				!! acciones asociadas a ella, se elimina del conjunto (si
-				!! procede), y se añaden las posibles sub-elecciones:
+				!! procede), y se aÃ±aden las posibles sub-elecciones:
 				if (self.hits) {
 					#Ifdef DEBUG_CHOICE_SET;
 					print "Tema seleccionado: ",
 					(string) self.selected_choice.entry, "^";
 					#Endif; ! DEBUG_CHOICE_SET;
 
-					!! Si no es persistente, la elección queda marcada como
+					!! Si no es persistente, la elecciÃ³n queda marcada como
 					!! tratada:
 					if (~~(self.selected_choice.persistent)) {
 						give self.selected_choice visited;
 					}
 
-					!! Acción al seleccionar la elección:
+					!! AcciÃ³n al seleccionar la elecciÃ³n:
 					if (self.selected_choice.reply ~= 0) {
 						PrintOrRun(self.selected_choice, reply);
 					}
 
 					!! Se establece la propiedad 'choice_set_flag' del gestor
-					!! en función de las propiedades de la elección:
+					!! en funciÃ³n de las propiedades de la elecciÃ³n:
 					self.choice_set_flag
 						= self.selected_choice.append_choice_set;
 
-					!! La elección se elimina del conjunto si está agotada y
-					!! se añaden todas sus sub-elecciones (si tiene alguna):
+					!! La elecciÃ³n se elimina del conjunto si estÃ¡ agotada y
+					!! se aÃ±aden todas sus sub-elecciones (si tiene alguna):
 					if (self.selected_choice has visited) {
 						self.current_choice_set.remove_choice(
 							self.selected_choice);
@@ -774,29 +776,29 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 					self.current_choice_set.add_subchoices(
 						self.selected_choice);
 
-					!! Acción después de tratar la elección:
+					!! AcciÃ³n despuÃ©s de tratar la elecciÃ³n:
 					if (self.selected_choice.reaction ~= 0) {
 						PrintOrRun(self.selected_choice, reaction);
 					}
 
-					!! Si es un ítem final, termina la selección:
+					!! Si es un Ã­tem final, termina la selecciÃ³n:
 					if (self.selected_choice.final_choice) {
 						self.current_choice_set.end();
 					}
 
-					!! Se modifica la entrada de usuario para que la librería
-					!! lance la acción de apoyo ##CSETSelected (referenciada
+					!! Se modifica la entrada de usuario para que la librerÃ­a
+					!! lance la acciÃ³n de apoyo ##CSETSelected (referenciada
 					!! por el verbo de apoyo 'cset.selected'):
 					parse-->1 = 'cset.selected';
 					num_words = 1;
-					!! A partir de este punto, la librería Inform lanzará la
-					!! acción ##CSETSelected, encargada de listar el conjunto
+					!! A partir de este punto, la librerÃ­a Inform lanzarÃ¡ la
+					!! acciÃ³n ##CSETSelected, encargada de listar el conjunto
 					!! de elecciones (si es preciso).
 				}
 			}
 
-			!! Retorna de la función y deja el flujo de ejecución de nuevo en
-			!! manos de la librería, para que haga el tratamiento normal de la
+			!! Retorna de la funciÃ³n y deja el flujo de ejecuciÃ³n de nuevo en
+			!! manos de la librerÃ­a, para que haga el tratamiento normal de la
 			!! entrada del usuario:
 			return false;
 		],
@@ -821,7 +823,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 				#Ifnot; ! TARGET_GLULX;
 				glk($0086, 0);
 				#Endif;	! TARGET_
-			1:	!! Estilo: Itálica
+			1:	!! Estilo: ItÃ¡lica
 				#Ifdef	TARGET_ZCODE;
 				font on; style underline;
 				#Ifnot;	! TARGET_GLULX;
@@ -856,28 +858,28 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 		],
 		!!----------------------------------------------------------------------
 		!! Inicia y deja activo en el gestor el conjunto de elecciones pasado
-		!! como parámetro. Si además se invoca con 'no_action' verdadero, se
-		!! evita la ejecución de las acciones asociadas a la activación (o
-		!! reactivación) del conjunto.
+		!! como parÃ¡metro. Si ademÃ¡s se invoca con 'no_action' verdadero, se
+		!! evita la ejecuciÃ³n de las acciones asociadas a la activaciÃ³n (o
+		!! reactivaciÃ³n) del conjunto.
 		!!
 		!!	@param {ChoiceSet} choice_set - Conjunto de elecciones que se
 		!!		activa en el gestor
 		!!	@param {boolean} [no_action=false] - Si se invoca como verdadero,
-		!!		evita la ejecucción de las acciones asociadas con la activación
-		!!		y reactivación del conjunto
+		!!		evita la ejecucciÃ³n de las acciones asociadas con la activaciÃ³n
+		!!		y reactivaciÃ³n del conjunto
 		!!	@returns {boolean} Verdadero si el conjunto de elecciones se activa
-		!!		(o reactiva) correctamente. Falso si el conjunto no es válido o
-		!!		está marcado como agotado
+		!!		(o reactiva) correctamente. Falso si el conjunto no es vÃ¡lido o
+		!!		estÃ¡ marcado como agotado
 		!!----------------------------------------------------------------------
 		start [ choice_set no_action;
-			!! Se comprueba que el conjunto pasado sea válido:
+			!! Se comprueba que el conjunto pasado sea vÃ¡lido:
 			if ((choice_set == 0) || ~~(choice_set ofclass ChoiceSet)) {
 				#Ifdef DEBUG_CHOICE_SET;
-				print "ERROR. El conjunto introducido no es válido.^";
+				print "ERROR. El conjunto introducido no es vÃ¡lido.^";
 				#Endif;
 				return false;
 			}
-			!! Si el conjunto está agotado, se ejecuta su acción final (si hay
+			!! Si el conjunto estÃ¡ agotado, se ejecuta su acciÃ³n final (si hay
 			!! una definida) y retorna:
 			if (choice_set.has_ended()) {
 				if ((choice_set.final_action ~= 0) && ~~(no_action)) {
@@ -885,15 +887,15 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 				}
 				return false;
 			}
-			!! Si el conjunto ya está activado, ejecuta su acción de conjunto
-			!! en ejecución (si hay una definida):
+			!! Si el conjunto ya estÃ¡ activado, ejecuta su acciÃ³n de conjunto
+			!! en ejecuciÃ³n (si hay una definida):
 			if (self.is_running(choice_set)) {
 				if ((choice_set.inter_action ~= 0) && ~~(no_action)) {
 					PrintOrRun(choice_set, inter_action);
 					new_line;
 				}
 			}
-			!! Se ejecuta la acción inicial del conjunto (si hay una definida)
+			!! Se ejecuta la acciÃ³n inicial del conjunto (si hay una definida)
 			!! y lo activa en el gestor:
 			else {
 				if ((choice_set.initial_action ~= 0) && ~~(no_action)) {
@@ -916,9 +918,9 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! Retorna el tamaño del conjunto de elecciones activo en el gestor.
+		!! Retorna el tamaÃ±o del conjunto de elecciones activo en el gestor.
 		!!
-		!!	@returns {integer} Número de elecciones del conjunto activo
+		!!	@returns {integer} NÃºmero de elecciones del conjunto activo
 		!!----------------------------------------------------------------------
 		get_size [;
 			if (self.is_running()) return self.current_choice_set.get_size();
@@ -926,12 +928,12 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 		],
  private
 		 !! Indica si hay que mostrar el inventario de temas al terminar de
-		 !! desarrollar uno de los temas de la conversación actual.
+		 !! desarrollar uno de los temas de la conversaciÃ³n actual.
 		 choice_set_flag false,
- 		!! Conversación actual activa en el gestor.
+ 		!! ConversaciÃ³n actual activa en el gestor.
  		current_choice_set 0,
-		!! Número de coincidencias del tema con más coincidencias de la
-		!! conversación (en tanto por 100 sobre el número de palabras clave).
+		!! NÃºmero de coincidencias del tema con mÃ¡s coincidencias de la
+		!! conversaciÃ³n (en tanto por 100 sobre el nÃºmero de palabras clave).
 		hits 0,
 
 		!! Tema con mayor porcentaje de coincidencias hasta el momento.
@@ -941,7 +943,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 
 
 !!==============================================================================
-!!	Definición de la acción de apoyo (y su gramática) que se lanza si se
+!!	DefiniciÃ³n de la acciÃ³n de apoyo (y su gramÃ¡tica) que se lanza si se
 !!	reconoce en la entrada de usuario un intento de tratar alguna de las
 !!	elecciones del conjunto activo en el gestor.
 !!------------------------------------------------------------------------------
@@ -987,15 +989,15 @@ Extend	'habla' replace
 
 [ TalkToSub;
 	if (noun == player) "Hablar con uno mismo es una locura.";
-	if (noun hasnt animate) "Eso no podría contestarte.";
+	if (noun hasnt animate) "Eso no podrÃ­a contestarte.";
 	print_ret (The) noun, " no parece", (n) noun, " interesad", (o) noun,
 	" en hablar contigo.";
 ];
 
-Object	Habitacion "Habitación"
+Object	Habitacion "HabitaciÃ³n"
  with	description
-			"Hay una persona en la habitación. Teclea HABLAR CON PERSONA para
-			iniciar una conversación con ella.",
+			"Hay una persona en la habitaciÃ³n. Teclea HABLAR CON PERSONA para
+			iniciar una conversaciÃ³n con ella.",
  has	light;
 
 Object	-> "persona"
@@ -1015,7 +1017,7 @@ Object	-> "persona"
 			],
  has	animate concealed female;
 
-ChoiceSet conversaction "(Conversación con la persona)"
+ChoiceSet conversaction "(ConversaciÃ³n con la persona)"
  with	initial_action [;
 			self.add_choice(cset_item_1);
 			self.add_choice(cset_item_2);
@@ -1026,18 +1028,18 @@ ChoiceSet conversaction "(Conversación con la persona)"
 			"El hombre te mira, curioso.";
 		],
 		final_action [;
-			"No hay nada más que comentar.";
+			"No hay nada mÃ¡s que comentar.";
 		];
 
 ChoiceSetItem	cset_item_1
  with	entry	"preguntar nombre",
 		keys	'preguntar' 'pregunta' 'nombre',
 		reply [;
-			"---Me presento,---le dices--- mi nombre es Don Pepito. ¿Puedo
+			"---Me presento,---le dices--- mi nombre es Don Pepito. Â¿Puedo
 			preguntarle el suyo?
 			^^
-			---Por supuesto Don Pepito, faltaría más. Encantado de conocerle,
-			yo soy Don José. Don José Villaescusa Lacio.";
+			---Por supuesto Don Pepito, faltarÃ­a mÃ¡s. Encantado de conocerle,
+			yo soy Don JosÃ©. Don JosÃ© Villaescusa Lacio.";
 		],
 		subchoices cset_item_12,
 		append_choice_set true;
@@ -1046,11 +1048,11 @@ ChoiceSetItem	cset_item_12
  with	entry	"interesarte por sus apellidos",
 		keys	'apellidos' 'apellido',
 		reply [;
-			"---Apellidos curiosos, ¿de dónde vienen, si me permite la
-			indiscreción?
+			"---Apellidos curiosos, Â¿de dÃ³nde vienen, si me permite la
+			indiscreciÃ³n?
 			^^
 			---Se la permito, por supuesto. Se va a sorprender usted; vienen de
-			mi padre, uno, y de mi madre el segundo. Curioso, ¿no es así?";
+			mi padre, uno, y de mi madre el segundo. Curioso, Â¿no es asÃ­?";
 		],
 		reaction [;
 			!! Alternativo a utilizar la propiedad *subchoices*:
@@ -1059,10 +1061,10 @@ ChoiceSetItem	cset_item_12
 		append_choice_set true;
 
 ChoiceSetItem	cset_item_2
- with	entry	"investigar en qué trabaja",
+ with	entry	"investigar en quÃ© trabaja",
 		keys	'trabaja' 'trabajo',
 		reply [;
-			"---¿Tendría la bondad de explicarme su trabajo?
+			"---Â¿TendrÃ­a la bondad de explicarme su trabajo?
 			^^
 			---Mi querido amigo, yo hago de todo, pero digamos que
 			principalmente me dedico al ramo de los viajes.";
@@ -1074,24 +1076,24 @@ ChoiceSetItem	cset_item_21
  with	entry	"preguntar sobre los viajes"
 		keys	'viajes',
 		reply [;
-			"---Oh, viajes. ¡Me encanta viajar! Claro que como turista. Supongo
+			"---Oh, viajes. Â¡Me encanta viajar! Claro que como turista. Supongo
 			que dedicarse a ello debe resultar cansado.
 			^^
 			---Cansado y aburrido. No imagina usted lo tedioso que es explicar
 			las mismas cosas sobre la Torre Eiffel una y otra vez. Un
-			auténtico tostón... perdone el exabrupto.";
+			autÃ©ntico tostÃ³n... perdone el exabrupto.";
 		],
 		append_choice_set false;
 
 ChoiceSetItem	cset_item_22
- with	entry	"pedir que te aclare qué quiere decir con ~de todo~",
+ with	entry	"pedir que te aclare quÃ© quiere decir con ~de todo~",
 		keys	'aclarar' 'aclare' 'decir' 'todo',
 		reply [;
-			"---Perdone, Don José. ¿De todo? ¿A qué se refiere?
+			"---Perdone, Don JosÃ©. Â¿De todo? Â¿A quÃ© se refiere?
 			^^
 			---Oh, pues exactamente a eso, Don Pepito. Un poco a todo tipo de
 			negocio; apuestas, inversiones en bolsa, compra-venta de activos,
-			robo de bancos... cualquier cosa que usted imagine. ---Sonríe.
+			robo de bancos... cualquier cosa que usted imagine. ---SonrÃ­e.
 			---No ponga esa cara, hombre. Era broma, por supuesto.";
 		]
 		append_choice_set false;
@@ -1102,7 +1104,7 @@ ChoiceSetItem	cset_item_3
 		reply [;
 			"---Me parece usted un borde.
 			^^
-			---¿Cómo dice? Retire eso, por favor.";
+			---Â¿CÃ³mo dice? Retire eso, por favor.";
 		],
 		append_choice_set true;
 
@@ -1110,11 +1112,11 @@ ChoiceSetItem	cset_item_31
  with	entry	"negarse",
 		keys	'negarse' 'negate' 'negar' 'negarte',
 		reply [;
-			"---¡Jamás! Es usted un borde. ¡Un borde!
+			"---Â¡JamÃ¡s! Es usted un borde. Â¡Un borde!
 			^^
-			---Amigo mío, estoy ya ha pasado de castaño oscuro. No pienso
-			tolerar más insultos. Zanjo aquí nuestra conversación. Que tenga
-			usted buen día.";
+			---Amigo mÃ­o, estoy ya ha pasado de castaÃ±o oscuro. No pienso
+			tolerar mÃ¡s insultos. Zanjo aquÃ­ nuestra conversaciÃ³n. Que tenga
+			usted buen dÃ­a.";
 		],
 		append_choice_set false;
 
@@ -1122,11 +1124,11 @@ ChoiceSetItem	cset_item_32
  with	entry	"retirar el insulto"
 		keys	'retirar' 'retira' 'insulto',
 		reply [;
-			"---Discúlpeme. Reconozco que ha sido una descortesía. Y era una
-			afirmación infundada, además.
+			"---DiscÃºlpeme. Reconozco que ha sido una descortesÃ­a. Y era una
+			afirmaciÃ³n infundada, ademÃ¡s.
 			^^
-			---No hay nada que disculpar. Olvidemos esta absurda disgresión
-			de nuestra agradable conversación.";
+			---No hay nada que disculpar. Olvidemos esta absurda disgresiÃ³n
+			de nuestra agradable conversaciÃ³n.";
 		],
 		append_choice_set true;
 
@@ -1134,8 +1136,8 @@ ChoiceSetItem	cset_item_4
  with	entry	"saludarle con el sombrero"
 		keys	'saludar' 'saluda' 'saludarle' 'saludale' 'sombrero',
 		reply [;
-			"Inclinas el ala de tu sombrero en un gesto amistoso, y él te
-			responde con un gesto idéntico.";
+			"Inclinas el ala de tu sombrero en un gesto amistoso, y Ã©l te
+			responde con un gesto idÃ©ntico.";
 		],
 		append_choice_set true,
 		permanent true;

@@ -2,70 +2,70 @@
 
 !!==============================================================================
 !!
-!!	GRAM¡TICA ESPA—OLA EXTENDIDA
+!!	GRAM√ÅTICA ESPA√ëOLA EXTENDIDA
 !!
 !!==============================================================================
 !!
 !!	File:			SpanishEG.inf
 !!	Author(s):		Emily Short <emshort@mindspring.com>
-!!					J. Francisco MartÌn <jfm.lisaso@gmail.com>
+!!					J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
 !!					Mapache
-!!	Language:		ES (EspaÒol)
+!!	Language:		ES (Espa√±ol)
 !!	System:			Inform-INFSP 6
-!!	Platform:		M·quina-Z / GLULX
-!!	Version:		5.2
-!!	Released:		2018/03/05
+!!	Platform:		M√°quina-Z / Glulx
+!!	Version:		5.3
+!!	Released:		2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	NOTAS
 !!
 !!	Basada en "ExpertGrammar.h", de Emily Short <emshort@mindspring.com>
-!!	y en su traducciÛn al castellano "GramaticaExperta.h", de Mapache.
+!!	y en su traducci√≥n al castellano "GramaticaExperta.h", de Mapache.
 !!
 !!
 !!	DERECHOS
 !!
-!!	Esta librerÌa puede tratarse como de dominio p˙blico. Puede incluirse
-!!	con o sin citar al autor original. Puede ser modificada a discreciÛn
+!!	Esta librer√≠a puede tratarse como de dominio p√∫blico. Puede incluirse
+!!	con o sin citar al autor original. Puede ser modificada a discreci√≥n
 !!	por el usuario. Se puede distribuir libremente. Pueden extraerse
-!!	fragmentos de la librerÌa.
+!!	fragmentos de la librer√≠a.
 !!
 !!
-!!	INSTALACI”N
+!!	INSTALACI√ìN
 !!
-!!	Incluye "SpanishEG.h" despuÈs de SpanishG en tu archivo de juego.
+!!	Incluye "SpanishEG.h" despu√©s de SpanishG en tu archivo de juego.
 !!
 !!	Se puede definir la variable '_grammatical_inflection' en el archivo de
-!!	juego, que puede tomar los valores: 1 (PRESENTE 1™ PERSONA), 2 (PRESENTE 2™
-!!	PERSONA), 3 (PRESENTE 3™ PERSONA), 4 (PASADO 1™ PERSONA), 5 (PASADO 2™
-!!	PERSONA) o 6 (PASADO 3™ PERSONA) para modificar la conjugaciÛn gramatical
-!!	de los mensajes de la librerÌa. Si no se define ninguna
-!!	'_grammatical_inflection', la librerÌa interpreta que se usa el valor 2 y
+!!	juego, que puede tomar los valores: 1 (PRESENTE 1¬™ PERSONA), 2 (PRESENTE 2¬™
+!!	PERSONA), 3 (PRESENTE 3¬™ PERSONA), 4 (PASADO 1¬™ PERSONA), 5 (PASADO 2¬™
+!!	PERSONA) o 6 (PASADO 3¬™ PERSONA) para modificar la conjugaci√≥n gramatical
+!!	de los mensajes de la librer√≠a. Si no se define ninguna
+!!	'_grammatical_inflection', la librer√≠a interpreta que se usa el valor 2 y
 !!	los mensajes de "SpanishEG.h" se imprimen en presente y segunda persona.
 !!
 !!
 !!	NUEVAS ACCIONES
 !!
-!!	o	Dance
-!!	o	GoDown
-!!	o	GoUp
-!!	o	KnockOn
-!!	o	Masturbate
-!!	o	Read
-!!	o	Shout
-!!	o	Sit
-!!	o	SleepWith
-!!	o	StandUp
-!!	o	Untie
-!!	o	Use
-!!	o	Write
-!!	o	Xyzzy
+!!	<>	Dance
+!!	<>	GoDown
+!!	<>	GoUp
+!!	<>	KnockOn
+!!	<>	Masturbate
+!!	<>	Read
+!!	<>	Shout
+!!	<>	Sit
+!!	<>	SleepWith
+!!	<>	StandUp
+!!	<>	Untie
+!!	<>	Use
+!!	<>	Write
+!!	<>	Xyzzy
 !!
 !!------------------------------------------------------------------------------
 
 !!------------------------------------------------------------------------------
-!! Valores de la extensiÛn por defecto
+!! Valores de la extensi√≥n por defecto
 !!------------------------------------------------------------------------------
 
 Default	FIRST_PERSON_PRESENT 1;
@@ -80,7 +80,7 @@ Default THIRD_PERSON_FUTURE 9;
 Default	_grammatical_inflection 2;
 
 !!------------------------------------------------------------------------------
-!! Nuevos sinÛnimos
+!! Nuevos sin√≥nimos
 !!------------------------------------------------------------------------------
 
 Verb	'machaca'						= 'ataca';
@@ -95,7 +95,7 @@ VerboIrregular "tostar" with imperativo 'tuesta';
 Verb	'acaricia'						= 'toca';
 
 !!------------------------------------------------------------------------------
-!! Extensiones a las acciones de la librerÌa por defecto
+!! Extensiones a las acciones de la librer√≠a por defecto
 !!------------------------------------------------------------------------------
 
 Extend	'sopla'
@@ -170,7 +170,7 @@ Verb	'baila'
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Nunca he sido un gran bailarÌn.";
+					"Nunca he sido un gran bailar√≠n.";
 				1, 7:
 					"Nunca he sido una gran bailarina.";
 				3, 9:
@@ -181,18 +181,18 @@ Verb	'baila'
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Nunca has sido un gran bailarÌn.";
+					"Nunca has sido un gran bailar√≠n.";
 				1, 7:
 					"Nunca has sido una gran bailarina.";
 				3, 9:
-					"Nunca habÈis sido unos grandes bailarines.";
+					"Nunca hab√©is sido unos grandes bailarines.";
 				4, 10:
-					"Nunca habÈis sido unas grandes bailarinas.";
+					"Nunca hab√©is sido unas grandes bailarinas.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Nunca ha sido un gran bailarÌn.";
+					"Nunca ha sido un gran bailar√≠n.";
 				1, 7:
 					"Nunca ha sido una gran bailarina.";
 				3, 9:
@@ -203,7 +203,7 @@ Verb	'baila'
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Nunca fui un gran bailarÌn.";
+					"Nunca fui un gran bailar√≠n.";
 				1, 7:
 					"Nunca fui una gran bailarina.";
 				3, 9:
@@ -214,7 +214,7 @@ Verb	'baila'
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Nunca fuiste un gran bailarÌn.";
+					"Nunca fuiste un gran bailar√≠n.";
 				1, 7:
 					"Nunca fuiste una gran bailarina.";
 				3, 9:
@@ -225,7 +225,7 @@ Verb	'baila'
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Nunca fue un gran bailarÌn.";
+					"Nunca fue un gran bailar√≠n.";
 				1, 7:
 					"Nunca fue una gran bailarina.";
 				3, 9:
@@ -236,9 +236,9 @@ Verb	'baila'
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No llegarÈ a ser un gran bailarÌn.";
+					"No llegar√© a ser un gran bailar√≠n.";
 				1, 7:
-					"No llegarÈ a ser una gran bailarina.";
+					"No llegar√© a ser una gran bailarina.";
 				3, 9:
 					"No llegaremos a ser unos grandes bailarines.";
 				4, 10:
@@ -247,24 +247,24 @@ Verb	'baila'
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No llegar·s a ser un gran bailarÌn.";
+					"No llegar√°s a ser un gran bailar√≠n.";
 				1, 7:
-					"No llegar·s a ser una gran bailarina.";
+					"No llegar√°s a ser una gran bailarina.";
 				3, 9:
-					"No llegarÈis a ser unos grandes bailarines.";
+					"No llegar√©is a ser unos grandes bailarines.";
 				4, 10:
-					"No llegarÈis a ser unas grandes bailarinas.";
+					"No llegar√©is a ser unas grandes bailarinas.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No llegar· a ser un gran bailarÌn.";
+					"No llegar√° a ser un gran bailar√≠n.";
 				1, 7:
-					"No llegar· a ser una gran bailarina.";
+					"No llegar√° a ser una gran bailarina.";
 				3, 9:
-					"No llegar·n a ser unos grandes bailarines.";
+					"No llegar√°n a ser unos grandes bailarines.";
 				4, 10:
-					"No llegar·n a ser unas grandes bailarinas.";
+					"No llegar√°n a ser unas grandes bailarinas.";
 			}
 	}
 ];
@@ -319,13 +319,13 @@ Verb	'llama'
 		FIRST_PERSON_PAST,
 		SECOND_PERSON_PAST,
 		THIRD_PERSON_PAST:
-			if (noun has door) "No contestÛ nadie.";
-			"No ocurriÛ nada.";
+			if (noun has door) "No contest√≥ nadie.";
+			"No ocurri√≥ nada.";
 		FIRST_PERSON_FUTURE,
 		SECOND_PERSON_FUTURE,
 		THIRD_PERSON_FUTURE:
-			if (noun has door) "No contestar· nadie.";
-			"No ocurrir· nada.";
+			if (noun has door) "No contestar√° nadie.";
+			"No ocurrir√° nada.";
 	}
 ];
 
@@ -352,7 +352,7 @@ Verb	'masturba'
 				0, 1, 6, 7:
 					"Ahora no tienes ganas en realidad.";
 				3, 4, 9, 10:
-					"Ahora no tenÈis ganas en realidad.";
+					"Ahora no ten√©is ganas en realidad.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
@@ -364,44 +364,44 @@ Verb	'masturba'
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌa ganas.";
+					"No ten√≠a ganas.";
 				3, 4, 9, 10:
-					"No tenÌamos ganas.";
+					"No ten√≠amos ganas.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌas ganas.";
+					"No ten√≠as ganas.";
 				3, 4, 9, 10:
-					"No tenÌais ganas.";
+					"No ten√≠ais ganas.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌa ganas.";
+					"No ten√≠a ganas.";
 				3, 4, 9, 10:
-					"No tenÌan ganas.";
+					"No ten√≠an ganas.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendrÈ ganas.";
+					"No tendr√© ganas.";
 				3, 4, 9, 10:
 					"No tendremos ganas.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendr·s ganas.";
+					"No tendr√°s ganas.";
 				3, 4, 9, 10:
-					"No tendrÈis ganas.";
+					"No tendr√©is ganas.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendr· ganas.";
+					"No tendr√° ganas.";
 				3, 4, 9, 10:
-					"No tendr·n ganas.";
+					"No tendr√°n ganas.";
 			}
 	}
 ];
@@ -423,11 +423,11 @@ Extend	'lee' first
 		FIRST_PERSON_PAST,
 		SECOND_PERSON_PAST,
 		THIRD_PERSON_PAST:
-			"No habÌa nada que leer en ", (the) noun, ".";
+			"No hab√≠a nada que leer en ", (the) noun, ".";
 		FIRST_PERSON_FUTURE,
 		SECOND_PERSON_FUTURE,
 		THIRD_PERSON_FUTURE:
-			"No habr· nada que leer en ", (the) noun, ".";
+			"No habr√° nada que leer en ", (the) noun, ".";
 	}
 ];
 
@@ -470,7 +470,7 @@ Extend	'grita' last
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"GritÈ con fuerza.";
+					"Grit√© con fuerza.";
 				3, 4, 9, 10:
 					"Gritamos con fuerza.";
 			}
@@ -484,30 +484,30 @@ Extend	'grita' last
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"GritÛ con fuerza.";
+					"Grit√≥ con fuerza.";
 				3, 4, 9, 10:
 					"Gritaron con fuerza.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"GritarÈ con fuerza.";
+					"Gritar√© con fuerza.";
 				3, 4, 9, 10:
 					"Gritaremos con fuerza.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Gritar·s con fuerza.";
+					"Gritar√°s con fuerza.";
 				3, 4, 9, 10:
-					"GritarÈis con fuerza.";
+					"Gritar√©is con fuerza.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Gritar· con fuerza.";
+					"Gritar√° con fuerza.";
 				3, 4, 9, 10:
-					"Gritar·n con fuerza.";
+					"Gritar√°n con fuerza.";
 			}
 	}
 ];
@@ -531,101 +531,101 @@ Extend    'sienta' replace
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Ya estoy bastante cÛmodo de pie.";
+					"Ya estoy bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estoy bastante cÛmoda de pie.";
+					"Ya estoy bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estamos bastante cÛmodos de pie.";
+					"Ya estamos bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estamos bastante cÛmodas de pie.";
+					"Ya estamos bastante c√≥modas de pie.";
 			}
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Ya est·s bastante cÛmodo de pie.";
+					"Ya est√°s bastante c√≥modo de pie.";
 				1, 7:
-					"Ya est·s bastante cÛmoda de pie.";
+					"Ya est√°s bastante c√≥moda de pie.";
 				3, 9:
-					"Ya est·is bastante cÛmodos de pie.";
+					"Ya est√°is bastante c√≥modos de pie.";
 				4, 10:
-					"Ya est·is bastante cÛmodas de pie.";
+					"Ya est√°is bastante c√≥modas de pie.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"Ya est· bastante cÛmodo de pie.";
+					"Ya est√° bastante c√≥modo de pie.";
 				1, 7:
-					"Ya est· bastante cÛmoda de pie.";
+					"Ya est√° bastante c√≥moda de pie.";
 				3, 9:
-					"Ya est·n bastante cÛmodos de pie.";
+					"Ya est√°n bastante c√≥modos de pie.";
 				4, 10:
-					"Ya est·n bastante cÛmodas de pie.";
+					"Ya est√°n bastante c√≥modas de pie.";
 			}
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Ya estaba bastante cÛmodo de pie.";
+					"Ya estaba bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estaba bastante cÛmoda de pie.";
+					"Ya estaba bastante c√≥moda de pie.";
 				3, 9:
-					"Ya est·bamos bastante cÛmodos de pie.";
+					"Ya est√°bamos bastante c√≥modos de pie.";
 				4, 10:
-					"Ya est·bamos bastante cÛmodas de pie.";
+					"Ya est√°bamos bastante c√≥modas de pie.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Ya estabas bastante cÛmodo de pie.";
+					"Ya estabas bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estabas bastante cÛmoda de pie.";
+					"Ya estabas bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estabais bastante cÛmodos de pie.";
+					"Ya estabais bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estabais bastante cÛmodas de pie.";
+					"Ya estabais bastante c√≥modas de pie.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"Ya estaba bastante cÛmodo de pie.";
+					"Ya estaba bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estaba bastante cÛmoda de pie.";
+					"Ya estaba bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estaban bastante cÛmodos de pie.";
+					"Ya estaban bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estaban bastante cÛmodas de pie.";
+					"Ya estaban bastante c√≥modas de pie.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"Ya estarÈ bastante cÛmodo de pie.";
+					"Ya estar√© bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estarÈ bastante cÛmoda de pie.";
+					"Ya estar√© bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estaremos bastante cÛmodos de pie.";
+					"Ya estaremos bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estaremos bastante cÛmodas de pie.";
+					"Ya estaremos bastante c√≥modas de pie.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"Ya estar·s bastante cÛmodo de pie.";
+					"Ya estar√°s bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estar·s bastante cÛmoda de pie.";
+					"Ya estar√°s bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estarÈis bastante cÛmodos de pie.";
+					"Ya estar√©is bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estarÈis bastante cÛmodas de pie.";
+					"Ya estar√©is bastante c√≥modas de pie.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"Ya estar· bastante cÛmodo de pie.";
+					"Ya estar√° bastante c√≥modo de pie.";
 				1, 7:
-					"Ya estar· bastante cÛmoda de pie.";
+					"Ya estar√° bastante c√≥moda de pie.";
 				3, 9:
-					"Ya estar·n bastante cÛmodos de pie.";
+					"Ya estar√°n bastante c√≥modos de pie.";
 				4, 10:
-					"Ya estar·n bastante cÛmodas de pie.";
+					"Ya estar√°n bastante c√≥modas de pie.";
 			}
 	}
 ];
@@ -663,75 +663,75 @@ Verb	'haz'
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Ni se me pasa por la cabeza algo asÌ ahora.";
+					"Ni se me pasa por la cabeza algo as√≠ ahora.";
 				3, 4, 9, 10:
-					"Ni se nos pasa por la cabeza algo asÌ ahora.";
+					"Ni se nos pasa por la cabeza algo as√≠ ahora.";
 			}
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"En realidad no se te pasarÌa por la cabeza algo asÌ
+					"En realidad no se te pasar√≠a por la cabeza algo as√≠
 					ahora.";
 				3, 4, 9, 10:
-					"En realidad no se os pasarÌa por la cabeza algo asÌ
+					"En realidad no se os pasar√≠a por la cabeza algo as√≠
 					ahora.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"En realidad no se le pasarÌa por la cabeza algo asÌ
+					"En realidad no se le pasar√≠a por la cabeza algo as√≠
 					ahora.";
 				3, 4, 9, 10:
-					"En realidad no se les pasarÌa por la cabeza algo asÌ
+					"En realidad no se les pasar√≠a por la cabeza algo as√≠
 					ahora.";
 			}
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No se me hubiese pasado por la cabeza algo asÌ en aquel
+					"No se me hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 				3, 4, 9, 10:
-					"No se nos hubiese pasado por la cabeza algo asÌ en aquel
+					"No se nos hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No se te hubiese pasado por la cabeza algo asÌ en aquel
+					"No se te hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 				3, 4, 9, 10:
-					"No se os hubiese pasado por la cabeza algo asÌ en aquel
+					"No se os hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No se le hubiese pasado por la cabeza algo asÌ en aquel
+					"No se le hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 				3, 4, 9, 10:
-					"No se les hubiese pasado por la cabeza algo asÌ en aquel
+					"No se les hubiese pasado por la cabeza algo as√≠ en aquel
 					momento.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Ni se me pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se me pasar√° por la cabeza algo as√≠ en ese momento.";
 				3, 4, 9, 10:
-					"Ni se nos pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se nos pasar√° por la cabeza algo as√≠ en ese momento.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Ni se te pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se te pasar√° por la cabeza algo as√≠ en ese momento.";
 				3, 4, 9, 10:
-					"Ni se os pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se os pasar√° por la cabeza algo as√≠ en ese momento.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Ni se le pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se le pasar√° por la cabeza algo as√≠ en ese momento.";
 				3, 4, 9, 10:
-					"Ni se les pasar· por la cabeza algo asÌ en ese momento.";
+					"Ni se les pasar√° por la cabeza algo as√≠ en ese momento.";
 			}
 	}
 ];
@@ -758,71 +758,71 @@ Verb    'levanta' 'incorpora'
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estoy en ning˙n sitio del que deba levantarme.";
+					"No estoy en ning√∫n sitio del que deba levantarme.";
 				3, 4, 9, 10:
-					"No estamos en ning˙n sitio del que debamos levantarnos.";
+					"No estamos en ning√∫n sitio del que debamos levantarnos.";
 			}
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No est·s en ning˙n sitio del que debas levantarte.";
+					"No est√°s en ning√∫n sitio del que debas levantarte.";
 				3, 4, 9, 10:
-					"No est·is en ning˙n sitio del que debais levantaros.";
+					"No est√°is en ning√∫n sitio del que debais levantaros.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No est· en ning˙n sitio del que deba levantarse.";
+					"No est√° en ning√∫n sitio del que deba levantarse.";
 				3, 4, 9, 10:
-					"No est·n en ning˙n sitio del que deban levantarse.";
+					"No est√°n en ning√∫n sitio del que deban levantarse.";
 			}
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estaba en ning˙n sitio del que debiese levantarme.";
+					"No estaba en ning√∫n sitio del que debiese levantarme.";
 				3, 4, 9, 10:
-					"No est·bamos en ning˙n sitio del que debiÈsemos
+					"No est√°bamos en ning√∫n sitio del que debi√©semos
 					levantarnos.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estabas en ning˙n sitio del que debieses levantarte.";
+					"No estabas en ning√∫n sitio del que debieses levantarte.";
 				3, 4, 9, 10:
-					"No estabais en ning˙n sitio del que debieseis levantaros.";
+					"No estabais en ning√∫n sitio del que debieseis levantaros.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estaba en ning˙n sitio del que debiese levantarse.";
+					"No estaba en ning√∫n sitio del que debiese levantarse.";
 				3, 4, 9, 10:
-					"No estaban en ning˙n sitio del que debiesen levantarse.";
+					"No estaban en ning√∫n sitio del que debiesen levantarse.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estarÈ en ning˙n sitio del que debiese
+					"No estar√© en ning√∫n sitio del que debiese
 					levantarme.";
 				3, 4, 9, 10:
-					"No estaremos en ning˙n sitio del que debiÈsemos
+					"No estaremos en ning√∫n sitio del que debi√©semos
 					levantarnos.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estar·s en ning˙n sitio del que debieses
+					"No estar√°s en ning√∫n sitio del que debieses
 					levantarte.";
 				3, 4, 9, 10:
-					"No estarÈis en ning˙n sitio del que debiÈsesis
+					"No estar√©is en ning√∫n sitio del que debi√©sesis
 					levantaros.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No estar· en ning˙n sitio del que debiese
+					"No estar√° en ning√∫n sitio del que debiese
 					levantarse.";
 				3, 4, 9, 10:
-					"No estar·n en ning˙n sitio del que debiesen
+					"No estar√°n en ning√∫n sitio del que debiesen
 					levantarse.";
 			}
 	}
@@ -849,101 +849,101 @@ Extend	only 'desconecta' last
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"No estoy seguro de cÛmo hacerlo.";
+					"No estoy seguro de c√≥mo hacerlo.";
 				1, 7:
-					"No estoy segura de cÛmo hacerlo.";
+					"No estoy segura de c√≥mo hacerlo.";
 				3, 9:
-					"No estamos seguros de cÛmo hacerlo.";
+					"No estamos seguros de c√≥mo hacerlo.";
 				4, 10:
-					"No estamos seguras de cÛmo hacerlo.";
+					"No estamos seguras de c√≥mo hacerlo.";
 			}
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"No est·s seguro de cÛmo hacerlo.";
+					"No est√°s seguro de c√≥mo hacerlo.";
 				1, 7:
-					"No est·s segura de cÛmo hacerlo.";
+					"No est√°s segura de c√≥mo hacerlo.";
 				3, 9:
-					"No est·is seguros de cÛmo hacerlo.";
+					"No est√°is seguros de c√≥mo hacerlo.";
 				4, 10:
-					"No est·is seguras de cÛmo hacerlo.";
+					"No est√°is seguras de c√≥mo hacerlo.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 6:
-					"No parece estar seguro de cÛmo hacerlo.";
+					"No parece estar seguro de c√≥mo hacerlo.";
 				1, 7:
-					"No parece estar segura de cÛmo hacerlo.";
+					"No parece estar segura de c√≥mo hacerlo.";
 				3, 9:
-					"No parecen estar seguros de cÛmo hacerlo.";
+					"No parecen estar seguros de c√≥mo hacerlo.";
 				4, 10:
-					"No parecen estar seguras de cÛmo hacerlo.";
+					"No parecen estar seguras de c√≥mo hacerlo.";
 			}
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"No estaba seguro de cÛmo hacer eso.";
+					"No estaba seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estaba segura de cÛmo hacer eso.";
+					"No estaba segura de c√≥mo hacer eso.";
 				3, 9:
-					"No est·bamos seguros de cÛmo hacer eso.";
+					"No est√°bamos seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No est·bamos seguras de cÛmo hacer eso.";
+					"No est√°bamos seguras de c√≥mo hacer eso.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"No estabas seguro de cÛmo hacer eso.";
+					"No estabas seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estabas segura de cÛmo hacer eso.";
+					"No estabas segura de c√≥mo hacer eso.";
 				3, 9:
-					"No estabais seguros de cÛmo hacer eso.";
+					"No estabais seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No estabais seguras de cÛmo hacer eso.";
+					"No estabais seguras de c√≥mo hacer eso.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 6:
-					"No estaba seguro de cÛmo hacer eso.";
+					"No estaba seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estaba segura de cÛmo hacer eso.";
+					"No estaba segura de c√≥mo hacer eso.";
 				3, 9:
-					"No estaban seguros de cÛmo hacer eso.";
+					"No estaban seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No estaban seguras de cÛmo hacer eso.";
+					"No estaban seguras de c√≥mo hacer eso.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No estarÈ seguro de cÛmo hacer eso.";
+					"No estar√© seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estarÈ segura de cÛmo hacer eso.";
+					"No estar√© segura de c√≥mo hacer eso.";
 				3, 9:
-					"No estaremos seguros de cÛmo hacer eso.";
+					"No estaremos seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No estaremos seguras de cÛmo hacer eso.";
+					"No estaremos seguras de c√≥mo hacer eso.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No estar·s seguro de cÛmo hacer eso.";
+					"No estar√°s seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estar·s segura de cÛmo hacer eso.";
+					"No estar√°s segura de c√≥mo hacer eso.";
 				3, 9:
-					"No estarÈis seguros de cÛmo hacer eso.";
+					"No estar√©is seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No estarÈis seguras de cÛmo hacer eso.";
+					"No estar√©is seguras de c√≥mo hacer eso.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 6:
-					"No estar· seguro de cÛmo hacer eso.";
+					"No estar√° seguro de c√≥mo hacer eso.";
 				1, 7:
-					"No estar· segura de cÛmo hacer eso.";
+					"No estar√° segura de c√≥mo hacer eso.";
 				3, 9:
-					"No estar·n seguros de cÛmo hacer eso.";
+					"No estar√°n seguros de c√≥mo hacer eso.";
 				4, 10:
-					"No estar·n seguras de cÛmo hacer eso.";
+					"No estar√°n seguras de c√≥mo hacer eso.";
 			}
 	}
 ];
@@ -971,83 +971,83 @@ Verb	'actua' 'interactua'
 		FIRST_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Pienso en alg˙n uso para ", (the) noun ,", pero no
-					termino de decidirme por una acciÛn concreta.";
+					"Pienso en alg√∫n uso para ", (the) noun ,", pero no
+					termino de decidirme por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensamos en alg˙n uso para ", (the) noun ,", pero no
-					terminamos de decidirnos por una acciÛn concreta.";
+					"Pensamos en alg√∫n uso para ", (the) noun ,", pero no
+					terminamos de decidirnos por una acci√≥n concreta.";
 			}
 		SECOND_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Piensas en alg˙n uso para ", (the) noun ,", pero no
-					terminas de decidirte por una acciÛn concreta.";
+					"Piensas en alg√∫n uso para ", (the) noun ,", pero no
+					terminas de decidirte por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pens·is en alg˙n uso para ", (the) noun ,", pero no
-					termin·is de decidiros por una acciÛn concreta.";
+					"Pens√°is en alg√∫n uso para ", (the) noun ,", pero no
+					termin√°is de decidiros por una acci√≥n concreta.";
 			}
 		THIRD_PERSON_PRESENT:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Piensa en alg˙n uso para ", (the) noun ,", pero no
-					termina de decidirse por una acciÛn concreta.";
+					"Piensa en alg√∫n uso para ", (the) noun ,", pero no
+					termina de decidirse por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Piensan en alg˙n uso para ", (the) noun ,", pero no
-					terminan de decidirse por una acciÛn concreta.";
+					"Piensan en alg√∫n uso para ", (the) noun ,", pero no
+					terminan de decidirse por una acci√≥n concreta.";
 			}
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"PensÈ en alg˙n uso para ", (the) noun ,", pero no
-					terminÈ de decidirme por una acciÛn concreta.";
+					"Pens√© en alg√∫n uso para ", (the) noun ,", pero no
+					termin√© de decidirme por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensamos en alg˙n uso para ", (the) noun ,", pero no
-					terminamos de decidirnos por una acciÛn concreta.";
+					"Pensamos en alg√∫n uso para ", (the) noun ,", pero no
+					terminamos de decidirnos por una acci√≥n concreta.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Pensaste en alg˙n uso para ", (the) noun ,", pero no
-					terminaste de decidirte por una acciÛn concreta.";
+					"Pensaste en alg√∫n uso para ", (the) noun ,", pero no
+					terminaste de decidirte por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensasteis en alg˙n uso para ", (the) noun ,", pero no
-					terminasteis de decidiros por una acciÛn concreta.";
+					"Pensasteis en alg√∫n uso para ", (the) noun ,", pero no
+					terminasteis de decidiros por una acci√≥n concreta.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"PensÛ en alg˙n uso para ", (the) noun ,", pero no
-					terminÛ de decidirse por una acciÛn concreta.";
+					"Pens√≥ en alg√∫n uso para ", (the) noun ,", pero no
+					termin√≥ de decidirse por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensaron en alg˙n uso para ", (the) noun ,", pero no
-					terminaron de decidirse por una acciÛn concreta.";
+					"Pensaron en alg√∫n uso para ", (the) noun ,", pero no
+					terminaron de decidirse por una acci√≥n concreta.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"PensarÈ en alg˙n uso para ", (the) noun ,", pero no
-					terminarÈ de decidirme por una acciÛn concreta.";
+					"Pensar√© en alg√∫n uso para ", (the) noun ,", pero no
+					terminar√© de decidirme por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensaremos en alg˙n uso para ", (the) noun ,", pero no
-					terminaremos de decidirnos por una acciÛn concreta.";
+					"Pensaremos en alg√∫n uso para ", (the) noun ,", pero no
+					terminaremos de decidirnos por una acci√≥n concreta.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Pensar·s en alg˙n uso para ", (the) noun ,", pero no
-					terminar·s de decidirte por una acciÛn concreta.";
+					"Pensar√°s en alg√∫n uso para ", (the) noun ,", pero no
+					terminar√°s de decidirte por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"PensarÈis en alg˙n uso para ", (the) noun ,", pero no
-					terminarÈis de decidiros por una acciÛn concreta.";
+					"Pensar√©is en alg√∫n uso para ", (the) noun ,", pero no
+					terminar√©is de decidiros por una acci√≥n concreta.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Pensar· en alg˙n uso para ", (the) noun ,", pero no
-					terminar· de decidirse por una acciÛn concreta.";
+					"Pensar√° en alg√∫n uso para ", (the) noun ,", pero no
+					terminar√° de decidirse por una acci√≥n concreta.";
 				3, 4, 9, 10:
-					"Pensar·n en alg˙n uso para ", (the) noun ,", pero no
-					terminar·n de decidirse por una acciÛn concreta.";
+					"Pensar√°n en alg√∫n uso para ", (the) noun ,", pero no
+					terminar√°n de decidirse por una acci√≥n concreta.";
 			}
 	}
 ];
@@ -1090,44 +1090,44 @@ Verb	'escribe'
 		FIRST_PERSON_PAST:
 		4:	switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌa nada que escribir en aquel momento.";
+					"No ten√≠a nada que escribir en aquel momento.";
 				3, 4, 9, 10:
-					"No tenÌamos nada que escribir en aquel momento.";
+					"No ten√≠amos nada que escribir en aquel momento.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌas nada que escribir en aquel momento.";
+					"No ten√≠as nada que escribir en aquel momento.";
 				3, 4, 9, 10:
-					"No tenÌais nada que escribir en aquel momento.";
+					"No ten√≠ais nada que escribir en aquel momento.";
 			}
 		THIRD_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tenÌa nada que escribir en aquel momento.";
+					"No ten√≠a nada que escribir en aquel momento.";
 				3, 4, 9, 10:
-					"No tenÌan nada que escribir en aquel momento.";
+					"No ten√≠an nada que escribir en aquel momento.";
 			}
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendrÈ nada que escribir en ese momento.";
+					"No tendr√© nada que escribir en ese momento.";
 				3, 4, 9, 10:
 					"No tendremos nada que escribir en ese momento.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendr·s nada que escribir en ese momento.";
+					"No tendr√°s nada que escribir en ese momento.";
 				3, 4, 9, 10:
-					"No tendrÈis nada que escribir en ese momento.";
+					"No tendr√©is nada que escribir en ese momento.";
 			}
 		THIRD_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"No tendr· nada que escribir en ese momento.";
+					"No tendr√° nada que escribir en ese momento.";
 				3, 4, 9, 10:
-					"No tendr·n nada que escribir en ese momento.";
+					"No tendr√°n nada que escribir en ese momento.";
 			}
 	}
 ];
@@ -1162,34 +1162,34 @@ Verb	'xyzzy' 'plugh' 'plover' 'abracadabra'
 		FIRST_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Un rumor silencioso respondiÛ a mis palabras.";
+					"Un rumor silencioso respondi√≥ a mis palabras.";
 				3, 4, 9, 10:
-					"Un rumor silencioso respondiÛ a nuestras palabras.";
+					"Un rumor silencioso respondi√≥ a nuestras palabras.";
 			}
 		SECOND_PERSON_PAST:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Un rumor silencioso respondiÛ a tus palabras.";
+					"Un rumor silencioso respondi√≥ a tus palabras.";
 				3, 4, 9, 10:
-					"Un rumor silencioso respondiÛ a vuestras palabras.";
+					"Un rumor silencioso respondi√≥ a vuestras palabras.";
 			}
 		THIRD_PERSON_PAST:
-			"Un rumor silencioso respondiÛ a sus palabras.";
+			"Un rumor silencioso respondi√≥ a sus palabras.";
 		FIRST_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Un rumor silencioso responder· a mis palabras.";
+					"Un rumor silencioso responder√° a mis palabras.";
 				3, 4, 9, 10:
-					"Un rumor silencioso responder· a nuestras palabras.";
+					"Un rumor silencioso responder√° a nuestras palabras.";
 			}
 		SECOND_PERSON_FUTURE:
 			switch (gna) {
 				0, 1, 6, 7:
-					"Un rumor silencioso responder· a tus palabras.";
+					"Un rumor silencioso responder√° a tus palabras.";
 				3, 4, 9, 10:
-					"Un rumor silencioso responder· a vuestras palabras.";
+					"Un rumor silencioso responder√° a vuestras palabras.";
 			}
 		THIRD_PERSON_FUTURE:
-			"Un rumor silencioso responder· a sus palabras.";
+			"Un rumor silencioso responder√° a sus palabras.";
 	}
 ];

@@ -3,33 +3,33 @@
 !!==============================================================================
 !!
 !!	GSTATUSX WINDOW
-!!	M骴ulo de ventana de estado para GWindows
+!!	M贸dulo de ventana de estado para GWindows
 !!
 !!==============================================================================
 !!
 !!	Archivo:		gstatusX.h
-!!	Autor(es):		J. Francisco Mart韓 <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (Espa駉l)
+!!	Autor(es):		J. Francisco Mart铆n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa帽ol)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Glulx
-!!	Versi髇:		1.2
-!!	Fecha:			2018/03/05
+!!	Versi贸n:		1.3
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2014, 2018, J. Francisco Mart韓
+!!	Copyright (c) 2014, 2018, J. Francisco Mart铆n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los t閞minos de la Licencia P鷅lica General GNU
-!!	publicada por la Fundaci髇 para el Software Libre, ya sea la versi髇
-!!	3 de la Licencia, o (a su elecci髇) cualquier versi髇 posterior.
+!!	modificarlo bajo los t茅rminos de la Licencia P煤blica General GNU
+!!	publicada por la Fundaci贸n para el Software Libre, ya sea la versi贸n
+!!	3 de la Licencia, o (a su elecci贸n) cualquier versi贸n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea 鷗il, pero
-!!	SIN GARANT虯 ALGUNA; ni siquiera la garant韆 impl韈ita MERCANTIL o
-!!	de APTITUD PARA UN PROP覵ITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P鷅lica General GNU para m醩 informaci髇.
+!!	Este programa se distribuye con la esperanza de que sea 煤til, pero
+!!	SIN GARANT脥A ALGUNA; ni siquiera la garant铆a impl铆cita MERCANTIL o
+!!	de APTITUD PARA UN PROP脫SITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P煤blica General GNU para m谩s informaci贸n.
 !!
-!!	Deber韆 haber recibido una copia de la Licencia P鷅lica General GNU
+!!	Deber铆a haber recibido una copia de la Licencia P煤blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,18 +37,20 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.2: 2018/03/05	Constante de la extensi髇 renombrada a GW_GSTATUSX.
-!!					Peque馻s modificaciones sobre la documentaci髇
+!!	1.3: 2018/09/21	Modificada la codificaci贸n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi贸n 6.34 o superior del compilador).
+!!	1.2: 2018/03/05	Constante de la extensi贸n renombrada a GW_GSTATUSX.
+!!					Peque帽as modificaciones sobre la documentaci贸n
 !!	1.1: 2014/10/20	Modificado el vector utilizado para tratar los contenidos
 !!					de la barra de estado, la rutina para imprimir el nombre de
 !!					la localidad en que se encuentra el personaje controlado
 !!					por el usuario, y la propiedad GStatusXWin.update.
-!!	1.0: 2014/06/06	Versi髇 inicial
+!!	1.0: 2014/06/06	Versi贸n inicial
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	'GStatusXWin' es un m骴ulo para la librer韆 GWindows de L. Ross Raszewski.
-!!	A馻de un tipo de ventana de estado en la que se imprime el nombre, centrado
+!!	'GStatusXWin' es un m贸dulo para la librer铆a GWindows de L. Ross Raszewski.
+!!	A帽ade un tipo de ventana de estado en la que se imprime el nombre, centrado
 !!	en la ventana, de la localidad actual del PC (player character, o personaje
 !!	controlado por el usuario).
 !!
@@ -62,12 +64,12 @@ Default GSTATUSX_JUSTIFIED 0; ! 0=left 1=center 2=right
 
 !! Vector auxiliar para manejar los contenidos de la barra de estado:
 #Ifdef VN_1630;	! compilador 6.30 o superior
-Array _gstatusx_buffer buffer 160; ! 150 y algo caracteres deber韆n bastar
+Array _gstatusx_buffer buffer 160; ! 150 y algo caracteres deber铆an bastar
 #Ifnot;			! compiladores anteriores
 Array _gstatusx_buffer -> 160 + WORDSIZE;
 #Endif; ! VN_1630
 
-!! Clase con la que se define la extensi髇 de barra de estado:
+!! Clase con la que se define la extensi贸n de barra de estado:
 Class	GStatusXWin
  class	TextGrid
  with	redraw [; self.update(); ],

@@ -7,29 +7,29 @@
 !!
 !!==============================================================================
 !!
-!!	File:			aimAndFire.h
-!!	Author(s):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
-!!	Language:		ES (Castellano)
-!!	System:			Inform-INFSP 6
-!!	Platform:		M·quina-Z / GLULX
-!!	Version:		5.0
-!!	Released:		2018/01/17
+!!	Archivo:		aimAndFire.h
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Castellano)
+!!	Sistema:		Inform-INFSP 6
+!!	Plataforma:		M√°quina-Z / GLULX
+!!	Versi√≥n:		5.1
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2012, 2018, J. Francisco MartÌn
+!!	Copyright (c) 2012, 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -37,50 +37,52 @@
 !!
 !!	# HISTORIAL DE VERSIONES
 !!
-!!	5.0: 2018/01/17	RedefiniciÛn de la interfaz del objeto gestor. AdiciÛn de
-!!					nivel de dificultad, modo de operaciÛn probabilista (usado
-!!					en M·quina-Z), formato del resultado basado en una divisiÛn
+!!	5.1: 2018/09/21	Modificada la codificaci√≥n de caracteres de ISO 8859-15 a
+!!					UTF-8 (requiere la versi√≥n 6.34 o superior del compilador).
+!!	5.0: 2018/01/17	Redefinici√≥n de la interfaz del objeto gestor. Adici√≥n de
+!!					nivel de dificultad, modo de operaci√≥n probabilista (usado
+!!					en M√°quina-Z), formato del resultado basado en una divisi√≥n
 !!					en zonas de la ventana de estado.
-!!	4.4: 2017/08/04	RevisiÛn de comentarios de la extensiÛn.
-!!	4.3: 2016/10/04	ParametrizaciÛn del posicionamiento de las guÌas centrales
-!!					en la animaciÛn de apuntado. ExtensiÛn de la interfaz:
+!!	4.4: 2017/08/04	Revisi√≥n de comentarios de la extensi√≥n.
+!!	4.3: 2016/10/04	Parametrizaci√≥n del posicionamiento de las gu√≠as centrales
+!!					en la animaci√≥n de apuntado. Extensi√≥n de la interfaz:
 !!					'get_is_distance():integer', 'set_is_distance(integer)'.
-!!	4.2: 2014/08/12 ExtensiÛn de la interfaz del gestor: mÈtodo
+!!	4.2: 2014/08/12 Extensi√≥n de la interfaz del gestor: m√©todo
 !!					'get_status_window_width()'.
-!!	4.1: 2014/07/28	RefactorizaciÛn de la lÛgica de apuntado y disparo en el
+!!	4.1: 2014/07/28	Refactorizaci√≥n de la l√≥gica de apuntado y disparo en el
 !!					objeto gestor para evitar interferencias con otros sistemas
 !!					que puedan hacer uso del temporizador Glk.
-!!	4.0: 2014/03/19	Desactivada la lÛgica del Movimiento ArmÛnico Simple.
+!!	4.0: 2014/03/19	Desactivada la l√≥gica del Movimiento Arm√≥nico Simple.
 !!					Ventana de estado parametrizada.
-!!	3.0: 2012/07/05	Pruebas con las ecuaciones del Movimiento ArmÛnico Simple.
-!!					Modo de depuraciÛn.
-!!	2.0: 2012/		RefactorizaciÛn general, correcciones de lÛgica y adiciÛn
+!!	3.0: 2012/07/05	Pruebas con las ecuaciones del Movimiento Arm√≥nico Simple.
+!!					Modo de depuraci√≥n.
+!!	2.0: 2012/		Refactorizaci√≥n general, correcciones de l√≥gica y adici√≥n
 !!					comentarios.
-!!	1.0: 2012/		Sistema de apuntado y disparo basado en una animaciÛn
+!!	1.0: 2012/		Sistema de apuntado y disparo basado en una animaci√≥n
 !!					interactiva usando el temporizador Glk.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	# INTRODUCCI”N
+!!	# INTRODUCCI√ìN
 !!
-!!	'AimAndFire' es una extensiÛn para la librerÌa Inform que implementa un
-!!	sistema de apuntado y disparo basado en una animaciÛn interactiva en la
-!!	m·quina virtual GLULX. Para facilitar la portabilidad de las obras a
-!!	M·quina-Z, implementa adem·s un mÈtodo alternativo basado en
+!!	'AimAndFire' es una extensi√≥n para la librer√≠a Inform que implementa un
+!!	sistema de apuntado y disparo basado en una animaci√≥n interactiva en la
+!!	m√°quina virtual GLULX. Para facilitar la portabilidad de las obras a
+!!	M√°quina-Z, implementa adem√°s un m√©todo alternativo basado en
 !!	probabilidades que no requiere del temporizador Glk exclusivo de GLULX.
 !!
 !!
 !!	# 'AIM AND FIRE' EN GLULX
 !!
 !!	Aprovechando las funciones de tiempo real de GLULX, el mecanismo principal
-!!	de 'AimAndFire' utiliza una animaciÛn para representar la acciÛn de
-!!	apuntar, y determina el Èxito del disparo en funciÛn de la entrada del
-!!	usuario y el estado de la animaciÛn. Al iniciar el mecanismo, los
+!!	de 'AimAndFire' utiliza una animaci√≥n para representar la acci√≥n de
+!!	apuntar, y determina el √©xito del disparo en funci√≥n de la entrada del
+!!	usuario y el estado de la animaci√≥n. Al iniciar el mecanismo, los
 !!	contenidos de la ventana de estado de la obra se reemplazan por una
-!!	retÌcula de apuntado animada con un movimiento de desplazamiento de extremo
+!!	ret√≠cula de apuntado animada con un movimiento de desplazamiento de extremo
 !!	a extremo de la ventana hasta que el usuario pulsa una tecla. El resultado
-!!	de la acciÛn se determina en funciÛn de lo lejos del centro de la ventana
-!!	de estado que se haya conseguido detener la retÌcula.
+!!	de la acci√≥n se determina en funci√≥n de lo lejos del centro de la ventana
+!!	de estado que se haya conseguido detener la ret√≠cula.
 !!
 !!	Para utilizar el sistema, el desarrollador de la obra debe incluir la
 !!	siguiente llamada dentro del punto de entrada 'HandleGlkEvent':
@@ -91,30 +93,30 @@
 !!		];
 !!
 !!
-!!	# 'AIM AND FIRE' EN M¡QUINA-Z
+!!	# 'AIM AND FIRE' EN M√ÅQUINA-Z
 !!
 !!	Como se ha indicado anteriormente, el uso del temporizador Glk es exclusivo
-!!	de GLULX asÌ que las obras compiladas para M·quina-Z no pueden hacer uso de
-!!	Èl. Para facilitar la creaciÛn de obras biplataforma, 'AimAndFire'
-!!	implementa una aproximaciÛn simplificada de la funcionalidad basada en
-!!	probabilidades dependientes de la dificultad del sistema. Adem·s esta
-!!	dificultad, modificable en tiempo de ejecuciÛn, permite al desarrollador la
+!!	de GLULX as√≠ que las obras compiladas para M√°quina-Z no pueden hacer uso de
+!!	√©l. Para facilitar la creaci√≥n de obras biplataforma, 'AimAndFire'
+!!	implementa una aproximaci√≥n simplificada de la funcionalidad basada en
+!!	probabilidades dependientes de la dificultad del sistema. Adem√°s esta
+!!	dificultad, modificable en tiempo de ejecuci√≥n, permite al desarrollador la
 !!	posibilidad de establecer probabilidades de 0 o 1 ---indicando porcentajes
 !!	de dificultad del 100% y del 0%, respectivamente--- que fuerzan el fallo o
 !!	el acierto del sistema, de modo que puede eliminarse el factor probabilista
-!!	y hacer que el resultado dependa exclusivamente de alg˙n par·metro
-!!	arbitrario como la resoluciÛn de un 'puzzle' o un desafÌo lÛgico por parte
+!!	y hacer que el resultado dependa exclusivamente de alg√∫n par√°metro
+!!	arbitrario como la resoluci√≥n de un 'puzzle' o un desaf√≠o l√≥gico por parte
 !!	del usuario, por ejemplo.
 !!
-!!	En GLULX se puede utilizar tambiÈn este modo de funcionamiento.
+!!	En GLULX se puede utilizar tambi√©n este modo de funcionamiento.
 !!
 !!
 !!	# OBJETO GESTOR
 !!
-!!	La extensiÛn define un objeto gestor 'AimingManager' en el que se
-!!	implementan todas las funcionalidades del sistema. A continuaciÛn se ofrece
-!!	una relaciÛn de mÈtodos que conforman la interfaz p˙blica del gestor. En la
-!!	propia definiciÛn del objeto se incluye documentaciÛn exhaustiva:
+!!	La extensi√≥n define un objeto gestor 'AimingManager' en el que se
+!!	implementan todas las funcionalidades del sistema. A continuaci√≥n se ofrece
+!!	una relaci√≥n de m√©todos que conforman la interfaz p√∫blica del gestor. En la
+!!	propia definici√≥n del objeto se incluye documentaci√≥n exhaustiva:
 !!
 !!	-	aim_and_fire(probabilistic:boolean, reset_position_flag:boolean)
 !!			: integer
@@ -142,7 +144,7 @@
 !!------------------------------------------------------------------------------
 System_file;
 
-!! Descomentar para obtener informaciÛn de depuraciÛn:
+!! Descomentar para obtener informaci√≥n de depuraci√≥n:
 ! Constant DEBUG_AIMANDFIRE;
 
 !! Array para operar con cadenas de caracteres:
@@ -152,43 +154,43 @@ Array _aim_and_fire_temp_buffer --> _AIM_AND_FIRE_BUFFER_SIZE;
 !! Objeto gestor del sistema
 Object	AimingManager "(Aiming Manager)"
  with	!!----------------------------------------------------------------------
-		!! M…TODOS P⁄BLICOS:
+		!! M√âTODOS P√öBLICOS:
 		!!----------------------------------------------------------------------
-		!! MÈtodo principal que implementa el sistema de apuntado y disparo.
-		!! Tiene 2 modos de operaciÛn, seleccionables a travÈs del par·metro
+		!! M√©todo principal que implementa el sistema de apuntado y disparo.
+		!! Tiene 2 modos de operaci√≥n, seleccionables a trav√©s del par√°metro
 		!! opcional 'probabilistic':
-		!!	0)	Utilizando una animaciÛn de apuntado interactiva (sÛlo en
-		!!		GLULX). Al invocar al mÈtodo se inicia la animaciÛn ---una
-		!!		retÌcula moviÈndose de extremo a extremo de la ventana de
-		!!		estado--- con una velocidad que se determina en funciÛn del
+		!!	0)	Utilizando una animaci√≥n de apuntado interactiva (s√≥lo en
+		!!		GLULX). Al invocar al m√©todo se inicia la animaci√≥n ---una
+		!!		ret√≠cula movi√©ndose de extremo a extremo de la ventana de
+		!!		estado--- con una velocidad que se determina en funci√≥n del
 		!!		nivel de dificultad del sistema, y que se detiene cuando el
 		!!		usuario pulsa una tecla. El resultado indica bien la distancia
-		!!		en n˙mero de columnas entre la posiciÛn final de la retÌcula y
+		!!		en n√∫mero de columnas entre la posici√≥n final de la ret√≠cula y
 		!!		el centro de la ventana de estado o la zona de la ventana de
-		!!		estado en la que se ha detenido, en funciÛn del formato
+		!!		estado en la que se ha detenido, en funci√≥n del formato
 		!!		establecido en el sistema.
-		!!	1)	MÈtodo probabilista (˙nico modo posible en M·quina-Z).
+		!!	1)	M√©todo probabilista (√∫nico modo posible en M√°quina-Z).
 		!!		Determina fallo con una probabilidad P(Q) que depende del nivel
 		!!		de dificultad 'difficulty' del sistema:
 		!!		P(Q) = 1 - P(difficulty/100). El valor retornado se selecciona
-		!!		aleatoriamente en funciÛn de si se ha producido un acierto o un
-		!!		fallo de entre conjuntos de valores que varÌan a su vez en
-		!!		funciÛn del formato establecido en el sistema.
+		!!		aleatoriamente en funci√≥n de si se ha producido un acierto o un
+		!!		fallo de entre conjuntos de valores que var√≠an a su vez en
+		!!		funci√≥n del formato establecido en el sistema.
 		!! Para establecer el formato de los resultados hay que invocar al
-		!! mÈtodo 'set_format()' del gestor.
+		!! m√©todo 'set_format()' del gestor.
 		!!
 		!!	@param {boolean} [probabilistic=false] - Por defecto en GLULX el
-		!!		sistema utiliza el modo de operaciÛn 0, pero si se invoca al
-		!!		mÈtodo con este par·metro verdadero se utiliza el modo 1. En
-		!!		M·quina-Z el par·metro se ignora totalmente y se utiliza en
-		!!		cualquier caso el modo de operaciÛn 1 probabilista
-		!!	@param {boolean} [reset_position_flag=false] - SÛlo cuando se
-		!!		utiliza el modo de operaciÛn 0, al invocar el mÈtodo con este
-		!!		par·metro verdadero evita que la retÌcula de apuntado inicie
-		!!		la animaciÛn desde el extremo izquierdo de la ventana y
-		!!		desplaz·ndose hacia la derecha y, en su lugar, iniciarÌa la
-		!!		animaciÛn desde la posiciÛn y con el sentido con el que se
-		!!		detuvo la ˙ltima vez que la rutina fue invocada
+		!!		sistema utiliza el modo de operaci√≥n 0, pero si se invoca al
+		!!		m√©todo con este par√°metro verdadero se utiliza el modo 1. En
+		!!		M√°quina-Z el par√°metro se ignora totalmente y se utiliza en
+		!!		cualquier caso el modo de operaci√≥n 1 probabilista
+		!!	@param {boolean} [reset_position_flag=false] - S√≥lo cuando se
+		!!		utiliza el modo de operaci√≥n 0, al invocar el m√©todo con este
+		!!		par√°metro verdadero evita que la ret√≠cula de apuntado inicie
+		!!		la animaci√≥n desde el extremo izquierdo de la ventana y
+		!!		desplaz√°ndose hacia la derecha y, en su lugar, iniciar√≠a la
+		!!		animaci√≥n desde la posici√≥n y con el sentido con el que se
+		!!		detuvo la √∫ltima vez que la rutina fue invocada
 		!!	@result {integer} Valores positivos cuando se considera que el
 		!!		resultado ha sido un acierto; negativos si se considera un
 		!!		fallo. El valor concreto del resultado depende del tipo de
@@ -199,8 +201,8 @@ Object	AimingManager "(Aiming Manager)"
 			#Ifdef TARGET_ZCODE;
 			probabilistic = true;
 			#Endif; ! TARGET_ZCODE;
-			!! MODO DE OPERACI”N 1 ---------------------------------------------
-			!! FIXME - Comprobar lÛgica. Es posible conseguir aciertos con
+			!! MODO DE OPERACI√ìN 1 ---------------------------------------------
+			!! FIXME - Comprobar l√≥gica. Es posible conseguir aciertos con
 			!! dificultad = 100
 			if (probabilistic) {
 				!! Acierto:
@@ -217,9 +219,9 @@ Object	AimingManager "(Aiming Manager)"
 					result = random(i);
 				}
 			}
-			!! MODO DE OPERACI”N 0 ---------------------------------------------
+			!! MODO DE OPERACI√ìN 0 ---------------------------------------------
 			else {
-				!! Asegura la correcta inicializaciÛn de atributos del gestor:
+				!! Asegura la correcta inicializaci√≥n de atributos del gestor:
 				if (self.grid_vx == 0)
 					self.set_difficulty(self.initial_difficulty);
 				if (self.status_window == 0)
@@ -227,31 +229,31 @@ Object	AimingManager "(Aiming Manager)"
 				self.delay_counter = 0;
 				self.end_flag = false;
 				!! Establece el punto de inicio y el sentido del movimiento de
-				!! la retÌcula:
+				!! la ret√≠cula:
 				if (~~reset_position_flag) {
 					if (self.grid_vx < 0) self.grid_vx = self.grid_vx * -1;
 					self.grid_x = 0;
 				}
-				!! Inicia el temporizador glk y activa la animaciÛn:
+				!! Inicia el temporizador glk y activa la animaci√≥n:
 				glk(214, self.timer_frequency); ! glk_request_timer_events(f);
 				give self on;
 				#Ifdef DEBUG_AIMANDFIRE;
 				print "** AIM&FIRE: Velocidad ", self.grid_vx, " **^";
 				#Endif; ! DEBUG_AIMANDFIRE;
-				!! La animaciÛn se detiene cuando el usuario pulsa una tecla:
+				!! La animaci√≥n se detiene cuando el usuario pulsa una tecla:
 				KeyCharPrimitive();
 				self.end_flag = true;
-				!! Calcula la distancia absoluta en n˙mero de columnas entre la
-				!! posiciÛn final de la retÌcula y el centro de la ventana de
+				!! Calcula la distancia absoluta en n√∫mero de columnas entre la
+				!! posici√≥n final de la ret√≠cula y el centro de la ventana de
 				!! estado:
 				glk($0025, self.status_window, gg_arguments, gg_arguments + 4);
 				status_window_width = gg_arguments-->0;
 				result = (self.grid_x / 1000) + (self.grid_length / 2)
 					- (status_window_width / 2);
 				if (result < 0) result = -result;
-				!! Retorna el resultado de la operaciÛn con el formato adecuado:
+				!! Retorna el resultado de la operaci√≥n con el formato adecuado:
 				#Ifdef DEBUG_AIMANDFIRE;
-				print "** AIM&FIRE: Pos. final retÌcula = ", result, " **^";
+				print "** AIM&FIRE: Pos. final ret√≠cula = ", result, " **^";
 				print "** AIM&FIRE: Ancho ventana = ", status_window_width,
 					" / ", (status_window_width/2), " **^";
 				print "** AIM&FIRE: Resultado = ", self.format_result(result),
@@ -261,9 +263,9 @@ Object	AimingManager "(Aiming Manager)"
 			return self.format_result(result);
 		],
 		!!----------------------------------------------------------------------
-		!!	@returns {integer} Milisegundos que se sigue mostrando la posiciÛn
-		!!		final de la retÌcula una vez detenida la animaciÛn de apuntado.
-		!!		-1 en M·quina-Z
+		!!	@returns {integer} Milisegundos que se sigue mostrando la posici√≥n
+		!!		final de la ret√≠cula una vez detenida la animaci√≥n de apuntado.
+		!!		-1 en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_delay_value [;
 			#Ifdef TARGET_ZCODE;
@@ -286,7 +288,7 @@ Object	AimingManager "(Aiming Manager)"
 			return format_type;
 		],
 		!!----------------------------------------------------------------------
-		!!	@returns {String|integer} RetÌcula de apuntado. -1 en M·quina-Z
+		!!	@returns {String|integer} Ret√≠cula de apuntado. -1 en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_grid [;
 			#Ifdef TARGET_ZCODE;
@@ -296,9 +298,9 @@ Object	AimingManager "(Aiming Manager)"
 			#Endif; ! TARGET_
 		],
 		!!----------------------------------------------------------------------
-		!!	@returns {integer} Factor de multiplicaciÛn a la velocidad mÌnima
-		!!		con el que se calcula la velocidad m·xima de la retÌcula. -1
-		!!		en M·quina-Z
+		!!	@returns {integer} Factor de multiplicaci√≥n a la velocidad m√≠nima
+		!!		con el que se calcula la velocidad m√°xima de la ret√≠cula. -1
+		!!		en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_grid_max_vx_factor [;
 			#Ifdef TARGET_ZCODE;
@@ -308,7 +310,7 @@ Object	AimingManager "(Aiming Manager)"
 			#Endif; ! TARGET_
 		],
 		!!----------------------------------------------------------------------
-		!!	@returns {integer} Velocidad mÌnima de la retÌcula. -1 en M·quina-Z
+		!!	@returns {integer} Velocidad m√≠nima de la ret√≠cula. -1 en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_grid_min_vx [;
 			#Ifdef TARGET_ZCODE;
@@ -319,8 +321,8 @@ Object	AimingManager "(Aiming Manager)"
 		],
 		!!----------------------------------------------------------------------
 		!!	@returns {integer} Distancia al centro de la ventana de estado, en
-		!!		n˙mero de columnas, a la que se imprimen las guÌas centrales.
-		!!		-1 en M·quina-Z
+		!!		n√∫mero de columnas, a la que se imprimen las gu√≠as centrales.
+		!!		-1 en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_iron_sight_distance [;
 			#Ifdef TARGET_ZCODE;
@@ -331,7 +333,7 @@ Object	AimingManager "(Aiming Manager)"
 		],
 		!!----------------------------------------------------------------------
 		!!	@returns {character|integer} Caracter con el que se representan las
-		!!		guÌas centrales. -1 en M·quina-Z
+		!!		gu√≠as centrales. -1 en M√°quina-Z
 		!!----------------------------------------------------------------------
 		get_iron_sight_symbol [;
 			#Ifdef TARGET_ZCODE;
@@ -347,7 +349,7 @@ Object	AimingManager "(Aiming Manager)"
 			return self.status_window;
 		],
 		!!----------------------------------------------------------------------
-		!! Reestablece los par·metros iniciales del sistema.
+		!! Reestablece los par√°metros iniciales del sistema.
 		!!----------------------------------------------------------------------
 		reset [;
 			self.delay_value = self.initial_delay_value;
@@ -365,9 +367,9 @@ Object	AimingManager "(Aiming Manager)"
 			self.status_window = self.initial_status_window;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece el n˙mero de milisegundos que se sigue mostrando la
-		!! posiciÛn final de la retÌcula una vez detenida la animaciÛn de
-		!! apuntado. En M·quina-Z no realiza ning˙n cambio.
+		!! Establece el n√∫mero de milisegundos que se sigue mostrando la
+		!! posici√≥n final de la ret√≠cula una vez detenida la animaci√≥n de
+		!! apuntado. En M√°quina-Z no realiza ning√∫n cambio.
 		!!
 		!!	@param {integer} a - Nuevo tiempo de espera (en ms)
 		!!	@returns {integer} El tiempo de espera previo (en ms)
@@ -381,8 +383,8 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece la dificultad del sistema. En GLULX se modifica adem·s la
-		!! velocidad de la retÌcula de apuntado atendiendo a que antes de
+		!! Establece la dificultad del sistema. En GLULX se modifica adem√°s la
+		!! velocidad de la ret√≠cula de apuntado atendiendo a que antes de
 		!! modificar el valor de la velocidad es necesario registrar el sentido
 		!! del movimiento previo de modo que el nuevo valor tenga el mismo
 		!! sentido (mismo signo).
@@ -390,7 +392,7 @@ Object	AimingManager "(Aiming Manager)"
 		!!	@param {integer} a - Valor comprendido en el rango [0-100] que se
 		!!		establece como nueva dificultad del sistema
 		!!	@returns {integer} El valor de dificultad previo. -1 si el
-		!!		par·metro 'a' se sale del rango v·lido y no se produce el
+		!!		par√°metro 'a' se sale del rango v√°lido y no se produce el
  		!!		cambio de dificultad
 		!!----------------------------------------------------------------------
 		set_difficulty [ a
@@ -410,8 +412,8 @@ Object	AimingManager "(Aiming Manager)"
 		!! Establece el tipo de formato de los resultados.
 		!!
 		!!	@param {integer} a - Nuevo tipo de formato [0-1]
-		!!	@returns {integer} El tipo de formato previo. -1 si el par·metro
-		!!		'a' se sale del rango v·lido y no se produce el cambio de
+		!!	@returns {integer} El tipo de formato previo. -1 si el par√°metro
+		!!		'a' se sale del rango v√°lido y no se produce el cambio de
 		!!		formato
 		!!----------------------------------------------------------------------
 		set_format_type [ a
@@ -422,11 +424,11 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece la retÌcula de apuntado (calcula adem·s el ancho de la
-		!! nueva retÌcula). En M·quina-Z no realiza ning˙n cambio.
+		!! Establece la ret√≠cula de apuntado (calcula adem√°s el ancho de la
+		!! nueva ret√≠cula). En M√°quina-Z no realiza ning√∫n cambio.
 		!!
-		!!	@param {String} a - Nueva retÌcula de apuntado
-		!!	@returns {String|integer} La retÌcula de apuntado previa
+		!!	@param {String} a - Nueva ret√≠cula de apuntado
+		!!	@returns {String|integer} La ret√≠cula de apuntado previa
 		!!----------------------------------------------------------------------
 		set_grid [ a
 			result;
@@ -437,18 +439,18 @@ Object	AimingManager "(Aiming Manager)"
 				_aim_and_fire_temp_buffer, _AIM_AND_FIRE_BUFFER_SIZE, a);
 			self.grid_length = _aim_and_fire_temp_buffer->(WORDSIZE-1);
 			#Ifdef DEBUG_AIMANDFIRE;
-			print "** AIM&FIRE: RetÌcula/Tam. = ", (string) self.grid, " / ",
+			print "** AIM&FIRE: Ret√≠cula/Tam. = ", (string) self.grid, " / ",
 				self.grid_length, " **^";
 			#Endif; ! DEBUG_AIMANDFIRE;
 			#Endif; ! TARGET_GLULX;
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece el factor de multiplicaciÛn a la velocidad mÌnima con el
-		!! que se calcula la velocidad m·xima de la retÌcula.
+		!! Establece el factor de multiplicaci√≥n a la velocidad m√≠nima con el
+		!! que se calcula la velocidad m√°xima de la ret√≠cula.
 		!!
-		!!	@param {integer} a - Nuevo factor de multiplicaciÛn
-		!!	@returns {integer} El factor de multiplicaciÛn previo
+		!!	@param {integer} a - Nuevo factor de multiplicaci√≥n
+		!!	@returns {integer} El factor de multiplicaci√≥n previo
 		!!----------------------------------------------------------------------
 		set_grid_max_vx_factor [ a
 			result;
@@ -459,10 +461,10 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece la velocidad mÌnima de la retÌcula.
+		!! Establece la velocidad m√≠nima de la ret√≠cula.
 		!!
-		!!	@param {integer} a - Nueva velocidad mÌnima de la retÌcula
-		!!	@returns {integer} La velocidad mÌnima previa de la retÌcula
+		!!	@param {integer} a - Nueva velocidad m√≠nima de la ret√≠cula
+		!!	@returns {integer} La velocidad m√≠nima previa de la ret√≠cula
 		!!----------------------------------------------------------------------
 		set_grid_min_vx [ a
 			result;
@@ -473,12 +475,12 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece la distancia al centro de la ventana de estado, en n˙mero
-		!! de columnas, a la que se imprimen las guÌas centrales. En M·quina-Z
-		!! no realiza ning˙n cambio.
+		!! Establece la distancia al centro de la ventana de estado, en n√∫mero
+		!! de columnas, a la que se imprimen las gu√≠as centrales. En M√°quina-Z
+		!! no realiza ning√∫n cambio.
 		!!
 		!!	@param {integer} a - Nueva distancia al centro de la ventana de
-		!!		estado de las guÌas centrales (en n˙mero de columnas)
+		!!		estado de las gu√≠as centrales (en n√∫mero de columnas)
 		!!	@returns {integer} La distancia previa
 		!!----------------------------------------------------------------------
 		set_iron_sight_distance [ a
@@ -490,13 +492,13 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Establece el caracter con el que se representan las guÌas centrales.
-		!! En M·quina-Z no realiza ning˙n cambio.
+		!! Establece el caracter con el que se representan las gu√≠as centrales.
+		!! En M√°quina-Z no realiza ning√∫n cambio.
 		!!
-		!!	@param {character} a - Nuevo caracter para representar las guÌas
+		!!	@param {character} a - Nuevo caracter para representar las gu√≠as
 		!!		centrales
 		!!	@returns {character|integer} El caracter con el que se
-		!!		representaban las guÌas centrales previamente
+		!!		representaban las gu√≠as centrales previamente
 		!!----------------------------------------------------------------------
 		set_iron_sight_symbol [ a
 			result;
@@ -519,7 +521,7 @@ Object	AimingManager "(Aiming Manager)"
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! OperaciÛn encargada de realizar la animaciÛn en la ventana de
+		!! Operaci√≥n encargada de realizar la animaci√≥n en la ventana de
 		!! estado. Debe invocarse desde el punto de entrada 'HandleGlkEvent()'
 		!! para que se ejecute en cada ciclo del temporizador glk:
 		!!
@@ -528,16 +530,16 @@ Object	AimingManager "(Aiming Manager)"
 		!!				AimingManager.tick();
 		!!		];
 		!!
-		!!	@returns {boolean} Falso si el gestor no est· preparado para
-		!!		mostrar la animaciÛn. Verdadero en otro caso
+		!!	@returns {boolean} Falso si el gestor no est√° preparado para
+		!!		mostrar la animaci√≥n. Verdadero en otro caso
 		!!----------------------------------------------------------------------
 		tick [
 			status_window_width;
 			#Ifdef TARGET_ZCODE;
 			return false;
 			#Ifnot; ! TARGET_GLULX;
-			!! Si el sistema no est· activado o no tiene definida una ventana
-			!! de estado en la mostrar la animaciÛn de apuntado, retorna
+			!! Si el sistema no est√° activado o no tiene definida una ventana
+			!! de estado en la mostrar la animaci√≥n de apuntado, retorna
 			if (self hasnt on || self.status_window == 0) {
 				glk(214, 0); ! glk_request_timer_events(0)
 				return false;
@@ -547,19 +549,19 @@ Object	AimingManager "(Aiming Manager)"
 			!! redimensionada por el usuario)
 			glk($0025, self.status_window, gg_arguments, gg_arguments + 4);
 			status_window_width = gg_arguments-->0;
-			!! Mientras el usuario no detenga la animaciÛn, se muestra
+			!! Mientras el usuario no detenga la animaci√≥n, se muestra
 			if (~~self.end_flag) {
 				switch (self.motion_type) {
 					0:	self.update_grid_position_LM(status_window_width);
 					1:	self.update_grid_position_SHM(status_window_width);
 				}
 				#Ifdef DEBUG_AIMANDFIRE;
-				print "** AIM&FIRE: Pos. retÌcula = ", self.grid_x, " / ",
+				print "** AIM&FIRE: Pos. ret√≠cula = ", self.grid_x, " / ",
 					(self.grid_x/1000), " **^";
 				#Endif; ! DEBUG_AIMANDFIRE;
 				self.draw_aiming_line(status_window_width);
 			}
-			!! Tras ser detenida, la posiciÛn final de la retÌcula a˙n se
+			!! Tras ser detenida, la posici√≥n final de la ret√≠cula a√∫n se
 			!! muestra en la ventana de estado durante unos milisegundos
 			else {
 				self.draw_aiming_line(status_window_width);
@@ -576,16 +578,16 @@ Object	AimingManager "(Aiming Manager)"
 		],
  private
 		!!----------------------------------------------------------------------
-		!! M…TODOS PRIVADOS:
+		!! M√âTODOS PRIVADOS:
 		!!----------------------------------------------------------------------
-		!! Dibuja la animaciÛn de apuntado.
+		!! Dibuja la animaci√≥n de apuntado.
 		!!
 		!!	@param {integer} status_window_width - Ancho de la ventana de estado
 		!!	@returns {boolean} Verdadero si imprime el estado actual de la
-		!!		animaciÛn con Èxito. Falso en caso contrario
+		!!		animaci√≥n con √©xito. Falso en caso contrario
 		!!----------------------------------------------------------------------
 		draw_aiming_line [ status_window_width;
-			!! En M·quina-Z, retorna
+			!! En M√°quina-Z, retorna
 			#Ifdef TARRGET_ZCODE;
 			return false;
 			#Endif; ! TARGET_ZCODE;
@@ -593,26 +595,26 @@ Object	AimingManager "(Aiming Manager)"
 			if (self.status_window == 0) {
 				#Ifdef DEBUG_AIMANDFIRE;
 				print "** AIM&FIRE: No hay definida ventana de estado para
-				pintar la animaciÛn de apuntado. **^";
+				pintar la animaci√≥n de apuntado. **^";
 				#Endif; ! DEBUG_AIMANDFIRE;
 				return false;
 			}
 			!! Inicializa la ventana de estado
 			glk($002F, self.status_window); ! set_window
 			!! TODO - Las ventanas de estado tienen habitualmente una altura de
-			!! 1 fila, pero pueden ser mayores. Actualmente la animaciÛn se
-			!! imprime en la primera fila de la ventana de estado. AÒadir
-			!! lÛgica para imprimir la animaciÛn en el centro de la ventana de
-			!! estado cuando Èsta tiene un tamaÒo superior a 1 fila.
+			!! 1 fila, pero pueden ser mayores. Actualmente la animaci√≥n se
+			!! imprime en la primera fila de la ventana de estado. A√±adir
+			!! l√≥gica para imprimir la animaci√≥n en el centro de la ventana de
+			!! estado cuando √©sta tiene un tama√±o superior a 1 fila.
 			glk($002A, self.status_window); ! window_clear
-			!! Imprime las guÌas
+			!! Imprime las gu√≠as
 			glk($002B, self.status_window, ((status_window_width / 2)
 				- self.iron_sight_distance), 0); ! window_move_cursor
 			print (char) self.iron_sight_symbol;
 			glk($002B, self.status_window, ((status_window_width / 2)
 				+ self.iron_sight_distance), 0); ! window_move_cursor
 			print (char) self.iron_sight_symbol;
-			!! Imprime la retÌcula
+			!! Imprime la ret√≠cula
 			glk($002B, self.status_window, (self.grid_x/1000), 0);
 			print (string) self.grid;
 			!! Reestablece la ventana principal
@@ -620,32 +622,32 @@ Object	AimingManager "(Aiming Manager)"
 			return true;
 		],
 		!!----------------------------------------------------------------------
-		!! Formatea el resultado de la operaciÛn de apuntado y disparo de
+		!! Formatea el resultado de la operaci√≥n de apuntado y disparo de
 		!! acuerdo al formato establecido en el sistema (consultar
-		!! documentaciÛn del atributo 'format_type').
+		!! documentaci√≥n del atributo 'format_type').
 		!!
-		!!	@param {integer} a - Valor absoluto en n˙mero de columnas de la
-		!!		distancia entre la posiciÛn final de la retÌcula y el centro de
+		!!	@param {integer} a - Valor absoluto en n√∫mero de columnas de la
+		!!		distancia entre la posici√≥n final de la ret√≠cula y el centro de
 		!!		la ventana de estado
-		!!	@returns {integer} Resultado de la operaciÛn de apuntado y disparo
+		!!	@returns {integer} Resultado de la operaci√≥n de apuntado y disparo
 		!!		formateado adecuadamente
 		!!----------------------------------------------------------------------
 		format_result [ a
 			result;
 			switch (self.format_type) {
-				0:	! DivisiÛn de la ventana de estado en zonas
+				0:	! Divisi√≥n de la ventana de estado en zonas
 					if (a == 0) result = 0;
 					else if (a <= self.iron_sight_distance) result = 1;
 					else if (a <= (self.iron_sight_distance * 4)) result = -2;
 					else result = -3;
-				1:	! DivisiÛn de la ventana de estado en columnas
+				1:	! Divisi√≥n de la ventana de estado en columnas
 					if (a <= self.iron_sight_distance) result = a;
 					else result = self.iron_sight_distance - a;
 			}
 			return result;
 		],
 		!!----------------------------------------------------------------------
-		!! Actualiza la posiciÛn de la retÌcula (Movimiento RectilÌneo
+		!! Actualiza la posici√≥n de la ret√≠cula (Movimiento Rectil√≠neo
 		!! Uniforme).
 		!!
 		!!	@param {integer} status_window_width - Ancho de la ventana de estado
@@ -658,12 +660,12 @@ Object	AimingManager "(Aiming Manager)"
 			self.grid_x = self.grid_x + self.grid_vx;
 		],
 		!!----------------------------------------------------------------------
-		!! XXX - CÛdigo GLULX para mover la posiciÛn de la retÌcula utilizando
-		!! Movimiento ArmÛnico Simple. Para hacerlo funcional, habrÌa que
+		!! XXX - C√≥digo GLULX para mover la posici√≥n de la ret√≠cula utilizando
+		!! Movimiento Arm√≥nico Simple. Para hacerlo funcional, habr√≠a que
 		!! modificar el algoritmo para ajustar el tiempo a la frecuencia del
 		!! temporizador glk, de modo que no se produjesen saltos entre
-		!! posiciones consecutivas y simplemente se modificase el n˙mero de
-		!! ticks de reloj en cada posiciÛn.
+		!! posiciones consecutivas y simplemente se modificase el n√∫mero de
+		!! ticks de reloj en cada posici√≥n.
 		!!
 		!!	@param {integer} status_window_width - Ancho de la ventana de estado
 		!!----------------------------------------------------------------------
@@ -690,94 +692,94 @@ Object	AimingManager "(Aiming Manager)"
 		!!----------------------------------------------------------------------
 		!! ATRIBUTOS:
 		!!----------------------------------------------------------------------
-		!! N˙mero de milisegundos que se sigue mostrando la posiciÛn final de
-		!! la retÌcula tras haber detenido la animaciÛn:
+		!! N√∫mero de milisegundos que se sigue mostrando la posici√≥n final de
+		!! la ret√≠cula tras haber detenido la animaci√≥n:
 		delay_value 1000,
 		initial_delay_value 1000,
-		!! Valor numÈrico comprendido en el rango [0-100] que expresa la
+		!! Valor num√©rico comprendido en el rango [0-100] que expresa la
 		!! dificultad para conseguir un acierto;
-		!!	-	En GLULX afecta a la velocidad de movimiento de la retÌcula;
-		!!		con 0 indicando velocidad mÌnima, y 100 velocidad m·xima.
-		!!	-	En M·quina-Z afecta a la probabilidad P(Q) de NO conseguir un
+		!!	-	En GLULX afecta a la velocidad de movimiento de la ret√≠cula;
+		!!		con 0 indicando velocidad m√≠nima, y 100 velocidad m√°xima.
+		!!	-	En M√°quina-Z afecta a la probabilidad P(Q) de NO conseguir un
 		!!		resultado positivo: P(Q) = 1 - difficulty/100
 		difficulty 50,
 		initial_difficulty 50,
-		!! Indicador del formato utilizado para los resultados de la operaciÛn
+		!! Indicador del formato utilizado para los resultados de la operaci√≥n
 		!! de apuntado y disparo:
-		!!	0)	DivisiÛn de la ventana de estado en las siguientes zonas:
+		!!	0)	Divisi√≥n de la ventana de estado en las siguientes zonas:
 		!!		0)	Centro exacto de la ventana.
-		!!		1)	Zona comprendida dentro de las dos guÌas centrales.
-		!!		-2)	Fuera de las guÌas centrales, a una distancia igual o
+		!!		1)	Zona comprendida dentro de las dos gu√≠as centrales.
+		!!		-2)	Fuera de las gu√≠as centrales, a una distancia igual o
 		!!			inferior a la que hay entre el centro de la ventana y
-		!!			cualquiera de las dos guÌas.
-		!!		-3)	Fuera de las guÌas centrales, a una distancia superior a
+		!!			cualquiera de las dos gu√≠as.
+		!!		-3)	Fuera de las gu√≠as centrales, a una distancia superior a
 		!!			la delimitada por la zona 2.
-		!!		Cuando se usa el modo de operaciÛn 0, usando una animaciÛn
-		!!		interactiva, el resultado indica el n˙mero de zona en el que el
-		!!		usuario ha conseguido detener la retÌcula de apuntado. En el
-		!!		modo de operaciÛn 1, probabilista, se retorna aleatoriamente
-		!!		{0,1} o {-2,-3} en funciÛn de si se logra un acierto o un
+		!!		Cuando se usa el modo de operaci√≥n 0, usando una animaci√≥n
+		!!		interactiva, el resultado indica el n√∫mero de zona en el que el
+		!!		usuario ha conseguido detener la ret√≠cula de apuntado. En el
+		!!		modo de operaci√≥n 1, probabilista, se retorna aleatoriamente
+		!!		{0,1} o {-2,-3} en funci√≥n de si se logra un acierto o un
 		!!		fallo, respectivamente.
-		!!	1)	DivisiÛn de la ventana de estado en columnas. En el modo de
-		!!		operaciÛn 0, usando una animaciÛn interactiva, el resultado es
-		!!		la distancia absoluta en n˙mero de columnas de la posiciÛn
-		!!		final en la que se ha detenido la retÌcula y el centro de la
+		!!	1)	Divisi√≥n de la ventana de estado en columnas. En el modo de
+		!!		operaci√≥n 0, usando una animaci√≥n interactiva, el resultado es
+		!!		la distancia absoluta en n√∫mero de columnas de la posici√≥n
+		!!		final en la que se ha detenido la ret√≠cula y el centro de la
 		!!		ventana de estado si se ha producido un acierto; o la distancia
-		!!		absoluta con valor negativo entre la posiciÛn final de la
-		!!		retÌcula y la posiciÛn de la guÌa central m·s prÛxima. En el
-		!!		modo de operaciÛn 1, probabilista, el resultado se selecciona
+		!!		absoluta con valor negativo entre la posici√≥n final de la
+		!!		ret√≠cula y la posici√≥n de la gu√≠a central m√°s pr√≥xima. En el
+		!!		modo de operaci√≥n 1, probabilista, el resultado se selecciona
 		!!		aleatoriamente de entre el conjunto [0, iron_sight_distance],
 		!!		si es un acierto, y entre (0, <ancho de la ventana de estado> -
 		!!		iron_sight_distance), con valor negativo, si es un fallo.
 		format_type 0,
 		initial_format_type 0,
-		!! Cadena que forma la retÌcula de apuntado:
+		!! Cadena que forma la ret√≠cula de apuntado:
 		grid "[+]",
 		initial_grid "[+]",
-		!! Factor de multiplicaciÛn a la velocidad mÌnima con el que se calcula
-		!! la velocidad m·xima (con 'difficulty' == 100) de la retÌcula, de
-		!! forma que la velocidad m·xima es 'grid_min_vx * grid_max_vx_factor':
+		!! Factor de multiplicaci√≥n a la velocidad m√≠nima con el que se calcula
+		!! la velocidad m√°xima (con 'difficulty' == 100) de la ret√≠cula, de
+		!! forma que la velocidad m√°xima es 'grid_min_vx * grid_max_vx_factor':
 		grid_max_vx_factor 25, initial_grid_max_vx_factor 25,
-		!! Velocidad mÌnima (con 'difficulty' == 0) de la retÌcula:
+		!! Velocidad m√≠nima (con 'difficulty' == 0) de la ret√≠cula:
 		grid_min_vx 60, initial_grid_min_vx 60,
-		!! Velocidad actual de la retÌcula. Es relativa a la frecuencia con que
- 		!! se activa el temporizador Glk e indica el n˙mero de columnas que se
-		!! mueve la retÌcula en cada evento del temporizador a razÛn
+		!! Velocidad actual de la ret√≠cula. Es relativa a la frecuencia con que
+ 		!! se activa el temporizador Glk e indica el n√∫mero de columnas que se
+		!! mueve la ret√≠cula en cada evento del temporizador a raz√≥n
 		!! 'grid_vx/1000':
 		grid_vx 0,
 		initial_grid_vx 0,
-		!! PosiciÛn de la retÌcula (valor/1000):
+		!! Posici√≥n de la ret√≠cula (valor/1000):
 		grid_x 0,
 		initial_grid_x 0,
-		!! Longitud de la retÌcula en n˙mero de caracteres:
+		!! Longitud de la ret√≠cula en n√∫mero de caracteres:
 		grid_length 3,
 		initial_grid_length 3,
-		!! Distancia al centro de la ventana de estado en n˙mero de columnas a
-		!! la que se imprimen las guÌas centrales (valor absoluto utilizado por
-		!! las dos guÌas; en positivo y negativo):
+		!! Distancia al centro de la ventana de estado en n√∫mero de columnas a
+		!! la que se imprimen las gu√≠as centrales (valor absoluto utilizado por
+		!! las dos gu√≠as; en positivo y negativo):
 		iron_sight_distance 3,
 		initial_iron_sight_distance 3,
-		!! Caracter con el que se representan las guÌas centrales:
-		iron_sight_symbol '∑',
-		initial_iron_sight_symbol '∑',
-		!! CÛdigo numÈrico del tipo de movimiento de la animaciÛn de apuntado:
-		!!	0)	Movimiento RectilÌneo Uniforme
-		!!	1)	Movimiento ArmÛnico Simple
+		!! Caracter con el que se representan las gu√≠as centrales:
+		iron_sight_symbol '¬∑',
+		initial_iron_sight_symbol '¬∑',
+		!! C√≥digo num√©rico del tipo de movimiento de la animaci√≥n de apuntado:
+		!!	0)	Movimiento Rectil√≠neo Uniforme
+		!!	1)	Movimiento Arm√≥nico Simple
 		motion_type 0,
 		initial_motion_type 0,
-		!! Ventana de estado sobre la que se muestra la animaciÛn de apuntado:
+		!! Ventana de estado sobre la que se muestra la animaci√≥n de apuntado:
 		status_window 0,
 		initial_status_window 0,
 		!!----------------------------------------------------------------------
-		!! Contador interno para la pausa final de la animaciÛn:
+		!! Contador interno para la pausa final de la animaci√≥n:
 		delay_counter 0,
-		!! Indica si el usuario ha detenido la animaciÛn de la retÌcula:
+		!! Indica si el usuario ha detenido la animaci√≥n de la ret√≠cula:
 		end_flag false,
 		!! Frecuencia con que se activa el temporizador Glk (en ms). Puesto que
-		!! la ventana de estado se divide en columnas y no en pÌxeles es
-		!! imposible conseguir una animaciÛn fluida. Para aumentar el n˙mero de
-		!! columnas en las que se hace impresiÛn e intentar reducir mÌnimamente
-		!! el movimiento entrecortado de la animaciÛn se dobla el objetivo
+		!! la ventana de estado se divide en columnas y no en p√≠xeles es
+		!! imposible conseguir una animaci√≥n fluida. Para aumentar el n√∫mero de
+		!! columnas en las que se hace impresi√≥n e intentar reducir m√≠nimamente
+		!! el movimiento entrecortado de la animaci√≥n se dobla el objetivo
 		!! habitual de 60 FPS:
 		timer_frequency 8, ! 125 FPS
 ;

@@ -2,39 +2,39 @@
 
 !!==============================================================================
 !!
-!!	MENSAJES DE LA LIBRERÕA EN ESPA—OL
+!!	MENSAJES DE LA LIBRER√çA EN ESPA√ëOL
 !!
 !!==============================================================================
 !!
 !!	Archivo:		SpanishLM.inf
-!!	Autor(es):		J. Francisco MartÌn <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (EspaÒol)
+!!	Autor(es):		J. Francisco Mart√≠n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espa√±ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		M·quina-Z/Glulx
-!!	VersiÛn:		0.0
-!!	Fecha:			2018/03/04
+!!	Plataforma:		M√°quina-Z/Glulx
+!!	Versi√≥n:		1.0
+!!	Fecha:			2018/09/21
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	0.0: 2017/08/03	VersiÛn en desarrollo de la extensiÛn.
+!!	1.0: 2018/09/21	Versi√≥n inicial de la extensi√≥n.
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco MartÌn
+!!	Copyright (c) 2018, J. Francisco Mart√≠n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los tÈrminos de la Licencia P˙blica General GNU
-!!	publicada por la FundaciÛn para el Software Libre, ya sea la versiÛn
-!!	3 de la Licencia, o (a su elecciÛn) cualquier versiÛn posterior.
+!!	modificarlo bajo los t√©rminos de la Licencia P√∫blica General GNU
+!!	publicada por la Fundaci√≥n para el Software Libre, ya sea la versi√≥n
+!!	3 de la Licencia, o (a su elecci√≥n) cualquier versi√≥n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea ˙til, pero
-!!	SIN GARANTÕA ALGUNA; ni siquiera la garantÌa implÌcita MERCANTIL o
-!!	de APTITUD PARA UN PROP”SITO DETERMINADO. Consulte los detalles de
-!!	la Licencia P˙blica General GNU para m·s informaciÛn.
+!!	Este programa se distribuye con la esperanza de que sea √∫til, pero
+!!	SIN GARANT√çA ALGUNA; ni siquiera la garant√≠a impl√≠cita MERCANTIL o
+!!	de APTITUD PARA UN PROP√ìSITO DETERMINADO. Consulte los detalles de
+!!	la Licencia P√∫blica General GNU para m√°s informaci√≥n.
 !!
-!!	DeberÌa haber recibido una copia de la Licencia P˙blica General GNU
+!!	Deber√≠a haber recibido una copia de la Licencia P√∫blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -42,58 +42,58 @@
 !!
 !!	NOTAS
 !!
-!!	Implementa el conjunto de mensajes por defecto de la librerÌa Inform-INFSP,
-!!	incluyendo la posibilidad de modificar en tiempo de ejecuciÛn tanto el
+!!	Implementa el conjunto de mensajes por defecto de la librer√≠a Inform-INFSP,
+!!	incluyendo la posibilidad de modificar en tiempo de ejecuci√≥n tanto el
 !!	tiempo verbal (presente, pasado, futuro) y la persona (primera, segunda,
-!!	tercera), como el gÈnero (masculino, femenino) el n˙mero (singular,
-!!	plural) ---estos ˙ltimos, en funciÛn de la definiciÛn del objeto 'player'
-!!	controlado por el usuario---. Los mensajes est·n basados en gran medida en
+!!	tercera), como el g√©nero (masculino, femenino) el n√∫mero (singular,
+!!	plural) ---estos √∫ltimos, en funci√≥n de la definici√≥n del objeto 'player'
+!!	controlado por el usuario---. Los mensajes est√°n basados en gran medida en
 !!	los de 'Spanish.h'.
 !!
-!!	Incluye adem·s una nueva meta-acciÛn de depuraciÛn (sÛlo est· definida
-!!	si la obra se compila con la opciÛn DEBUG activada); 'gramatica [opciÛn]',
-!!	que  permite consultar la flexiÛn gramatical actual de los mensajes de la
-!!	librerÌa (cuando se invoca sin indicar ninguna opciÛn), o si se especifica
-!!	una opciÛn [1-9], modifica la flexiÛn gramatical utilizada.
+!!	Incluye adem√°s una nueva meta-acci√≥n de depuraci√≥n (s√≥lo est√° definida
+!!	si la obra se compila con la opci√≥n DEBUG activada); 'gramatica [opci√≥n]',
+!!	que  permite consultar la flexi√≥n gramatical actual de los mensajes de la
+!!	librer√≠a (cuando se invoca sin indicar ninguna opci√≥n), o si se especifica
+!!	una opci√≥n [1-9], modifica la flexi√≥n gramatical utilizada.
 !!
 !!
-!!	UTILIZACI”N
+!!	UTILIZACI√ìN
 !!
-!!	A continuaciÛn se detallan los 3 pasos que deben seguirse para instalar la
-!!	extensiÛn:
+!!	A continuaci√≥n se detallan los 3 pasos que deben seguirse para instalar la
+!!	extensi√≥n:
 !!
 !!	1)	Declarar la constante SIN_MENSAJES para omitir los mensajes por defecto
-!!		de la librerÌa Inform (antes de incluir librerÌas y extensiones):
+!!		de la librer√≠a Inform (antes de incluir librer√≠as y extensiones):
 !!
 !!			Constant SIN_MENSAJES;
 !!
-!!	2)	Declarar el siguiente conjunto de variables (antes de incluir librerÌas
+!!	2)	Declarar el siguiente conjunto de variables (antes de incluir librer√≠as
 !!		y extensiones):
 !!
 !!			Global FORMER__TX	= "tu antiguo ~yo~";
 !!			Global YOURSELF__TX	= "ti mismo";
-!!			Global CANTGO__TX	= "No puedes ir por ahÌ.";
+!!			Global CANTGO__TX	= "No puedes ir por ah√≠.";
 !!			Global IS__TX		= " ves";
 !!			Global ARE__TX		= " ves";
 !!			Global IS2__TX		= "ves ";
 !!			Global ARE2__TX		= "ves ";
-!!			Global YOU__TX		= "T˙";
+!!			Global YOU__TX		= "T√∫";
 !!			Global PARTICULA_TE	= "te";
 !!
 !!	3)	Declarar el reemplazo de la rutina 'ChangePlayer' definida en
-!!		'parserm.h' (antes de incluir librerÌas y extensiones):
+!!		'parserm.h' (antes de incluir librer√≠as y extensiones):
 !!
 !!			Replace ChangePlayer;
 !!
 !!		Como se ha apuntado anteriormente, 'SpanishLM.h' utiliza un mecanismo
-!!		que permite modificar la flexiÛn gramatical de los mensajes de la
-!!		librerÌa en tiempo de ejecuciÛn ---permitiendo mensajes en primera,
+!!		que permite modificar la flexi√≥n gramatical de los mensajes de la
+!!		librer√≠a en tiempo de ejecuci√≥n ---permitiendo mensajes en primera,
 !!		segunda y tercera persona; presente, pasado y futuro; singular y
-!!		plurar; masculino y femenino--- en funciÛn, en parte, de los atributos
-!!		del personaje controlado por el usuario. AsÌ, al cambiar de personaje,
-!!		se hace necesario actualizar el estado de la librerÌa Inform.
+!!		plurar; masculino y femenino--- en funci√≥n, en parte, de los atributos
+!!		del personaje controlado por el usuario. As√≠, al cambiar de personaje,
+!!		se hace necesario actualizar el estado de la librer√≠a Inform.
 !!
-!!	Una vez instalada, se puede modificar la flexiÛn gramatical utilizada en
+!!	Una vez instalada, se puede modificar la flexi√≥n gramatical utilizada en
 !!	los mensajes por defecto invocando a la rutina
 !!	'SetGrammaticalInflection()'. Por ejemplo, para pasar a utilizar un
 !!	narrador en pasado y tercera persona:
@@ -104,7 +104,7 @@
 
 
 !!------------------------------------------------------------------------------
-!! DefiniciÛn de constantes, variables y propiedades
+!! Definici√≥n de constantes, variables y propiedades
 !!------------------------------------------------------------------------------
 
 Constant FIRST_PERSON_PRESENT	= 1;
@@ -120,29 +120,29 @@ Constant THIRD_PERSON_FUTURE	= 9;
 Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 !!==============================================================================
-!! La propiedad 'clarification' est· ideada para aquellos objetos que no son
+!! La propiedad 'clarification' est√° ideada para aquellos objetos que no son
 !! localidades y que permiten al personaje controlado por el usuario (PC)
 !! entrar en ellos (objetos con el atributo 'enterable'). Cuando un PJ se
 !! encuentra dentro de uno de estos objetos 'enterables', al imprimir la
-!! descripciÛn de la localidad como resultado de la acciÛn ##Look, se imprime
-!! el tÌtulo de la localidad con un pequeÒo apÈndice del tipo ", en el
+!! descripci√≥n de la localidad como resultado de la acci√≥n ##Look, se imprime
+!! el t√≠tulo de la localidad con un peque√±o ap√©ndice del tipo ", en el
 !! <objeto enterable>" o ", sobre el <objeto enterable>". La propiedad
-!! 'clarification' permite personalizar los mensajes de este apÈndice. Por
+!! 'clarification' permite personalizar los mensajes de este ap√©ndice. Por
 !! ejemplo, en una localidad "DORMITORIO" podemos definir un objeto 'enterable'
 !! cama con la propiedad:
 !!
 !!		clarification "sentado en la cama",
 !!
-!! para conseguir tÌtulos del tipo: "DORMITORIO, sentado en la cama", en lugar
+!! para conseguir t√≠tulos del tipo: "DORMITORIO, sentado en la cama", en lugar
 !! del: "DORMITORIO, en la cama" por defecto.
 !!------------------------------------------------------------------------------
 Property clarification; ! string
 
 !!==============================================================================
-!! La propiedad 'inhibit_object_list' est· ideada para ser utilizada por los
+!! La propiedad 'inhibit_object_list' est√° ideada para ser utilizada por los
 !! objetos de tipo localidad. Se se define una localidad con la propiedad
-!! 'inhibit_object_list' como verdadera, al imprimir su descripciÛn como
-!! resultado de la acciÛn ##Look se omitir· el listado autom·tico de objetos
+!! 'inhibit_object_list' como verdadera, al imprimir su descripci√≥n como
+!! resultado de la acci√≥n ##Look se omitir√° el listado autom√°tico de objetos
 !! presentes en esa localidad.
 !!------------------------------------------------------------------------------
 Property inhibit_object_list; ! boolean
@@ -153,9 +153,9 @@ Property inhibit_object_list; ! boolean
 !!------------------------------------------------------------------------------
 
 !!==============================================================================
-!! Imprime la construcciÛn correcta (en forma amalgamada o no) formada por la
-!! preposiciÛn 'con' y el pronombre o segmento pronominal que se corresponda
-!! con la flexiÛn gramatical del narrador y el objeto pasado como par·metro.
+!! Imprime la construcci√≥n correcta (en forma amalgamada o no) formada por la
+!! preposici√≥n 'con' y el pronombre o segmento pronominal que se corresponda
+!! con la flexi√≥n gramatical del narrador y el objeto pasado como par√°metro.
 !!
 !!	@param {Object} obj
 !!------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ Property inhibit_object_list; ! boolean
 				else print "con ellos";
 			} else {
 				if (IsFemaleNoun(obj)) print "con ella";
-				else print "con Èl";
+				else print "con √©l";
 			}
 	}
 ];
@@ -204,9 +204,9 @@ Property inhibit_object_list; ! boolean
         i = parent(i);
     }
 
-	!! XXX - ModificaciÛn sobre la rutina original
+	!! XXX - Modificaci√≥n sobre la rutina original
 	SetGrammaticalInflection(_grammatical_inflection, obj);
-	!! XXX - Fin de la modificaciÛn
+	!! XXX - Fin de la modificaci√≥n
 
     if (player == selfobj) player.short_name = FORMER__TX;
 
@@ -225,15 +225,15 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Determina si un objeto est· definido como nombre femenino o no. En la
-!! pr·ctica, en la extensiÛn se considera que todos los objetos con nombre no
+!! Determina si un objeto est√° definido como nombre femenino o no. En la
+!! pr√°ctica, en la extensi√≥n se considera que todos los objetos con nombre no
 !! femenino ('~~IsFemaleNoun()') tienen nombre masculino ---aunque en realidad,
 !! el inverso del conjunto de GNA femenino: {1, 4, 7, 10}, comprende a un
 !! tiempo los conjuntos de GNA masculino: {0, 3, 6, 9}, y GNA neutro:
 !! {2, 6, 8, 11}---.
 !!
 !!	@param {Object} obj
-!!	@returns {boolean} Verdadero si el objeto est· definido como nombre
+!!	@returns {boolean} Verdadero si el objeto est√° definido como nombre
 !!		femenino. Falso en caso contrario
 !!------------------------------------------------------------------------------
 [ IsFemaleNoun obj
@@ -245,14 +245,14 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Determina si un objeto est· definido como nombre plural o no. En la
-!! pr·ctica, en la extensiÛn se considera que todos los objetos con nombre no
+!! Determina si un objeto est√° definido como nombre plural o no. En la
+!! pr√°ctica, en la extensi√≥n se considera que todos los objetos con nombre no
 !! plural ('~~IsPluralNoun()') tienen nombre singular ---ciertamente, el
 !! inverso del conjunto de GNA plural: {3, 4, 5, 9, 10, 11}, se corresponde con
 !! el conjunto de GNA singular: {0, 1, 2, 6, 7, 8}---.
 !!
 !!	@param {Object} obj
-!!	@returns {boolean} Verdadero si el objeto est· definido como nombre
+!!	@returns {boolean} Verdadero si el objeto est√° definido como nombre
 !!		plural. Falso en caso contrario
 !!------------------------------------------------------------------------------
 [ IsPluralNoun obj
@@ -264,18 +264,18 @@ Property inhibit_object_list; ! boolean
 
 
 !!==============================================================================
-!! Establece la flexiÛn gramatical de los mensajes de la librerÌa, actualizando
-!! su estado. Para ello, utiliza la definiciÛn ---para determinar su gÈnero y
-!! n˙mero--- de un objeto dado (si no se especifica uno, por defecto el objeto
+!! Establece la flexi√≥n gramatical de los mensajes de la librer√≠a, actualizando
+!! su estado. Para ello, utiliza la definici√≥n ---para determinar su g√©nero y
+!! n√∫mero--- de un objeto dado (si no se especifica uno, por defecto el objeto
 !! 'player' controlado por el usuario).
 !!
-!!	@param {int} [gi=SECOND_PERSON_PRESENT] - Nueva flexiÛn gramatical a
-!!		utilizar en los mensajes de la librerÌa. Si no se especifica un valor o
-!!		el valor especificado es errÛneo, se establece por defecto la segunda
+!!	@param {int} [gi=SECOND_PERSON_PRESENT] - Nueva flexi√≥n gramatical a
+!!		utilizar en los mensajes de la librer√≠a. Si no se especifica un valor o
+!!		el valor especificado es err√≥neo, se establece por defecto la segunda
 !!		persona del presente: SECOND_PERSON_PRESENT.
 !!	@param {Object} [obj=player] - Objeto del que se cosultan los atributos
-!!		referidos a gÈnero y n˙mero utilizados para actualizar el estado de la
-!!		librerÌa.
+!!		referidos a g√©nero y n√∫mero utilizados para actualizar el estado de la
+!!		librer√≠a.
 !!------------------------------------------------------------------------------
 [ SetGrammaticalInflection gi obj;
 	if ((obj == 0) || (metaclass(obj) == nothing)) obj = player;
@@ -285,7 +285,7 @@ Property inhibit_object_list; ! boolean
 			if (IsPluralNoun(obj)) {
 				ARE__TX			= " vemos";
 				ARE2__TX		= "vemos ";
-				CANTGO__TX		= "No podemos ir por ahÌ.";
+				CANTGO__TX		= "No podemos ir por ah√≠.";
 				IS__TX			= " vemos";
 				IS2__TX			= "vemos ";
 				PARTICULA_TE	= "nos";
@@ -301,18 +301,18 @@ Property inhibit_object_list; ! boolean
 			} else {
 				ARE__TX			= " veo";
 				ARE2__TX		= "veo ";
-				CANTGO__TX		= "No puedo ir por ahÌ.";
+				CANTGO__TX		= "No puedo ir por ah√≠.";
 				IS__TX			= " veo";
 				IS2__TX			= "veo ";
 				PARTICULA_TE	= "me";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ misma";
+					YOURSELF__TX	= "m√≠ misma";
 				} else {
 					FORMER__TX		= "mi mi antiguo ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ mismo";
+					YOURSELF__TX	= "m√≠ mismo";
 				}
 			}
 		SECOND_PERSON_PRESENT:
@@ -321,7 +321,7 @@ Property inhibit_object_list; ! boolean
 			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veis";
 				ARE2__TX		= "veis ";
-				CANTGO__TX		= "No podÈis ir por ahÌ.";
+				CANTGO__TX		= "No pod√©is ir por ah√≠.";
 				IS__TX			= " veis";
 				IS2__TX			= "veis ";
 				PARTICULA_TE	= "os";
@@ -337,18 +337,18 @@ Property inhibit_object_list; ! boolean
 			} else {
 				ARE__TX			= " ves";
 				ARE2__TX		= "ves ";
-				CANTGO__TX		= "No puedes ir por ahÌ.";
+				CANTGO__TX		= "No puedes ir por ah√≠.";
 				IS__TX			= " ves";
 				IS2__TX			= "ves ";
 				PARTICULA_TE	= "te";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ misma";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ misma";
 				} else {
 					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ mismo";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ mismo";
 				}
 			}
 		THIRD_PERSON_PRESENT:
@@ -356,7 +356,7 @@ Property inhibit_object_list; ! boolean
 			if (IsPluralNoun(obj)) {
 				ARE__TX			= " ven";
 				ARE2__TX		= "ven ";
-				CANTGO__TX		= "No pueden ir por ahÌ.";
+				CANTGO__TX		= "No pueden ir por ah√≠.";
 				IS__TX			= " ven";
 				IS2__TX			= "ven ";
 				PARTICULA_TE	= "se";
@@ -372,28 +372,28 @@ Property inhibit_object_list; ! boolean
 			} else {
 				ARE__TX			= " ve";
 				ARE2__TX		= "ve ";
-				CANTGO__TX		= "No puede ir por ahÌ.";
+				CANTGO__TX		= "No puede ir por ah√≠.";
 				IS__TX			= " ve";
 				IS2__TX			= "ve ";
 				PARTICULA_TE	= "se";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sÌ misma";
+					YOURSELF__TX	= "s√≠ misma";
 				} else {
 					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "…l";
-					YOURSELF__TX	= "sÌ mismo";
+					YOU__TX			= "√âl";
+					YOURSELF__TX	= "s√≠ mismo";
 				}
 			}
 		FIRST_PERSON_PAST:
 			_grammatical_inflection = FIRST_PERSON_PAST;
 			if (IsPluralNoun(obj)) {
-				ARE__TX			= " veÌamos";
-				ARE2__TX		= "veÌamos ";
-				CANTGO__TX		= "No podÌamos ir por ahÌ.";
-				IS__TX			= " veÌamos";
-				IS2__TX			= "veÌamos ";
+				ARE__TX			= " ve√≠amos";
+				ARE2__TX		= "ve√≠amos ";
+				CANTGO__TX		= "No pod√≠amos ir por ah√≠.";
+				IS__TX			= " ve√≠amos";
+				IS2__TX			= "ve√≠amos ";
 				PARTICULA_TE	= "nos";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "nuestra antigua ~yo~";
@@ -405,30 +405,30 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "nosotros mismos";
 				}
 			} else {
-				ARE__TX			= " veÌa";
-				ARE2__TX		= "veÌa ";
-				CANTGO__TX		= "No podÌa ir por ahÌ.";
-				IS__TX			= " veÌa";
-				IS2__TX			= "veÌa ";
+				ARE__TX			= " ve√≠a";
+				ARE2__TX		= "ve√≠a ";
+				CANTGO__TX		= "No pod√≠a ir por ah√≠.";
+				IS__TX			= " ve√≠a";
+				IS2__TX			= "ve√≠a ";
 				PARTICULA_TE	= "me";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ misma";
+					YOURSELF__TX	= "m√≠ misma";
 				} else {
 					FORMER__TX		= "mi antiguo ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ mismo";
+					YOURSELF__TX	= "m√≠ mismo";
 				}
 			}
 		SECOND_PERSON_PAST:
 			_grammatical_inflection = SECOND_PERSON_PAST;
 			if (IsPluralNoun(obj)) {
-				ARE__TX			= " veÌais";
-				ARE2__TX		= "veÌais ";
-				CANTGO__TX		= "No podÌais ir por ahÌ.";
-				IS__TX			= " veÌais";
-				IS2__TX			= "veÌais ";
+				ARE__TX			= " ve√≠ais";
+				ARE2__TX		= "ve√≠ais ";
+				CANTGO__TX		= "No pod√≠ais ir por ah√≠.";
+				IS__TX			= " ve√≠ais";
+				IS2__TX			= "ve√≠ais ";
 				PARTICULA_TE	= "os";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
@@ -440,30 +440,30 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "vosotros mismos";
 				}
 			} else {
-				ARE__TX			= " veÌas";
-				ARE2__TX		= "veÌas ";
-				CANTGO__TX		= "No podÌas ir por ahÌ.";
-				IS__TX			= " veÌas";
-				IS2__TX			= "veÌas ";
+				ARE__TX			= " ve√≠as";
+				ARE2__TX		= "ve√≠as ";
+				CANTGO__TX		= "No pod√≠as ir por ah√≠.";
+				IS__TX			= " ve√≠as";
+				IS2__TX			= "ve√≠as ";
 				PARTICULA_TE	= "te";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ misma";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ misma";
 				} else {
 					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ mismo";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ mismo";
 				}
 			}
 		THIRD_PERSON_PAST:
 			_grammatical_inflection = THIRD_PERSON_PAST;
 			if (IsPluralNoun(obj)) {
-				ARE__TX			= " veÌan";
-				ARE2__TX		= "veÌan ";
-				CANTGO__TX		= "No podÌan ir por ahÌ.";
-				IS__TX			= " veÌan";
-				IS2__TX			= "veÌan ";
+				ARE__TX			= " ve√≠an";
+				ARE2__TX		= "ve√≠an ";
+				CANTGO__TX		= "No pod√≠an ir por ah√≠.";
+				IS__TX			= " ve√≠an";
+				IS2__TX			= "ve√≠an ";
 				PARTICULA_TE	= "se";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
@@ -475,20 +475,20 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "ellos mismos";
 				}
 			} else {
-				ARE__TX			= " veÌa";
-				ARE2__TX		= "veÌa ";
-				CANTGO__TX		= "No podÌa ir por ahÌ.";
-				IS__TX			= " veÌa";
-				IS2__TX			= "veÌa ";
+				ARE__TX			= " ve√≠a";
+				ARE2__TX		= "ve√≠a ";
+				CANTGO__TX		= "No pod√≠a ir por ah√≠.";
+				IS__TX			= " ve√≠a";
+				IS2__TX			= "ve√≠a ";
 				PARTICULA_TE	= "se";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sÌ misma";
+					YOURSELF__TX	= "s√≠ misma";
 				} else {
 					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "…l";
-					YOURSELF__TX	= "sÌ mismo";
+					YOU__TX			= "√âl";
+					YOURSELF__TX	= "s√≠ mismo";
 				}
 			}
 		FIRST_PERSON_FUTURE:
@@ -496,7 +496,7 @@ Property inhibit_object_list; ! boolean
 			if (IsPluralNoun(obj)) {
 				ARE__TX			= " veremos";
 				ARE2__TX		= "veremos ";
-				CANTGO__TX		= "No podremos ir por ahÌ.";
+				CANTGO__TX		= "No podremos ir por ah√≠.";
 				IS__TX			= " veremos";
 				IS2__TX			= "veremos ";
 				PARTICULA_TE	= "nos";
@@ -510,30 +510,30 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "nosotros mismos";
 				}
 			} else {
-				ARE__TX			= " verÈ";
-				ARE2__TX		= "verÈ ";
-				CANTGO__TX		= "No podrÈ ir por ahÌ.";
-				IS__TX			= " verÈ";
-				IS2__TX			= "verÈ ";
+				ARE__TX			= " ver√©";
+				ARE2__TX		= "ver√© ";
+				CANTGO__TX		= "No podr√© ir por ah√≠.";
+				IS__TX			= " ver√©";
+				IS2__TX			= "ver√© ";
 				PARTICULA_TE	= "me";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "mi antigua ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ misma";
+					YOURSELF__TX	= "m√≠ misma";
 				} else {
 					FORMER__TX		= "mi antiguo ~yo~";
 					YOU__TX			= "Yo";
-					YOURSELF__TX	= "mÌ mismo";
+					YOURSELF__TX	= "m√≠ mismo";
 				}
 			}
 		SECOND_PERSON_FUTURE:
 			_grammatical_inflection = SECOND_PERSON_FUTURE;
 			if (IsPluralNoun(obj)) {
-				ARE__TX			= " verÈis";
-				ARE2__TX		= "verÈis ";
-				CANTGO__TX		= "No podrÈis ir por ahÌ.";
-				IS__TX			= " verÈis";
-				IS2__TX			= "verÈis ";
+				ARE__TX			= " ver√©is";
+				ARE2__TX		= "ver√©is ";
+				CANTGO__TX		= "No podr√©is ir por ah√≠.";
+				IS__TX			= " ver√©is";
+				IS2__TX			= "ver√©is ";
 				PARTICULA_TE	= "os";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "vuestra antigua ~yo~";
@@ -545,30 +545,30 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "vosotros mismos";
 				}
 			} else {
-				ARE__TX				= " ver·s";
-				ARE2__TX			= "ver·s ";
-				CANTGO__TX			= "No podr·s ir por ahÌ.";
-				IS__TX				= " ver·s";
-				IS2__TX				= "ver·s ";
+				ARE__TX				= " ver√°s";
+				ARE2__TX			= "ver√°s ";
+				CANTGO__TX			= "No podr√°s ir por ah√≠.";
+				IS__TX				= " ver√°s";
+				IS2__TX				= "ver√°s ";
 				PARTICULA_TE		= "te";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "tu antigua ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ misma";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ misma";
 				} else {
 					FORMER__TX		= "tu antiguo ~yo~";
-					YOU__TX			= "T˙";
-					YOURSELF__TX	= "tÌ mismo";
+					YOU__TX			= "T√∫";
+					YOURSELF__TX	= "t√≠ mismo";
 				}
 			}
 		THIRD_PERSON_FUTURE:
 			_grammatical_inflection = THIRD_PERSON_FUTURE;
 			if (IsPluralNoun(obj)) {
-				ARE__TX			= " ver·n";
-				ARE2__TX		= "ver·n ";
-				CANTGO__TX		= "No podr·n ir por ahÌ.";
-				IS__TX			= " ver·n";
-				IS2__TX			= "ver·n ";
+				ARE__TX			= " ver√°n";
+				ARE2__TX		= "ver√°n ";
+				CANTGO__TX		= "No podr√°n ir por ah√≠.";
+				IS__TX			= " ver√°n";
+				IS2__TX			= "ver√°n ";
 				PARTICULA_TE	= "se";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
@@ -580,20 +580,20 @@ Property inhibit_object_list; ! boolean
 					YOURSELF__TX	= "ellos mismos";
 				}
 			} else {
-				ARE__TX			= " ver·";
-				ARE2__TX		= "ver· ";
-				CANTGO__TX		= "No podr· ir por ahÌ.";
-				IS__TX			= " ver·";
-				IS2__TX			= "ver· ";
+				ARE__TX			= " ver√°";
+				ARE2__TX		= "ver√° ";
+				CANTGO__TX		= "No podr√° ir por ah√≠.";
+				IS__TX			= " ver√°";
+				IS2__TX			= "ver√° ";
 				PARTICULA_TE	= "se";
 				if (IsFemaleNoun(obj)) {
 					FORMER__TX		= "su antigua ~yo~";
 					YOU__TX			= "Ella";
-					YOURSELF__TX	= "sÌ misma";
+					YOURSELF__TX	= "s√≠ misma";
 				} else {
 					FORMER__TX		= "su antiguo ~yo~";
-					YOU__TX			= "…l";
-					YOURSELF__TX	= "sÌ mismo";
+					YOU__TX			= "√âl";
+					YOURSELF__TX	= "s√≠ mismo";
 				}
 			}
 		default:
@@ -620,7 +620,7 @@ Verb	meta 'gramatica' 'grammar'
 		8:	SetGrammaticalInflection(SECOND_PERSON_FUTURE);
 		9:	SetGrammaticalInflection(THIRD_PERSON_FUTURE);
 		default:
-			"FlexiÛn gramatical actual: ", _grammatical_inflection,
+			"Flexi√≥n gramatical actual: ", _grammatical_inflection,
 			"^ARE__TX: ", (string) ARE__TX,
 			"^ARE2__TX: ", (string) ARE2__TX,
 			"^CANTGO__TX: ", (string) CANTGO__TX,
@@ -631,7 +631,7 @@ Verb	meta 'gramatica' 'grammar'
 			"^YOU__TX: ", (string) YOU__TX,
 			"^YOURSELF__TX: ", (string) YOURSELF__TX;
 	}
-	print "Cambio de flexiÛn gramatical: ";
+	print "Cambio de flexi√≥n gramatical: ";
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
 			print "(1) presente 1a persona";
@@ -683,8 +683,8 @@ Include "sp3future.h";
 		SECOND_PERSON_PAST:
 			SecondPersonPast_ES(n, x1);
 		THIRD_PERSON_PAST:
-			!! LibrerÌa de mensajes principal. Es la ˙nica librerÌa completa,
-			!! el resto de librerÌas la invocan para reutilizar algunos de sus
+			!! Librer√≠a de mensajes principal. Es la √∫nica librer√≠a completa,
+			!! el resto de librer√≠as la invocan para reutilizar algunos de sus
 			!! mensajes:
 			ThirdPersonPast_ES(n, x1);
 		FIRST_PERSON_FUTURE:
