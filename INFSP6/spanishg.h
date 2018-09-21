@@ -2,15 +2,15 @@
 ! INFSP (Spanish Inform Library)
 ! =====================================================================
 !        Author: INFSP Task Team
-!       Version: 0.9
-!      Released: 21- Enero - 2009
-! Serial Number: 901.21
+!       Version: 0.91
+!      Released: 21 - Septiembre - 2018
+! Serial Number: 1809.21
 !          Note: For use with Inform 6. (Tested with Inform compiler
-!                version 6.31 and Inform library 6/11).
+!                version 6.34 and Inform library 6/11).
 !   Description: "An Inform library to write Interactive Fiction in
 !                Spanish. Grammar Spanish File."
 ! =====================================================================
-!  SpanishG.h -(Gramatica.h) GRAMATICA: Gramática española
+!  SpanishG.h -(Gramatica.h) GRAMATICA: GramÃ¡tica espaÃ±ola
 !  INFSP  traduccion al ingles de informATE .: by Sarganar :.
 !  InformATE es (c) de Zak
 !  Re-edicion INFSP by Sarganar
@@ -24,21 +24,21 @@ System_file; ! for supress warnings in I6 environment
 #ifdef DEBUG;
   [ ActivarAcentosSub;
     quitacentos = 0;
-    "Los acentos no serán eliminados del comando recibido.";
+    "Los acentos no serÃ¡n eliminados del comando recibido.";
   ];
 
   [ DesactivarAcentosSub;
     quitacentos = 1;
-    "Los acentos serán eliminados del comando recibido, pero sólo en
-      las palabras que de otro modo no serían comprendidas.";
+    "Los acentos serÃ¡n eliminados del comando recibido, pero sÃ³lo en
+      las palabras que de otro modo no serÃ­an comprendidas.";
   ];
 #endif; ! DEBUG
 
-! Elección del dialecto (afecta a la interpretación del
-! verbo COGER únicamente)
+! ElecciÃ³n del dialecto (afecta a la interpretaciÃ³n del
+! verbo COGER Ãºnicamente)
 
 [ DialectoSub;
-  print "Actualmente estás jugando en el dialecto ";
+  print "Actualmente estÃ¡s jugando en el dialecto ";
   if (dialecto_sudamericano)
     print "sudamericano";
   else
@@ -97,7 +97,7 @@ ifdef ADMITIR_COMANDO_SALIDAS;
             flag  = false;           ! Show la salida si existe la
             flag2 = false;           ! propiedad al_* y no es un string.
           true:
-            j++;                     ! La dirección ya ha sido escrita.
+            j++;                     ! La direcciÃ³n ya ha sido escrita.
             flag2 = true;
           2:
             flag2 = true;            ! No imprimir esta.
@@ -120,11 +120,11 @@ ifdef ADMITIR_COMANDO_SALIDAS;
     if (j == 0)
       " ninguna.";
     ".";        ! ELIUK BLAU: antes hacia dos saltos de linea al final, cuando
-                ! en realidad debía hacer solo uno. (el otro salto lo agrega el PROMPT mismo)
+                ! en realidad debÃ­a hacer solo uno. (el otro salto lo agrega el PROMPT mismo)
   ];
 endif;  ! ADMITIR_COMANDO_SALIDAS
 
-! TODO: ¿De verdad son necesarias tantas formas inglesas de los commandos?
+! TODO: Â¿De verdad son necesarias tantas formas inglesas de los commandos?
 ! ------------------------------------------------------------------------------
 !  The "meta-verbs", commands to the game rather than in the game, come first:
 ! ------------------------------------------------------------------------------
@@ -134,11 +134,11 @@ endif;  ! ADMITIR_COMANDO_SALIDAS
 Verb meta 'score' 'puntos' 'puntuacion'
   *                                   -> Score
   * 'total'/'detallada'/'completa'    -> FullScore;
-VerboIrregular "conocer la puntuación" with imperativo 'score' 'puntos' 'puntuacion';
+VerboIrregular "conocer la puntuaciÃ³n" with imperativo 'score' 'puntos' 'puntuacion';
 
 Verb meta 'total' 'pt'
   *                                   -> FullScore;
-VerboIrregular "conocer la puntuación detallada" with imperativo 'total' 'pt';
+VerboIrregular "conocer la puntuaciÃ³n detallada" with imperativo 'total' 'pt';
 !#ENDIF; ! NO_PUNTUACION
 
 Verb meta 'q//' 'quit' 'terminar' 'fin' 'acabar' 'abandonar'
@@ -157,7 +157,7 @@ VerboIrregular "reiniciar el juego" with imperativo 'reiniciar';
 
 Verb meta 'verificar'
   *                                   -> Verify;
-VerboIrregular "verificar la corrección del juego" with imperativo 'verificar';
+VerboIrregular "verificar la correcciÃ³n del juego" with imperativo 'verificar';
 
 Verb meta 'save' 'guardar' 'salvar'
   *                                   -> Save;
@@ -168,12 +168,12 @@ Verb meta 'script' 'transcripcion'
   *                                   -> ScriptOn
   * 'off'/'no'                        -> ScriptOff
   * 'on'/'si'                         -> ScriptOn;
-VerboIrregular "activar la transcripción a disco" with imperativo 'script'
+VerboIrregular "activar la transcripciÃ³n a disco" with imperativo 'script'
   'transcripcion';
 
 Verb meta 'noscript' 'unscript' 'notranscripcion'
   *                                   -> ScriptOff;
-VerboIrregular "desactivar la transcripción a disco" with imperativo 'unscript'
+VerboIrregular "desactivar la transcripciÃ³n a disco" with imperativo 'unscript'
   'noscript' 'notranscripcion';
 
 Verb meta 'superbreve' 'corto'
@@ -196,13 +196,13 @@ VerboIrregular "ver el estado de los pronames" with imperativo 'pronombres';
 Verb meta 'notify' 'notificar' 'notificacion'
   * 'on'/'si'                         -> NotifyOn
   * 'off'/'no'                        -> NotifyOff;
-VerboIrregular "cambiar el estado de la NOTIFICACIÓN de PUNTOS" with imperativo
+VerboIrregular "cambiar el estado de la NOTIFICACIÃ“N de PUNTOS" with imperativo
   'notificar' 'notify';
 !#ENDIF; ! NO_PUNTUACION
 
 Verb meta 'version'
   *                                   -> Version;
-VerboIrregular "conocer el número de VERSIÓN del juego" with imperativo
+VerboIrregular "conocer el nÃºmero de VERSIÃ“N del juego" with imperativo
   'version';
 
 Verb meta 'dialecto'
@@ -225,10 +225,10 @@ VerboIrregular "cambiar el dialecto del juego" with imperativo 'dialecto';
 #ENDIF;  ! NO_PLACES
 
 ! ----------------------------------------------------------------------------
-!  Comandos para depuración
+!  Comandos para depuraciÃ³n
 ! ----------------------------------------------------------------------------
 
-! TODO: ¿Añadimos formas infinitivas para los commandos de depuración?
+! TODO: Â¿AÃ±adimos formas infinitivas para los commandos de depuraciÃ³n?
 
 #ifdef DEBUG;
   Verb meta 'acentos'
@@ -278,7 +278,7 @@ VerboIrregular "cambiar el dialecto del juego" with imperativo 'dialecto';
     * number                          -> Goto
     * noun                            -> Gonear;
 
-! TODO: ¿Añadimos aquí también 'relojes'?
+! TODO: Â¿AÃ±adimos aquÃ­ tambiÃ©n 'relojes'?
 
   Verb meta 'timers' 'daemons' 'temporizadores'
     *                                 -> TimersOn
@@ -309,7 +309,7 @@ VerboIrregular "cambiar el dialecto del juego" with imperativo 'dialecto';
 
   #ifdef TARGET_GLULX;
 
-! TODO: ¿Alguna forma española para este commando? ¿Tal vez 'listaglk'?
+! TODO: Â¿Alguna forma espaÃ±ola para este commando? Â¿Tal vez 'listaglk'?
 
     Verb meta 'glklist'
       *                               -> Glklist;
@@ -328,8 +328,8 @@ Verb 'saca'
   * multiinside 'de' noun             -> Remove
   * 'a//' creature 'de' noun          -> Remove;
 
-! [001115] El verbo quita genera ahora la acción Quitar, pero
-! esta acción es reconvertida por la librería en Disrobe,
+! [001115] El verbo quita genera ahora la acciÃ³n Quitar, pero
+! esta acciÃ³n es reconvertida por la librerÃ­a en Disrobe,
 ! Take o Remove.
 
 Verb 'quita' 'quitale'
@@ -419,7 +419,7 @@ Verb 'muestra' 'ensena'
     * held 'a//' creature        -> Show;
 VerboIrregular "mostrar" with imperativo 'muestra';
 [ ADirection; if (noun in compass) rtrue; rfalse; ];
-!! XXX - Se elimina el verbo vuelve/volver como sinónimo de la acción:
+!! XXX - Se elimina el verbo vuelve/volver como sinÃ³nimo de la acciÃ³n:
 Verb 'anda' 'camina' 'corre' 'ir' 've' 'vete' !'vuelve'
     *                                   -> VagueGo
     * noun=ADirection                   -> Go
@@ -430,7 +430,7 @@ Verb 'anda' 'camina' 'corre' 'ir' 've' 'vete' !'vuelve'
     * 'hacia' noun                      -> Enter
     * 'por' noun                        -> Enter;
 VerboIrregular "ir" with imperativo 've' 'vete' 'ir';
-!! XXX - Se elimina el verbo vuelve/volver como sinónimo de la acción:
+!! XXX - Se elimina el verbo vuelve/volver como sinÃ³nimo de la acciÃ³n:
 !VerboIrregular "volver" with imperativo 'vuelve';
 
 Verb 'pasa'
@@ -519,9 +519,9 @@ Verb 'lee'
     * noun                               -> Examine
     * 'sobre' topic 'en' noun        -> Consult
     * topic 'en' noun                -> Consult;
-Verb 'si' 'sí'
+Verb 'si' 'sÃ­'
     *                                    -> Yes;
-VerboIrregular "responder ~sí~" with imperativo 'si' 'y//';
+VerboIrregular "responder ~sÃ­~" with imperativo 'si' 'y//';
 Verb 'nx'
     *                                    -> No;
 VerboIrregular "responder ~no~" with imperativo 'nx';
@@ -740,7 +740,7 @@ Verb 'cava' 'excava'
     * 'en' noun 'con' held              -> Dig;
 
 ifdef ADMITIR_COMANDO_SALIDAS;
-! A partir de la revisión [021025] el verbo Salidas ya no es metaverbo.
+! A partir de la revisiÃ³n [021025] el verbo Salidas ya no es metaverbo.
 
   Verb 'salidas' 'exits'
     *                                   -> Salidas;
@@ -751,8 +751,8 @@ VerboIrregular "mostrar las salidas" with imperativo 'salidas'; ![infsp] Urba to
 endif;  ! ADMITIR_COMANDO_SALIDAS
 
 
-! Nuevo en la revisión [001101]. Xir es análogo a Xarbol pero no incluye
-! en la lista los objetos de librería ni los verbos irregulares
+! Nuevo en la revisiÃ³n [001101]. Xir es anÃ¡logo a Xarbol pero no incluye
+! en la lista los objetos de librerÃ­a ni los verbos irregulares
 #ifdef DEBUG;
 [ XlistaSub i;
     objectloop(i)
@@ -805,17 +805,17 @@ Verb meta 'xlista'
 ! #Ifdef Make__PN;
 
 ! La rutina ParseNoun se ocupa de ignorar "de" cuando aparece entre
-! dos palabras reconocidas como names de un mismo objeto. Así, si
+! dos palabras reconocidas como names de un mismo objeto. AsÃ­, si
 ! un objeto tiene en su campo "name" los valores "caja" "madera" "caoba"
-! ParseNoun aceptará "caja de madera" "caja de caoba" e incluso
-! "caja de madera de caoba". En cambio, ante la cadena "caja de bolsa", sólo
-! aceptará la primera palabra (caja) dejando sin procesar "de bolsa", lo
+! ParseNoun aceptarÃ¡ "caja de madera" "caja de caoba" e incluso
+! "caja de madera de caoba". En cambio, ante la cadena "caja de bolsa", sÃ³lo
+! aceptarÃ¡ la primera palabra (caja) dejando sin procesar "de bolsa", lo
 ! que permite la posterior interpretacion de frases como "saca caja de bolsa"
 ! E incluso "saca caja de madera de caoba de bolsa"
-! De paso también ignora artículos con lo que también se admite:
+! De paso tambiÃ©n ignora artÃ­culos con lo que tambiÃ©n se admite:
 ! "saca la caja de madera de caoba de la bolsa"
 !
-! ParseNoun debe retornar un número que indica cuántas palabras admite
+! ParseNoun debe retornar un nÃºmero que indica cuÃ¡ntas palabras admite
 ! como pertenecientes al objeto. En nuestro ejemplo, ante "caja de madera"
 ! debe retornar 3, pero ante "caja de bolsa" debe retornar 1.
 !
@@ -844,7 +844,7 @@ Verb meta 'xlista'
 !         ! Una palabra que se refiere al objeto
 !     {
 !         n++;         ! la contamos
-!         n=n+dudas;   ! añadimos todos los "de" "la"...
+!         n=n+dudas;   ! aÃ±adimos todos los "de" "la"...
 !                      ! que estaban sin contar
 !         dudas=0;     ! y resetamos el contador de "de"s
 !         continue;    ! volvemos al while
@@ -855,7 +855,7 @@ Verb meta 'xlista'
         if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
         if (gen==5) gen=G_FEMENINO;
         n++;            ! la contamos
-        n=n+dudas;      ! añadimos todos los "de" "la"...
+        n=n+dudas;      ! aÃ±adimos todos los "de" "la"...
                         ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
 !        print " --> es ahora femenino...." ; !infsp debug
@@ -867,7 +867,7 @@ Verb meta 'xlista'
         if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
         if (gen==5) gen=G_MASCULINO+G_PLURAL;
         n++;            ! la contamos
-        n=n+dudas;      ! añadimos todos los "de" "la"...
+        n=n+dudas;      ! aÃ±adimos todos los "de" "la"...
                         ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
         continue;       ! volvemos al while
@@ -877,7 +877,7 @@ Verb meta 'xlista'
         if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
         if (gen==5) gen=G_FEMENINO+G_PLURAL;
         n++;            ! la contamos
-        n=n+dudas;      ! añadimos todos los "de" "la"...
+        n=n+dudas;      ! aÃ±adimos todos los "de" "la"...
                         ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
         continue;       ! volvemos al while
@@ -891,7 +891,7 @@ Verb meta 'xlista'
         if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
         if (gen==5) gen=G_MASCULINO;
         n++;            ! la contamos
-        n=n+dudas;      ! añadimos todos los "de" "la"...
+        n=n+dudas;      ! aÃ±adimos todos los "de" "la"...
                         ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
 !        print " --> es ahora masculino...." ; !infsp debug
@@ -901,7 +901,7 @@ Verb meta 'xlista'
       {
         if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
         n++;            ! la contamos
-        n=n+dudas;      ! añadimos todos los "de" "la"...
+        n=n+dudas;      ! aÃ±adimos todos los "de" "la"...
                         ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
 !        print (the) obj," --> adjetivo detectado....^" ; !infsp debug
@@ -909,11 +909,11 @@ Verb meta 'xlista'
       }
 
     ! Si la palabra no fue reconocida, miraremos si se trata
-    ! de 'de' o un artículo. En este caso mantenemos la duda y
+    ! de 'de' o un artÃ­culo. En este caso mantenemos la duda y
     ! seguimos mirando palabras, hasta que una de ellas encaje
     ! en este objeto$ en cuyo caso se retornan todas las que se
     ! han leido, o bien se encuentre una que no encaja en cuyo
-    ! caso se retorna las que se habían encontrado antes del "de"
+    ! caso se retorna las que se habÃ­an encontrado antes del "de"
 
       else if (p== 'el' or 'la' or 'los' or 'las' or
          'de')
@@ -928,7 +928,7 @@ Verb meta 'xlista'
         switch(gen)
         { ! Los casos del switch estaban mal.
           ! Bug corregido en 001030
-          1: give obj ~female ~pluralname; !infsp fix for I7 compatibility (en I7 no se puede asignar el 0 a gender, de 1 para arriba, sí)
+          1: give obj ~female ~pluralname; !infsp fix for I7 compatibility (en I7 no se puede asignar el 0 a gender, de 1 para arriba, sÃ­)
           2: give obj female ~pluralname;  !print " FEMALE GIVEN "; !infsp debug
           3: give obj ~female pluralname;
           4: give obj female pluralname;
@@ -961,7 +961,7 @@ Verb meta 'xlista'
 #Stub InitGlkWindow   1;
 #endif; ! TARGET_GLULX
 
-! [010515] Cambiado de sitio el punto de inclusión de Mensajes.h
+! [010515] Cambiado de sitio el punto de inclusiÃ³n de Mensajes.h
 ! para dar la oportunidad al usuario de incluir su proper Mensajes
 ! si lo desea (antes del include Gramatica)
 #ifndef LanguageLM;

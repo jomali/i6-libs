@@ -2,19 +2,19 @@
 ! INFSP (Spanish Inform Library)
 ! =====================================================================
 !        Author: INFSP Task Team
-!       Version: 0.9
-!      Released: 21- Enero - 2009
-! Serial Number: 901.21
+!       Version: 0.91
+!      Released: 21 - Septiembre - 2018
+! Serial Number: 1809.21
 !          Note: For use with Inform 6. (Tested with Inform compiler
-!                version 6.31 and Inform library 6/11).
+!                version 6.34 and Inform library 6/11).
 !   Description: "An Inform library to write Interactive Fiction in
 !                Spanish. Language Spanish File."
 !================================================================
 ! Spanish.h
-! INFSP 0.9 libreria espaÒola para inform, basada en informATE de Zak
+! INFSP 0.91 libreria espa√±ola para inform, basada en informATE de Zak
 !                         .: by Sarganar :.
 !
-! DefiniciÛn de todo lo relacionado con el idioma EspaÒol (artÌculos,
+! Definici√≥n de todo lo relacionado con el idioma Espa√±ol (art√≠culos,
 ! nombres, pre-parsing, mensajes estandares, etc.)
 !
 !  InformATE es (c) de Zak
@@ -43,23 +43,23 @@ Replace NounDomain;
 !   Parte I.   Asuntos preliminares
 ! ---------------------------------------------------------------------------
 
-Constant LanguageVersion = "LibrerÌa EspaÒola INFSP 0.9 [901.21], basada en InformATE!";
+Constant LanguageVersion = "Librer√≠a Espa√±ola INFSP 0.9 [901.21], basada en InformATE!";
 
-! DefiniciÛn de caractÈres "baratos". Esto permite que estas letras
-! ocupen menos bits en la m·quina Z. No funciona si se intenta la
-! compilaciÛn por mÛdulos (viejo mÈtodo)
+! Definici√≥n de caract√©res "baratos". Esto permite que estas letras
+! ocupen menos bits en la m√°quina Z. No funciona si se intenta la
+! compilaci√≥n por m√≥dulos (viejo m√©todo)
 
 #ifdef TARGET_ZCODE;
-  Zcharacter '·';                    ! a con acento
-  Zcharacter 'È';                    ! e con acento
-  Zcharacter 'Ì';                    ! i con acento
-  Zcharacter 'Û';                    ! o con acento
-  Zcharacter '˙';                    ! u con acento
-  Zcharacter 'Ò';                    ! n con virguilla
-  Zcharacter '—';                    ! N con virguilla
-  Zcharacter '¸';                    ! u con dieresis
-  Zcharacter 'ø';                    ! abrir interrogaciÛn
-  Zcharacter '°';                    ! abrir exclamaciÛn
+  Zcharacter '√°';                    ! a con acento
+  Zcharacter '√©';                    ! e con acento
+  Zcharacter '√≠';                    ! i con acento
+  Zcharacter '√≥';                    ! o con acento
+  Zcharacter '√∫';                    ! u con acento
+  Zcharacter '√±';                    ! n con virguilla
+  Zcharacter '√ë';                    ! N con virguilla
+  Zcharacter '√º';                    ! u con dieresis
+  Zcharacter '¬ø';                    ! abrir interrogaci√≥n
+  Zcharacter '¬°';                    ! abrir exclamaci√≥n
 #endif;
 
 !----------------------------------------------
@@ -76,30 +76,30 @@ Constant G_PLURAL    = 2;
 Class VerboIrregular;
 
 !------------------------------------
-! Globales especÌficas de InformatE!
+! Globales espec√≠ficas de InformatE!
 !------------------------------------
 
 global PreguntaCualExactamente = 0;
-! Esta variable se pone a 1 cuando se le pregunta al jugador øCu·l
+! Esta variable se pone a 1 cuando se le pregunta al jugador ¬øCu√°l
 ! exactamente...? esto indica que puede ser necesario re-traducir la
-! respuesta que el jugador dÈ, ya que puede que simplemente el jugador
+! respuesta que el jugador d√©, ya que puede que simplemente el jugador
 ! cambie de idea y en lugar de responder a nuestra pregunta introduzca
 ! un comando completamente nuevo.
 
 global PreguntaSiNo = 0;
 ! Esta variable debe ponerse a 1 manualmente si queremos que el verbo
 ! 'no' sea accesible como respuesta (y no como punto cardinal). La
-! variable sÛlo afecta a la siguiente respuesta del jugador y vuelve a
-! hacerse cero autom·ticamente.
+! variable s√≥lo afecta a la siguiente respuesta del jugador y vuelve a
+! hacerse cero autom√°ticamente.
 
-Global bandera_todo_vale; ! øy esta para quÈ sirve?
+Global bandera_todo_vale; ! ¬øy esta para qu√© sirve?
 Global quitacentos = 1;
 Array  texto_impreso --> 52;
 
 Global dialecto_sudamericano = 0;
 
 !---------------------------------------------------------------------------
-! Atributos y propiedades especÌficas de InformatE!, tambien usados en INFSP
+! Atributos y propiedades espec√≠ficas de InformatE!, tambien usados en INFSP
 !---------------------------------------------------------------------------
 
 Property additive adjectives;
@@ -133,7 +133,7 @@ Class   CompassDirection
         compass_look false,
   has   scenery;
 
-Object Compass "br˙jula" has concealed female ;
+Object Compass "br√∫jula" has concealed female ;
 
 #Ifndef WITHOUT_DIRECTIONS;
   CompassDirection -> n_obj "norte"
@@ -229,7 +229,7 @@ Constant ME1__WD      = '-me';
 Constant ME2__WD      = '-te';
 Constant ME3__WD      = '-se';
 Constant OF1__WD      = '.de';       ! no usados nunca, pues provocan
-Constant OF2__WD      = '.de';       ! interferencia con la preposiciÛn "de"
+Constant OF2__WD      = '.de';       ! interferencia con la preposici√≥n "de"
 Constant OF3__WD      = '.de';       ! usada por algunos verbos, como en
 Constant OF4__WD      = '.de';       ! "saca objeto de la caja"
 Constant OTHER1__WD    = 'otro';
@@ -247,7 +247,7 @@ Constant NO2__WD      = 'no';
 Constant NO3__WD      = 'no';
 Constant YES1__WD      = 's//';
 Constant YES2__WD      = 'si';
-Constant YES3__WD      = 'sÌ';
+Constant YES3__WD      = 's√≠';
 
 Constant AMUSING__WD = 'curiosidades';
 Constant FULLSCORE1__WD  = 'puntuacion';
@@ -271,7 +271,7 @@ Array LanguagePronouns table
     '-las'   $$000010000010                    NULL
     '-le'    $$110000110000                    NULL
     '-les'   $$000110000110                    NULL
-    'Èl'     $$100000100000                    NULL
+    '√©l'     $$100000100000                    NULL
     'ella'   $$010000010000                    NULL
     'ellos'  $$000100000100                    NULL
     'ellas'  $$000010000010                    NULL;
@@ -282,8 +282,8 @@ Array LanguageDescriptors table
     !              seguirles:  descriptor:       con:
     !          a     i
     !          s  p  s  p
-    !          mfnmfnmfnmfn                 
-    
+    !          mfnmfnmfnmfn
+
     'mi'     $$110110110110    POSSESS_PK      0
     'este'   $$100000100000    POSSESS_PK      0
     'estos'  $$000100000100    POSSESS_PK      0
@@ -303,7 +303,7 @@ Array LanguageDescriptors table
     'una'    $$010000010000    INDEFART_PK     NULL
     'unos'   $$000100000100    INDEFART_PK     NULL
     'unas'   $$000010000010    INDEFART_PK     NULL
-    'alg˙n'  $$100000100000    INDEFART_PK     NULL
+    'alg√∫n'  $$100000100000    INDEFART_PK     NULL
    'algunos' $$000100000100    INDEFART_PK     NULL
    'algunas' $$000010000010    INDEFART_PK     NULL
  'encendido' $$100000100000    light             NULL
@@ -319,15 +319,15 @@ Array LanguageNumbers table
     'un' 1 'uno' 1 'una' 1 'dos' 2 'tres' 3 'cuatro' 4 'cinco' 5
     'seis' 6 'siete' 7 'ocho' 8 'nueve' 9 'diez' 10
     'once' 11 'doce' 12 'trece' 13 'catorce' 14 'quince' 15
-    'diecisÈis' 16 'diecisiete' 17 'dieciocho' 18 'diecinueve' 19
+    'diecis√©is' 16 'diecisiete' 17 'dieciocho' 18 'diecinueve' 19
     'veinte' 20;
 
 ! ---------------------------------------------------------------------------
-!   Parte III.   TraducciÛn
+!   Parte III.   Traducci√≥n
 ! ---------------------------------------------------------------------------
 
 !------------------------------------
-! Funciones de ayuda a la depuraciÛn
+! Funciones de ayuda a la depuraci√≥n
 !------------------------------------
 
 [ ImprimeBuffer b desde l i;
@@ -358,9 +358,9 @@ Array LanguageNumbers table
 ! lugar tiene esa palabra en su campo nombre, name_f...
 !
 ! Es usada por la rutina ArreglarLosY, pues se mira si la palabra que
-! viene detr·s de la Y es un nombre, y si lo es, si es aplicable a alg˙n
-! objeto cercano. Observar que fallar· en los objetos que proporcionen
-! su propio parse_name. 
+! viene detr√°s de la Y es un nombre, y si lo es, si es aplicable a alg√∫n
+! objeto cercano. Observar que fallar√° en los objetos que proporcionen
+! su propio parse_name.
 !----------------------------------------------------------------
 [ EncajeSimplon w donde i;
   objectloop(i in donde) {
@@ -376,11 +376,11 @@ Array LanguageNumbers table
 
 
 ! ----------------------------------------------------------------------------
-!  Las siguientes pueden ser ˙tiles para los programadores de los
-!  ficheros de definiciÛn de lenguaje
+!  Las siguientes pueden ser √∫tiles para los programadores de los
+!  ficheros de definici√≥n de lenguaje
 ! ----------------------------------------------------------------------------
 
-! InsertarLetraBuffer ya es soportada por la funcion de f·brica LTI_Insert
+! InsertarLetraBuffer ya es soportada por la funcion de f√°brica LTI_Insert
 
 [ BorrarBuffer b p i; ! infsp TODO : esta funcion no se usa, la borramos?
     ! Rellena con espacios el buffer
@@ -393,27 +393,27 @@ Array LanguageNumbers table
 !----------------------------------------------------------------
 ! QuitarAcentos
 !
-! La siguiente funciÛn prueba a quitar los acentos de las palabras que
+! La siguiente funci√≥n prueba a quitar los acentos de las palabras que
 ! no hayan podido ser interpretadas. De este modo, el jugador puede usar
 ! o no los acentos. Para ello el juego debe definir las palabras sin acentos
 ! por ejemplo:
-! object sillon "sillÛn confortable"
+! object sillon "sill√≥n confortable"
 ! with name 'sillon' 'confortable'
 !
 ! Si el jugador pone: "mira sillon", la palabra encaja directamente y es
-! comprendida. Si pone "mira sillÛn", no es comprendida, de modo que se
+! comprendida. Si pone "mira sill√≥n", no es comprendida, de modo que se
 ! le quita el acento y se reintenta el parsing.
 !
 ! Este caso no es especialmente importante, pues el programador
-! siempre puede definir 'sillon' y 'sillÛn', ambos como nombres para
-! el objeto. Pero el asunto es m·s importante para el caso de los
-! verbos, ya que si el jugador teclea "cÛgelo" este es separado en
-! "cÛge" y "-lo" y el verbo "cÛge" (con acento) no serÌa
+! siempre puede definir 'sillon' y 'sill√≥n', ambos como nombres para
+! el objeto. Pero el asunto es m√°s importante para el caso de los
+! verbos, ya que si el jugador teclea "c√≥gelo" este es separado en
+! "c√≥ge" y "-lo" y el verbo "c√≥ge" (con acento) no ser√≠a
 ! comprendido.
 !
-! La llamada a esta funciÛn puede desactivarse con el comando de
-! debugging "acentos sÌ" de modo que los acentos que teclee el jugador
-! no ser·n eliminados (con propÛsitos de depuraciÛn)
+! La llamada a esta funci√≥n puede desactivarse con el comando de
+! debugging "acentos s√≠" de modo que los acentos que teclee el jugador
+! no ser√°n eliminados (con prop√≥sitos de depuraci√≥n)
 
 [ QuitarAcentos buf pars x i word at len;
 
@@ -423,12 +423,12 @@ Array LanguageNumbers table
           print "Buffer recibido: |";
              ImprimeTodoElBuffer(buf);
           print "|^";
-    } 
-    tokenise__(buf, pars); 
+    }
+    tokenise__(buf, pars);
     for (x=1:x<=tokenCount(pars):x++) ! para cada token
     {
   word = tokenDict (pars,x); !dictionary value of token 1,2,3...
-  at = tokenPos (pars,x); ! position in buffer of token 1,2,3... 
+  at = tokenPos (pars,x); ! position in buffer of token 1,2,3...
   len = WordLength (x);! length in chars of token 1,2,3...
 
   if (word==0) ! no comprendida
@@ -442,20 +442,20 @@ Array LanguageNumbers table
     for (i=at:i<at+len:i++)
        switch(buf->i)
       {
-      '·': buf->i='a';
-      'È': buf->i='e';
-      'Î': buf->i='e';
-      'Ì': buf->i='i';
-      'Û': buf->i='o';
-      '˙': buf->i='u';
-      '¸': buf->i='u';
-      'Ò': buf->i='n'; 
+      '√°': buf->i='a';
+      '√©': buf->i='e';
+      '√´': buf->i='e';
+      '√≠': buf->i='i';
+      '√≥': buf->i='o';
+      '√∫': buf->i='u';
+      '√º': buf->i='u';
+      '√±': buf->i='n';
     !             '?': buf->i=' ';
-    !             'ø': buf->i=' ';
+    !             '¬ø': buf->i=' ';
     !             '!': buf->i=' ';
-    !         '°': buf->i=' ' ;    
+    !         '¬°': buf->i=' ' ;
        }
-        tokenise__(buf, pars); 
+        tokenise__(buf, pars);
         }
     }
 
@@ -505,9 +505,9 @@ Array LanguageNumbers table
 !
 ! Esta parte es interesante. Debe separar los sufijos pronominales
 ! como en "cogela" "mirale", claro que no basta con ver si las dos
-! ˙ltimas letras del verbo son "la" "le", etc, pues el verbo podrÌa
-! terminar de forma "natural" en esas letras (como en "habla"). AsÌ
-! que hay que separar el sufijo sÛlo si el verbo no ha sido hallado en
+! √∫ltimas letras del verbo son "la" "le", etc, pues el verbo podr√≠a
+! terminar de forma "natural" en esas letras (como en "habla"). As√≠
+! que hay que separar el sufijo s√≥lo si el verbo no ha sido hallado en
 ! el diccionario.
 !
 [ LanguageToInformese ;
@@ -515,14 +515,14 @@ Array LanguageNumbers table
     EspanolAInformes(buffer, parse);
 ];
 
-! La funciÛn que verdaderamente hace la traducciÛn es la siguiente. Ha
-! sido separada de LanguageToInformese porque es llamada tambiÈn desde
+! La funci√≥n que verdaderamente hace la traducci√≥n es la siguiente. Ha
+! sido separada de LanguageToInformese porque es llamada tambi√©n desde
 ! LanguageIsVerb, pero recibe un buffer diferente para procesar.
 
 [ EspanolAInformes buf pars x i word at len romper_en siguiente retokenise at2;
 
 !    print "   EspanolAInformes called^"; ! infsp debug
-    
+
 
 #ifdef TARGET_GLULX; ! TARGET_GLULX
     buf = PasarAMinuscula (buf); ![INFSP] Necesario para q no cazque al procesar infinitivos
@@ -537,23 +537,23 @@ Array LanguageNumbers table
           print "Buffer recibido: |";
     ImprimeTodoElBuffer(buf);
           print "|^  ";
-    } 
+    }
     if (quitacentos) QuitarAcentos(buf, pars);
 
     for (x=1:x<=tokenCount(pars):x++) ! para cada token
     {
   word = tokenDict (pars,x); !dictionary value of token 1,2,3...
-  at = tokenPos (pars,x); ! position in buffer of token 1,2,3... 
+  at = tokenPos (pars,x); ! position in buffer of token 1,2,3...
   len = tokenLen (pars,x);! length in chars of token 1,2,3...
 
   if (parser_trace>=7){
           print "Palabra ",x," : ";
           if (word==0)
             print "<no comprendida>";
-          else 
+          else
             print (address) word," ^";
           print " ^";
-        }        
+        }
 
   if (dialecto_sudamericano && (word == 'coge'))
   {
@@ -565,34 +565,34 @@ Array LanguageNumbers table
     if (dialecto_sudamericano == 1)  ! [071030_git]
     {
       print "[Este juego utiliza por defecto el dialecto sudamericano,
-        por lo que aquÌ COGER es entendido como una palabra
+        por lo que aqu√≠ COGER es entendido como una palabra
         malsonante. Por favor, utiliza TOMAR en su lugar, o bien
         elige el dialecto castellano con DIALECTO CASTELLANO.]^";
       dialecto_sudamericano = 2;
     }
   }
-    
+
     if (word=='del' or 'al')
     {
         buf->(at+len-1)=' ';    ! convertir "del" "al" en "de"
                                        ! "a" respectivamente
         retokenise=1;
     }
-    
+
 
     ! Si el jugador ha escrito "no", y previamente el programador
-    ! habÌa puesto a 1 el flag "PreguntaSiNo" (que indica que
-    ! acaba de hacerse una pregunta que podrÌa admitir NO como
+    ! hab√≠a puesto a 1 el flag "PreguntaSiNo" (que indica que
+    ! acaba de hacerse una pregunta que podr√≠a admitir NO como
     ! respuesta), en ese caso cambiamos "no" por "xo". La
-    ! gram·tica define el verbo "xo" para generar la acciÛn NO
-    ! (negar), y asÌ lo distinguimos de la acciÛn "Ir noroeste"
+    ! gram√°tica define el verbo "xo" para generar la acci√≥n NO
+    ! (negar), y as√≠ lo distinguimos de la acci√≥n "Ir noroeste"
     if ((word=='no')&&(PreguntaSiNo==1))
     {
         buf->(at+len-1)='x';
         PreguntaSiNo=0;
         retokenise=1;
     }
-        
+
         ! "pegar" las expresiones "y luego" "y despues" "y entonces"
         ! para que queden "yluego" "ydespues" "yentonces"
         ! que es como las reconoce el parser
@@ -602,9 +602,9 @@ Array LanguageNumbers table
 
   if (siguiente==DESPUES11_WD or DESPUES21_WD or DESPUES31_WD)
        {
-     at2 = tokenPos (pars,x+1); ! position in buffer of token 1,2,3... 
+     at2 = tokenPos (pars,x+1); ! position in buffer of token 1,2,3...
            for (i=0:i<tokenLen(pars,x+1):i++){
-                   buf->(at2+i) = ' '; ! borrar palabra 'entonces' (pis·ndola con espacios)
+                   buf->(at2+i) = ' '; ! borrar palabra 'entonces' (pis√°ndola con espacios)
      }
            buf->(at+len)='l'; ! agregar 'luego' inmediatamente despues de 'y', formando 'yluego'
            buf->(at+len+1)='u';
@@ -618,7 +618,7 @@ Array LanguageNumbers table
     print "Buffer recibido: |";
     ImprimeTodoElBuffer(buf);
     print "|^  ";
-      } 
+      }
        }
     }
 
@@ -630,8 +630,8 @@ Array LanguageNumbers table
             ImprimeBuffer(buf, at, len);
             print "|^";
         }
-        
-        if (len > 2) !sÛlo si tiene m·s de tres letras
+
+        if (len > 2) !s√≥lo si tiene m√°s de tres letras
         {
            romper_en=0;
            if ((buf->(at+len-1)=='s') &&
@@ -643,16 +643,16 @@ Array LanguageNumbers table
             romper_en=2;
            if ((buf->(at+len-1)=='e') &&
             (buf->(at+len-2)=='m' or 't' or 's'))
-            romper_en=2;  ! [001108] Antes ponÌa == °serÈ burro!
-           if (romper_en) 
+            romper_en=2;  ! [001108] Antes pon√≠a == ¬°ser√© burro!
+           if (romper_en)
            {
             ! [990524]
             ! Antes de modificar el buffer, comprobemos si
-            ! servir· para algo, es decir, si la palabra que
+            ! servir√° para algo, es decir, si la palabra que
             ! queda una vez separado el sufijo existe en el
             ! diccionario y es un verbo
             i=DictionaryLookup(buf+at, len-romper_en);
-            
+
               if (i) if ((i->#dict_par1)&1)
               {
                 LTI_Insert(at+len-romper_en, '-', buf);
@@ -675,18 +675,18 @@ Array LanguageNumbers table
        tokenise__(buf, pars);
 
     ArreglarLosY(buf, pars);
-    
+
     ! Como paso final, quitamos las palabras que aparezcan dos veces
     ! seguidas. Esto puede ocurrir si el jugador teclea un comando
-    ! incompleto, como "MIRA HACIA", y el parser le pregunta "øHacia
+    ! incompleto, como "MIRA HACIA", y el parser le pregunta "¬øHacia
     ! donde quieres mirar?" y el jugador responde "HACIA EL NORTE". En
-    ! este caso se construirÌa la orden concatenada: "MIRA HACIA HACIA
+    ! este caso se construir√≠a la orden concatenada: "MIRA HACIA HACIA
     ! EL NORTE".
     if (PreguntaCualExactamente==1){
         PreguntaCualExactamente=0;
         EliminarDuplicados(buf, pars);
     }
-    
+
     if (parser_trace>=7){
        print "Buffer traducido a informese: ^|";
         ImprimeTodoElBuffer(buf);
@@ -708,15 +708,15 @@ Array LanguageNumbers table
         ! [010515] arreglado bug. at y len no apuntaban a la
         ! palabra siguiente, sino a la propia 'y', por lo que no
         ! eran reconocidos los verbos en infinitivo
-    at = tokenPos (pars,x+1); ! position in buffer of token siguiente 
+    at = tokenPos (pars,x+1); ! position in buffer of token siguiente
     len = tokenLen (pars,x+1);! length in chars of token siguiente
 
-        ! [010515] AÒadido. Si la palabra es noun, se retorna
-        ! (aunque pueda ser tambiÈn un verbo) de este modo, en
+        ! [010515] A√±adido. Si la palabra es noun, se retorna
+        ! (aunque pueda ser tambi√©n un verbo) de este modo, en
         ! COGE VINO Y CAVA, si el juego tiene un objeto llamado
-        ! "cava", la frase ser· parseada como tratando de coger
+        ! "cava", la frase ser√° parseada como tratando de coger
         ! dos objetos, llamados "vino" y "cava". Si el juego no
-        ! define el sustantivo "cava", la frase ser· parseada como
+        ! define el sustantivo "cava", la frase ser√° parseada como
         ! dos acciones en secuencia <<Coger vino>> y <<Excavar>>
     if (i && (i->#dict_par1)&128) {
       if (EncajeSimplon(i, location)) continue;
@@ -724,7 +724,7 @@ Array LanguageNumbers table
     if (i && ((i->#dict_par1)&1)||QuitandoRFinal(buf+at,len)||
       BuscarEntreVerbosIrregulares(buf+at, len))
     {
-      at = tokenPos (pars,x); ! position in buffer of token siguiente 
+      at = tokenPos (pars,x); ! position in buffer of token siguiente
       buf->(at)='.';
       retoke=true;
     }
@@ -743,12 +743,12 @@ Array LanguageNumbers table
           print "Buffer recibido: |";
               ImprimeTodoElBuffer(buf);
           print "| (", pars->1, " palabras)^";
-    } 
+    }
     for (x=1:x<=tokenCount(pars):x++) ! para cada token
     {
   word = tokenDict (pars,x); !dictionary value of token 1,2,3...
   siguiente = tokenDict (pars,x+1); !dictionary value of token 1,2,3...
-  at = tokenPos (pars,x); ! position in buffer of token 1,2,3... 
+  at = tokenPos (pars,x); ! position in buffer of token 1,2,3...
   len = tokenLen (pars,x);! length in chars of token 1,2,3...
     if ((word==siguiente) && (word~=0))
     {
@@ -758,7 +758,7 @@ Array LanguageNumbers table
         retokenise=1;
     }
     }
-    if (retokenise) 
+    if (retokenise)
     tokenise__(buf, pars);
 
     if (parser_trace>=8) !imprimir el buffer recibido
@@ -766,29 +766,29 @@ Array LanguageNumbers table
           print "Buffer resultante: |";
         ImprimeTodoElBuffer(buf);
           print "| (", pars->1, " palabras)^";
-    } 
+    }
 ];
 
 
-! La siguiente funciÛn debe devolver si el verbo recibido es
-! reconocido o no. Se recibe el buffer completo y "pos" indica quÈ
+! La siguiente funci√≥n debe devolver si el verbo recibido es
+! reconocido o no. Se recibe el buffer completo y "pos" indica qu√©
 ! palabra dentro del buffer "pars" es el supuesto verbo.
-! Hay que devolver la direcciÛn de diccionario del verbo en cuestiÛn.
+! Hay que devolver la direcci√≥n de diccionario del verbo en cuesti√≥n.
 !
-! Lo usamos para admitir infinitivos. El mÈtodo es:
+! Lo usamos para admitir infinitivos. El m√©todo es:
 !   Si la palabra corresponde a una palabra de diccionario, no hacemos
 !   nada (retornamos esa palabra, sin molestarnos en comprobar que sea
-!   un verbo. Ya lo har· el parser).
+!   un verbo. Ya lo har√° el parser).
 !
-!   Si la palabra no est· en el diccionario, miramos si termina en
-!   'r', y de ser asÌ se la quitamos y re-tokenizamos. Si de este modo
+!   Si la palabra no est√° en el diccionario, miramos si termina en
+!   'r', y de ser as√≠ se la quitamos y re-tokenizamos. Si de este modo
 !   se obtiene una palabra en el diccionario, retornamos su valor (sin
-!   comprobar que sea un verbo, ya lo har· el parser).
+!   comprobar que sea un verbo, ya lo har√° el parser).
 !
 !   Si tampoco de este modo se reconoce, comparamos la palabra dada
 !   con todos los verbos irregulares conocidos. Si en uno de ellos
 !   encontramos coincidencia, retornamos el primer elemento de la
-!   propiedad "imperativo" del verbo en cuestiÛn.
+!   propiedad "imperativo" del verbo en cuesti√≥n.
 !
 !   En el caso de la desambiguacion, puede darse que el jugador responda
 !   con un verbo nuevo, pero con sufijo pronominal la/le/lo/me/te/se (ej. examinala)
@@ -796,31 +796,31 @@ Array LanguageNumbers table
 
 [ LanguageIsVerb buf pars pos
     i word at len;
-    
+
     if (parser_trace>=7) !imprimir el buffer recibido
     {
   print "^[ LanguageIsVerb:  ";
   print "Buffer recibido: |";
     ImprimeTodoElBuffer(buf);
   print "|, pos=", pos, "^  ";
-    } 
+    }
 
-    if (PreguntaCualExactamente) ! caso de desambiguaciÛn
+    if (PreguntaCualExactamente) ! caso de desambiguaci√≥n
   EspanolAInformes(buf, pars); ! revisar la existencia de sufijos pronominales la/le/lo/me/te/se
 
     word = tokenDict (pars,pos); !dictionary value of token 1,2,3...
-    at = tokenPos (pars,pos); ! position in buffer of token 1,2,3... 
+    at = tokenPos (pars,pos); ! position in buffer of token 1,2,3...
     len = tokenLen (pars,pos);! length in chars of token 1,2,3...
 
-    ! Si la palabra se reconoce, devolverla sin m·s
+    ! Si la palabra se reconoce, devolverla sin m√°s
      if (word~=0 && word->#dict_par1 & 1 ~= 0)
     {
   if (parser_trace>=7) print " la palabra ~", (address)
-    word, "~ est· en el diccionario.^";
+    word, "~ est√° en el diccionario.^";
   return    (word);
     }
 
-   
+
     ! Si no, probar a ver si se reconoce sin la 'r' final
     i=QuitandoRFinal(buf + at,len);
 
@@ -830,22 +830,22 @@ Array LanguageNumbers table
   if (parser_trace>=7) print "^ Verbo reconocido
     al quitarle la 'r' final.^";
     }
-    else 
+    else
     {
   if (parser_trace>=7) print "^ Verbo no reconocido sin la
     'r'. ^Probando irregulares...";
 
   i=BuscarEntreVerbosIrregulares(buf + at,len);
-  if (parser_trace>=7) 
+  if (parser_trace>=7)
   {
     if (i==0) print "No reconocido como irregular.^";
     else print "      Reconocido como el verbo ", (address) i, "^";
   }
     }
 
-    if (parser_trace>=7) 
+    if (parser_trace>=7)
         print " ^                   -- end LanguageIsVerb ]^";
-    return i;    
+    return i;
 ];
 
 !#ifdef ADMITIR_INFINITIVOS;
@@ -862,7 +862,7 @@ Array LanguageNumbers table
     if (parser_trace>=9) print "No termina en 'r'^";
     return 0;
     }
-    
+
     i=DictionaryLookup(texto, longitud-1);
 !    if ((dialecto_sudamericano==1)&&(i=='coge')) return 'jode';
     if (dialecto_sudamericano && (i == 'coge'))
@@ -870,7 +870,7 @@ Array LanguageNumbers table
       if (dialecto_sudamericano == 1)  ! [071030] git
       {
         print "[Este juego utiliza por defecto el dialecto sudamericano,
-                por lo que aquÌ COGER es entendido como una palabra
+                por lo que aqu√≠ COGER es entendido como una palabra
                 malsonante. Por favor, utiliza TOMAR en su lugar, o bien
                 elige el dialecto castellano con DIALECTO CASTELLANO.]^";
         dialecto_sudamericano = 2;
@@ -878,9 +878,9 @@ Array LanguageNumbers table
       return 'jode';
     }
     if ((i->#dict_par1)&1) return i;
-    else 
+    else
     {
-    if (parser_trace>=9) print "Est· en el diccionario, pero no es
+    if (parser_trace>=9) print "Est√° en el diccionario, pero no es
         verbo.^";
     return 0;
     }
@@ -903,17 +903,17 @@ Array LanguageNumbers table
 #ifdef TARGET_GLULX;
         k=PrintAnyToArray(texto_impreso+WORDSIZE, 46, verbo);
 #endif; !TARGET_
-    
+
         !Si sus longitudes no coinciden no es necesario seguir comparando
         if (k~=longitud) jump NoCoincide;
-    
+
         !Si sus longitudes coinciden, miramos letra a letra
         for (i=0:i<k:i++)
             if ((texto->i)~=(texto_impreso->(i+WORDSIZE)))
         jump NoCoincide; ! si una sola letra no coincide,
     ! Si ha pasado los test anteriores, hemos hallado una
     ! coincidencia
-    if (parser_trace>=8) print "°coincide!^";
+    if (parser_trace>=8) print "¬°coincide!^";
     return (verbo.&imperativo-->0);
 
     .NoCoincide;
@@ -929,12 +929,12 @@ Array LanguageNumbers table
 ! ---------------------------------------------------------------------------
 
 
-! Definimos una funciÛn para imprimir el verbo coger. Esto hace m·s f·cil
-! la adaptaciÛn de los juegos a los dialectos sudamericanos, en los
+! Definimos una funci√≥n para imprimir el verbo coger. Esto hace m√°s f√°cil
+! la adaptaci√≥n de los juegos a los dialectos sudamericanos, en los
 ! que debe usarse "tomar" en lugar de "coger"
-! 
+!
 ! La variable global que elige el dialecto se fija en tiempo de
-! ejecuciÛn con el meta-verbo "dialecto". TambiÈn puede fijarse en
+! ejecuci√≥n con el meta-verbo "dialecto". Tambi√©n puede fijarse en
 ! Initialize para que su valor por defecto sea 1.
 !
 [ coge sufijo;
@@ -945,7 +945,7 @@ Array LanguageNumbers table
        print (string) sufijo;
 ];
 
-! La siguiente es la versiÛn con la primera letra may˙scula
+! La siguiente es la versi√≥n con la primera letra may√∫scula
 
 [ MCoge sufijo;
     if (dialecto_sudamericano)
@@ -955,7 +955,7 @@ Array LanguageNumbers table
        print (string) sufijo;
 ];
 
-! Y finalmente una versiÛn con todo may˙sculas
+! Y finalmente una versi√≥n con todo may√∫sculas
 
 [ MMCoge sufijo;
     if (dialecto_sudamericano)
@@ -964,15 +964,15 @@ Array LanguageNumbers table
     if (sufijo ~= 0)
        print (string) sufijo;
 ];
-    
+
 
 
 Constant LanguageAnimateGender   = male;
 Constant LanguageInanimateGender = male;
 
-Constant LanguageContractionForms = 1;     ! Para el espaÒol
-! No se produce contracciÛn del artÌculo. SÛlo de las preposiciones
-! como en "del" y "al", pero eso no est· contemplado por el manual
+Constant LanguageContractionForms = 1;     ! Para el espa√±ol
+! No se produce contracci√≥n del art√≠culo. S√≥lo de las preposiciones
+! como en "del" y "al", pero eso no est√° contemplado por el manual
 ! del traductor, por lo que es necesario otro tipo de truco
 
 [ LanguageContraction ;
@@ -980,16 +980,16 @@ Constant LanguageContractionForms = 1;     ! Para el espaÒol
 ];
 
 Array LanguageArticles -->
-    ! Forma de contracciÛn 0:
-    ! Cdef   Def  Indef  
-    "El " "el " "un "    
-    "La " "la " "una "   
-    "Los " "los " "unos "  
+    ! Forma de contracci√≥n 0:
+    ! Cdef   Def  Indef
+    "El " "el " "un "
+    "La " "la " "una "
+    "Los " "los " "unos "
     "Las " "las " "unas ";
 
                    !             a           i
                    !             s     p     s     p
-                   !             m f n m f n m f n m f n                 
+                   !             m f n m f n m f n m f n
 Array LanguageGNAsToArticles --> 0 1 0 2 3 2 0 1 0 2 3 2;
 
 [ LanguageDirection d; ! [INFSP] Se agregaron los articulos, para una correcta impresion.
@@ -1013,16 +1013,16 @@ Array LanguageGNAsToArticles --> 0 1 0 2 3 2 0 1 0 2 3 2;
 [ LanguageNumber n venti m;
     if (n==0) { print "cero"; rfalse; }
     if (n<0) { print "menos "; n=-n; }
-    if (n>=1000) { 
+    if (n>=1000) {
         if (n<2000) print "mil";
-        else { LanguageNumber(n/1000,1); print " mil";} 
-        n=n%1000; 
+        else { LanguageNumber(n/1000,1); print " mil";}
+        n=n%1000;
         if (n~=0) print " ";
         }
-    if (n>=100)  { 
-     CientosEspanol(n/100); 
+    if (n>=100)  {
+     CientosEspanol(n/100);
          if (n%100~=0) print " ";
-     n=n%100; 
+     n=n%100;
     }
     if (n==0) rfalse;
 
@@ -1043,7 +1043,7 @@ Array LanguageGNAsToArticles --> 0 1 0 2 3 2 0 1 0 2 3 2;
           if (m==8) print "ochenta";
           if (m==9) print "noventa";
           if (n%10==0) rfalse;
-          if (m>2) print " y "; 
+          if (m>2) print " y ";
           DigitoEspanol(n%10, (m==2)&&(venti==0)); rfalse;
     }
     if (n==10) { print "diez"; rfalse; }
@@ -1052,7 +1052,7 @@ Array LanguageGNAsToArticles --> 0 1 0 2 3 2 0 1 0 2 3 2;
     if (n==13) { print "trece"; rfalse; }
     if (n==14) { print "catorce"; rfalse; }
     if (n==15) { print "quince"; rfalse; }
-    if (n==16) { print "diecisÈis"; rfalse; }
+    if (n==16) { print "diecis√©is"; rfalse; }
     if (n==17) { print "diecisiete"; rfalse; }
     if (n==18) { print "dieciocho"; rfalse; }
     print "diecinueve";
@@ -1060,16 +1060,16 @@ Array LanguageGNAsToArticles --> 0 1 0 2 3 2 0 1 0 2 3 2;
 
 [ DigitoEspanol n venti;
     if (n==1) { print "un"; rfalse; }
-    if (n==2) { 
-         if (venti) {print "dÛs";} else {print "dos"; };
+    if (n==2) {
+         if (venti) {print "d√≥s";} else {print "dos"; };
          rfalse; }
-    if (n==3) { 
-         if (venti) {print "trÈs";} else {print "tres"; };
+    if (n==3) {
+         if (venti) {print "tr√©s";} else {print "tres"; };
          rfalse; }
     if (n==4) { print "cuatro"; rfalse; }
     if (n==5) { print "cinco"; rfalse; }
-    if (n==6) { 
-         if (venti) {print "sÈis";} else {print "seis"; };
+    if (n==6) {
+         if (venti) {print "s√©is";} else {print "seis"; };
          rfalse; }
     if (n==7) { print "siete"; rfalse; }
     if (n==8) { print "ocho"; rfalse; }
@@ -1101,23 +1101,23 @@ print "cientos"; rfalse;
 
     if (ImprimirIrregular(i)==0){
         !print "^   LanguageVerb: Verbo no es irregular.^"; ! infsp debug
-      
-      ! Tatar de matchear con la br˙jula - 807.7 infsp
+
+      ! Tatar de matchear con la br√∫jula - 807.7 infsp
       objectloop (aux ofclass CompassDirection){
         if (WordInProperty(i, aux, name)) {
-          print "ir hacia alg˙n lado";
+          print "ir hacia alg√∫n lado";
 !          !LanguageDirection (aux.door_dir); ! the direction name as adverb
-          rtrue; ! no avanzar m·s en la rutina
-        }    
+          rtrue; ! no avanzar m√°s en la rutina
+        }
        }
-       
+
        ! Un ultimo intento, con una rutina stub a proveer por el autor
        if (PrintVerb(i)==0){
          print (address) i; print "r";
         }
     }
      if (i=='mete') rtrue;
-         
+
 #ifdef TARGET_ZCODE;
     ! Comprobemos si era un verbo reflexivo (-te)
     texto_impreso-->0 = 50;
@@ -1137,7 +1137,7 @@ print "cientos"; rfalse;
 #ifdef TARGET_GLULX;
     aux=PrintAnyToArray(texto_impreso, 50, i);
     if ((texto_impreso->(aux-1)=='e')&&
-        (texto_impreso->(aux-2) == 't' or 's' or 'm')) 
+        (texto_impreso->(aux-2) == 't' or 's' or 'm'))
     {
        if (actor ~= player) print "se";
         else print (string) PARTICULA_TE;
@@ -1150,27 +1150,27 @@ print "cientos"; rfalse;
 
 [ ImprimirIrregular v i;
   ! Imprime los verbos irregulares (es decir, aquellos en los que no basta
-  ! aÒadir una "r" al imperativo). Por ejemplo, si el jugador teclea "friega"
-  ! la respuesta por defecto serÌa "øQuÈ quieres friegar?"
+  ! a√±adir una "r" al imperativo). Por ejemplo, si el jugador teclea "friega"
+  ! la respuesta por defecto ser√≠a "¬øQu√© quieres friegar?"
   ! Para evitar esto, el programador debe definir un objeto de la clase
   ! VerboIrregular, con nombre "fregar" y propiedad name = "friega"
-  ! Esta rutina busca entre los verbos asÌ definidos, en el campo name
+  ! Esta rutina busca entre los verbos as√≠ definidos, en el campo name
   ! y si encuentra una coincidencia imprime el nombre del objeto para
-  ! el cual se hallÛ.
+  ! el cual se hall√≥.
 
-  ! Para mayor flexibilidad a˙n, se permite que el programador incluya
+  ! Para mayor flexibilidad a√∫n, se permite que el programador incluya
   ! una rutina en la propiedad nombre_corto del verbo, por si el nombre
-  ! del verbo a imprimir es variable seg˙n el momento en que se llame.
-  ! Si existe nombre_corto para el verbo en cuestiÛn, se ejecuta dicha rutina
-  ! de lo contrario se imprime el nombre de ese verbo sin m·s.
+  ! del verbo a imprimir es variable seg√∫n el momento en que se llame.
+  ! Si existe nombre_corto para el verbo en cuesti√≥n, se ejecuta dicha rutina
+  ! de lo contrario se imprime el nombre de ese verbo sin m√°s.
 
-  ! Ver SpanishG.h para ejemplos de declaraciÛn de verbos irregulares.
+  ! Ver SpanishG.h para ejemplos de declaraci√≥n de verbos irregulares.
 
   objectloop (i ofclass VerboIrregular)
    if (WordInProperty(v, i, imperativo)) {
      if (i.&short_name~=0) return(PrintOrRun(i, short_name, 1));
      else { print (name) i; rtrue;}}
-     
+
   rfalse;
 ];
 
@@ -1227,7 +1227,7 @@ print "cientos"; rfalse;
 Constant NKEY__TX      = "S = Siguiente";
 Constant PKEY__TX      = "    P=Previo";
 Constant QKEY1__TX     = "Q=Volver al juego";
-Constant QKEY2__TX     = "Q = Men˙ anterior";
+Constant QKEY2__TX     = "Q = Men√∫ anterior";
 Constant RKEY__TX      = "INTRO = leer este tema";
 
 Constant NKEY1__KY     = 'S';
@@ -1243,8 +1243,8 @@ Constant TIME__TX      = "Hora: ";
 
 Constant DARKNESS__TX  = "Oscuridad";
 
-! En la revisiÛn [020415] las constantes HAY*__TX se han trasladado al
-! fichero Mensajes, pues dependen del tiempo, persona y n˙mero verbales.
+! En la revisi√≥n [020415] las constantes HAY*__TX se han trasladado al
+! fichero Mensajes, pues dependen del tiempo, persona y n√∫mero verbales.
 ! INFSP - Se volvieron a su lugar, pues no se usa Mensajes.h
 
 Constant THOSET__TX    = "esas cosas";
@@ -1252,30 +1252,30 @@ Constant THAT__TX      = "eso";
 Constant OR__TX        = " o ";
 Constant NOTHING__TX   = "nada";
 Constant AND__TX       = " y ";
-Constant WHOM__TX      = "que ";  ! Al parecer, aquÌ sobraban los espacios
+Constant WHOM__TX      = "que ";  ! Al parecer, aqu√≠ sobraban los espacios
 Constant WHICH__TX     = "que ";  ! de antes de los 'que'. [020423]
 Constant COMMA__TX     = ", ";
 
 
-! Funciones para manejar concordancias de gÈnero y n˙mero en los
-! mensajes de respuesta genÈricos.
+! Funciones para manejar concordancias de g√©nero y n√∫mero en los
+! mensajes de respuesta gen√©ricos.
 !
-! o -> escribe la terminaciÛn -o -a -os -as seg˙n el gÈnero y n˙mero
+! o -> escribe la terminaci√≥n -o -a -os -as seg√∫n el g√©nero y n√∫mero
 ! del objeto recibido, para hacer concordar los adjetivos.
 !
-! n -> escribe la terminaciÛn -"" -n seg˙n el n˙mero del objeto, para
+! n -> escribe la terminaci√≥n -"" -n seg√∫n el n√∫mero del objeto, para
 ! hacer concordar el verbo en plural.
 !
-! esta -> escribe "est·" o "est·n" seg˙n el n˙mero del objeto.
+! esta -> escribe "est√°" o "est√°n" seg√∫n el n√∫mero del objeto.
 !
-! del -> escribe "del" "de la" "de los" "de las" seg˙n el gÈnero y
-! n˙mero del objeto. En realidad, determina quÈ artÌculo habrÌa de ir
-! y si Èste es "el" realiza la contracciÛn "del".
+! del -> escribe "del" "de la" "de los" "de las" seg√∫n el g√©nero y
+! n√∫mero del objeto. En realidad, determina qu√© art√≠culo habr√≠a de ir
+! y si √©ste es "el" realiza la contracci√≥n "del".
 !
 ! al -> como del, pero con "al" "a la" "a los" "a las".
 !
-! lo -> Escribe "lo" "la" "le" "los" "las" "les" (proname) seg˙n el
-! gÈnero y n˙mero del objeto y seg˙n sea animate o no.
+! lo -> Escribe "lo" "la" "le" "los" "las" "les" (proname) seg√∫n el
+! g√©nero y n√∫mero del objeto y seg√∫n sea animate o no.
 !
 
 [ o obj gna;
@@ -1288,7 +1288,7 @@ Constant COMMA__TX     = ", ";
      3,9: print "os";
      4,10: print "as";
     }
-];    
+];
 
 [ e obj gna;
 
@@ -1313,7 +1313,7 @@ Constant COMMA__TX     = ", ";
 ];
 
 [ esta obj;
-    print "est·", (n) obj;
+    print "est√°", (n) obj;
 ];
 
 [ es obj;
@@ -1353,7 +1353,7 @@ Constant COMMA__TX     = ", ";
 !];
 
 [ un obj;
-!  if (obj has proper) print "a "; ![infsp] ya se incluyÛ esta linea en el hackeo de Indefart.
+!  if (obj has proper) print "a "; ![infsp] ya se incluy√≥ esta linea en el hackeo de Indefart.
   print (a) obj;
 ];
 
@@ -1371,18 +1371,18 @@ Constant COMMA__TX     = ", ";
 ];
 
 
-! "al" y "del" plantean un bonito problema. La contracciÛn debe
-! producirse si el artÌculo es "el", pero esto no se sabe consultando
+! "al" y "del" plantean un bonito problema. La contracci√≥n debe
+! producirse si el art√≠culo es "el", pero esto no se sabe consultando
 ! el GNA, pues hay palabras como "aguila" que son femeninas y no
-! obstante usan "el" como artÌculo.
-! El truquillo consiste en llamar a (the) para averiguar quÈ artÌculo
-! se imprimirÌa (pero capturando la salida de ese print y guard·ndola
-! en una variable). Si el artÌculo en cuestiÛn empieza por 'e', se
-! produce la contracciÛn.
+! obstante usan "el" como art√≠culo.
+! El truquillo consiste en llamar a (the) para averiguar qu√© art√≠culo
+! se imprimir√≠a (pero capturando la salida de ese print y guard√°ndola
+! en una variable). Si el art√≠culo en cuesti√≥n empieza por 'e', se
+! produce la contracci√≥n.
 !
 ! Para capturar la salida a una variable, es necesario descender al
-! lenguaje ensamblador de la Z machine. Este truco lo aprendÌ del
-! Designers manual (respuesta al ejercicio 96, p·gina 249)
+! lenguaje ensamblador de la Z machine. Este truco lo aprend√≠ del
+! Designers manual (respuesta al ejercicio 96, p√°gina 249)
 !
 !------------------------------------------------------------------------------
 ! ELIUK BLAU: He re-implementado la rutina para permitir que la primera letra
@@ -1412,12 +1412,12 @@ Constant COMMA__TX     = ", ";
     PrefaceByArticle(obj, 1, -1);
 ];
 
-! Con "al" el truco es m·s complejo, ya que si el artÌculo impreso por
+! Con "al" el truco es m√°s complejo, ya que si el art√≠culo impreso por
 ! el_ empieza por "e", hay que cambiar esta "e" por una "a". Y si no
 ! empieza por "e" hay que poner una "a" delante.
-! Adem·s debemos capturar el caso de que no se imprima artÌculo alguno
+! Adem√°s debemos capturar el caso de que no se imprima art√≠culo alguno
 ! (si el objeto proporciona una propiedad "articulos" con cadenas
-! vacÌas).
+! vac√≠as).
 !------------------------------------------------------------------------------
 ! ELIUK BLAU: He re-implementado la rutina para permitir que la primera letra
 ! se imprima en mayuscula si se activa el argumento 'flag' durante la llamada.
@@ -1433,7 +1433,7 @@ Constant COMMA__TX     = ", ";
       PrintAnyToArray(texto_impreso, 50, Defart, obj);! 070809 infsp fix: corrige mal funcionamiento con Propios - gracias Eliuk
       ! print "^  ";for (i=0:i<2:i++) print (char)texto_impreso->i;print "   "; ! infsp debug
     #endif; !TARGET_
-    
+
     ! ELIUK: aqui se decide si se pone mayuscula o no
     if (flag) { print "A"; } ! 'flag' activado
     else { print "a"; }      ! 'flag' desactivado
@@ -1511,87 +1511,87 @@ Constant COMMA__TX     = ", ";
 ! pero la forma de preguntarlo depende del verbo. Por ej.:
 !
 ! > coge
-! øQuÈ quieres coger?
+! ¬øQu√© quieres coger?
 !
 ! > mete llave
-! øDÛnde quieres meter la llave?
+! ¬øD√≥nde quieres meter la llave?
 !
 ! > orco, saca la botella
-! øDe dÛnde tiene que sacar el orco la botella?
+! ¬øDe d√≥nde tiene que sacar el orco la botella?
 !
 ! Cuando el parser tiene que imprimir una respuesta de estas,
-! simplemente llama a MLIdioma con el n˙mero de mensaje Misc, 48 o
-! 49. En esta versiÛn de la librerÌa (6/7) es responsabilidad de
+! simplemente llama a MLIdioma con el n√∫mero de mensaje Misc, 48 o
+! 49. En esta versi√≥n de la librer√≠a (6/7) es responsabilidad de
 ! LanguageLM generar el mensaje completo.
 !
 ! En nuestro caso hemos implementado estos mensajes de forma que
-! llaman a IniciarPregunta para que escriba una partÌcula interrogativa
+! llaman a IniciarPregunta para que escriba una part√≠cula interrogativa
 ! como "Donde" "De donde", etc. Si no escribe nada, MLIdioma pone
-! "QuÈ" o "A quiÈn" seg˙n el tipo de error, a continuaciÛn se escribe
-! "quieres" o "tiene que" seg˙n quiÈn sea el actor. Se llama a
-! LanguageVerb para que escriba el verbo, y finalmente se aÒade el
-! name del objeto directo si lo habÌa, para terminar la pregunta
-! cerrando la interrogaciÛn.
+! "Qu√©" o "A qui√©n" seg√∫n el tipo de error, a continuaci√≥n se escribe
+! "quieres" o "tiene que" seg√∫n qui√©n sea el actor. Se llama a
+! LanguageVerb para que escriba el verbo, y finalmente se a√±ade el
+! name del objeto directo si lo hab√≠a, para terminar la pregunta
+! cerrando la interrogaci√≥n.
 !
-! IniciarPregunta, lo que hace es: 
+! IniciarPregunta, lo que hace es:
 !
-! 1) busca preposiciones en el patrÛn que ha encajado, si las
-! encuentra, la pregunta debe comenzar por alguna partÌcula
-! interrogativa. Por ejemplo, si la lÌnea de gram·tica hallada era
-! "saca" noun "de" noun, se hallar· la preposiciÛn "de" que nos indica
-! que la pregunta ha de comenzar con "øDe dÛnde ...".
+! 1) busca preposiciones en el patr√≥n que ha encajado, si las
+! encuentra, la pregunta debe comenzar por alguna part√≠cula
+! interrogativa. Por ejemplo, si la l√≠nea de gram√°tica hallada era
+! "saca" noun "de" noun, se hallar√° la preposici√≥n "de" que nos indica
+! que la pregunta ha de comenzar con "¬øDe d√≥nde ...".
 !
-! 2) Llama a la funciÛn "IdiomaPreguntarPrep" que recibe como
-! par·metros la preposiciÛn y la acciÛn en curso, para que imprima la
-! partÌcula interrogativa adecuada. Esta funciÛn tan sÛlo debe
-! escribir esa partÌcula.
+! 2) Llama a la funci√≥n "IdiomaPreguntarPrep" que recibe como
+! par√°metros la preposici√≥n y la acci√≥n en curso, para que imprima la
+! part√≠cula interrogativa adecuada. Esta funci√≥n tan s√≥lo debe
+! escribir esa part√≠cula.
 !
 ! IdiomaPreguntarPrep llama a su vez a PreguntarPreposicion por si el
-! programador aÒade verbos raros con preposiciones raras que no son
+! programador a√±ade verbos raros con preposiciones raras que no son
 ! correctamente manejados por esta rutina. Si PreguntarPreposicion
-! existe y retorna distinto de cero, IdiomaPreguntarPrep asumir·
-! que la partÌcula interrogativa ya ha sido escrita por
-! PreguntarPreposicion y no har· nada m·s.
+! existe y retorna distinto de cero, IdiomaPreguntarPrep asumir√°
+! que la part√≠cula interrogativa ya ha sido escrita por
+! PreguntarPreposicion y no har√° nada m√°s.
 !
 [ IdiomaPreguntarPrep prepos action;
 
     if (PreguntarPreposicion(prepos, action)) return;
-!    print "^IPPrep: action: ", (DebugAction)action, "  Prepos: ",(address)prepos,"^"; ! infsp debug 
+!    print "^IPPrep: action: ", (DebugAction)action, "  Prepos: ",(address)prepos,"^"; ! infsp debug
     switch (prepos)
     {
-     'de': print "De dÛnde";
-     'en', 'dentro', 'encima': print "DÛnde";
-     'bajo','debajo':print "Debajo de quÈ";
-     'sobre', 'acerca':print "Sobre quÈ";
-     'contra': print "Contra quÈ";
-     'hacia':print "Hacia dÛnde";
-     'con':if (action==##Tell or ##Attack)  print "Con quiÈn";
-              else print "Con quÈ";
-     'por':if (action==##Ask) print "Por quÈ";
-              else print "Por dÛnde";
-     'una', 'un' : print "A quiÈn";
+     'de': print "De d√≥nde";
+     'en', 'dentro', 'encima': print "D√≥nde";
+     'bajo','debajo':print "Debajo de qu√©";
+     'sobre', 'acerca':print "Sobre qu√©";
+     'contra': print "Contra qu√©";
+     'hacia':print "Hacia d√≥nde";
+     'con':if (action==##Tell or ##Attack)  print "Con qui√©n";
+              else print "Con qu√©";
+     'por':if (action==##Ask) print "Por qu√©";
+              else print "Por d√≥nde";
+     'una', 'un' : print "A qui√©n";
 !     #n$a:  switch(action) ! esto es arcaico man!
      'a//':  switch(action){
-           ##Go:                  print "Hacia dÛnde";
-           ##GoIn, ##Climb:       print "DÛnde";
+           ##Go:                  print "Hacia d√≥nde";
+           ##GoIn, ##Climb:       print "D√≥nde";
            ##ThrowAt, ##Give, ##Show, ##Answer, ##Tell, ##Ask:
-                                  print "A quiÈn";
-           ##Search:              print "A travÈs de quÈ";
-           ##Tie:                 print "A quÈ"; 
-           ##Transfer,##Enter:    print "A dÛnde";
-           default:               print "A quiÈn";
+                                  print "A qui√©n";
+           ##Search:              print "A trav√©s de qu√©";
+           ##Tie:                 print "A qu√©";
+           ##Transfer,##Enter:    print "A d√≥nde";
+           default:               print "A qui√©n";
        };
     }
 ];
 
-! A partir del patrÛn que ha construido el parser, se determina cu·l
-! es la primera preposiciÛn usada detr·s del verbo.
-! Esto ser· usado por la funciÛn IniciarPregunta y por LanguageIsVerb
+! A partir del patr√≥n que ha construido el parser, se determina cu√°l
+! es la primera preposici√≥n usada detr√°s del verbo.
+! Esto ser√° usado por la funci√≥n IniciarPregunta y por LanguageIsVerb
 ! [INFSP] Recoding para un mejor comportamiento en caso de lineas de gramaticas complejas
 ! Ej: 'pon' noun 'en/sobre' noun . Antes usando 'sobre' (segundo token) no andaba.
 ! (devolvia NULL)
 
-[ AveriguarPreposicion 
+[ AveriguarPreposicion
     i k p ;
 
 !    print " ",pattern-->(pcount-1)," ^"; ![infsp] debug
@@ -1600,7 +1600,7 @@ Constant COMMA__TX     = ", ";
     for (k=pcount:k>=1:k--){
 !        print "^AP: k:",k; ! infsp debug
        i=pattern-->k;
-!        print "^ i:",(address)No__Dword(i-REPARSE_CODE); ! infsp debug 
+!        print "^ i:",(address)No__Dword(i-REPARSE_CODE); ! infsp debug
        if ( i == PATTERN_NULL) continue;
        if (i>=REPARSE_CODE)
            p=No__Dword(i-REPARSE_CODE);
@@ -1614,10 +1614,10 @@ Constant COMMA__TX     = ", ";
     i k p found;
     p=NULL;
     for (k=pcount:k>=1:k--)
-    { 
+    {
 !     print "^AP: k:",k; ! infsp debug
      i=pattern-->k;
-!    print "^ i:",i; ! infsp debug 
+!    print "^ i:",i; ! infsp debug
    if (pattern-->k == PATTERN_NULL) continue;
 !    i=pattern-->k;
         if (i>=REPARSE_CODE)
@@ -1630,31 +1630,31 @@ Constant COMMA__TX     = ", ";
 !    print "APP: Primera prep: ",(address) p; ! infsp debug
 !    print " / found :",found; ! infsp debug
 !    print " / pcount :",pcount,"^"; ! infsp debug
-    
+
     if (found==(pcount -1)) return NULL;
     else return p;
 ];
 
 
-! Averigua si es necesaria una partÌcula interrogativa. Llama a
+! Averigua si es necesaria una part√≠cula interrogativa. Llama a
 ! IdiomaPreguntarPrep para que la imprima.
 !
-! Retorna 1 si ha sido impresa la partÌcula interrogativa, y 0 en caso
-! contrario, (y entonces la funciÛn que la llamÛ "LanguageLM", sabe
-! que es necesario escribir "QuÈ" o "A quiÈn" ya que en este caso lo
+! Retorna 1 si ha sido impresa la part√≠cula interrogativa, y 0 en caso
+! contrario, (y entonces la funci√≥n que la llam√≥ "LanguageLM", sabe
+! que es necesario escribir "Qu√©" o "A qui√©n" ya que en este caso lo
 ! que faltaba era el objeto directo en lugar del complemento.
 !
 [ IniciarPregunta
     p;
 
-    print "ø";
+    print "¬ø";
     p=AveriguarPreposicion();
     if (p~=NULL) {
       IdiomaPreguntarPrep(p, action_to_be);
       return 1;
     }
     return 0;
-    
+
 ];
 
 [ IdiomaImprimirComando from i k spacing_flag prep;
@@ -1664,10 +1664,10 @@ Constant COMMA__TX     = ", ";
       LanguageVerb(i);
       from++; spacing_flag = true;
   }
-  
+
 ! print "^Valor de from: ",from,"^"; ! infsp debug
 ! print "Valor de pcount: ",pcount,"^"; ! infsp debug
-  
+
   for (k=from:k<pcount:k++){
      i=pattern-->k;
 !     print "^IIC: i: ",  i, "^"; ! infsp debug
@@ -1699,8 +1699,8 @@ Constant COMMA__TX     = ", ";
 
 
 ! [001115]
-! Los mensajes de librerÌa van ahora en fichero aparte
-! [010515] Cambiado de sitio el punto de inclusiÛn de Mensajes.h
+! Los mensajes de librer√≠a van ahora en fichero aparte
+! [010515] Cambiado de sitio el punto de inclusi√≥n de Mensajes.h
 ! para dar la oportunidad al usuario de incluir su propio Mensajes
 ! si lo desea (antes del include Gramatica)
 ! Include "Mensajes";
@@ -1717,7 +1717,7 @@ Constant COMMA__TX     = ", ";
 #ifdef DEBUG;
     aux=debug_flag; debug_flag=0;
 #endif;
-        switch(obj.gender) 
+        switch(obj.gender)
         {
           1: give obj ~female ~pluralname; !infsp fix for I7 compatibility (en I7 no se puede asignar el 0 a gender, de 1 para arriba si)
           2: give obj female ~pluralname;!print " FEMALE GIVEN "; !infsp debug
@@ -1729,7 +1729,7 @@ Constant COMMA__TX     = ", ";
 #endif;
         rfalse;
     }
-    
+
     else{
 !    if (parser_trace>=10)
 !        print "[", obj, " no tiene la propiedad ~genero~.]";
@@ -1737,13 +1737,13 @@ Constant COMMA__TX     = ", ";
     }
 ];
 
-! Esta funciÛn de elegir objetos asigna m·s puntuaciÛn al objeto que
+! Esta funci√≥n de elegir objetos asigna m√°s puntuaci√≥n al objeto que
 ! ha sido llamado por su 'name' (por tanto toman prioridad sobre los
 ! que son llamados solo por su 'adjetivo'). Se excluye al propio
 ! player de la lista, y los objetos de scenery. Solo para inform 6
 ! Inform 7 tiene su propio ChooseObjects, ver Cap 16.16
 [ ChooseObjects obj codigo prio;
-    
+
 !    prio=ChooseObjects2(obj,codigo); ! [TODO] si ChooseObjects estuviera usada por otra libreria, retocar aqui
 !    print "^[ElijeObjetos : priority = ",prio," (initial)"; ! infsp debug
     if (codigo>=2){
@@ -1773,28 +1773,28 @@ Constant COMMA__TX     = ", ";
 !-------------------------------------------------------------------------------
 #ifdef SIN_MENSAJES;
   Message "> Spanish: AVISO - Omitiendo los mensajes estandares de la libreria";
-#ifnot; 
+#ifnot;
 
 Constant FORMER__TX    = "tu antiguo ~yo~";
 Constant YOURSELF__TX  = "ti mismo";
-Constant CANTGO__TX    = "No puedes ir por ahÌ.";
+Constant CANTGO__TX    = "No puedes ir por ah√≠.";
 Constant IS__TX        = " ves";
 Constant ARE__TX       = " ves";
 Constant IS2__TX       = "ves ";
 Constant ARE2__TX      = "ves ";
-Constant YOU__TX       = "T˙";
+Constant YOU__TX       = "T√∫";
 Constant PARTICULA_TE  = "te";
 
 [ LanguageLM n x1;
- ! Answer:   " ",(The) second , " no te responde."; ! esto sera sÛlo para I6?
+ ! Answer:   " ",(The) second , " no te responde."; ! esto sera s√≥lo para I6?
   Answer, Ask : "No hay respuesta.";
  ! Ask:      " ",(The) x1 , " no te responde.";
  ! Ask:      see Answer
-  Attack:    "La violencia no es la soluciÛn.";
-  Blow:      "Tu soplido no produce ning˙n efecto.";
-  Burn:      "Con esa peligrosa acciÛn no lograrÌas nada.";
+  Attack:    "La violencia no es la soluci√≥n.";
+  Blow:      "Tu soplido no produce ning√∫n efecto.";
+  Burn:      "Con esa peligrosa acci√≥n no lograr√≠as nada.";
   Buy:       "No hay nada en venta.";
-  Climb:     "No creo que vayas a lograr nada asÌ.";
+  Climb:     "No creo que vayas a lograr nada as√≠.";
   Close:    switch(n)    {
      1: print_ret "No es algo que pueda cerrarse.";
      2: "Ya estaba", (n) x1, " cerrad", (o)x1, ".";
@@ -1802,64 +1802,64 @@ Constant PARTICULA_TE  = "te";
     }
 
   CommandsOff: switch (n) { ![6/11]
-        1: "[GrabaciÛn de Ûrdenes finalizada.]";
+        1: "[Grabaci√≥n de √≥rdenes finalizada.]";
         #Ifdef TARGET_GLULX;
-        2: "[GrabaciÛn de Ûrdenes ya estaba finalizada.]";
+        2: "[Grabaci√≥n de √≥rdenes ya estaba finalizada.]";
         #Endif; ! TARGET_
     }
   CommandsOn: switch (n) { ! [6/11]
-        1: "[GrabaciÛn de Ûrdenes activada.]";
+        1: "[Grabaci√≥n de √≥rdenes activada.]";
         #Ifdef TARGET_GLULX;
-        2: "[”rdenes relanzadas.]";
-        3: "[GrabaciÛn de Ûrdenes ya activada.]";
-        4: "[Fallo en la grabaciÛn de Ûrdenes.]";
+        2: "[√ìrdenes relanzadas.]";
+        3: "[Grabaci√≥n de √≥rdenes ya activada.]";
+        4: "[Fallo en la grabaci√≥n de √≥rdenes.]";
         #Endif; ! TARGET_
     }
   CommandsRead: switch (n) { ! [6/11]
         1: "[Relanzando acciones.]";
         #Ifdef TARGET_GLULX;
-        2: "[Las Ûrdenes ya est·n siendo relanzadas.]";
-        3: "[Fallo en la reejecuciÛn de Ûrdenes: grabaciÛn en curso.]";
-        4: "[Fallo en la reejecuciÛn de Ûrdenes.]";
+        2: "[Las √≥rdenes ya est√°n siendo relanzadas.]";
+        3: "[Fallo en la reejecuci√≥n de √≥rdenes: grabaci√≥n en curso.]";
+        4: "[Fallo en la reejecuci√≥n de √≥rdenes.]";
         5: "[Acciones ejecutadas: fin del proceso.]";
         #Endif; ! TARGET_
     }
   Consult:  "No descubres nada interesante en ", (the) x1,
               " sobre ese tema.";
-  Cut:      "Cort·ndo", (lo) x1, " no lograr·s gran cosa.";
-  Dig:      "Excavar no servir· de nada aquÌ.";
+  Cut:      "Cort√°ndo", (lo) x1, " no lograr√°s gran cosa.";
+  Dig:      "Excavar no servir√° de nada aqu√≠.";
   Disrobe:    switch(n)    {
      1: "No llevas puesto eso.";
      2: "Te quitas ", (the) x1, ".";
     }
   Drink:       "Eso no parece potable.";
   Drop:
-    ! 2 mensajes de error, 1 aviso y 1 de Èxito:
-    !   1: Error, el objeto dejado no est· en poder del jugador, pero
-    !      est· en la localidad.
-    !   2: Error, el objeto dejado no est· en poder del jugador ni en
+    ! 2 mensajes de error, 1 aviso y 1 de √©xito:
+    !   1: Error, el objeto dejado no est√° en poder del jugador, pero
+    !      est√° en la localidad.
+    !   2: Error, el objeto dejado no est√° en poder del jugador ni en
     !      la localidad.
     !   3: Aviso, el objeto era una prenda que el jugador llevaba
-    !      puesta y la librerÌa va a quitarsela autom·ticamente para
+    !      puesta y la librer√≠a va a quitarsela autom√°ticamente para
     !      poder dejarla.
     !   4: Exito
     switch(n)
     {
-     1: "Para dejar ", (the)x1, " deberÌas tener", (lo) x1, ".";
+     1: "Para dejar ", (the)x1, " deber√≠as tener", (lo) x1, ".";
      2: "No ", (lo) x1, " tienes.";
      3: "(primero te quitas ", (the) x1, ")";
      4: "Dejad", (o) x1, ".";
     }
   Eat:
     !  1: Error, el objeto no tiene el atributo "comestible"
-    !  2: Exito. [NOTA: la librerÌa permite por defecto comerse
+    !  2: Exito. [NOTA: la librer√≠a permite por defecto comerse
     !    cualquier cosa que tenga el atributo "comestible", pero la
-    !    ˙nica acciÛn que causa esto es que el objeto en cuestiÛn
+    !    √∫nica acci√≥n que causa esto es que el objeto en cuesti√≥n
     !    desaparece del juego al ser comido]
     switch(n)
     {
      1: "Eso es simplemente incomestible.";
-     2: "Te comes ", (the) x1, ". No est· mal.";
+     2: "Te comes ", (the) x1, ". No est√° mal.";
     }
   EmptyT:
     ! 1: Error, el jugador intenta vaciar un objeto en otro que no es
@@ -1868,12 +1868,12 @@ Constant PARTICULA_TE  = "te";
     !    recipiente cerrado.
     ! 3: Error, el jugador intenta vaciar un objeto que no tiene nada
     !    dentro.
-    ! 4: Error, el jugador intenta vaciar un objeto sobre sÌ mismo.
-    ! [NOTA: No hay mensajes de Èxito para esta acciÛn, ya que en caso
-    ! de haber superado los test anteriores, la librerÌa genera
-    ! finalmente la acciÛn Transferir, la cual a su vez, generar· la
-    ! acciÛn PonerSobre o Meter, seg˙n el segundo objeto sea soporte o
-    ! recipiente. Por tanto los mensajes de Èxito ser·n los de las
+    ! 4: Error, el jugador intenta vaciar un objeto sobre s√≠ mismo.
+    ! [NOTA: No hay mensajes de √©xito para esta acci√≥n, ya que en caso
+    ! de haber superado los test anteriores, la librer√≠a genera
+    ! finalmente la acci√≥n Transferir, la cual a su vez, generar√° la
+    ! acci√≥n PonerSobre o Meter, seg√∫n el segundo objeto sea soporte o
+    ! recipiente. Por tanto los mensajes de √©xito ser√°n los de las
     ! acciones PonerSobre o Meter.
     switch(n)
     {
@@ -1882,58 +1882,58 @@ Constant PARTICULA_TE  = "te";
       2:
         print_ret (The) x1, " ", (esta) x1, " cerrad", (o) x1, ".";
       3:
-        print_ret (The) x1, " ya ", (esta) x1, " vacÌ", (o)x1, ".";
+        print_ret (The) x1, " ya ", (esta) x1, " vac√≠", (o)x1, ".";
       4:
-        "No puedes vaciar un objeto sobre sÌ mismo."; ! [INFSP] antes usaba x1
+        "No puedes vaciar un objeto sobre s√≠ mismo."; ! [INFSP] antes usaba x1
     }
   Enter: ! [infsp] GoIn (Meterse) se cambio por Enter.
-    ! CUIDADO. La acciÛn Meterse se genera en muy diversas
+    ! CUIDADO. La acci√≥n Meterse se genera en muy diversas
     ! circunstancias: VETE HACIA EL PUENTE, VETE AL PUENTE, VETE POR
     ! EL PUENTE, PASA POR EL PUENTE, ENTRA EN EL PUENTE, ENTRA AL
     ! PUENTE, CRUZA EL PUENTE, CRUZA POR EL PUENTE, METETE EN EL
     ! PUENTE, METETE POR EL PUENTE, ATRAVIESA EL PUENTE, BAJA POR EL
-    ! PUENTE.  Todas ellas generarÌan la acciÛn <Meterse Puente>
+    ! PUENTE.  Todas ellas generar√≠an la acci√≥n <Meterse Puente>
     !
-    ! Adem·s, los intentos de entrar en un "entrable", tambiÈn, como
+    ! Adem√°s, los intentos de entrar en un "entrable", tambi√©n, como
     ! por ejemplo: SIENTATE EN EL BANCO, ECHATE EN EL BANCO, SUBETE AL
     ! BANCO, SUBETE EN EL BANCO, SUBE AL BANCO, SUBE POR EL BANCO,
-    ! SALTA AL BANCO. Todas ellas generarÌan <Meterse Banco>
+    ! SALTA AL BANCO. Todas ellas generar√≠an <Meterse Banco>
     !
     ! Puesto que hay muchos verbos diferentes que dan lugar a la misma
-    ! acciÛn, es necesaria alguna forma de imprimir quÈ verbo concreto
+    ! acci√≥n, es necesaria alguna forma de imprimir qu√© verbo concreto
     ! ha sido el que la ha desencadenado, para poder generar mensajes
     ! como "No puedes entrar ahi", "No puedes sentarte ahi", "No
-    ! puedes subirte ahi", etc.. seg˙n el verbo usado. Para esto puede
+    ! puedes subirte ahi", etc.. seg√∫n el verbo usado. Para esto puede
     ! usarse una llamada a IdiomaVerbo(palabra_verbo). palabra_verbo
     ! contiene el verbo usado por el jugador (convertido en forma
     ! imperativa), y IdiomaVerbo lo que hace es imprimir la forma
     ! infinitiva.
     !
-    ! Mensajes que puede generar esta acciÛn:
-    !  1: Error, el jugador ya est· en/sobre el objeto en cuestiÛn
+    ! Mensajes que puede generar esta acci√≥n:
+    !  1: Error, el jugador ya est√° en/sobre el objeto en cuesti√≥n
     !  2: Error, el objeto al que intenta entrar/subirse/meterse no
     !     tiene el atributo "entrable"
     !  3: Error, el objeto en que intenta entrar/meterse/subirse, es
-    !     un entrable y recipiente, pero est· cerrado.
-    !  4: Error, el objeto en que intenta entrar/meterse/subirse, est·
+    !     un entrable y recipiente, pero est√° cerrado.
+    !  4: Error, el objeto en que intenta entrar/meterse/subirse, est√°
     !     en poder del jugador
     !  5: Exito, el jugador sube/entra en el objeto
-    !  6: Aviso, el jugador estaba en otro objeto, la librerÌa
-    !     intentar· una acciÛn <Salir> autom·tica, antes de reintentar lo
+    !  6: Aviso, el jugador estaba en otro objeto, la librer√≠a
+    !     intentar√° una acci√≥n <Salir> autom√°tica, antes de reintentar lo
     !     que el jugador le ha ordenado.
-    !  7: Aviso, el objeto en que el jugador intenta meterse, est·
-    !     dentro de otros objetos. La librerÌa intentar· de forma
-    !     autom·tica meter al jugador en el objeto desde el cual pueda
+    !  7: Aviso, el objeto en que el jugador intenta meterse, est√°
+    !     dentro de otros objetos. La librer√≠a intentar√° de forma
+    !     autom√°tica meter al jugador en el objeto desde el cual pueda
     !     acceder al que el jugador ha indicado.
     switch(n) {
-     1: print "Pero si ya est·s ";
+     1: print "Pero si ya est√°s ";
     if (x1 has supporter) print "sobre "; else print "en ";
     print_ret (the) x1, ".";
      2: print "No es algo donde puedas "; LanguageVerb(verb_word); ".";
-     3: "No puedes entrar en ", (the) x1, " porque est·", (n) x1,
+     3: "No puedes entrar en ", (the) x1, " porque est√°", (n) x1,
         " cerrad", (o) x1, ".";
      4: print "No puedes "; LanguageVerb(verb_word);
-        " ahÌ mientras no lo sueltes.";
+        " ah√≠ mientras no lo sueltes.";
      5:
     if (x1 has supporter) print "Subes ", (al) x1;
     else print "Entras en ", (the) x1;
@@ -1945,17 +1945,17 @@ Constant PARTICULA_TE  = "te";
     if (x1 has container) "(te metes en ", (the) x1, ")^";
     "(entras en ", (the) x1, ")^";
     }
-    
+
   Examine:
-    !  1: Error, el jugador intenta examinar un objeto, pero est· a
+    !  1: Error, el jugador intenta examinar un objeto, pero est√° a
     !     oscuras.
     !  2: Exito, pero el objeto examinado no tiene descripcion
     !  3: Exito, pero el objeto examinado no tiene descripcion, aunque
-    !     tiene el atributo conmutable, por lo que la librerÌa genera
-    !     este mensaje para indicar si est· apagado o encendido.
+    !     tiene el atributo conmutable, por lo que la librer√≠a genera
+    !     este mensaje para indicar si est√° apagado o encendido.
     switch(n)
     {
-     1: "Est· demasiado oscuro, no puedes ver nada.";
+     1: "Est√° demasiado oscuro, no puedes ver nada.";
      2: "No observas nada especial en ", (the) x1, ".";
      3: print (The) x1, " ", (esta) x1;
     if (x1 has on) " encendid", (o)x1, ".";
@@ -1963,58 +1963,58 @@ Constant PARTICULA_TE  = "te";
     }
 
   Exit:
-    ! 1: Error, el jugador no est· subido/sentado/metido en ning˙n
+    ! 1: Error, el jugador no est√° subido/sentado/metido en ning√∫n
     !    objeto. [Nota, si la localidad tiene la propiedad "afuera",
-    !    entonces la acciÛn Salir lo sacar· de la localidad. En caso
+    !    entonces la acci√≥n Salir lo sacar√° de la localidad. En caso
     !    contrario es cuando se genera este error]
-    ! 2: Error, el jugador est· dentro de un recipiente cerrado.
+    ! 2: Error, el jugador est√° dentro de un recipiente cerrado.
     ! 3: Exito, el jugador sale/baja del objeto
     ! 4: Error, mas especifico. [6/11]
     switch(n)
     {
-     1: print "No est·s en ning˙n sitio del que debas ";
+     1: print "No est√°s en ning√∫n sitio del que debas ";
     LanguageVerb(verb_word); ".";
-     2: "No puedes salir ", (del) x1, " porque est· cerrad", (o)x1, ".";
+     2: "No puedes salir ", (del) x1, " porque est√° cerrad", (o)x1, ".";
      3: if (x1 has supporter) print "Bajas ";
     else print "Sales ";
     print_ret (del) x1, ".";
-     4:  print "Pero es que no est·s ";
+     4:  print "Pero es que no est√°s ";
             if (x1 has supporter) print "encima de  "; else print "dentro de ";
             print_ret (the) x1, ".";
     }
 
   Fill:      "No puedes llenar", (lo) x1, ".";
   FullScore:
-    ! PuntuaciÛn en modo "explicativo". Puede activarse porque el
+    ! Puntuaci√≥n en modo "explicativo". Puede activarse porque el
     ! jugador lo pida con el verbo "PUNTUACION LARGA" o porque el
-    ! juego haya terminado (y la constante HAY_TAREAS est· definida).
+    ! juego haya terminado (y la constante HAY_TAREAS est√° definida).
     !
     !  1: texto introductorio al desglose de puntos
     !  2: texto de objetos importantes (los que tienen el atributo
     !     "valepuntos")
     !  3: texto de lugares importantes (los que tienen el atributo
     !     "valepuntos")
-    !  4: texto final, tras la suma total impresa por la librerÌa
+    !  4: texto final, tras la suma total impresa por la librer√≠a
     switch(n)
     {
-     1: if (deadflag) print "La puntuaciÛn se desglosÛ ";
-    else          print "La puntuaciÛn se desglosa ";
+     1: if (deadflag) print "La puntuaci√≥n se desglos√≥ ";
+    else          print "La puntuaci√≥n se desglosa ";
     "de la siguiente manera:^";
      2: "por encontrar objetos importantes";
      3: "por visitar lugares importantes";
      4: print "total (de ", MAX_SCORE ; ")";
     }
   GetOff:
-    ! Esta acciÛn se genera ante la frase SAL DEL ARMARIO o
-    ! similares. Ante SAL a secas la acciÛn es Salir.
-    ! Si el jugador no est· en el objeto indicado, se genera el
-    ! siguiente mensaje de error. Si est·, la librerÌa generar· una
-    ! acciÛn Salir, por lo que el mensaje de Èxito ser· el de Salir.
-    "Pero si no est·s en ", (the) x1, ".";
+    ! Esta acci√≥n se genera ante la frase SAL DEL ARMARIO o
+    ! similares. Ante SAL a secas la acci√≥n es Salir.
+    ! Si el jugador no est√° en el objeto indicado, se genera el
+    ! siguiente mensaje de error. Si est√°, la librer√≠a generar√° una
+    ! acci√≥n Salir, por lo que el mensaje de √©xito ser√° el de Salir.
+    "Pero si no est√°s en ", (the) x1, ".";
   Give:
     ! 1: Error, el jugador intenta dar un objeto que no tiene
-    ! 2: Error, el jugador se da el objeto a sÌ mismo
-    ! 3: Aviso, se ha enviado la acciÛn Dar al PNJ, pero este no ha
+    ! 2: Error, el jugador se da el objeto a s√≠ mismo
+    ! 3: Aviso, se ha enviado la acci√≥n Dar al PNJ, pero este no ha
     !    respondido. En este caso ml_o apunta al PNJ y no al objeto
     !    que le hemos dado.
     ! [Observar que por defecto el objeto sigue en poder del
@@ -2028,48 +2028,48 @@ Constant PARTICULA_TE  = "te";
      3: print_ret (The) x1, " no parece", (n) x1, " interesad", (o)x1, ".";
     }
   Go:
-    ! La acciÛn Ir se genera si el jugador pone IR NORTE, o si pone
+    ! La acci√≥n Ir se genera si el jugador pone IR NORTE, o si pone
     ! simplemente NORTE.
-    !   1: Error, el jugador est· dentro/subido en un objeto del que
+    !   1: Error, el jugador est√° dentro/subido en un objeto del que
     !      tiene que salir antes
-    !   2: Error, la localidad no tiene salida en esa direcciÛn (y
+    !   2: Error, la localidad no tiene salida en esa direcci√≥n (y
     !      tampoco tiene la propiedad no_puedes_ir, ya que en este caso
-    !      se habrÌa impreso el valor de esa propiedad
-    !   3: Error, el jugador ha intentado ir hacia arriba, pero allÌ
+    !      se habr√≠a impreso el valor de esa propiedad
+    !   3: Error, el jugador ha intentado ir hacia arriba, pero all√≠
     !      hay una puerta cerrada
     !   4: Error, el jugador ha intentado ir hacia abajo, pero alli
     !      hay una puerta cerrada.
-    !   5: Error, en la direcciÛn que ha dicho el jugador hay una
+    !   5: Error, en la direcci√≥n que ha dicho el jugador hay una
     !      puerta cerrada
-    !   6: Error, en la direcciÛn que ha dicho el jugador hay una
-    !      puerta, pero Èsta no tiene una propiedad puerta_a
-    !      (probablemente un error de programaciÛn del juego)
+    !   6: Error, en la direcci√≥n que ha dicho el jugador hay una
+    !      puerta, pero √©sta no tiene una propiedad puerta_a
+    !      (probablemente un error de programaci√≥n del juego)
     switch(n)
     {
      1: print "Tienes que ";
          if (x1 has supporter) print "bajarte "; else print "salir ";
          print_ret (del) x1, " antes.";
-     2: "No puedes ir por ahÌ.";
+     2: "No puedes ir por ah√≠.";
      3: "Eres incapaz de trepar por ", (the) x1, ".";
      4: "Eres incapaz de bajar por ", (the) x1, ".";
-     5: "No puedes pasar a travÈs ", (del) x1, ".";
-     6: "No puedes ir porque ", (the) x1, " no lleva", (n) x1, " a ning˙n sitio.";
+     5: "No puedes pasar a trav√©s ", (del) x1, ".";
+     6: "No puedes ir porque ", (the) x1, " no lleva", (n) x1, " a ning√∫n sitio.";
     }
   Insert:
-    ! 1: Error, el objeto no est· en poder del jugador. [Nota,
+    ! 1: Error, el objeto no est√° en poder del jugador. [Nota,
     !    conviene mirar en este caso si el objeto es animado o no,
-    !    para generar un mensaje m·s adecuado]
+    !    para generar un mensaje m√°s adecuado]
     ! 2: Error, el jugador intenta meter el objeto en otro que no
     !    tiene el atributo "recipiente"
     ! 3: Error, el jugador intenta meter el objeto en un recipiente
     !    cerrado.
     ! 4: Error, el objeto es una prenda que el jugador lleva puesta.
     !    [ESTE MENSAJE NO SE GENERA NUNCA, PARECE UN BUG DE LA
-    !    LIBRERIA. VÈase en su lugar el mensaje 6]
-    ! 5: Error, se intenta poner un objeto dentro de sÌ mismo
-    ! 6: Aviso, el objeto es una prenda puesta, la librerÌa va a
-    !    quit·rsela de forma autom·tica antes de reintentar Meter.
-    ! 7: Error, no queda sitio en el recipiente (el n˙mero de objetos
+    !    LIBRERIA. V√©ase en su lugar el mensaje 6]
+    ! 5: Error, se intenta poner un objeto dentro de s√≠ mismo
+    ! 6: Aviso, el objeto es una prenda puesta, la librer√≠a va a
+    !    quit√°rsela de forma autom√°tica antes de reintentar Meter.
+    ! 7: Error, no queda sitio en el recipiente (el n√∫mero de objetos
     !    que un recipiente puede contener se indica en su propiedad
     !    "capacidad").
     ! 8: Exito. Mensaje a mostrar para cada objeto metido cuando se
@@ -2078,8 +2078,8 @@ Constant PARTICULA_TE  = "te";
     !    de otro
     switch(n)
     {
-     1: if (x1 has animate) "Antes tendrÌas que ", (coge)"rl", (o) x1,
-          " y no sÈ si se dejar·",(n)x1,".";
+     1: if (x1 has animate) "Antes tendr√≠as que ", (coge)"rl", (o) x1,
+          " y no s√© si se dejar√°",(n)x1,".";
         else
           "Necesitas tener ", (the) x1,
           " para poder meter", (lo) x1,
@@ -2087,7 +2087,7 @@ Constant PARTICULA_TE  = "te";
      2: "No se pueden meter cosas dentro ", (del) x1, ".";
      3: print_ret (The) x1, " ", (esta) x1, " cerrad", (o) x1, ".";
      4: "Tienes que quitarte", (lo) x1, " antes.";
-     5: "No puedes poner un objeto dentro de sÌ mismo.";
+     5: "No puedes poner un objeto dentro de s√≠ mismo.";
      6: "(primero te ", (lo) x1, " quitas)^";
      7: "No queda sitio en ", (the) x1, ".";
      8: "Hecho.";
@@ -2096,9 +2096,9 @@ Constant PARTICULA_TE  = "te";
 
  Inv:
     ! Inventario
-    !  1: Mensaje si el inventario est· vacÌo
+    !  1: Mensaje si el inventario est√° vac√≠o
     !  2: Encabezado del inventario, antes de la lista de objetos
-    !     generada por la librerÌa
+    !     generada por la librer√≠a
     !  3 y 4: [6/11]
     switch(n)
     {
@@ -2107,18 +2107,18 @@ Constant PARTICULA_TE  = "te";
      3:  print ":^";
      4:  print ".^";
     }
-  Jump:      "Saltas en el sitio, sin ning˙n resultado.";
+  Jump:      "Saltas en el sitio, sin ning√∫n resultado.";
   JumpOver,Tie:
-        "No lograr·s nada asÌ.";
+        "No lograr√°s nada as√≠.";
   Kiss:         "No creo que debas.";
-  Listen:      "No escuchas nada fuera de lo com˙n.";
+  Listen:      "No escuchas nada fuera de lo com√∫n.";
   ListMiscellany:
     ! Los siguientes mensajes se muestran como aclaraciones cuando se
-    ! est· listando el inventario del jugador, o los objetos que hay
-    ! en una localidad. Junto a cada mensaje se comenta quÈ
+    ! est√° listando el inventario del jugador, o los objetos que hay
+    ! en una localidad. Junto a cada mensaje se comenta qu√©
     ! condiciones deben darse en ese objeto para que se muestre ese
     ! mensaje aclaratorio
-    
+
     switch(n)
     {
      1: print " (alumbrando)";
@@ -2127,28 +2127,28 @@ Constant PARTICULA_TE  = "te";
     ! El objeto tiene "recipiente" pero no "abierto"
      3: print " (cerrad", (o) x1, " y alumbrando)";
     ! Casos 2 y 1 juntos
-     4: print " (que ", (esta) x1, " vacÌ", (o) x1, ")";
+     4: print " (que ", (esta) x1, " vac√≠", (o) x1, ")";
     ! El objeto es un recipiente abierto (o transparente) y no
     ! tiene nada en su interior
-     5: print " (vacÌ", (o) x1, " y alumbrando)";
+     5: print " (vac√≠", (o) x1, " y alumbrando)";
     ! Casos 1 y 4 juntos
-     6: print " (que ", (esta) x1, " cerrad", (o) x1, " y vacÌ",
+     6: print " (que ", (esta) x1, " cerrad", (o) x1, " y vac√≠",
      (o) x1, ")";
-    ! El objeto tiene "recipiente", no "abierto", pero sÌ
+    ! El objeto tiene "recipiente", no "abierto", pero s√≠
     ! "transparente"
-     7: print " (cerrad", (o) x1, ", vacÌ", (o) x1, " y
+     7: print " (cerrad", (o) x1, ", vac√≠", (o) x1, " y
         alumbrando)";
     ! Casos 1 y 6 juntos
 
 ! Los casos siguientes son similares, pero se muestran cuando
 ! se solicita a la rutina EscribirListaDesde la opcion INFOTOTAL
-! La librerÌa puede combinar varios de estos mensajes, por eso no
-! deben llevar el cerrar parÈntesis al final, que lo aÒade la
-! propia librerÌa
+! La librer√≠a puede combinar varios de estos mensajes, por eso no
+! deben llevar el cerrar par√©ntesis al final, que lo a√±ade la
+! propia librer√≠a
 ! ************************************
 !  NO SE ACONSEJA CAMBIAR ESTOS
 ! ************************************
-    
+
      8: print " (alumbrando y que llevas puest", (o) x1;
     ! El objeto tiene "luz" y "puesto"
      9: print " (alumbrando";
@@ -2156,60 +2156,60 @@ Constant PARTICULA_TE  = "te";
      10: print " (que llevas puest", (o) x1;
     ! El objeto tiene "puesto" pero no "luz"
      11: print " (que ", (esta) x1, " ";
-    ! Mensaje introductorio para decir "que est·
+    ! Mensaje introductorio para decir "que est√°
     ! abierto/cerrado/vacio"...
      12: print "abiert", (o)x1;
     ! Objeto tiene "recipiente", "abrible" y "abierto" (y cosas dentro)
-     13: print "abiert", (o)x1, ", pero vacÌ", (o) x1;
+     13: print "abiert", (o)x1, ", pero vac√≠", (o) x1;
     ! Objeto tiene "recipiente", "abrible" y "abierto (pero vacio)
      14: print "cerrad", (o) x1;
     ! Objeto tiene "recipiente", "abrible"  y no "abierto"
      15: print "cerrad", (o) x1, " con llave";
     ! Objeto tiene "recipiente", "abrible" y "cerrojoechado" o "cerrojo"
-     16: print " vacÌ", (o) x1;
+     16: print " vac√≠", (o) x1;
     ! Objeto tiene "recipiente", no "abrible" y "transparente"
-     17: print " (que ", (esta) x1, " vacÌ", (o) x1, ")";
-    ! Como el caso anterior, pero mensaje m·s "largo" (que se activa si
+     17: print " (que ", (esta) x1, " vac√≠", (o) x1, ")";
+    ! Como el caso anterior, pero mensaje m√°s "largo" (que se activa si
     ! EscribirListaDesde es llamada sin el modo BREVE_BIT)
      18: print " que contiene ";
     ! encabezado a la lista de lo que hay dentro del objeto
      19: print " (sobre ", (el_) x1;
-    ! Si el objeto tiene "soporte", la librerÌa va a listar sus
+    ! Si el objeto tiene "soporte", la librer√≠a va a listar sus
     ! contenidos. Este es el encabezado de la lista
      20: print ", encima ", (del_) x1;
     ! Como e l9, pero en otra modalidad (que se activa si
     ! EscribirListaDesde es llamada sin el modo BREVE_BIT)
      21: print " (en ", (el_) x1;
     ! Si el contenido tiene "recipiente" y puede verse su interior
-    ! y hay cosas, la librerÌa va a mostrar sus contenidos. Este
+    ! y hay cosas, la librer√≠a va a mostrar sus contenidos. Este
     ! es el encabezado de la lista
      22: print ", dentro ", (del_) x1;
     ! Como el 21, pero en otra modalidad (que se activa si
     ! EscribirListaDesde es llamada sin el modo BREVE_BIT)
     }
-    
+
  LMode1:
-    ! La acciÛn ModoM1 se genera ante el comando BREVE (o NORMAL). La
-    ! librerÌa imprime la constante Historia y a continuaciÛn este
+    ! La acci√≥n ModoM1 se genera ante el comando BREVE (o NORMAL). La
+    ! librer√≠a imprime la constante Historia y a continuaci√≥n este
     ! mensaje.
-    " est· ahora en su modo normal ~breve~, que da sÛlo descripciones
+    " est√° ahora en su modo normal ~breve~, que da s√≥lo descripciones
     largas de los lugares la primera vez que son visitadas, y
     descripciones cortas en otro caso.";
 
  LMode2:
-    ! La acciÛn ModoM2 se genera ante el comando LARGO. La
-    ! librerÌa imprime la constante Historia y a continuaciÛn este
+    ! La acci√≥n ModoM2 se genera ante el comando LARGO. La
+    ! librer√≠a imprime la constante Historia y a continuaci√≥n este
     ! mensaje.
-    " est· ahora en su modo ~largo~, que siempre da descripciones
-    largas de los lugares (incluso si ya habÌas estado antes).";
+    " est√° ahora en su modo ~largo~, que siempre da descripciones
+    largas de los lugares (incluso si ya hab√≠as estado antes).";
 
  LMode3:
-    ! La acciÛn ModoM3 se genera ante el comando SUPERBREVE. La
-    ! librerÌa imprime la constante Historia y a continuaciÛn este
+    ! La acci√≥n ModoM3 se genera ante el comando SUPERBREVE. La
+    ! librer√≠a imprime la constante Historia y a continuaci√≥n este
     ! mensaje.
-    " est· ahora en su modo ~superbreve~, que siempre da descripciones
-    cortas de los lugares (incluso si nunca habÌas estado antes).";
-    
+    " est√° ahora en su modo ~superbreve~, que siempre da descripciones
+    cortas de los lugares (incluso si nunca hab√≠as estado antes).";
+
    Lock:
     ! EcharCerrojo se genera con CIERRA <objeto> CON <objeto2>, o
     ! tambien ante ECHA CERROJO A <objeto>. (sin especificar un
@@ -2218,8 +2218,8 @@ Constant PARTICULA_TE  = "te";
     !  1: Error, el objeto que se intenta cerrar no tiene la propiedad
     !     "cerrojo".
     !  2: Error, el objeto que se intenta cerrar tiene la propiedad
-    !     "cerrojo", pero ya tiene tambiÈn "cerrojoechado
-    !  3: Error, el objeto tiene "cerrojo", pero est· "abierto". No se
+    !     "cerrojo", pero ya tiene tambi√©n "cerrojoechado
+    !  3: Error, el objeto tiene "cerrojo", pero est√° "abierto". No se
     !     le puede echar el cerrojo hasta que no se cierre.
     !  4: Error, el <objeto2> especificado no coincide con el que el
     !     <objeto> indica en su propiedad "con_llave".
@@ -2228,44 +2228,44 @@ Constant PARTICULA_TE  = "te";
     !     "otro")
     switch(n)
     {
-      1: "No parece", (n) x1, " tener ning˙n tipo de cerrojo.";
+      1: "No parece", (n) x1, " tener ning√∫n tipo de cerrojo.";
       2: if (x1 provides with_key)
       print_ret (The) x1, " ya estaba", (n) x1, " cerrad", (o) x1,
       " con llave.";
     else
       print_ret (The) x1, " ya tiene",(n) x1, " echado el cerrojo.";
-      3: "Primero tendr·s que cerrar ", (the) x1, ".";
+      3: "Primero tendr√°s que cerrar ", (the) x1, ".";
       4: if (second) "No parece", (n) x1, " encajar en la cerradura.";
-    "Necesitas alg˙n tipo de llave.";
+    "Necesitas alg√∫n tipo de llave.";
       5: if (second) "Cierras ", (the) x1," con ", (the) second, ".";
     "Echas el cerrojo ", (al) x1, ".";
     }
 
  Look:
-    ! La acciÛn Look se genera cuando el player pone MIRAR, pero
-    ! tambiÈn de forma autom·tica al entrar en una localidad nueva, o
+    ! La acci√≥n Look se genera cuando el player pone MIRAR, pero
+    ! tambi√©n de forma autom√°tica al entrar en una localidad nueva, o
     ! cuando el player sale/se baja de un objeto en el que estaba.
     !
     ! Algnouns de los mensajes que se definen aqui aparecen en el
-    ! "tÌtulo" de la localidad (lo que aparece en negrita before de la
-    ! descripciÛn de la localidad)
+    ! "t√≠tulo" de la localidad (lo que aparece en negrita before de la
+    ! descripci√≥n de la localidad)
     !
-    !  1: aclaraciÛn a aÒadir tras el tÌtulo si el player est· subido
+    !  1: aclaraci√≥n a a√±adir tras el t√≠tulo si el player est√° subido
     !     en un objeto
-    !  2: aclaraciÛn a aÒadir tras el tÌtulo si el player est· dentro
+    !  2: aclaraci√≥n a a√±adir tras el t√≠tulo si el player est√° dentro
     !     de un objeto
-    !  3: aclaraciÛn a aÒadir tras el tÌtulo si el player ha sido
+    !  3: aclaraci√≥n a a√±adir tras el t√≠tulo si el player ha sido
     !     transformado en otro personaje, mediante una llamada a
-    !     ChangePlayer(nuevo, 1); (si el 1, la librerÌa no intentar·
+    !     ChangePlayer(nuevo, 1); (si el 1, la librer√≠a no intentar√°
     !     mostrar este mensaje)
-    !  4: Una vez que la librerÌa ha mostrado la descrcipciÛn de la
+    !  4: Una vez que la librer√≠a ha mostrado la descrcipci√≥n de la
     !     localidad, si el player estaba encima de un supporter, la
-    !     librerÌa generar· este mensaje 4 para mostrar quÈ m·s cosas
+    !     librer√≠a generar√° este mensaje 4 para mostrar qu√© m√°s cosas
     !     hay sobre el supporter
     !  Restante: 5,6 [6/11] antes 'default'
-    !     Son usados por la librerÌa para listar los objetos "simples"
+    !     Son usados por la librer√≠a para listar los objetos "simples"
     !     que hay en la localidad. Son objetos "simples" los que no
-    !     dan su propia auto-descrcipcion a travÈs de la propiedad
+    !     dan su propia auto-descrcipcion a trav√©s de la propiedad
     !     "describe" o "initial".
     !  7: Respuesta estandar para MirarHacia [6/11]
     switch(n)
@@ -2285,13 +2285,13 @@ Constant PARTICULA_TE  = "te";
                  print " puedes ver ";
          }
          else print "Puedes ver ";
-         if (n==5) print "tambiÈn ";
+         if (n==5) print "tambi√©n ";
          WriteListFrom(child(x1),
                       ENGLISH_BIT + WORKFLAG_BIT + RECURSE_BIT
                       + PARTINV_BIT + TERSE_BIT + CONCEAL_BIT);
          if (x1~=location) ".";
          ".";
-     7: "No observas nada digno de menciÛn al mirar hacia ", (the) x1, ".";![6/11] ! ELIUK: sobraba el "m·s"
+     7: "No observas nada digno de menci√≥n al mirar hacia ", (the) x1, ".";![6/11] ! ELIUK: sobraba el "m√°s"
      8:  if (x1 has supporter) print " (sobre "; else print " (en "; ! added in 6/11N 4U65
           print (the) x1, ")";
     }
@@ -2302,91 +2302,91 @@ Constant PARTICULA_TE  = "te";
     !  2: Exito, mensaje por defecto.
     switch(n)
     {
-     1: "Est· muy oscuro.";
+     1: "Est√° muy oscuro.";
      2: "No ves nada interesante.";
     }
 
   Mild:        "Bastante.";
-  ! Y esta si usa como primera palabra alg˙n insulto m·s suave
-  
+  ! Y esta si usa como primera palabra alg√∫n insulto m√°s suave
+
 !================================================================
 ! MISCELANEA
 !================================================================
-! Esta es una falsa acciÛn, que se usa simplemente para agrupar aquÌ
+! Esta es una falsa acci√≥n, que se usa simplemente para agrupar aqu√≠
 ! todos los mensajes de error del parser, los mensajes ante algunos
-! metacommandos, o algnouns mensajes de librerÌa no relacionados con
-! acciÛn alguna. La asignaciÛn de n˙meros a mensajes es bastante
+! metacommandos, o algnouns mensajes de librer√≠a no relacionados con
+! acci√≥n alguna. La asignaci√≥n de n√∫meros a mensajes es bastante
 ! caprichosa.
 
-! Debajo de cada mensaje un comentario indica en quÈ condiciones se
+! Debajo de cada mensaje un comentario indica en qu√© condiciones se
 ! genera.
 
  Miscellany:
     switch(n)
     {
-     1: "(SÛlo considero los diecisÈis primeros objetos)^";
+     1: "(S√≥lo considero los diecis√©is primeros objetos)^";
     ! El player ha especificado objetos multiples, pero el parser
-    ! tiene una lista que no admite m·s de 16, de modo que los
-    ! restbefore objetos no ser·n procesados.
+    ! tiene una lista que no admite m√°s de 16, de modo que los
+    ! restbefore objetos no ser√°n procesados.
 
-     2: "°No sÈ a quÈ objetos te refieres!";
-    ! El player ha usado objetos multiples, pero por alguna razÛn
-    ! la lista del parser est· vacÌa.
+     2: "¬°No s√© a qu√© objetos te refieres!";
+    ! El player ha usado objetos multiples, pero por alguna raz√≥n
+    ! la lista del parser est√° vac√≠a.
 
-     3: 
+     3:
 !         TextoLlamativo(" Has muerto ");
          print " Has muerto ";
     ! Mensaje fin de juego. Has muerto.
 
-     4: 
+     4:
 !          TextoLlamativo(" Has ganado ");
           print " Has ganado ";
     ! Mensaje fin de juego de victoria.
 
      5: ! Mensaje a mostrar tras el fin del juego, para pedir al
-    ! player si quiere reniciar, recuperar, anular, puntuaciÛn,
+    ! player si quiere reniciar, recuperar, anular, puntuaci√≥n,
     ! curiosidades o terminar.
-       print "^øQuieres REINICIAR, RECUPERAR un juego guardado";
+       print "^¬øQuieres REINICIAR, RECUPERAR un juego guardado";
        #IFDEF DEATH_MENTION_UNDO;
-         print ", ANULAR tu ˙ltimo movimiento";
+         print ", ANULAR tu √∫ltimo movimiento";
        #ENDIF;
     !  #IFNDEF NO_PUNTUACION;
          if (TASKS_PROVIDED==0)
-           print ", ver la PUNTUACI”N de este juego";
+           print ", ver la PUNTUACI√ìN de este juego";
     !  #ENDIF; ! NO_PUNTUACION
-    
+
          if (deadflag==2 && AMUSING_PROVIDED==0)
             print ", ver algunas CURIOSIDADES";
-    
+
       " o TERMINAR?";
 
-     6: "[Tu intÈrprete no puede ~deshacer~ acciones, °lo siento!]";
-    ! Error si el intÈrprete no tiene "undo"
+     6: "[Tu int√©rprete no puede ~deshacer~ acciones, ¬°lo siento!]";
+    ! Error si el int√©rprete no tiene "undo"
             #Ifdef TARGET_ZCODE; ![6/11]
-     7: "~deshacer~ fallÛ. [No todos los intÈrpretes lo tienen.]";
+     7: "~deshacer~ fall√≥. [No todos los int√©rpretes lo tienen.]";
             #Ifnot; ! TARGET_GLULX
-     7:  "[No puedes ~deshacer~ m·s.]";
+     7:  "[No puedes ~deshacer~ m√°s.]";
             #Endif; ! TARGET_
-    ! Otro error si el intÈrprete no tiene "undo", pero no habÌa
+    ! Otro error si el int√©rprete no tiene "undo", pero no hab√≠a
     ! sido detectado correctamente
 
      8: "Por favor, da una de las respuestas anteriores.";
     ! Si el player no responde correctamente a la pregunta del
     ! mensaje [Miscellany,5]
 
-     9: "^°Te has quedado a oscuras!"; ! ELIUK: agregado salto de linea inicial (solo I6)
+     9: "^¬°Te has quedado a oscuras!"; ! ELIUK: agregado salto de linea inicial (solo I6)
     ! Mensaje cuando se detecta, al final del turno, que ya no hay
     ! light.
 
-     10: "øPerdÛn?";
+     10: "¬øPerd√≥n?";
     ! Mensaje cuando el player introduce una linea en blanco (no
-    ! llega a generarse acciÛn alguna, por tanto no se consume
+    ! llega a generarse acci√≥n alguna, por tanto no se consume
     ! turno ni se ejecutan daemons)
 
      11: "[No puedes ~deshacer~ lo que no has hecho.]";
     ! Si el player intenta "undo" al principio del juego
 
-     12: "[No puedes ~deshacer~ dos veces seguidas. °Lo siento!]";
+     12: "[No puedes ~deshacer~ dos veces seguidas. ¬°Lo siento!]";
     ! Si el player pone "undo" dos veces
 
      13: "[Retrocediendo al turno anterior.]";
@@ -2395,32 +2395,32 @@ Constant PARTICULA_TE  = "te";
      14: "Lo siento, eso no puede corregirse.";
     ! Si el player pone EEPA (verbo para corregir), pero el
     ! parser no recordaba ninguna palabra mal
-    ! El commando EEPA se usa asÌ, por ejemplo:
+    ! El commando EEPA se usa as√≠, por ejemplo:
     !   > SACA MAZANA VERDE DE LA CESTA
-    !   No veo eso por aquÌ
+    !   No veo eso por aqu√≠
     !   > EEPA MANZANA
     !   Sacas la manzana verde de la cesta de mimbre.
-    
+
      15: "No te preocupes.";
-    ! Si el player pone EEPA sÛlo (sin especificar la palabra
+    ! Si el player pone EEPA s√≥lo (sin especificar la palabra
     ! corregida)
 
-     16: "~eepa~ sÛlo puede corregir una palabra.";
-    ! Si el player pone EEPA seguido de dos o m·s palabras
+     16: "~eepa~ s√≥lo puede corregir una palabra.";
+    ! Si el player pone EEPA seguido de dos o m√°s palabras
 
-     17: "Est· muy oscuro y no puedes ver nada.";
-    ! DescripciÛn del objeto Oscuridad
+     17: "Est√° muy oscuro y no puedes ver nada.";
+    ! Descripci√≥n del objeto Oscuridad
 
      18: print "ti mism", (o) player;
     ! Nombre corto del objeto player
 
      19: "Tan buen aspecto como siempre.";
-    ! DescripciÛn del objeto player
+    ! Descripci√≥n del objeto player
 
      20: "Para repetir un comando como ~rana, salta~, escribe
     ~repite~, en lugar de ~rana, repite~.";
     ! Cuando el player pone PNJ, REPITE para que el PNJ haga otra
-    ! vez la ˙ltima acciÛn.
+    ! vez la √∫ltima acci√≥n.
 
      21: "No hay commando que repetir.";
     ! Cuando el player pone REPITE como primer commando del juego.
@@ -2429,73 +2429,73 @@ Constant PARTICULA_TE  = "te";
     ! Cuando ha empezado la frase con una coma :-)
 
      23: "Parece que quieres hablar con alguien, pero no veo con
-    quiÈn.";
+    qui√©n.";
     ! Cuando el player pone PEPE, COGE HACHA, pero no hay un
     ! objeto que responda al name PEPE.
 
      24: "No puedes hablar con ", (the) x1, ".";
     ! Si el player intenta hablar con un objeto que no es
     ! "animate" ni "talkable" ("talkable" debe ponerse a objetos
-    ! inanimates con los que se podrÌa hablar, como un micrÛfono)
+    ! inanimates con los que se podr√≠a hablar, como un micr√≥fono)
 
      25: "Para hablar con alguien intenta ~alguien, hola~ o algo
-    asÌ.";
+    as√≠.";
     ! Si hay palabras no comprendidas entre el name del PNJ y
     ! la comma, como p.ej: PEPE XADASDGG, SALTA
 
      26: "(primero tratas de ", (coge)"r ", (the) x1, ")"; ! infsp I6
 
-    ! Si la gram·tica especifica que una acciÛn debe efectuarse
+    ! Si la gram√°tica especifica que una acci√≥n debe efectuarse
     ! sobre un objeto en poder del player (token "held"), pero el
     ! player lo intenta sobre un objeto que no tiene, pero que
-    ! est· accesible, el parser intentar· autom·ticamente coger
-    ! ese objeto antes de efectuar la acciÛn. En este mensaje se
-    ! avisa al player de esta intenciÛn.
+    ! est√° accesible, el parser intentar√° autom√°ticamente coger
+    ! ese objeto antes de efectuar la acci√≥n. En este mensaje se
+    ! avisa al player de esta intenci√≥n.
 
-! ================================================================    
+! ================================================================
 ! ERRORES DE PARSING
-! Estos errores son generados por la librerÌa, a menos que el
-! programador proporcione su propia funciÛn ParserError para
+! Estos errores son generados por la librer√≠a, a menos que el
+! programador proporcione su propia funci√≥n ParserError para
 ! manejo de errores.
 
-     27:! El parser se ha atascado. Es el tipo de error m·s
-    ! genÈrico. Si el parser puede, dar· un error m·s concreto
+     27:! El parser se ha atascado. Es el tipo de error m√°s
+    ! gen√©rico. Si el parser puede, dar√° un error m√°s concreto
     ! (noun de los siguientes)
-    "No entendÌ esa frase.";
+    "No entend√≠ esa frase.";
 
      28:! Al parser le sobran palabras, aunque ha entendido gran parte
-    ! de la orden. 
-        
-    print "Intenta de nuevo, porque sÛlo te pude entender: ";
+    ! de la orden.
 
-     29: ! El parser esperaba un token de tipo n˙mero
-    "No comprendÌ ese n˙mero.";
+    print "Intenta de nuevo, porque s√≥lo te pude entender: ";
+
+     29: ! El parser esperaba un token de tipo n√∫mero
+    "No comprend√≠ ese n√∫mero.";
 
      30: ! El parser no ha comprendido el nombre del objeto al que se
-    ! refiere el player, o ese objeto no est· aquÌ.
+    ! refiere el player, o ese objeto no est√° aqu√≠.
     "No veo eso que dices.";
 
      31: ! Este error parece que no se genera nunca. Un posible bug de
     ! libreria, o restos de versiones arcaicas
-     "°Pareces haber dicho muy poca cosa!";
+     "¬°Pareces haber dicho muy poca cosa!";
 
-     32: ! El objeto que el player intenta usar no est· en su
+     32: ! El objeto que el player intenta usar no est√° en su
     ! poder. El parser ha intentado "cogerlo de forma automatica",
     ! pero ha fallado
-    "°No tienes eso!";
+    "¬°No tienes eso!";
 
-     33: ! El player ha intentado usar objetos m˙ltiples (o "TODO")
-    ! con un verbo que en su gram·tica no lo admite.
-    "No puedes especificar objetos m˙ltiples con ese verbo.";
+     33: ! El player ha intentado usar objetos m√∫ltiples (o "TODO")
+    ! con un verbo que en su gram√°tica no lo admite.
+    "No puedes especificar objetos m√∫ltiples con ese verbo.";
 
      34: ! El player ha intentado objetos multiples para "noun" y para
     ! "second", como en METE TODO EN TODO.
-     "SÛlo puedes especificar objetos m˙ltiples una vez en cada
-    lÌnea.";
+     "S√≥lo puedes especificar objetos m√∫ltiples una vez en cada
+    l√≠nea.";
 
      35: ! El player ha usado un proname, como COMELO, pero el
     ! parser no tiene asignado un valor a ese proname.
-     "No estoy seguro de a quÈ se refiere ~", (address) pronoun_word,
+     "No estoy seguro de a qu√© se refiere ~", (address) pronoun_word,
      "~.";
 
      36: ! El player ha puesto una lista de objetos y ha usado la
@@ -2504,61 +2504,61 @@ Constant PARTICULA_TE  = "te";
     ! SACO.
     "Has exceptuado algo que no estaba incluido.";
 
-     37:! La gram·tica de un verbo obliga a que el objeto sobre el que
-    ! se act˙e sea animate (tiene un token de tipo "creature"),
+     37:! La gram√°tica de un verbo obliga a que el objeto sobre el que
+    ! se act√∫e sea animate (tiene un token de tipo "creature"),
     ! pero el player lo ha intentado sobre un objeto que no es
     ! animate.
-    "SÛlo puedes hacer eso con seres animados.";
+    "S√≥lo puedes hacer eso con seres animados.";
 
      38: ! La primera palabra usada por el player es desconocida (o
     ! la primera palabra tras la comma, si se trata de una orden a
     ! un PNJ)
     "No conozco ese verbo.";
 
-     39: ! El player intenta actiones sobre las palabras que est·n en
+     39: ! El player intenta actiones sobre las palabras que est√°n en
     ! la propiedad "irrelevante" de la localidad
      "Eso no es importante.";
 
      40: ! El player ha usado un proname, como EXAMINALO, pero el
-    ! proname se refiere a un objeto que ya no est· visible.
+    ! proname se refiere a un objeto que ya no est√° visible.
      "Ahora mismo no puedes ver lo que representa el pronombre ~",
       (address) pronoun_word,
      "~ (", (the) pronoun_obj, ").";
 
      41: ! Este error no sale nunca. Probablemente sigue aqui por
-    ! razones de compatibilidad, o por despiste de Graham øTal vez
+    ! razones de compatibilidad, o por despiste de Graham ¬øTal vez
     ! ha sido sustituido en versiones mas recients por el mensaje
-    ! n˙mero 28?
-    "No entendÌ la ˙ltima parte de la orden.";
+    ! n√∫mero 28?
+    "No entend√≠ la √∫ltima parte de la orden.";
 
      42: ! El player ha solicitado un numero de objetos en una lista
     ! de objetos multiples, pero el parser no es capaz de
     ! encontrar tantos. Por ejemplo: COGE SEIS MONEDAS.
-    ! En x1 se recibe el n˙mero de objetos hallados por el
+    ! En x1 se recibe el n√∫mero de objetos hallados por el
     ! parser.
      if (x1==0) "No hay suficientes.";
          else if (x1==1){
-     print "AquÌ sÛlo hay un";
+     print "Aqu√≠ s√≥lo hay un";
      if (multiple_object-->1) print (o) multiple_object-->1;
      else print "o";
      " disponible.";
         }
     else
-       "SÛlo hay ", (number) x1, " disponibles para esa acciÛn.";
+       "S√≥lo hay ", (number) x1, " disponibles para esa acci√≥n.";
 
-     43: ! El player ha puesto TODO como objeto m˙ltiple, pero el
-    ! parser no ha encontrado ning˙n objeto. En realidad este
-    ! error parece no producirse nunca (second bug de librerÌa) ya
-    ! que el que siempre acaba gener·ndose es el siguiente (44)
-     "°No encuentro nada para hacer eso!";
+     43: ! El player ha puesto TODO como objeto m√∫ltiple, pero el
+    ! parser no ha encontrado ning√∫n objeto. En realidad este
+    ! error parece no producirse nunca (second bug de librer√≠a) ya
+    ! que el que siempre acaba gener√°ndose es el siguiente (44)
+     "¬°No encuentro nada para hacer eso!";
 
-     44: ! El player ha intentado objetos m˙ltiples usando TODO
+     44: ! El player ha intentado objetos m√∫ltiples usando TODO
          ! pero el parser no ha encontrado ninguno. Por ejemplo, COGE
          ! TODO o DEJA TODO si no hay nada cerca o en el inventario.
-         ! Modificado en [020621] para dar un mensaje m·s coherente
-         ! si el player tiene alg˙n objeto en su inventario.
+         ! Modificado en [020621] para dar un mensaje m√°s coherente
+         ! si el player tiene alg√∫n objeto en su inventario.
        if (action_to_be == ##Drop) {
-         print "°Pero si no llevas nada";
+         print "¬°Pero si no llevas nada";
          if (children (player))
            " de eso!";
          else
@@ -2568,32 +2568,32 @@ Constant PARTICULA_TE  = "te";
        LanguageVerb(verb_word);
        ".";
 
-     45:! El player ha nombrado un PNJ ambiguo (hay m·s de noun con el
-    ! mismo name cerca). El parser le pide aclaraciÛn. Este
+     45:! El player ha nombrado un PNJ ambiguo (hay m√°s de noun con el
+    ! mismo name cerca). El parser le pide aclaraci√≥n. Este
     ! mensaje es la primera parte de la pregunta, el resto lo pone
     ! el parser (que es la lista de PNJs entre los que
     ! duda). Debemos poner a 1 la variable PreguntaCualExactamente
     ! cuando se generan este tipo de preguntas aclaratorias.
-     print "øQuiÈn concretamente, ";
+     print "¬øQui√©n concretamente, ";
     PreguntaCualExactamente=1;
     ImprimirListaDudosos("o");
 !    print "?^";
 
-     46:! El player ha nombrado un objeto ambiguo (hay m·s de noun con el
-    ! mismo name cerca). El parser le pide aclaraciÛn. Este
+     46:! El player ha nombrado un objeto ambiguo (hay m√°s de noun con el
+    ! mismo name cerca). El parser le pide aclaraci√≥n. Este
     ! mensaje es la primera parte de la pregunta, el resto lo pone
     ! el parser (que es la lista de objetos entre los que
     ! duda). Debemos poner a 1 la variable PreguntaCualExactamente
     ! cuando se generan este tipo de preguntas aclaratorias.
-     print "øCu·l concretamente, ";
+     print "¬øCu√°l concretamente, ";
     PreguntaCualExactamente=1;
     ImprimirListaDudosos("o");
 !    print "?^";
 
      47: ! El player ha respondido "TODOS" o "AMBOS" a una pregunta
     ! aclaratoria como la anterior, pero el verbo no admite
-    ! objetos m˙ltiples
-    print "Lo siento, sÛlo puedes referirte a un objeto aquÌ. øCu·l
+    ! objetos m√∫ltiples
+    print "Lo siento, s√≥lo puedes referirte a un objeto aqu√≠. ¬øCu√°l
         exactamente?^";
     PreguntaCualExactamente=1;
 
@@ -2602,7 +2602,7 @@ Constant PARTICULA_TE  = "te";
          !El parser le pregunta para que complete la frase
      PreguntaCualExactamente=1;
 !     print "Mensaje 48^"; ![infps] debug
-    if (IniciarPregunta()==0) print "A quiÈn";
+    if (IniciarPregunta()==0) print "A qui√©n";
     if (actor ~= player) print " tiene que ";
     else print " quieres ";
          IdiomaImprimirComando();
@@ -2614,7 +2614,7 @@ Constant PARTICULA_TE  = "te";
          !El parser le pregunta para que complete la frase
     PreguntaCualExactamente=1;
 !     print "Mensaje 49^"; ![infps] debug
-    if (IniciarPregunta()==0) print "QuÈ";
+    if (IniciarPregunta()==0) print "Qu√©";
     if (actor ~= player) print " tiene que ";
     else print " quieres ";
          IdiomaImprimirComando();
@@ -2622,11 +2622,11 @@ Constant PARTICULA_TE  = "te";
     print "?^";
 
 !#IFNDEF NO_PUNTUACION;
-     50: ! El player acaba de realizar una acciÛn que punt˙a (la
-    ! librerÌa ha detectado que la variable score ha cambiado
-    ! de valor). Se informa de ello al player. El par·metro x1
-    ! contiene el incremento (o decremento) en la puntuaciÛn.
-    print "Tu puntuaciÛn ha ";
+     50: ! El player acaba de realizar una acci√≥n que punt√∫a (la
+    ! librer√≠a ha detectado que la variable score ha cambiado
+    ! de valor). Se informa de ello al player. El par√°metro x1
+    ! contiene el incremento (o decremento) en la puntuaci√≥n.
+    print "Tu puntuaci√≥n ha ";
     if (x1 > 0)
           print "aumentado";
         else {
@@ -2637,24 +2637,24 @@ Constant PARTICULA_TE  = "te";
     if (x1 > 1) print "s";
 !#ENDIF; ! NO_PUNTUACION
 
-     51: ! El player ha intentado una acciÛn con objeto m˙ltiple
-    ! (como COGE TODO). Esta acciÛn es convertida por el parser en
+     51: ! El player ha intentado una acci√≥n con objeto m√∫ltiple
+    ! (como COGE TODO). Esta acci√≥n es convertida por el parser en
     ! una serie de actiones COGE OBJETO1, COGE OBJETO2, etc... Si
-    ! en la ejecuciÛn de alguna de estas actiones encuentra que la
+    ! en la ejecuci√≥n de alguna de estas actiones encuentra que la
     ! localidad del player ha cambiado, debe abortar el
     ! proceso. Este mensaje informa de ello al player.
     !
-    "(Ya que ha ocurrido algo dram·tico, se ha recortado la lista
+    "(Ya que ha ocurrido algo dram√°tico, se ha recortado la lista
     de objetos sobre los que actuabas)";
-    
-     52: ! En los men˙s, se espera a que el player escriba un n˙mero
-    ! para mostrar una entrada del men˙. Si pulsa un numero
-    ! incorrecto, se saca este mensaje. El par·metro x1 contiene
-    ! el n˙mero m·s alto v·lido
-    "^Escribe un n˙mero del 1 al ", x1,
+
+     52: ! En los men√∫s, se espera a que el player escriba un n√∫mero
+    ! para mostrar una entrada del men√∫. Si pulsa un numero
+    ! incorrecto, se saca este mensaje. El par√°metro x1 contiene
+    ! el n√∫mero m√°s alto v√°lido
+    "^Escribe un n√∫mero del 1 al ", x1,
      ", 0 para volver a mostrarlo, o pulsa Intro.";
-    
-     53: ! Mensaje que muestra el sistema de men˙s cuando espera una
+
+     53: ! Mensaje que muestra el sistema de men√∫s cuando espera una
     ! tecla
      "^[Por favor, pulsa ESPACIO]";
      ! [6/11] agregados:
@@ -2662,38 +2662,38 @@ Constant PARTICULA_TE  = "te";
      55: "[Comentario NO guardado]";
      56: print ".^";
      57: print "?^";
-    }        
-    
-  No,Yes:      "SÛlo era una pregunta retÛrica.";
+    }
+
+  No,Yes:      "S√≥lo era una pregunta ret√≥rica.";
   ! Cuando el jugador pone SI o NO, a secas, se genera esta
-  ! acciÛn. Est· pensado por si el juego suelta una frase del estilo
-  ! de "øPero t˙ eres tonto?" y el jugador responde NO.
+  ! acci√≥n. Est√° pensado por si el juego suelta una frase del estilo
+  ! de "¬øPero t√∫ eres tonto?" y el jugador responde NO.
   ! De todas formas, hay un problema, y es que NO es normalmente la
-  ! acciÛn Ir al noroeste. Si queremos que NO sea provisionalmente
-  ! la acciÛn No, entonces el juego debe poner un 1 en la variable
-  ! PreguntaSiNo, antes de escribir el texto "øPero t˙ eres tonto?".
-  ! En este caso, el parser interpretar· "NO" como la acciÛn No,
-  ! pero sÛlo en el siguiente turno. DespuÈs recuperar· su antiguo
+  ! acci√≥n Ir al noroeste. Si queremos que NO sea provisionalmente
+  ! la acci√≥n No, entonces el juego debe poner un 1 en la variable
+  ! PreguntaSiNo, antes de escribir el texto "¬øPero t√∫ eres tonto?".
+  ! En este caso, el parser interpretar√° "NO" como la acci√≥n No,
+  ! pero s√≥lo en el siguiente turno. Despu√©s recuperar√° su antiguo
   ! significado de Ir al Noroeste.
 
   NotifyOff:
-    "NotificaciÛn de puntuaciÛn desactivada.";
-    
+    "Notificaci√≥n de puntuaci√≥n desactivada.";
+
  Objects:
-    ! Ante el verbo "OBJETOS" se genera esta acciÛn, que muestra una
+    ! Ante el verbo "OBJETOS" se genera esta acci√≥n, que muestra una
     ! lista de todos los objetos que el jugador ha manipulado a lo
-    ! largo del juego, junto con una indicaciÛn de quÈ hizo con ellos.
+    ! largo del juego, junto con una indicaci√≥n de qu√© hizo con ellos.
     !
     !  1: Texto introductorio a la lista
-    !  2: Si no ha manejado a˙n ninguno
-    !  3: indicaciÛn de que lo lleva puesto
-    !  4: indicaciÛn de que lo lleva en su inventario
-    !  5: indicaciÛn de quiÈn lo tiene ahora (si lo tiene un PNJ)
-    !  6: indicaciÛn de dÛnde est· el objeto (si est· en una localidad)
-    !  7: indicaciÛn de dÛnde est· el objeto (si est· en un "entrable")
-    !  8: indicaciÛn de dÛnde est· el objeto (si est· en un recipiente)
-    !  9: indicaciÛn de dÛnde est· el objeto (si est· en un soporte)
-    !  10: indicaciÛn de que se ha perdido (no est· en ninguno de los
+    !  2: Si no ha manejado a√∫n ninguno
+    !  3: indicaci√≥n de que lo lleva puesto
+    !  4: indicaci√≥n de que lo lleva en su inventario
+    !  5: indicaci√≥n de qui√©n lo tiene ahora (si lo tiene un PNJ)
+    !  6: indicaci√≥n de d√≥nde est√° el objeto (si est√° en una localidad)
+    !  7: indicaci√≥n de d√≥nde est√° el objeto (si est√° en un "entrable")
+    !  8: indicaci√≥n de d√≥nde est√° el objeto (si est√° en un recipiente)
+    !  9: indicaci√≥n de d√≥nde est√° el objeto (si est√° en un soporte)
+    !  10: indicaci√≥n de que se ha perdido (no est√° en ninguno de los
     !     casos anteriores)
     switch(n)
     {
@@ -2718,15 +2718,15 @@ Constant PARTICULA_TE  = "te";
     !  2: Error, el objeto es abrible, pero tiene "cerrojoechado"
     !  3: Error, el objeto es abrible, pero ya tiene el atributo
     !     "abierto"
-    !  4: Exito, el objeto se abre, y adem·s era recipiente y tenÌa
+    !  4: Exito, el objeto se abre, y adem√°s era recipiente y ten√≠a
     !     cosas dentro. Se muestra entoces la lista de objetos que
-    !     habÌa en su interior (si habia algo)
+    !     hab√≠a en su interior (si habia algo)
     !  5: Exito, el objeto se abre (pero no tiene nada en su
     !     interior, o no era recipiente).
     switch(n)
     {
      1: print_ret "No es algo que pueda abrirse.";
-     2: "Est·", (n) x1, " cerrad", (o) x1, " con llave.";
+     2: "Est√°", (n) x1, " cerrad", (o) x1, " con llave.";
      3: "Ya estaba", (n) x1, " abiert", (o) x1, ".";
      4: print "Abres ", (the) x1, ", descubriendo ";
     if (WriteListFrom(child(x1),
@@ -2738,42 +2738,42 @@ Constant PARTICULA_TE  = "te";
   Order:
     print_ret (The) x1, " tiene", (n) x1, " mejores cosas que hacer.";
 
-  Places: 
+  Places:
     ! El verbo "LUGARES" muestra un listado de los lugares que el
-    ! jugador ha visitado. AquÌ debemos escribir el texto
+    ! jugador ha visitado. Aqu√≠ debemos escribir el texto
     ! introductorio a esa lista.
     switch (n) {
         1:  print "Has visitado: ";
         2:  print ".^";
     }
 
-  Pray:         "No obtienes nada pr·ctico de tus oraciones.";
+  Pray:         "No obtienes nada pr√°ctico de tus oraciones.";
 
   Prompt:
     print "^>";
-    ! El prompt aparece justo antes de pedir una nueva lÌnea al
+    ! El prompt aparece justo antes de pedir una nueva l√≠nea al
     ! jugador. Puede definirse para que sea una frase, o se genere una
     ! frase aleatoria en cada turno.
-    
+
    Pronouns:
-    ! Esta acciÛn (generada por el verbo PRONOMBRES) muestra una lista
-    ! de quÈ significa en ese momento para el parser cada proname
+    ! Esta acci√≥n (generada por el verbo PRONOMBRES) muestra una lista
+    ! de qu√© significa en ese momento para el parser cada proname
     ! -lo, -la, -los, -las...
     !
     !  1: Texto introductorio
     !  2: La palabra "es"
-    !  3: texto a mostrar si el proname no est· definido
+    !  3: texto a mostrar si el proname no est√° definido
     !  4: Si el juego no define pronames
     !  5: [6/11]
     switch(n)
     {
      1: print "En este momento, ";
      2: print "es ";
-     3: print "no est· definido";
-     4: "el juego no conoce ning˙n pronombre.";
+     3: print "no est√° definido";
+     4: "el juego no conoce ning√∫n pronombre.";
      5:  ".";
     }
-    
+
   Pull, Push, Turn:
   ! Las acciones Tirar, Empujar y Girar generan todas ellas los
   ! mismos mensajes, pero pueden darse 4 casos:
@@ -2782,48 +2782,48 @@ Constant PARTICULA_TE  = "te";
   !   3: El objeto no tiene 'estatico' ni 'escenario'
   !   4: El objeto es un ser animado
   ! [Nota, si el objeto tiene ambos 'estatico' y 'escenario' se
-  ! est· tambiÈn en el caso 1]
+  ! est√° tambi√©n en el caso 1]
     switch(n)
     {
-      1: "Est·", (n)x1, " firmemente sujet", (o)x1, ".";
+      1: "Est√°", (n)x1, " firmemente sujet", (o)x1, ".";
       2: "No eres capaz.";
       3: "No ocurre nada, aparentemente.";
-      4: "Eso serÌa, como poco, maleducado.";
+      4: "Eso ser√≠a, como poco, maleducado.";
     }
 
-! Push: see Pull    
+! Push: see Pull
 
   PushDir:
-  ! La acciÛn EmpujarDir se genera ante frases como EMPUJA EL COCHE
+  ! La acci√≥n EmpujarDir se genera ante frases como EMPUJA EL COCHE
   ! HACIA EL NORTE. Hay 3 casos posibles:
   !   1: Si el juego no ha previsto la posibilidad de empujar ese
-  !      objeto hacia una direcciÛn (o sea, no llama a la rutina
-  !      PermitirEmujarDir). Esta es la respuesta por defecto m·s
+  !      objeto hacia una direcci√≥n (o sea, no llama a la rutina
+  !      PermitirEmujarDir). Esta es la respuesta por defecto m√°s
   !      habitual.
-  !   2: Si el jugador pone tras HACIA algo que no es una direcciÛn.
+  !   2: Si el jugador pone tras HACIA algo que no es una direcci√≥n.
   !      (respuesta por defecto en este caso)
   !   3: Si intenta empujar hacia arriba o hacia abajo
     switch(n)
     {
      1: "No creo que empujar ", (the) x1, " sirva para nada.";
-     2: "Eso no es una direcciÛn.";
-     3: "No, no puedes en esa direcciÛn.";
+     2: "Eso no es una direcci√≥n.";
+     3: "No, no puedes en esa direcci√≥n.";
     }
-   
+
  PutOn:
-    ! 1: Error, el objeto no est· en poder del jugador. [Nota,
+    ! 1: Error, el objeto no est√° en poder del jugador. [Nota,
     !    conviene mirar en este caso si el objeto es animado o no,
-    !    para generar un mensaje m·s adecuado]
-    ! 2: Error, el jugador intenta poner un objeto sobre sÌ mismo
+    !    para generar un mensaje m√°s adecuado]
+    ! 2: Error, el jugador intenta poner un objeto sobre s√≠ mismo
     ! 3: Error, el jugador intenta poner el objeto sobre otro que no
     !    tiene el atributo "soporte"
     ! 4: Error, el jugador intenta poner un objeto sobre el propio
     !    jugador.
-    ! 5: Aviso, el objeto es una prenda puesta. La librerÌa va a
-    !    quit·rselo autom·ticamente antes de reintentar la acciÛn
+    ! 5: Aviso, el objeto es una prenda puesta. La librer√≠a va a
+    !    quit√°rselo autom√°ticamente antes de reintentar la acci√≥n
     !    PonerSobre
     ! 6: Error, se intenta poner el objeto sobre otro en el que ya no
-    !    queda sitio (el n˙mero de objetos que caben en el soporte se
+    !    queda sitio (el n√∫mero de objetos que caben en el soporte se
     !    indica en su propiedad "capacidad")
     ! 7: Exito. Mensaje a mostrar para cada objeto puesto cuando se
     !    ponen muchos (ej: PON TODO SOBRE LA MESA)
@@ -2832,36 +2832,36 @@ Constant PARTICULA_TE  = "te";
     switch(n)
     {
      1: if (x1 has animate)
-     "Antes tendrÌas que", (coge) "rl", (o) x1, ", y no sÈ si se dejar·",
+     "Antes tendr√≠as que", (coge) "rl", (o) x1, ", y no s√© si se dejar√°",
          (n) x1, ".";
     else
            "Necesitas tener ", (the) x1,
          " para poder poner", (lo) x1,
          " donde sea.";
-     2: "No puedes poner un objeto sobre sÌ mismo.";
-     3: "Poner cosas sobre ", (the) x1, " no servir· de nada.";
+     2: "No puedes poner un objeto sobre s√≠ mismo.";
+     3: "Poner cosas sobre ", (the) x1, " no servir√° de nada.";
      4: "Te falta destreza.";
      5: "(primero te ", (lo) x1, " quitas)^";
-     6: "No queda sitio en ", (the) x1, " para poner nada m·s.";
+     6: "No queda sitio en ", (the) x1, " para poner nada m√°s.";
      7: "Hecho.";
      8: "Colocas ", (the) x1, " sobre ", (the) second, ".";
     }
-   
+
  Quit:
     !  1: Respuesta al comando FIN
     !  2: Respuesta si el jugador escribe algo distinto de "si" o "no"
     switch(n)
     {
-     1: print "Por favor, responde sÌ o no.";
-     2: print "øRealmente quieres abandonar el juego? ";  ! ELIUK BLAU: antes "Seguro que..."
+     1: print "Por favor, responde s√≠ o no.";
+     2: print "¬øRealmente quieres abandonar el juego? ";  ! ELIUK BLAU: antes "Seguro que..."
     }
-    
+
  Remove:
     ! 2 mensajes de error y 1 de exito
     !   1: El recipiente que contiene el objeto que el jugador quiere
-    !      sacar, est· cerrado. (ml_o apunta al objeto, no al
+    !      sacar, est√° cerrado. (ml_o apunta al objeto, no al
     !      recipiente, el cual puede obtenerse con parent(ml_o))
-    !   2: El objeto no est· dentro del recipiente que el jugador ha
+    !   2: El objeto no est√° dentro del recipiente que el jugador ha
     !     dicho.
     !   3: Exito
     switch(n)
@@ -2869,8 +2869,8 @@ Constant PARTICULA_TE  = "te";
      1: "Por desgracia ", (the) parent(x1), " ",(esta) parent(x1),
      " cerrad", (o) parent(x1), ".";
      2: if (second has animate)
-     "°Pero si no ", (lo) x1, " tiene", (n) second, "!";
-    "°Pero si no ", (esta) x1, " ahÌ ahora!";
+     "¬°Pero si no ", (lo) x1, " tiene", (n) second, "!";
+    "¬°Pero si no ", (esta) x1, " ah√≠ ahora!";
      3: if (verb_word=='quita') "Quitad", (o)x1, ".";
     "Sacad", (o) x1, ".";
     }
@@ -2880,14 +2880,14 @@ Constant PARTICULA_TE  = "te";
     !  2: Si no se puede reiniciar
     switch(n)
     {
-     1: print "øRealmente quieres reiniciar el juego? ";  ! ELIUK BLAU: antes "Seguro que..."
+     1: print "¬øRealmente quieres reiniciar el juego? ";  ! ELIUK BLAU: antes "Seguro que..."
      2: "Error.";
     }
 
  Restore:
     ! 1: Si no se pudo cargar la partida con LOAD
-    ! 2: Exito (no llega a mostrarse, porque en caso de Èxito el
-    !    estado del juego cambia al momento en que se salvÛ. El "Ok"
+    ! 2: Exito (no llega a mostrarse, porque en caso de √©xito el
+    !    estado del juego cambia al momento en que se salv√≥. El "Ok"
     !    que se ve entonces es el del comando Salvar.
     switch(n)
     {
@@ -2899,64 +2899,64 @@ Constant PARTICULA_TE  = "te";
 
  Save:
     ! 1: Si no se pudo guardar el juego
-    ! 2: …xito
+    ! 2: √âxito
     switch(n)
     {
      1: "Error. No se pudo guardar.";
      2: "Ok.";
     }
 
-    ! PuntuaciÛn del juego. Puede activarse porque el player lo pide
+    ! Puntuaci√≥n del juego. Puede activarse porque el player lo pide
     ! (con el verbo "PUNTUACION") o porque el juego ha terminado. En
-    ! este ultimo caso, la variable "deadflag" valdr· true.
+    ! este ultimo caso, la variable "deadflag" valdr√° true.
     ! [6/11] agregado de (2)
   Score: switch (n) {
-    1: if (deadflag) print "En este juego, tu puntuaciÛn ha sido ";
-       else print "Hasta el momento tu puntuaciÛn es ";
+    1: if (deadflag) print "En este juego, tu puntuaci√≥n ha sido ";
+       else print "Hasta el momento tu puntuaci√≥n es ";
        print score, " de un total de ", MAX_SCORE,
         ", en ", turns, " turno";
        if (turns>1) print "s"; return;
-    2:  "Este juego no tiene conteo de puntuaciÛn.";
+    2:  "Este juego no tiene conteo de puntuaci√≥n.";
     }
 
  ScriptOff:
-    ! 1: Error ya estaba desactivada la transcrcipciÛn
+    ! 1: Error ya estaba desactivada la transcrcipci√≥n
     ! 2: Exito
     switch(n)
     {
-     1: "La transcripciÛn ya estaba desactivada.";
-     2: "^Fin de la transcripciÛn.";
-     3:  "Intento fallido de finalizaciÛn de transcripciÛn.";
+     1: "La transcripci√≥n ya estaba desactivada.";
+     2: "^Fin de la transcripci√≥n.";
+     3:  "Intento fallido de finalizaci√≥n de transcripci√≥n.";
     }
 
  ScriptOn:
-    ! 1: Error, ya estaba activada la transcrcipciÛn
-    ! 2: …xito (parte inicial del mensaje, la librerÌa aÒade el tÌtulo
+    ! 1: Error, ya estaba activada la transcrcipci√≥n
+    ! 2: √âxito (parte inicial del mensaje, la librer√≠a a√±ade el t√≠tulo
     !    del juego obtenido de la constante Historia)
     switch(n)
     {
-     1: "La transcripciÛn ya estaba activada.";
-     2: "Iniciando la transcripciÛn de ";
-     3:  "Intento fallido de comienzo de transcripciÛn.";
+     1: "La transcripci√≥n ya estaba activada.";
+     2: "Iniciando la transcripci√≥n de ";
+     3:  "Intento fallido de comienzo de transcripci√≥n.";
     }
 
   Search:
-    ! La acciÛn BuscarEn se genera ante la frase MIRA EN RECIPIENTE,
+    ! La acci√≥n BuscarEn se genera ante la frase MIRA EN RECIPIENTE,
     ! MIRA EN SOPORTE, REGISTRA OBJETO.
     !
     !  1: Error, estamos a oscuras.
-    !  2: …xito examinando soporte, pero no hay nada sobre Èl.
-    !  3: …xito examinando soporte, listar lo que hay.
+    !  2: √âxito examinando soporte, pero no hay nada sobre √©l.
+    !  3: √âxito examinando soporte, listar lo que hay.
     !  4: El objeto examinado no es soporte ni recipiente, mensaje
-    !     est·ndar indicando que no se encuentra nada.
-    !  5: Error, El objeto examinado es recipiente, pero est· cerrado.
-    !  6: …xito, el objeto examinado es recipiente abierto, pero no
+    !     est√°ndar indicando que no se encuentra nada.
+    !  5: Error, El objeto examinado es recipiente, pero est√° cerrado.
+    !  6: √âxito, el objeto examinado es recipiente abierto, pero no
     !     tiene nada dentro.
-    !  7: …xito, el objeto examinado es recipiente abierto y tiene
+    !  7: √âxito, el objeto examinado es recipiente abierto y tiene
     !     cosas dentro. Listarlas.
     switch(n)
     {
-     1: "Est· muy oscuro.";
+     1: "Est√° muy oscuro.";
      2: "No hay nada sobre ", (the) x1, ".";
      3: print "Sobre ", (the) x1;
     WriteListFrom(child(x1),
@@ -2965,7 +2965,7 @@ Constant PARTICULA_TE  = "te";
      4: "No encuentras nada interesante.";
      5: "No puedes ver lo que hay dentro ", (del) x1, " porque ",
      (esta) x1, " cerrad", (o)x1, ".";
-     6: print_ret (The) x1, " ", (esta) x1, " vacÌ", (o)x1,".";
+     6: print_ret (The) x1, " ", (esta) x1, " vac√≠", (o)x1,".";
      7: print "En ", (the) x1;
     WriteListFrom(child(x1),
                       TERSE_BIT + ENGLISH_BIT + ISARE_BIT + CONCEAL_BIT);
@@ -2975,26 +2975,26 @@ Constant PARTICULA_TE  = "te";
   Set:       "No, no puedes.";
   ! Fijar sale ante la frase FIJA OBJETO o AJUSTA OBJETO
 
-  SetTo:      "Eso no puede regularse a ning˙n valor.";
+  SetTo:      "Eso no puede regularse a ning√∫n valor.";
   ! PonerA sale ante la frase AJUSTA DIAL A 23 o FIJA CONTROL EN
   ! ACTIVADO, o PON REGULADOR A 30
-  
+
   Show:
     ! 1: Error, el jugador intenta mostrar un objeto que no tiene.
-    ! 2: Aviso, se ha enviado la acciÛn Mostrar al PNJ, pero este no
+    ! 2: Aviso, se ha enviado la acci√≥n Mostrar al PNJ, pero este no
     !    ha respondido. En este caso ml_n apunta al PNJ y no al objeto
     !    que le hemos mostrado.
     switch(n)
     {
      1: "No tienes ", (the)x1, ".";
-     2: print_ret (The) x1, " no muestra", (n) x1, " interÈs.";
+     2: print_ret (The) x1, " no muestra", (n) x1, " inter√©s.";
     }
-    
+
   Sing:         "Cantas fatal.";
-  Sleep:         "No est·s especialmente somnolient", (o) player, ".";
-  Smell:          "No hueles nada extraÒo.";
+  Sleep:         "No est√°s especialmente somnolient", (o) player, ".";
+  Smell:          "No hueles nada extra√±o.";
   Sorry:    "Oh, no es necesario que te disculpes.";
-  ! Esta acciÛn se genera si el jugador pone "LO SIENTO",
+  ! Esta acci√≥n se genera si el jugador pone "LO SIENTO",
   ! "PERDONA" o cosas similares.
 
  Squeeze:
@@ -3003,7 +3003,7 @@ Constant PARTICULA_TE  = "te";
     !  2: Cualquier otro objeto
     switch(n)
     {
-     1: "°Las manos quietas!";
+     1: "¬°Las manos quietas!";
      2: "No consigues nada haciendo eso.";
     }
 
@@ -3026,14 +3026,14 @@ Constant PARTICULA_TE  = "te";
 
   SwitchOn:
     ! Generada al intentar ENCIENDE OBJETO si el objeto tiene el
-    ! atributo "conmutable". Observar que si no lo tiene, la acciÛn
-    ! que se genera ser· sin embargo Quemar.
+    ! atributo "conmutable". Observar que si no lo tiene, la acci√≥n
+    ! que se genera ser√° sin embargo Quemar.
     !
-    !   1: Error, el objeto no es conmutable (este error no aparecer·
+    !   1: Error, el objeto no es conmutable (este error no aparecer√°
     !      si el jugador pone ENCIENDE OBJETO, ya que en este caso la
-    !      acciÛn generada ser· Quemar objeto, pero puede aparecer si
+    !      acci√≥n generada ser√° Quemar objeto, pero puede aparecer si
     !      pone CONECTA OBJETO)
-    !   2: Error, el objeto ya tenÌa el atributo "encendido"
+    !   2: Error, el objeto ya ten√≠a el atributo "encendido"
     !   3: Exito, el objeto tiene ahora activado "encendido".
     switch(n)
     {
@@ -3041,35 +3041,35 @@ Constant PARTICULA_TE  = "te";
      2: print_ret "Ya estaba", (n) x1, " encendid", (o) x1, ".";
      3: "Enciendes ", (the) x1, ".";
     }
-    
+
     Take:
-    ! Hay 13 casos diferentes. Se trata de 1 mensaje de Èxito y 11
+    ! Hay 13 casos diferentes. Se trata de 1 mensaje de √©xito y 11
     ! mensajes de error y un aviso
     !  1: Exito
     !  2: Error, el objeto cogido es el propio jugador
     !  3: Error, el objeto cogido es animado
-    !  4: Error, el jugador est· subido o metido en el objeto que
+    !  4: Error, el jugador est√° subido o metido en el objeto que
     !     intenta coger
-    !  5: Error, el jugador ya tenÌa ese objeto
-    !  6: Error, el objeto est· en poder de un ser animado [ml_o
+    !  5: Error, el jugador ya ten√≠a ese objeto
+    !  6: Error, el objeto est√° en poder de un ser animado [ml_o
     !     apunta al ser, no al objeto, el cual puede obtenerse en la
     !     variable "uno"]
-    !  7: Error, el objeto es un sub-objeto de otro (est· dentro de un
+    !  7: Error, el objeto es un sub-objeto de otro (est√° dentro de un
     !     objeto que tiene el atributo "transparente", pero no tiene el
     !     atributo "recipiente" ni "soporte")
-    !  8: Error, el objeto est· dentro de otro, pero este otro no es
+    !  8: Error, el objeto est√° dentro de otro, pero este otro no es
     !     recipiente ni soporte ni transparente (probablemente un error
-    !     de programaciÛn)
-    !  9: Error, el objeto est· dentro de un recipiente cerrado.
+    !     de programaci√≥n)
+    !  9: Error, el objeto est√° dentro de un recipiente cerrado.
     ! 10: Error, el objeto es escenario
     ! 11: Error, el objeto es estatico (no puede ser llevado de la
     !     localidad en que se halla)
     ! 12: Error, el jugador lleva demasiados objetos
-    ! 13: Mensaje de aviso, la librerÌa ha decidido mover objetos del
+    ! 13: Mensaje de aviso, la librer√≠a ha decidido mover objetos del
     !     inventario al "objeto saco" para hacer sitio y que el jugador
     !     pueda coger el objeto. [El objeto saco es uno que puede
     !     declarar el programador. Si el jugador lo coge y lo lleva
-    !     consigo, la librerÌa lo usar· autom·ticamente como mochila
+    !     consigo, la librer√≠a lo usar√° autom√°ticamente como mochila
     !     para descargar al jugador cuando sea necesario]
     switch(n)
     {
@@ -3087,38 +3087,38 @@ Constant PARTICULA_TE  = "te";
      7: "Parece", (n) noun, " formar parte ", (del) x1, ".";
      8: "No ", (esta) x1, " disponible", (s)x1, ".";
      9: print_ret (The) x1, " no ", (esta) x1, " abiert", (o) x1, ".";
-     10: "DifÌcilmente podrÌas llevarte eso.";
-     11: print_ret (The) x1, " est· fij", (o) x1, " en el sitio.";
+     10: "Dif√≠cilmente podr√≠as llevarte eso.";
+     11: print_ret (The) x1, " est√° fij", (o) x1, " en el sitio.";
      12: "Ya llevas demasiadas cosas.";
      13: "(colocas ", (the) x1, " en ", (the) SACK_OBJECT,
          " para hacer sitio)";
     }
 
    Taste: "No saboreas nada inesperado.";
-  
+
    Tell:
     ! Dos casos:
     !  1: El jugador habla consigo mismo
     !  2: Hablar con cualquier otro ser animado
-    ! [Nota: Hablar con un objeto inanimado no est· permitido por el
-    ! parser, que da un error y no llega a generar la acciÛn]
-    ! [Los errores de parser se tratan en la secciÛn "Miscelanea" de
+    ! [Nota: Hablar con un objeto inanimado no est√° permitido por el
+    ! parser, que da un error y no llega a generar la acci√≥n]
+    ! [Los errores de parser se tratan en la secci√≥n "Miscelanea" de
     ! esta rutina, al final]
     switch(n)
     {
      1: "Hablas sol", (o) player, " durante un rato.";
-     2: "No has provocado ninguna reacciÛn.";
+     2: "No has provocado ninguna reacci√≥n.";
     }
-    
-   Think:        "Vaya. QuÈ buena idea.";
+
+   Think:        "Vaya. Qu√© buena idea.";
    ThrowAt:
     ! Dos casos:
     !  1: Lanzar cosas a objetos inanimados
     !  2: Lanzar cosas a objetos animados
     switch(n)
     {
-     1: "No servirÌa de nada.";
-     2: "En el ˙ltimo momento te echas atr·s.";
+     1: "No servir√≠a de nada.";
+     2: "En el √∫ltimo momento te echas atr√°s.";
     }
 ! Tie:  see JumpOver.
   Touch:
@@ -3128,14 +3128,14 @@ Constant PARTICULA_TE  = "te";
     !  3: Tocarse a si mismo
     switch(n)
     {
-      1: "°Las manos quietas!";
-      2: "No notas nada extraÒo al tacto.";
-      3: "Si crees que eso servir· de algo...";
+      1: "¬°Las manos quietas!";
+      2: "No notas nada extra√±o al tacto.";
+      3: "Si crees que eso servir√° de algo...";
     }
 ! Turn: see Pull.
 
   Unlock:
-    ! QuitarCerrojo se genera ante ABRE <objeto> CON <objeto2>, o tambiÈn
+    ! QuitarCerrojo se genera ante ABRE <objeto> CON <objeto2>, o tambi√©n
     ! ante QUITA CERROJO A <objeto> (en este segundo caso no se
     ! especifica la "llave" que abre la puerta).
     !
@@ -3146,45 +3146,45 @@ Constant PARTICULA_TE  = "te";
     !  3: Error, el <objeto2> que se intenta usar como llave, no
     !     coincide con la propiedad "con_llave" del <objeto> que
     !     intenta ser abierto.
-    !  4: Exito. El <objeto> se abre (con <objeto2> si Èste ha sido
+    !  4: Exito. El <objeto> se abre (con <objeto2> si √©ste ha sido
     !     especificado, el cual podemos encontrarlo en la variable "otro"
     switch(n)
     {
-     1: "No parece", (n) x1," tener ning˙n tipo de cerrojo.";
-     2:    print_ret (The) x1, " ya tenÌa", (n) x1, " abierto el cerrojo.";
+     1: "No parece", (n) x1," tener ning√∫n tipo de cerrojo.";
+     2:    print_ret (The) x1, " ya ten√≠a", (n) x1, " abierto el cerrojo.";
      3: if (second) "No parece", (n) x1, " encajar en la cerradura.";
-    "Necesitas alg˙n tipo de llave.";
+    "Necesitas alg√∫n tipo de llave.";
      4: if (second) "Quitas el cerrojo ", (al) x1, " con ", (the) second, ".";
     "Quitas el cerrojo ", (al) x1, ".";
     }
 
- VagueGo: ! El jugador ha dicho IR sin especificar a dÛnde
-    "Tienes que especificar en quÈ direcciÛn ir.";
-    
+ VagueGo: ! El jugador ha dicho IR sin especificar a d√≥nde
+    "Tienes que especificar en qu√© direcci√≥n ir.";
+
  Verify:
-    ! 1: …xito
-    ! 2: Error en la verificaciÛn
+    ! 1: √âxito
+    ! 2: Error en la verificaci√≥n
     switch(n)
     {
      1: "Fichero de juego verificado e intacto.";
      2: "El fichero de juego no parece intacto, puede estar corrompido
-    (a menos que estÈs jugando con un intÈrprete muy primitivo que
-    no sea capaz de realizar la comprobaciÛn).";
+    (a menos que est√©s jugando con un int√©rprete muy primitivo que
+    no sea capaz de realizar la comprobaci√≥n).";
     }
    Wait:        "Pasa el tiempo...";
-   Wake:   "La cruda realidad es que esto no es un sueÒo.";
+   Wake:   "La cruda realidad es que esto no es un sue√±o.";
    WakeOther: "No parece necesario hacer eso.";
    Wave:
   ! Agitar genera dos mensajes diferentes:
-  !  1: Si se intenta agitar un objeto que no est· en el inventario
-  !  2: Si se agita un objeto que sÌ est· en el inventario
+  !  1: Si se intenta agitar un objeto que no est√° en el inventario
+  !  2: Si se agita un objeto que s√≠ est√° en el inventario
     switch (n)
     {
       1: "No l",(o) x1, " tienes.";
-      2: "Te sientes ridÌcul", (o) player, " agitando ", (the) x1, ".";
+      2: "Te sientes rid√≠cul", (o) player, " agitando ", (the) x1, ".";
     }
-   WaveHands:  "Te ves ridÌcul", (o) player, " gesticulando asÌ.";
-  ! La acciÛn Gesticular sale ante las frases "gesticula", "agita la
+   WaveHands:  "Te ves rid√≠cul", (o) player, " gesticulando as√≠.";
+  ! La acci√≥n Gesticular sale ante las frases "gesticula", "agita la
   ! mano", "sacude la mano", "saluda con la mano"...
    Wear:
     !  1: Error, el objeto no tiene el atributo "prenda"
@@ -3193,9 +3193,9 @@ Constant PARTICULA_TE  = "te";
     !  4: Exito.
     switch(n)
     {
-     1: "°No puedes ponerte eso!";
+     1: "¬°No puedes ponerte eso!";
      2: "No ", (lo) x1, " tienes.";
-     3: "°Ya ", (lo) x1, " llevas puest", (o) x1, "!.";
+     3: "¬°Ya ", (lo) x1, " llevas puest", (o) x1, "!.";
      4: "Te pones ", (the) x1, ".";
     }
 ! Yes:  see No.
@@ -3207,10 +3207,10 @@ Constant PARTICULA_TE  = "te";
 
 
 ! ---------------------------------------------------------------------------
-! Otras rutinas de soporte para el AUTOR de Aventuras 
+! Otras rutinas de soporte para el AUTOR de Aventuras
 
 [ TextoLlamativo txt;
-    ! Imprime un texto rodeado de asteriscos y en negrita. 
+    ! Imprime un texto rodeado de asteriscos y en negrita.
     ! Puedes cambiarlo si quieres que aparezcan en otros formatos.
 #ifdef TARGET_ZCODE;
     #IFV5; style bold; #ENDIF;
@@ -3227,13 +3227,13 @@ Constant PARTICULA_TE  = "te";
 ];
 
 
-! La siguiente funciÛn imprime la lista de objetos entre los que el
+! La siguiente funci√≥n imprime la lista de objetos entre los que el
 ! parser tiene dudas (porque todos ellos responden al name que ha
 ! usado el player). Esta rutina es llamada desde los mensajes
 ! (Miscellany,45) y (Miscellany,46)
 
-! Modificada en [021025] para que pregunte sÛlo por aquellos objetos
-! empatados a puntuaciÛn m·xima por la desambiaguaciÛn.
+! Modificada en [021025] para que pregunte s√≥lo por aquellos objetos
+! empatados a puntuaci√≥n m√°xima por la desambiaguaci√≥n.
 
 [ ImprimirListaDudosos2 conjuncion
     i k marker punt_max num_objs;
@@ -3301,8 +3301,8 @@ Constant PARTICULA_TE  = "te";
 		if (ii == num_objs - 1) print " ", (string) conjuncion, " ";
 	    }
 	}
-]; 
-  
+];
+
 ! ==============================================================================
 
 Constant LIBRARY_SPANISH;       ! for dependency checking.

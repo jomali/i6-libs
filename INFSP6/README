@@ -1,4 +1,5 @@
-Librer韆 INFSP6 (Spanish Inform Library) versi髇 0.9, por INFSP Task Team
-Incluye modificaciones m韓imas de J. Francisco Mart韓 (marcadas con 'XXX'):
-	-	En la definici髇 de la gram醫ica para la acci髇 ##Go/##Enter en
-		SpanishG.h. Se elimina el verbo vuelve/volver como sin髇imo.
+Librer铆a INFSP6 (Spanish Inform Library) versi贸n 0.91, por INFSP Task Team
+Cambia la codificaci贸n de caracteres ISO 8859-15 original por la UTF-8
+Incluye adem谩s otras modificaciones m铆nimas por J. Francisco Mart铆n (estas modificaciones est谩n marcadas en el c贸digo con la etiqueta 'XXX'):
+	-	En la definici贸n de la gram谩tica para la acci贸n ##Go/##Enter en
+		SpanishG.h. Se elimina el verbo vuelve/volver como sin贸nimo.
