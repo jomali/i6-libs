@@ -4,8 +4,8 @@
 !===============================================================================
 !
 !  Archivo :  damusix.h
-!  Fecha   :  2009/01/03
-!  Version :  3/090103
+!  Fecha   :  2018/09/21
+!  Version :  3.1/180921
 !  Autor   :  Eliuk Blau
 !  e-Mail  :  eliukblau (AT) gmail.com
 !
@@ -210,19 +210,19 @@ Constant _DAMUSIX_VERSION_ = "3/090103";
 #ifdef DEBUG;
   ! CONSTANTES PARA INTERNACIONALIZACION DE MENSAJES DE AVISO/ADVERTENCIA
   Constant ERROR_GLK_NO_FULL_AUDIO =
-             "[AVISO: ¡Tu intérprete no soporta completamente el audio!]^
-              [-No se reproducirán los sonidos ni las músicas de fondo-]^";
+             "[AVISO: Â¡Tu intÃ©rprete no soporta completamente el audio!]^
+              [-No se reproducirÃ¡n los sonidos ni las mÃºsicas de fondo-]^";
 
   Constant ERROR_LISTA_REPROD_LLENA =
-             "[ERROR: ¡La Lista de Reproducción de sonidos se ha llenado!]^
-              [-Imposible agregar un sonido si la Lista ya está completa-]^";
+             "[ERROR: Â¡La Lista de ReproducciÃ³n de sonidos se ha llenado!]^
+              [-Imposible agregar un sonido si la Lista ya estÃ¡ completa-]^";
 
   Constant ERROR_TOCAR_LISTA_DURANTE_FADE =
-             "[ERROR: ¡Actualmente ya está en proceso un trabajo de Fade!]^
-              [-Imposible tocar la Lista de Reproducción durante un Fade-]^";
+             "[ERROR: Â¡Actualmente ya estÃ¡ en proceso un trabajo de Fade!]^
+              [-Imposible tocar la Lista de ReproducciÃ³n durante un Fade-]^";
 
   Constant ERROR_HACER_FADE_DURANTE_FADE =
-             "[ERROR: ¡Actualmente ya está en proceso un trabajo de Fade!]^
+             "[ERROR: Â¡Actualmente ya estÃ¡ en proceso un trabajo de Fade!]^
               [-Imposible ejecutar uno nuevo hasta que termine el actual-]^";
 #endif; ! DEBUG
 
@@ -1102,7 +1102,7 @@ Object Damusix
     ! en el comportamiento de la rutina puede corregirse con un breve truco,
     ! pero se ha decido no hacerlo, porque la correccion podria traer 'efectos
     ! colaterales' en el codigo ajeno a Damusix implementado por el programador
-    ! (la solucion es detener el Timer SIEMPRE, pero... ¿y si el juego lo esta
+    ! (la solucion es detener el Timer SIEMPRE, pero... Â¿y si el juego lo esta
     ! usando para una funcion propia? Mejor NO DETENERLO injustificadamente)
     ! A pesar de todo, AbortarFade() SIEMPRE DETIENE CORRECTAMENTE los Fades
     ! activos, incluso si el Timer sige produciendo 'ticks' sin control]

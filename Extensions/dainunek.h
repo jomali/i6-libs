@@ -4,8 +4,8 @@
 !===============================================================================
 !
 !  Archivo :  dainunek.h
-!  Fecha   :  2009/01/03
-!  Version :  3
+!  Fecha   :  2018/09/21
+!  Version :  3.1
 !  Autor   :  Eliuk Blau
 !  e-Mail  :  eliukblau (AT) gmail.com
 !
@@ -89,6 +89,10 @@
 !===============================================================================
 !
 !  Log:
+!  2018/09/21  J. Francisco Martín -
+!							Modificada la codificación de caracteres de
+!							ISO 8859-15 a UTF-8 (requiere la versión 6.34 o
+!							superior del compilador).
 !  2009/01/03  Eliuk Blau - IMPORTANTE!! Nuevo Release: ** Dainunek v3 **
 !                         - Se realizan muchas mejoras en el codigo, entre las
 !                           que se destacan eliminacion de la clase 'Dainunek'
