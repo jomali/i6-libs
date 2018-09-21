@@ -1,10 +1,12 @@
 #! /bin/sh
 # Script de inicializaciónn de librerías y extensiones para Inform 6.
-# Versión: 2.0 (2018/09/16)
+# Versión: 3.0 (2018/09/18)
 
+# Versión de la librería Inform:
+inform_version="611"
 # Rutas:
-directorio_librerias="/usr/share/inform/6.31/module"
-directorio_extensiones="/usr/share/inform/6.31/include"
+directorio_librerias="/usr/share/inform6/library"
+directorio_extensiones="/usr/share/inform6/extensions"
 directorio_sintaxis_gtksourceview="/usr/share/gtksourceview-3.0/language-specs"
 directorio_paquetes_atom=$HOME"/.atom/packages"
 
@@ -31,12 +33,32 @@ if [ -d $directorio_librerias ]; then
 	sudo rm -r $directorio_librerias
 fi
 sudo mkdir $directorio_librerias
-sudo cp InformLibrary/*.h $directorio_librerias/
+sudo cp Inform6/library$inform_version/*.h $directorio_librerias/
+sudo ln -s $directorio_librerias/english.h $directorio_librerias/English.h
+sudo ln -s $directorio_librerias/grammar.h $directorio_librerias/Grammar.h
+sudo ln -s $directorio_librerias/parser.h $directorio_librerias/Parser.h
+sudo ln -s $directorio_librerias/verblib.h $directorio_librerias/Verblib.h
+sudo ln -s $directorio_librerias/verblib.h $directorio_librerias/VerbLib.h
 sudo cp INFSP6/*.h $directorio_librerias/
-cp InformLibrary/README README_temp
+sudo ln -s $directorio_librerias/infspr.h $directorio_librerias/INFSPR.h
+sudo ln -s $directorio_librerias/spanish.h $directorio_librerias/Spanish.h
+sudo ln -s $directorio_librerias/spanishg.h $directorio_librerias/SpanishG.h
+cp Inform6/library$inform_version/README README_temp
 echo " " >> README_temp
 cat INFSP6/README >> README_temp
 sudo mv README_temp $directorio_librerias/README
+echo " hecho."
+
+# Otras extensiones:
+echo -n "Copiando archivos de extensiones generales..."
+if [ -d $directorio_extensiones ]; then
+	sudo rm -r $directorio_extensiones
+fi
+sudo mkdir $directorio_extensiones
+sudo cp Extensions/*.h $directorio_extensiones/
+sudo ln -s $directorio_extensiones/dainunek.h $directorio_extensiones/Dainunek.h
+sudo ln -s $directorio_extensiones/damusix.h $directorio_extensiones/Damusix.h
+sudo ln -s $directorio_extensiones/infglk.h $directorio_extensiones/InfGlk.h
 echo " hecho."
 
 # Librería GWindows (DA-Gwindows v1.2):
@@ -57,19 +79,6 @@ if [ -d $directorio_extensiones/vorple ]; then
 fi
 sudo mkdir $directorio_extensiones/vorple
 sudo cp Vorple6/*.h $directorio_extensiones/vorple/
-sudo cp Vorple6/JustEnoughGlulx/JustEnoughGlulx.h $directorio_extensiones/vorple/
-echo " hecho."
-
-# Otras extensiones:
-echo -n "Copiando archivos de otras extensiones..."
-if [ -d $directorio_extensiones/other ]; then
-	sudo rm -r $directorio_extensiones/other
-fi
-sudo mkdir $directorio_extensiones/other
-sudo cp Extensions/*.h $directorio_extensiones/other/
-sudo ln -s $directorio_extensiones/other/dainunek.h $directorio_extensiones/other/Dainunek.h
-sudo ln -s $directorio_extensiones/other/damusix.h $directorio_extensiones/other/Damusix.h
-sudo ln -s $directorio_extensiones/other/infglk.h $directorio_extensiones/other/InfGlk.h
 echo " hecho."
 echo " "
 
@@ -93,10 +102,6 @@ echo " "
 
 echo $directorio_extensiones/vorple
 sudo ls --color=auto $directorio_extensiones/vorple/
-echo " "
-
-echo $directorio_extensiones/other
-sudo ls --color=auto $directorio_extensiones/other/
 echo " "
 
 #sudo -k

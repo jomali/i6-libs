@@ -12,6 +12,8 @@ bresc_location=~/data/bin
 zcode_interpreter=gargoyle-free;
 glulx_interpreter=gargoyle-free;
 
+inform_path=,/usr/share/inform6/library/,/usr/share/inform6/extensions/,/usr/share/inform6/extensions/gwindows/,/usr/share/inform6/extensions/vorple/
+
 #-------------------------------------------------------------------------------
 
 rm ./*~
@@ -46,7 +48,7 @@ if [ "$op" = "3" ]; then
 	echo "============================================="
 	echo "COMPILANDO PARA GLULX (sin multimedia)..."
 	echo "---------------------------------------------"
-	inform +include_path=,/usr/share/inform/include/,/usr/share/inform/module/,/usr/share/inform/6.31/include/,/usr/share/inform/6.31/module/,/usr/share/inform/6.31/include/gwindows/,/usr/share/inform/6.31/include/other/ -G $gameFile.inf ../$gameFile.ulx
+	inform +include_path=$inform_path -G $gameFile.inf ../$gameFile.ulx
 
 	echo " "
 	echo -n "Pulsa cualquier tecla para ejecutar la aplicación ('q' para salir): "
@@ -66,9 +68,9 @@ elif [ "$op" = "2" ]; then
 	echo "============================================="
 	echo "COMPILANDO PARA GLULX..."
 	echo "---------------------------------------------"
-	inform +include_path=,/usr/share/inform/include/,/usr/share/inform/module/,/usr/share/inform/6.31/include/,/usr/share/inform/6.31/module/,/usr/share/inform/6.31/include/gwindows/,/usr/share/inform/6.31/include/other/ -G $gameFile.inf $gameFile.ulx
+	inform +include_path=$inform_path -G $gameFile.inf $gameFile.ulx
 	$bresc_location/bres $gameFile.res
-	inform +include_path=,/usr/share/inform/include/,/usr/share/inform/module/,/usr/share/inform/6.31/include/,/usr/share/inform/6.31/module/,/usr/share/inform/6.31/include/gwindows/,/usr/share/inform/6.31/include/other/ -G $gameFile.inf
+	inform +include_path=$inform_path -G $gameFile.inf
 	$bresc_location/bresc $gameFile.res
 	mv $gameFile.gblorb ../$gameFile.gblorb
 	rm $gameFile.ulx
@@ -85,13 +87,13 @@ elif [ "$op" = "2" ]; then
 	$glulx_interpreter $gameFile.gblorb
 
 #===============================================================================
-# Compilar el relato para MÃÂQUINA-Z
+# Compilar el relato para MÁQUINA-Z
 #-------------------------------------------------------------------------------
 else
 	echo "============================================="
 	echo "COMPILANDO PARA MÁQUINA-Z..."
 	echo "---------------------------------------------"
-	inform +include_path=,/usr/share/inform/include/,/usr/share/inform/module/,/usr/share/inform/6.31/include/,/usr/share/inform/6.31/module/,/usr/share/inform/6.31/include/gwindows/,/usr/share/inform/6.31/include/other/ $gameFile.inf ../$gameFile.z5
+	inform +include_path=$inform_path $gameFile.inf ../$gameFile.z5
 
 	echo " "
 	echo -n "Pulsa cualquier tecla para ejecutar la aplicación ('q' para salir): "
