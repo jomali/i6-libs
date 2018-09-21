@@ -16,8 +16,6 @@ inform_path=,/usr/share/inform6/library/,/usr/share/inform6/extensions/,/usr/sha
 
 #-------------------------------------------------------------------------------
 
-rm ./*~
-
 if [ "$1" != "" ]; then gameFile=$1;
 else
 	echo -n "Introduce el nombre del archivo (sin la extensión): ";
@@ -39,7 +37,7 @@ else
 	echo " "
 fi
 
-perl ./extensions/preprocesaTexto.pl ./$gameFile\_objects.txt ./$gameFile\_langOM.inf
+perl ./libs/preprocesaTexto.pl ./$gameFile\_objects.txt ./$gameFile\_langOM.inf
 
 #===============================================================================
 # Compilar el relato para GLULX (sin multimedia)
