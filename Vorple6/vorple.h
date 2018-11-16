@@ -28,7 +28,7 @@
 !		-- you will have to manually add the Vorple modifications in this case.
 !
 !	Version:	3.1 (preview)
-!	Released:	2018/09/17
+!	Released:	2018/09/23
 ! ==============================================================================
 
 System_file;
@@ -43,15 +43,9 @@ System_file;
 #Ifndef VORPLE_NO_REPLACES;
 ! To change the status line, add objects to "StatusLineRulebook" with your code
 ! as the description of the object. See the end of this file
-#Ifndef DrawStatusLine;
-[ DrawStatusLine;
-	if (VorpleAppendToDrawStatusLine()) return true;
-	OldDrawStatusLine();
-	return true;
-];
-#Endif; ! DrawStatusLine;
 
 Replace Banner OldBanner;					! (verblibm.h)
+Replace DrawStatusLine OldDrawStatusLine;	! (parserm.h)
 Replace L__M OldLM;							! (verblibm.h)
 #Endif; ! VORPLE_NO_REPLACES;
 
@@ -93,15 +87,14 @@ Global bp_memory_nest = 0;
     @output_stream str buf;
     fref = max; ! Avoid compiler warning
 	#Ifnot; ! TARGET_GLULX;
-    switch (str) {
-
-        BP_OUTSTREAM_SCREEN:
+	switch (str) {
+    	bp_outstream_Screen:
             ; ! Code to be supplied
 
-        -BP_OUTSTREAM_SCREEN:
+        -bp_outstream_Screen:
             ; ! Code to be supplied
 
-        BP_OUTSTREAM_SCRIPT: ! ScriptOn
+        bp_outstream_Script: ! ScriptOn
             if (gg_scriptstr ~= GLK_NULL) rfalse;
             if (gg_scriptfref == GLK_NULL) {
                 gg_scriptfref = glk_fileref_create_by_prompt(
@@ -117,47 +110,52 @@ Global bp_memory_nest = 0;
             if (gg_scriptstr == GLK_NULL) rfalse;
             glk_window_set_echo_stream(gg_mainwin, gg_scriptstr);
 
-        -BP_OUTSTREAM_SCRIPT: ! ScriptOff
+        -bp_outstream_Script:   ! ScriptOff
             if (gg_scriptstr == GLK_NULL) rfalse;
             glk_stream_close(gg_scriptstr, GLK_NULL);
             gg_scriptstr = GLK_NULL;
 
-        BP_OUTSTREAM_MEMORY:
+        bp_outstream_Memory:
             if (bp_memory_nest == BP_MEMORY_MAXNEST) rfalse;
             bp_memory_buf-->bp_memory_nest = buf;
             bp_memory_str-->bp_memory_nest = glk_stream_get_current();
-            glk_stream_set_current(glk_stream_open_memory(buf+WORDSIZE, max,
-				filemode_Write, BP_MEMORYFREF_ROCK+bp_memory_nest));
+            glk_stream_set_current(glk_stream_open_memory(
+				buf + WORDSIZE,
+				max,
+				filemode_Write,
+				BP_MEMORYFREF_ROCK + bp_memory_nest));
             bp_memory_nest++;
 
-        -BP_OUTSTREAM_MEMORY:
+        -bp_outstream_Memory:
             if (bp_memory_nest == 0) rfalse;
             bp_memory_nest--;
             glk_stream_close(glk_stream_get_current(), gg_arguments);
             glk_stream_set_current(bp_memory_str-->bp_memory_nest);
             (bp_memory_buf-->bp_memory_nest)-->0 = gg_arguments-->1;
-            bp_memory_buf-->bp_memory_nest
-				= bp_memory_str-->bp_memory_nest
+            bp_memory_buf-->bp_memory_nest = bp_memory_str-->bp_memory_nest
 				= GLK_NULL;
 
-        BP_OUTSTREAM_CMDFILE: ! CommandsOn
+        bp_outstream_Cmdfile: ! CommandsOn
             if (gg_commandstr ~= GLK_NULL) rfalse;
-            fref = glk_fileref_create_by_prompt(fileusage_TextMode
-				+ fileusage_InputRecord, filemode_Write, GG_COMMANDWSTR_ROCK);
+            fref = glk_fileref_create_by_prompt(
+				fileusage_TextMode + fileusage_InputRecord,
+				filemode_Write,
+				GG_COMMANDWSTR_ROCK);
             if (fref == GLK_NULL) rfalse;
-            gg_commandstr = glk_stream_open_file(fref, filemode_Write,
+            gg_commandstr = glk_stream_open_file(
+				fref,
+				filemode_Write,
 				GG_COMMANDWSTR_ROCK);
             glk_fileref_destroy(fref);
             gg_command_reading = false;
             if (gg_commandstr == GLK_NULL) rfalse;
 
-        -BP_OUTSTREAM_CMDFILE:  ! CommandsOff
+        -bp_outstream_Cmdfile: ! CommandsOff
             if (gg_commandstr == GLK_NULL) rfalse;
             if (gg_command_reading) rfalse;
             gg_command_reading = false;
             glk_stream_close(gg_commandstr, GLK_NULL);
             gg_commandstr = GLK_NULL;
-
     }
 	#Endif; ! TARGET_
     rtrue;
@@ -176,6 +174,7 @@ Global fref_js_return;
 
 [ VorpleInitialise      r ;
 	! creates references
+	! TODO - remove?
 	!fref_handshake = make_fref(HANDSHAKE_FILE);
 	!fref_js_eval = make_fref(JS_EVAL_FILE);
 	!fref_js_return = make_fref(JS_RETURN_FILE);
@@ -196,16 +195,17 @@ Global fref_js_return;
 
 	! vorple interface setup rules
 	! TODO - is the test for vorple support superflous here, since
-	! "VorpleExecuteJavaScriptCommand()"" just doesn't do anything for normal
+	! "VorpleExecuteJavaScriptCommand()" just doesn't do anything for normal
 	! terps?
+
 	if (isVorpleSupported()) {
-		! execute the "Vorple interface setup rules"
-		VorpleExecuteJavaScriptCommand(
+	    ! execute the "Vorple interface setup rules"
+	    VorpleExecuteJavaScriptCommand(
 			"window._vorpleSetupRulebookHasRun||false");
-		if (VorpleWhatBooleanWasReturned() == false) {
-			! go through the rules of vorple interface setup
-			objectloop(r in VorpleInterfaceSetup) r.description();
-			VorpleExecuteJavaScriptCommand(
+	    if (~~VorpleWhatBooleanWasReturned()) {
+	        ! go through the rules of vorple interface setup
+	        objectloop(r in VorpleInterfaceSetup) r.description();
+	        VorpleExecuteJavaScriptCommand(
 				"window._vorpleSetupRulebookHasRun=true");
 	    }
 	}
@@ -213,7 +213,7 @@ Global fref_js_return;
 
 Global VorpleCommunicationDone = 0;
 
-Constant BUFLEN = 500;  ! used for most arrays
+Constant BUFLEN = 500; ! used for most arrays
 Array current_prompt buffer (BUFLEN-1);
 
 [ StartVorpleStorySub ;
@@ -226,14 +226,14 @@ Array current_prompt buffer (BUFLEN-1);
 ];
 
 Verb meta '__start_story'
-*   -> StartVorpleStory;
+	*   -> StartVorpleStory;
 
 
 !================================
 ! Runtime errors
 
 [ VorpleThrowRuntimeError text ;
-    print "  *** Vorple run-time error: ";
+	print "  *** Vorple run-time error: ";
 	PrintStringOrArray(text);
 	print " ***  ";
 ];
@@ -244,14 +244,14 @@ Verb meta '__start_story'
 
 ! Code by Juhana, cribbed from Zarf's examples probably? or from I7 code?
 
-!Already defined in "infglk"
+!Already defined in "infglk" TODO - remove?
 !Constant filemode_Write = 1;
 !Constant filemode_Read = 2;
 !Constant filemode_ReadWrite = 3;
 
-! TODO - this is used e.g. with VorpleExecuteJavaScriptCommand is called with
-! just a string ; should we increase that just in case (but then it costs more
-! memory)?
+! TODO - this is used e.g. with "VorpleExecuteJavaScriptCommand()" is called
+! with just a string ; should we increase that just in case (but then it costs
+! more memory)?
 Constant HANDSHAKE_FILE = "VpHndshk";
 Constant JS_EVAL_FILE = "VpJSEval";
 
@@ -276,17 +276,21 @@ Array gg_result --> 2;
     !glk($0044, str, gg_result); ! stream_close
     signalFileToRead(fref_handshake, HANDSHAKE_FILE);
 
-    ! the interpreter now writes "Callay!" to the file.
+    ! the interpreter now writes "Callay!" to the file
     str = open_file(fref_handshake, HANDSHAKE_FILE, filemode_Read);
-    len = glk($0092, str, mybuffer, BUFLEN);    ! get_buffer_stream
-    ! compare_string, but with a small twist (get_buffer_stream starts writing at 0, not at WORDSIZE)
+    len = glk($0092, str, mybuffer, BUFLEN); ! get_buffer_stream
+    ! compare_string, but with a small twist (get_buffer_stream starts writing
+	! at 0, not at WORDSIZE)
     ("Callay!").print_to_array(mybuffer2, BUFLEN);
-    if (len ~= 7) rfalse;   ! wrong response from the interpreter
+    if (len ~= 7) {
+		! wrong response from the interpreter
+		rfalse;
+	}
     for (ix=0 : ix<len : ix++) {
        if (mybuffer->ix ~= mybuffer2->(WORDSIZE+ix)) rfalse;
     }
     glk($0044, str, gg_result); ! stream_close
-    rtrue;  ! everything passed, it's a Vorple interpreter
+    rtrue; ! everything passed, it's a Vorple interpreter
 ];
 
 [ signalFileToRead  myref myhandshake     str ;
@@ -325,8 +329,8 @@ Array gg_result --> 2;
     if (val ofclass String) {
         len = val.print_to_array(mybuffer, BUFLEN);
         if (len == BUFLEN) {
-			VorpleThrowRuntimeError("JS command too long; please increase ",
-				"BUFLEN");
+			VorpleThrowRuntimeError(
+				"JS command too long; please increase BUFLEN");
 		}
         glk($0085, str, mybuffer+4, len); ! put_buffer_stream
     } else {
@@ -343,9 +347,10 @@ Array gg_result --> 2;
         bp_output_stream(-3);
         blen = buf-->0;
     }
+
     if (blen == BUFLEN) {
-		VorpleThrowRuntimeError("compare_string: string number 1 too long; ",
-			"please increase BUFLEN");
+		VorpleThrowRuntimeError("compare_string: string number 1 too long;
+ 			please increase BUFLEN");
 	}
 
     if (val ofclass String) {
@@ -356,10 +361,12 @@ Array gg_result --> 2;
         bp_output_stream(-3);
         len = val-->0;
     }
+
     if (len == BUFLEN) {
-		VorpleThrowRuntimeError("compare_string: string number 2 too long; ",
-			"please increase BUFLEN");
+		VorpleThrowRuntimeError("compare_string: string number 2 too long;
+			please increase BUFLEN");
 	}
+
     if (len ~= blen) rfalse;
     for (ix=0 : ix<len : ix++) {
         if (mybuffer->(WORDSIZE+ix) ~= mybuffer2->(WORDSIZE+ix)) rfalse;
@@ -380,27 +387,30 @@ Array gg_result --> 2;
 ! utils
 
 Constant LEN_LONGSTR = 500;
-Constant LEN_SHORTSTR= 200;
+Constant LEN_SHORTSTR = 200;
 Constant LEN_HUGESTR = 1500;
 Constant LEN_HUGEHUGESTR = 2000;
-Array  longstr buffer LEN_LONGSTR;
-Array  shortstr buffer LEN_SHORTSTR;
-Array  hugestr buffer LEN_HUGESTR;
-Array  hugehugestr buffer LEN_HUGEHUGESTR;
+Array longstr buffer LEN_LONGSTR;
+Array shortstr buffer LEN_SHORTSTR;
+Array hugestr buffer LEN_HUGESTR;
+Array hugehugestr buffer LEN_HUGEHUGESTR;
 
 ! Print a string or an array (a buffer array, to be more precise)
 [ PrintStringOrArray st i ;
 	if (st ofclass String) {
 		print (string) st;
-	} else {
+	}
+	else {
+		!! print " * "; ! FIXME
 		for (i=0: i< st-->0: i++) {
 			print (char) st->(WORDSIZE+i);
 		}
+		!! print " * ";
 	}
 ];
 
 ! Concatenates individual parts of a command, send a string back
-[ BuildCommand str1 str2 str3 str4 str5 str6 str7 ;
+[ BuildCommand str1 str2 str3 str4 str5 str6 str7;
 	!@output_stream 3 hugehugestr;
     bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
 	if (str1 ~= 0) { print (PrintStringOrArray) str1; }
@@ -413,8 +423,8 @@ Array  hugehugestr buffer LEN_HUGEHUGESTR;
     !@output_stream -3;
     bp_output_stream(-3);
     if (hugehugestr-->0 == LEN_HUGEHUGESTR) {
-		VorpleThrowRuntimeError("JS command too long; please increase ",
-			"LEN_HUGEHUGESTR");
+		VorpleThrowRuntimeError("JS command too long; please increase
+			LEN_HUGEHUGESTR");
 	}
 	return hugehugestr ;
 ];
@@ -458,9 +468,9 @@ Array uid buffer 15;
 ];
 
 ! Escape ^ and ' in text
-Array  toescape buffer 500;
-Array  safe buffer 500;
-Array  temp buffer 50;
+Array toescape buffer 500;
+Array safe buffer 500;
+Array temp buffer 50;
 [ VorpleEscape str;
 	return VorpleEscapeLineBreaks(str, "");
 ];
@@ -472,9 +482,9 @@ Array  temp buffer 50;
 ! Unix files sometimes appear in Windows as one big line. Anyway, it's just a
 ! big standardisation debate
 #Ifdef TARGET_ZCODE;
-Constant NEW_LINE_CHAR = 13;     ! '\r'
+Constant NEW_LINE_CHAR = 13; ! '\r'
 #Ifnot; ! TARGET_GLULX
-Constant NEW_LINE_CHAR = 10;     ! '\n'
+Constant NEW_LINE_CHAR = 10; ! '\n'
 #Endif;
 
 ! Transform a char into a Unicode value
@@ -482,8 +492,7 @@ Constant NEW_LINE_CHAR = 10;     ! '\n'
 	y = (x & $7f00) / $100;
 	if (x<0) y = y + $80;
 	x = x & $ff;
-	print (hexdigit) y/$10, (hexdigit) y,
-    	(hexdigit) x/$10, (hexdigit) x;
+	print (hexdigit) y/$10, (hexdigit) y, (hexdigit) x/$10, (hexdigit) x;
 ];
 
 [ hexdigit x;
@@ -528,7 +537,7 @@ Constant NEW_LINE_CHAR = 10;     ! '\n'
         if (c < 128) {
             print (char) c;
         } else {
-            print (char) 92; print "u"; ! \u
+            print (char) 92; print "u";  ! \u
             Unicode(c);
         }
 	}
@@ -556,7 +565,7 @@ Constant NEW_LINE_CHAR = 10;     ! '\n'
 
 Constant JS_RETURN_FILE = "VpJSRtrn";
 
-! do we need that? or can we use other ones declared later?
+! TODO - do we need that? or can we use other ones declared later?
 Array returnedValue -> BUFLEN+4;
 Array returnedValuebuffer buffer BUFLEN+4;
 
@@ -598,29 +607,31 @@ Array returnedValuebuffer buffer BUFLEN+4;
     if (compare_string(txt, len, "NaN")) { return "NaN"; }
     if (compare_string(txt, len, "Infinity")) { return "infinity"; }
     if (compare_string(txt, len, "-Infinity")) { return "infinity"; }
-    c = txt->(WORDSIZE);  ! 1st character
+    c = txt->(WORDSIZE); ! 1st character
     d = txt->(WORDSIZE+len-1); ! last character
     switch(c) {
         39: ! 39 = '
-			if (len == 1 || d ~= 39) {
+ 			if (len == 1 || d ~= 39) {
 				return "unknown";
 			} else {
 				return "text";
 			}
-        '[': return "list";
-        '{': return "object";
+        '[':
+			return "list";
+        '{':
+			return "object";
     }
     ! this is so ugly!...
     if ( txt->(WORDSIZE) == 'f'
 		&& txt->(WORDSIZE) == 'u'
 		&& txt->(WORDSIZE) == 'n'
-		&& txt->(WORDSIZE) == 'c'
+    	&& txt->(WORDSIZE) == 'c'
 		&& txt->(WORDSIZE) == 't'
 		&& txt->(WORDSIZE) == 'i'
 		&& txt->(WORDSIZE) == 'o'
 		&& txt->(WORDSIZE) == 'n'
 		&& txt->(WORDSIZE) == ' ') {
-        return "function";
+    	return "function";
     }
     ! corresponding regexp : "^\-?\d+(\.\d+)?$"
     c = 0; ! current number of letter
@@ -633,7 +644,7 @@ Array returnedValuebuffer buffer BUFLEN+4;
 		return "unknown";
 	}
     while ( c < len && txt->(WORDSIZE+c) <= 58 && txt->(WORDSIZE+c) >= 48) {
-		c++;
+ 		c++;
 	}
     ! "()?$"
     if (c == len) {
@@ -657,11 +668,11 @@ Array returnedValuebuffer buffer BUFLEN+4;
 ];
 
 [ VorpleWhatTextWasReturned     txt len i ;
-    if (isVorpleSupported() == false) {
+    if (~~isVorpleSupported()) {
 		return "";
 	}
     txt = VorpleWhatWasReturned();
-    if ( compare_string(VorpleWhatType(txt), 4, "text") == false) {
+    if ( ~~compare_string(VorpleWhatType(txt), 4, "text")) {
 		return txt;
 	}
     len = txt-->0;
@@ -686,11 +697,9 @@ Array returnedValuebuffer buffer BUFLEN+4;
     neg = 0;
     prev = 0;
     if (txt->(WORDSIZE) == '-') {
-		neg = 1;
-		s++;
+		neg = 1; s++;
 	}
     res = 0;
-
     for (n=s: n<l: n++) {
         c = txt->(WORDSIZE+n);
         d = 0;
@@ -727,12 +736,14 @@ Array returnedValuebuffer buffer BUFLEN+4;
 [ VorpleWhatNumberWasReturned       txt;
     if (isVorpleSupported() == false) { return 0; }
     txt = VorpleWhatWasReturned();
-    if (compare_string(VorpleWhatType(txt), 4, "text")) { txt = VorpleWhatTextWasReturned(); }
+    if (compare_string(VorpleWhatType(txt), 4, "text")) {
+		txt = VorpleWhatTextWasReturned();
+	}
     else {
-        if (compare_string(VorpleWhatType(txt), 6, "number") == false) {
+        if (~~compare_string(VorpleWhatType(txt), 6, "number")) {
             VorpleThrowRuntimeError(
 				BuildCommand("Trying to convert return value of type ",
-					VorpleWhatType(txt), " into a number"));
+				VorpleWhatType(txt), " into a number"));
             return 0;
         }
     }
@@ -740,13 +751,15 @@ Array returnedValuebuffer buffer BUFLEN+4;
 ];
 
 [ VorpleWhatBooleanWasReturned   txt type ;
-    if (isVorpleSupported() == false) { return false;}
+    if (~~isVorpleSupported()) {
+		return false;
+	}
     txt = VorpleWhatTextWasReturned();
     type = VorpleWhatType(txt);
-    if (compare_string(type, 11, "truth state") == false) {
+    if (~~compare_string(type, 11, "truth state")) {
         VorpleThrowRuntimeError(
 			BuildCommand("Trying to convert return value of type ", type,
-				" into a boolean"));
+			" into a boolean"));
         return false;
     }
     return compare_string(VorpleWhatWasReturned(),
@@ -758,9 +771,11 @@ Array returnedValuebuffer buffer BUFLEN+4;
 ! Opening and closing HTML tags
 
 [ VorpleOpenHTMLTag elt classes ;
-    if (classes == 0) { classes = ""; }
-    VorpleExecuteJavaScriptCommand(BuildCommand("vorple.layout.openTag('", elt,
-		"','", classes, "')"));
+    if (classes == 0) {
+		classes = "";
+	}
+    VorpleExecuteJavaScriptCommand(
+		BuildCommand("vorple.layout.openTag('", elt, "','", classes, "')"));
 ];
 
 [ VorpleCloseHTMLTag ;
@@ -772,9 +787,15 @@ Array returnedValuebuffer buffer BUFLEN+4;
 ! Placing elements and displaying content
 
 [ VorplePlaceElement elt classes txt ;
-    if (elt == 0 or "") { elt = "tag"; }
-    if (classes == 0) { classes = ""; }
-    if (txt == 0) { txt = ""; }
+    if (elt == 0 or "") {
+		elt = "tag";
+	}
+    if (classes == 0) {
+		classes = "";
+	}
+    if (txt == 0) {
+		txt = "";
+	}
     VorpleOpenHTMLTag(elt, classes);
     print (PrintStringOrArray) txt;
     VorpleCloseHTMLTag();
@@ -865,17 +886,15 @@ Array returnedValuebuffer buffer BUFLEN+4;
 Array Vorple_prompt buffer (BUFLEN-1);
 #Stub MyVorplePrompt 0;
 
-[ VorpleAppendToLM act n x1 s
-	result;
-	result = false;
-	! Print the prompt in Vorple
+[ VorpleAppendToLM act n x1 s;
+	x1 = s; ! avoid compiler warning
+    ! Print the prompt in Vorple
     if (act == ##Prompt) {
         if (isVorpleSupported()) {
+			new_line;
             bp_output_stream(3, Vorple_prompt, BUFLEN-1);
-            ! if you haven't defined any special prompt, Vorple will use "> "
-            if (~~MyVorplePrompt()) {
-				print "> ";
-			}
+            ! if you haven't defined any special prompt, Vorple will use ">"
+			if (~~MyVorplePrompt()) print ">";
             bp_output_stream(-3);
 
             ! if the prompt has changed since last turn...
@@ -883,13 +902,13 @@ Array Vorple_prompt buffer (BUFLEN-1);
                 ! set it
                 VorpleExecuteJavaScriptCommand(
 					BuildCommand("vorple.prompt.setPrefix('",
-						VorpleEscape(Vorple_prompt), "')"));
+					VorpleEscape(Vorple_prompt), "')"));
                 ! change the current_prompt variable
                 bp_output_stream(3, current_prompt, BUFLEN-1);
                 print (PrintStringOrArray) Vorple_prompt;
                 bp_output_stream(-3);
             }
-            result = true;
+			return true;
         }
     }
     ! Fix for music not stopping after restoring a game
@@ -899,7 +918,7 @@ Array Vorple_prompt buffer (BUFLEN-1);
 				"$('.vorple-sound').remove();vorple.audio.stopMusic()");
         }
     }
-	return result;
+	return false;
 ];
 
 
@@ -922,8 +941,9 @@ Array Vorple_prompt buffer (BUFLEN-1);
     if (isVorpleSupported()) {
         VorpleExecuteJavaScriptCommand("vorple.version");
         print "Vorple version ";
-		PrintStringOrArray(VorpleWhatTextWasReturned());
+ 		PrintStringOrArray(VorpleWhatTextWasReturned());
 		print " preview";
+		new_line;
     }
 	return true;
 ];
@@ -937,8 +957,7 @@ Array Vorple_prompt buffer (BUFLEN-1);
 ! yours "MyLookRoutine()"
 #Stub MyLookRoutine 0;
 
-#Ifndef LookRoutine;
-[ LookRoutine;
+[ LookRoutine ;
 	! each_turn is executed at the end of every turn, so we need a way to
 	! execute it at the very beginning too cf Roger Firth's "Why don't my
 	! daemons run at the start of the game"
@@ -947,7 +966,6 @@ Array Vorple_prompt buffer (BUFLEN-1);
 	#Endif;
 	MyLookRoutine();
 ];
-#Endif; ! Routine;
 
 
 !===========================================
@@ -958,67 +976,68 @@ Object StatusLineRulebook "status line rulebook";
 ! if you don't want normal status lines, insert "remove drawNormalStatusLine;"
 ! in your Initialise() routine
 Object drawNormalStatusLine "draw normal statusline" StatusLineRulebook
-    with description [; OldDrawStatusLine(); rtrue; ];
+    with description [
+			width posa posb;
+
+	! The following is the same code as the "DrawStatusLine()" from parserm.h
+	#Ifdef TARGET_GLULX;
+	! If we have no status window, we must not try to redraw it.
+	if (gg_statuswin == 0)
+		return;
+	#Endif;
+
+	! If there is no player location, we shouldn't try to draw status window
+	if (location == nothing || parent(player) == nothing)
+		return;
+
+	StatusLineHeight(gg_statuswin_size);
+	MoveCursor(1, 1);
+
+	width = ScreenWidth();
+	posa = width-26; posb = width-13;
+	spaces width;
+
+	MoveCursor(1, 2);
+	if (location == thedark) {
+		print (name) location;
+	}
+	else {
+		FindVisibilityLevels();
+		if (visibility_ceiling == location)
+			print (name) location;
+		else
+			print (The) visibility_ceiling;
+	}
+
+	if (sys_statusline_flag && width > 53) {
+		MoveCursor(1, posa);
+		print (string) TIME__TX;
+		LanguageTimeOfDay(sline1, sline2);
+	}
+	else {
+		if (width > 66) {
+			#Ifndef NO_SCORE;
+			MoveCursor(1, posa);
+			print (string) SCORE__TX, sline1;
+			#Endif;
+			MoveCursor(1, posb);
+			print (string) MOVES__TX, sline2;
+		}
+		#Ifndef NO_SCORE;
+		if (width > 53 && width <= 66) {
+			MoveCursor(1, posb);
+			print sline1, "/", sline2;
+		}
+		#Endif;
+	}
+
+	MainWindow(); ! set_window
+	return true;
+		];
 
 [ VorpleAppendToDrawStatusLine r ;
     objectloop(r in StatusLineRulebook) { r.description(); }
 	return true;
-];
-
-[ OldDrawStatusLine
-	width posa posb;
-    #Ifdef TARGET_GLULX;
-    ! If we have no status window, we must not try to redraw it.
-    if (gg_statuswin == 0)
-        return;
-    #Endif;
-
-    ! If there is no player location, we shouldn't try to draw status window
-    if (location == nothing || parent(player) == nothing)
-        return;
-
-    StatusLineHeight(gg_statuswin_size);
-    MoveCursor(1, 1);
-
-    width = ScreenWidth();
-    posa = width-26; posb = width-13;
-    spaces width;
-
-    MoveCursor(1, 2);
-    if (location == thedark) {
-        print (name) location;
-    }
-    else {
-        FindVisibilityLevels();
-        if (visibility_ceiling == location)
-            print (name) location;
-        else
-            print (The) visibility_ceiling;
-    }
-
-    if (sys_statusline_flag && width > 53) {
-        MoveCursor(1, posa);
-        print (string) TIME__TX;
-        LanguageTimeOfDay(sline1, sline2);
-    }
-    else {
-        if (width > 66) {
-            #Ifndef NO_SCORE;
-            MoveCursor(1, posa);
-            print (string) SCORE__TX, sline1;
-            #Endif;
-            MoveCursor(1, posb);
-            print (string) MOVES__TX, sline2;
-        }
-        #Ifndef NO_SCORE;
-        if (width > 53 && width <= 66) {
-            MoveCursor(1, posb);
-            print sline1, "/", sline2;
-        }
-        #Endif;
-    }
-
-    MainWindow(); ! set_window
 ];
 
 
@@ -1032,9 +1051,16 @@ Object drawNormalStatusLine "draw normal statusline" StatusLineRulebook
 	return true;
 ];
 
+[ DrawStatusLine;
+	if (VorpleAppendToDrawStatusLine()) return true;
+	OldDrawStatusLine();
+	return true;
+];
+
 [ L__M act n x1 s;
-	if (VorpleAppendToLM(act, n, x1, s)) return;
+	if (VorpleAppendToLM(act, n, x1, s)) return true;
 	OldLM(act, n, x1, s);
+	return true;
 ];
 #Endif; ! VORPLE_NO_REPLACES;
 

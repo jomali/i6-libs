@@ -77,7 +77,7 @@ Constant STYLE_FIXED_WIDTH = STYLE_MONOSPACE;
 ! TODO: what does this do?
 !
 ! Section 3 - Displaying boxed quotations (in place of Section SR5/1/7 - Saying - Fonts and visual effects in Standard Rules by Graham Nelson)
-! 
+!
 ! To say bold type -- running on
 !	(documented at phs_bold):
 !	(- style bold; -).
@@ -203,7 +203,7 @@ Constant STYLE_LIGHT_MAGENTA_BACKGROUND = 46;
                 STYLE_LIGHT_CYAN_LETTERS: return "light cyan letters";
                 STYLE_LIGHT_RED_LETTERS: return "light red letters";
                 STYLE_LIGHT_MAGENTA_LETTERS: return "light magenta letters";
-                
+
 		STYLE_RED_BACKGROUND: return "red background";
 		STYLE_GREEN_BACKGROUND: return "green background";
 		STYLE_YELLOW_BACKGROUND: return "yellow background";
