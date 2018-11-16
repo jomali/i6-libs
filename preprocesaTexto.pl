@@ -2,8 +2,8 @@
 
 #	File:			preprocesaTexto.pl
 #	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
-#	Version:		2.0
-#	Released:		2017/09/11
+#	Version:		2.1
+#	Released:		2018/10/09
 #
 #	Script Perl para preprocesar un archivo de texto. Sustituye ciertas
 #	etiquetas de texto por funciones definidas dentro del relato para manipular
@@ -12,6 +12,7 @@
 #
 #	HISTORIAL DE VERSIONES:
 #
+#	2.1: 2018/10/09	Se utiliza una nueva rutina para crear hipervínculos
 #	2.0: 2017/09/11	Redefinición de las expresiones regulares.
 #	1.1: 2016/06/18	Añade etiquetas para crear hipervínuclos con distintas
 #					configuraciones de parámetros.
@@ -76,11 +77,11 @@ for (@lines) {
 	s/\[\s*lista\s+de\s+objetos\s+(en|sobre)\s+(.+?)\s*\]/";\nWriteListFrom(child(\2), ENGLISH_BIT);\nprint "/g;
 
 	# Hipervínculo asociado a un objeto, con un texto alternativo:
-	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nHyperlink(\1, "\2", \3);\nprint "/g;
-	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\)/";\nHyperlink(\1, "\2", 0);\nprint "/g;
+	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nUtil.extended_print(\1, "\2", \3);\nprint "/g;
+	s/(?<!\\)\[([^\[\]]+)(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\)/";\nUtil.extended_print(\1, "\2", -1);\nprint "/g;
 	# Hipervínculo creado a partir de un texto:
-	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nHyperlink("\1", "\1", \2);\nprint "/g;
-	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)(?<!\\)\)/";\nHyperlink("\1", "\1", 0);\nprint "/g;
+	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)\:\s*([^\(\)\:\s]+)(?<!\\)\)/";\nUtil.extended_print("\1", "\1", \2);\nprint "/g;
+	s/(?<!\\)\[(?<!\\)\](?<!\\)\(([^\(\)\:]+)(?<!\\)(?<!\\)\)/";\nUtil.extended_print("\1", "\1", -1);\nprint "/g;
 
 	# Imprime el nombre corto del objeto:
 	s/\[\s*(.+?)\s*\]/", (name) \1, "/g;
