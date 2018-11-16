@@ -11,13 +11,14 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
-!!	Fecha:			2018/09/21
+!!	Versión:		1.1
+!!	Fecha:			2018/10/09
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2018/10/09 Pequeñas correcciones de estilo.
 !!	1.0: 2018/09/21	Versión inicial de la extensión.
 !!
 !!------------------------------------------------------------------------------
@@ -45,7 +46,7 @@
 !!	Implementa el conjunto de mensajes por defecto de la librería Inform-INFSP,
 !!	incluyendo la posibilidad de modificar en tiempo de ejecución tanto el
 !!	tiempo verbal (presente, pasado, futuro) y la persona (primera, segunda,
-!!	tercera), como el género (masculino, femenino) el número (singular,
+!!	tercera), como el género (masculino, femenino) y número (singular,
 !!	plural) ---estos últimos, en función de la definición del objeto 'player'
 !!	controlado por el usuario---. Los mensajes están basados en gran medida en
 !!	los de 'Spanish.h'.
@@ -101,7 +102,6 @@
 !!		SetGrammaticalInflection(THIRD_PERSON_PAST);
 !!
 !!------------------------------------------------------------------------------
-
 
 !!------------------------------------------------------------------------------
 !! Definición de constantes, variables y propiedades
@@ -223,7 +223,6 @@ Property inhibit_object_list; ! boolean
     print_player_flag = flag;
 ];
 
-
 !!==============================================================================
 !! Determina si un objeto está definido como nombre femenino o no. En la
 !! práctica, en la extensión se considera que todos los objetos con nombre no
@@ -243,7 +242,6 @@ Property inhibit_object_list; ! boolean
 	return result;
 ];
 
-
 !!==============================================================================
 !! Determina si un objeto está definido como nombre plural o no. En la
 !! práctica, en la extensión se considera que todos los objetos con nombre no
@@ -261,7 +259,6 @@ Property inhibit_object_list; ! boolean
 	else result = (GetGNAOfObject(obj) == 3 or 4 or 5 or 9 or 10 or 11);
 	return result;
 ];
-
 
 !!==============================================================================
 !! Establece la flexión gramatical de los mensajes de la librería, actualizando
@@ -657,8 +654,11 @@ Verb	meta 'gramatica' 'grammar'
 #Endif; ! DEBUG;
 
 
+!!------------------------------------------------------------------------------
+!! Mensajes de la librería
+!!------------------------------------------------------------------------------
 
-
+#Ifndef LanguageLM;
 Include "sp1present.h";
 Include "sp2present.h";
 Include "sp3present.h";
@@ -669,7 +669,6 @@ Include "sp1future.h";
 Include "sp2future.h";
 Include "sp3future.h";
 
-!!==============================================================================
 [ LanguageLM n x1;
 	switch (_grammatical_inflection) {
 		FIRST_PERSON_PRESENT:
@@ -695,3 +694,4 @@ Include "sp3future.h";
 			ThirdPersonFuture_ES(n, x1);
 	}
 ];
+#Endif; ! LanguageLM
