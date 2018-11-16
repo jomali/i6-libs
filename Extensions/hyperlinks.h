@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.2
-!!	Fecha:			2018/09/21
+!!	Versión:		2.0
+!!	Fecha:			2018/10/09
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,12 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	2.0: 2018/10/09	Simplificación de la extensión. Ofrece infraestructura
+!!					únicamente para la creación y la respuesta a eventos de
+!!					selección de hipervínculos, eliminando lógica asociada a la
+!!					selección de estilos de texto y determinación de estado de
+!!					los hipervínculos ---estas funcionalidades se dejan en
+!!					manos del autor o de otras extensiones---.
 !!	1.2: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
 !!	1.1: 2018/06/06	Nueva función 'ListenHyperlinkEvents()' para activar la
@@ -56,8 +62,8 @@
 !!	utilizarse tanto en Glulx como en Máquina-Z (en esta segunda ---o en
 !!	aquellos intérpretes Glulx que no soporten hipervínculos--- simplemente
 !!	no es posible utilizar la funcionalidad). Para hacerlo hay que añadir la
-!!	siguiente línea en el fichero principal de la obra, inmediatamente después
-!!	de la línea 'Include "Parser";':
+!!	siguiente línea en el fichero principal de la obra, después de la línea
+!!	'Include "Parser";' y antes de 'Include "VerbLib";':
 !!
 !!		Include "hyperlinks";
 !!
@@ -218,10 +224,8 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !! Genera un hipervínculo de tipo texto a partir del objeto o la cadena de
 !! caracteres pasado como parámetro, de forma que el texto impreso del
 !! hipervínculo es el nombre del objeto o la propia cadena de caracteres.
-!! Admite dos parámetros opcionales; en primer lugar una cadena de caracteres
-!! con un texto alternativo que se imprime en lugar del nombre del objeto o de
-!! la cadena, y un valor numérico que se identifica con el estilo de texto
-!! utilizado para imprimir el hipervínculo.
+!! Admite como parámetro opcional una cadena de caracteres con un texto
+!! alternativo que se imprime en lugar del nombre del objeto o de la cadena.
 !!
 !!	@param {Object|String} item - Objeto o cadena de caracteres sobre la que se
 !!		genera el hipervínculo. Si es un objeto, la entrada que se genera al
@@ -232,19 +236,14 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 !!		hipervínculo. Si no se indica ninguno, como texto del hipervínculo se
 !!		utiliza el nombre del objeto o la cadena de caracteres del parámetro
 !!		'item'
-!!	@param {integer} [style = 0] - Código numérico indicando el estilo de
-!!		texto con que se imprime el hipervínculo
 !!	@returns {boolean} Verdadero
 !!------------------------------------------------------------------------------
-[ Hyperlink item alternative style
-	auxiliary;
+[ Hyperlink item alternative;
 	if (metaclass(item) ~= String or Object) return false;
 	!! Establece el inicio del hipervínculo:
 	#Ifdef TARGET_GLULX;
 	if (glk($0004, 11, 0)) glk($0100, item); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
-	!! Selecciona el estilo de texto del hipervínculo:
-	auxiliary = HyperlinkSetStyle(style, item);
 	!! Imprime el texto del hipervínculo:
 	if (metaclass(alternative) == String) item = alternative;
 	switch (metaclass(item)) {
@@ -259,68 +258,10 @@ Array _hyperlinks_temp_array -> INPUT_BUFFER_LEN/WORDSIZE*2;
 			print (object) item;
 	}
 	.hyperlinkTextPrinted;
-	!! Reestablece el estilo de texto de la obra:
-	HyperlinkSetStyle(auxiliary);
 	!! Establece el final del hipervínculo:
 	#Ifdef TARGET_GLULX;
 	if (glk($0004, 11, 0)) glk($0100, 0); ! glk_set_hyperlink();
 	#Endif; ! TARGET_GLULX;
-];
-
-!!------------------------------------------------------------------------------
-!! Selecciona el estilo de texto utilizado por la rutina para crear
-!! hipervínculos. Puede ser sobreescrita por el autor desde el fichero original
-!! (por medio de una sentencia 'Replace HyperlinkSetStyle'), para definir un
-!! comportamiento más complejo ---utilizar el tipo de objeto pasado como
-!! parámetro para determinar el estilo de texto aplicado en el hipervínculo,
-!! por ejemplo---.
-!!
-!!	@param {integer} highlight - Código numérico para identificar el estilo de
-!!		texto a utilizar, utilizando como referencia los estilos de texto de
-!!		Máquina-Z: 0) normal, 1) subrayado, 2) negrita y 3) ancho-fijo
-!!	@param {Object|String} item - Objeto o cadena de caracteres sobre el que se
-!!		genera el hipervínculo. Originalmente no se utiliza, pero puede ser
-!!		interesante si el autor decide sobreescribir la rutina y tener en
-!!		cuenta este 'item' para seleccionar el estilo de texto utilizado
-!!	@returns {integer} Código numérico que identifica los estilos de texto. La
-!!		rutina se invoca 2 veces, antes y después de imprimir el texto del
-!!		hipervínculo, de tal forma que el resultado de la primera llamada se
-!!		pasa como parámetro en la segunda. Así es posible inicar, desde la
-!!		llamada 1, el estilo final del texto una vez impreso el hipervínculo
-!!------------------------------------------------------------------------------
-[ HyperlinkSetStyle style item;
-	item++; ! (por evitar alertas del compilador)
-	switch (style) {
-		1:	! Subrayado
-			#Ifdef TARGET_ZCODE;
-			font on; style roman;
-			style underline;
-			#Ifnot; ! TARGET_GLULX;
-			glk($0086, 1); ! style_Emphasized
-			#Endif; ! TARGET_
-		2:	! Negrita
-			#Ifdef TARGET_ZCODE;
-			font on; style roman;
-			style bold;
-			#Ifnot; ! TARGET_GLULX;
-			glk($0086, 4); ! style_Subheader
-			#Endif; ! TARGET_
-		3:	! Ancho-fijo
-			#Ifdef TARGET_ZCODE;
-			font on; style roman;
-			font off;
-			#Ifnot; ! TARGET_GLULX;
-			glk($0086, 2); ! style_Preformatted
-			#Endif; ! TARGET_
-		default: ! Normal
-			#Ifdef TARGET_ZCODE;
-			font on; style roman;
-			#Ifnot; ! TARGET_GLULX;
-			glk($0086, 0); ! style_Normal
-			#Endif; ! TARGET_
-	}
-	!! Garantiza que tras el hipervínculo se utilice el estilo Normal:
-	return 0;
 ];
 
 !!------------------------------------------------------------------------------
