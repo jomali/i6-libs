@@ -49,6 +49,9 @@
 !!------------------------------------------------------------------------------
 System_file;
 
+#Ifndef PARSING_PREPROCESSOR;
+Constant PARSING_PREPROCESSOR;
+
 !! Descomentar para obtener info. de depuración del preprocesador:
 !Constant DEBUG_PARSING_PREPROCESSOR;
 
@@ -267,3 +270,5 @@ Object	ParsingPreprocessor "(Parsing preprocessor)"
 		],
  private
 		selected_object 0;
+
+#Endif; ! PARSING_PREPROCESSOR;
