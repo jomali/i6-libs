@@ -3,9 +3,9 @@
 #===============================================================================
 # Script para compilar y ejecutar relatos interactivos programados en Inform 6.
 # Herramientas utilizadas:
-#	<>	inform:			Compilador Inform 6
 #	<>	bresc:			Blorb resource compiler (sólo en Glulx)
 #	<>	gargoyle-free:	Intérprete multi-plataforma
+#	<>	inform:			Compilador Inform 6
 #-------------------------------------------------------------------------------
 
 bresc_location=~/data/bin
@@ -13,6 +13,25 @@ zcode_interpreter=gargoyle-free;
 glulx_interpreter=gargoyle-free;
 
 inform_path=,/usr/share/inform6/library/,/usr/share/inform6/extensions/,/usr/share/inform6/extensions/gwindows/,/usr/share/inform6/extensions/vorple/
+
+#-------------------------------------------------------------------------------
+
+function preprocesa_textos() {
+	for i in *.xinf; do
+	    [ -f "$i" ] || break
+		perl ./libs/preprocesaTexto.pl "$i" "${i%.xinf}.inf"
+	done
+}
+
+function limpia_ficheros_temporales() {
+	for i in *.xinf; do
+	    [ -f "$i" ] || break
+		rm "${i%.xinf}.inf"
+	done
+	if [ -e "$gameFile.ulx" ]; then
+		rm $gameFile.ulx
+	fi
+}
 
 #-------------------------------------------------------------------------------
 
@@ -37,16 +56,21 @@ else
 	echo " "
 fi
 
-perl ./libs/preprocesaTexto.pl ./$gameFile\_objects.txt ./$gameFile\_langOM.inf
-
 #===============================================================================
 # Compilar el relato para GLULX (sin multimedia)
 #-------------------------------------------------------------------------------
 if [ "$op" = "3" ]; then
+
+	if [ -e "../$gameFile.ulx" ]; then
+		rm ../$gameFile.ulx
+	fi
+
 	echo "============================================="
 	echo "COMPILANDO PARA GLULX (sin multimedia)..."
 	echo "---------------------------------------------"
+	preprocesa_textos
 	inform +include_path=$inform_path -G $gameFile.inf ../$gameFile.ulx
+	limpia_ficheros_temporales
 
 	echo " "
 	echo -n "Pulsa cualquier tecla para ejecutar la aplicación ('q' para salir): "
@@ -63,15 +87,21 @@ if [ "$op" = "3" ]; then
 # Compilar el relato para GLULX
 #-------------------------------------------------------------------------------
 elif [ "$op" = "2" ]; then
+
+	if [ -e "../$gameFile.gblorb" ]; then
+		rm ../$gameFile.gblorb
+	fi
+
 	echo "============================================="
 	echo "COMPILANDO PARA GLULX..."
 	echo "---------------------------------------------"
+	preprocesa_textos
 	inform +include_path=$inform_path -G $gameFile.inf $gameFile.ulx
 	$bresc_location/bres $gameFile.res
 	inform +include_path=$inform_path -G $gameFile.inf
 	$bresc_location/bresc $gameFile.res
 	mv $gameFile.gblorb ../$gameFile.gblorb
-	rm $gameFile.ulx
+	limpia_ficheros_temporales
 
 	echo " "
 	echo -n "Pulsa cualquier tecla para ejecutar la aplicación ('q' para salir): "
@@ -88,10 +118,17 @@ elif [ "$op" = "2" ]; then
 # Compilar el relato para MÁQUINA-Z
 #-------------------------------------------------------------------------------
 else
+
+	if [ -e "../$gameFile.z5" ]; then
+		rm ../$gameFile.z5
+	fi
+
 	echo "============================================="
 	echo "COMPILANDO PARA MÁQUINA-Z..."
 	echo "---------------------------------------------"
+	preprocesa_textos
 	inform +include_path=$inform_path $gameFile.inf ../$gameFile.z5
+	limpia_ficheros_temporales
 
 	echo " "
 	echo -n "Pulsa cualquier tecla para ejecutar la aplicación ('q' para salir): "
