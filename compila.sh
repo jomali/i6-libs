@@ -16,14 +16,14 @@ inform_path=,/usr/share/inform6/library/,/usr/share/inform6/extensions/,/usr/sha
 
 #-------------------------------------------------------------------------------
 
-function preprocesa_textos() {
+preprocesa_textos() {
 	for i in *.xinf; do
 	    [ -f "$i" ] || break
 		perl ./libs/preprocesaTexto.pl "$i" "${i%.xinf}.inf"
 	done
 }
 
-function limpia_ficheros_temporales() {
+limpia_ficheros_temporales() {
 	for i in *.xinf; do
 	    [ -f "$i" ] || break
 		rm "${i%.xinf}.inf"
