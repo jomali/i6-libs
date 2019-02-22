@@ -11,13 +11,19 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
+!!	Versión:		1.2
 !!	Fecha:			2018/10/09
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.2: 2019/02/21 'clarification' queda renombrada como 'look_clarification',
+!!					(para mayor claridad :). Se modifica la propiedad
+!!					'inhibit_object_list' por 'list_visible_objects', con un
+!!					comportamiento similar al de 'look_clarification'
+!!					(consultar lógica de los mensajes de respuesta a la acción
+!!					##Look para ver los cambios).
 !!	1.1: 2018/10/09 Pequeñas correcciones de estilo.
 !!	1.0: 2018/09/21	Versión inicial de la extensión.
 !!
@@ -120,32 +126,45 @@ Constant THIRD_PERSON_FUTURE	= 9;
 Global _grammatical_inflection = SECOND_PERSON_PRESENT;
 
 !!==============================================================================
-!! La propiedad 'clarification' está ideada para aquellos objetos que no son
-!! localidades y que permiten al personaje controlado por el usuario (PC)
-!! entrar en ellos (objetos con el atributo 'enterable'). Cuando un PJ se
+!! La propiedad 'look_clarification' está ideada para aquellos objetos que no
+!! son localidades y que permiten al personaje controlado por el usuario (PC)
+!! entrar en ellos (objetos con el atributo 'enterable'). Cuando un PC se
 !! encuentra dentro de uno de estos objetos 'enterables', al imprimir la
 !! descripción de la localidad como resultado de la acción ##Look, se imprime
 !! el título de la localidad con un pequeño apéndice del tipo ", en el
 !! <objeto enterable>" o ", sobre el <objeto enterable>". La propiedad
 !! 'clarification' permite personalizar los mensajes de este apéndice. Por
-!! ejemplo, en una localidad "DORMITORIO" podemos definir un objeto 'enterable'
-!! cama con la propiedad:
+!! ejemplo, en una localidad "DORMITORIO" podemos definir un objeto 'cama' con
+!! la propiedad:
 !!
-!!		clarification "sentado en la cama",
+!!		look_clarification "sentado en la cama",
 !!
-!! para conseguir títulos del tipo: "DORMITORIO, sentado en la cama", en lugar
+!! O:
+!!
+!!		look_clarification [;
+!!			print "sentando en ", (the) self;
+!!			return true;
+!!		],
+!!
+!! Para conseguir títulos del tipo: "DORMITORIO, sentado en la cama", en lugar
 !! del: "DORMITORIO, en la cama" por defecto.
 !!------------------------------------------------------------------------------
-Property clarification; ! string
+Property look_clarification;
 
 !!==============================================================================
-!! La propiedad 'inhibit_object_list' está ideada para ser utilizada por los
-!! objetos de tipo localidad. Se se define una localidad con la propiedad
-!! 'inhibit_object_list' como verdadera, al imprimir su descripción como
-!! resultado de la acción ##Look se omitirá el listado automático de objetos
-!! presentes en esa localidad.
+!! La propiedad 'list_visible_objects' está ideada para ser utilizada por los
+!! objetos de tipo localidad. Si una localidad define su propia
+!! 'list_visible_objects' como una cadena de texto personalizada o como una
+!! rutina que retorna verdadero se evitará que la librería imprima el listado
+!! automático de objetos presentes en la localidad que se imprimen con la
+!! acción ##Look. Ej:
+!!
+!!		list_visible_objects [;
+!!			"Ves formas imprecisas por el suelo de ", (the) self, ", pero no
+!!			puedes distinguir nada por culpa de la oscuridad.";
+!!		],
 !!------------------------------------------------------------------------------
-Property inhibit_object_list; ! boolean
+Property list_visible_objects;
 
 
 !!------------------------------------------------------------------------------

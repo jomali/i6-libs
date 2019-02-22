@@ -12,13 +12,16 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
-!!	Fecha:			2018/09/21
+!!	Versión:		1.1
+!!	Fecha:			2011/02/21
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2019/02/21 Modificación de mensajes de la acción ##Look para
+!!					reemplazar 'inhibit_object_list' por la nueva propiedad
+!!					'list_visible_objects'.
 !!	1.0: 2018/09/21	Versión inicial.
 !!
 !!------------------------------------------------------------------------------
@@ -541,9 +544,19 @@
 	Look:
 		switch (n) {
 			5, 6:
-				if (real_location provides inhibit_object_list)
-					if (real_location.inhibit_object_list)
+				if (location provides list_visible_objects) {
+					if (metaclass(location.list_visible_objects) == String) {
+						new_line;
+						print (string) location.list_visible_objects;
+						new_line;
 						return true;
+					}
+					if (metaclass(location.list_visible_objects) == Routine) {
+						if (location.list_visible_objects(n==5)) {
+							return true;
+						}
+					}
+				}
 				new_line;
 				if (x1 ~= location) {
 					if (x1 has supporter) print "Sobre ";

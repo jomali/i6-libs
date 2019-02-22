@@ -12,13 +12,16 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
-!!	Fecha:			2018/09/21
+!!	Versión:		1.1
+!!	Fecha:			2011/02/21
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.1: 2019/02/21 Modificación de mensajes de la acción ##Look para
+!!					reemplazar 'inhibit_object_list' por la nueva propiedad
+!!					'list_visible_objects'.
 !!	1.0: 2018/09/21	Versión inicial
 !!
 !!------------------------------------------------------------------------------
@@ -856,9 +859,9 @@
 		}
 
 	Look:
-		!! La acción Look se genera cuando el usuario pone MIRAR, pero también
-		!! de forma automática al entrar en una localidad nueva, o cuando el
-		!! usuario sale/se baja de un objeto en el que estaba.
+		!! La acción ##Look se genera cuando el usuario pone MIRAR, pero
+		!! también de forma automática al entrar en una localidad nueva, o
+		!! cuando el usuario sale/se baja de un objeto en el que estaba.
 		!!
 		!! Algunos de los mensajes que se definen aquí aparecen en el "título"
 		!! de la localidad (lo que aparece en negrita antes de la descripción
@@ -884,29 +887,30 @@
 		!!	7:	Respuesta estandar para MirarHacia [6/11]
 		switch (n) {
 			1:
-				print ", ";
-				!! XXX: Se puede usar un mensaje de aclaración completamente
-				!! personalizado definiendo la propiedad "clarification" en un
-				!! objeto ("clarification" tiene que devolver un string o una
-				!! rutina encargada de imprimir un string). Ej: SALA DE ESTAR,
-				!! sentado en el sofá
-				if ( x1 provides clarification ) {
-					if (x1.clarification ofclass string)
-						print (string) x1.clarification;
-					else if (x1.clarification ofclass routine)
-						indirect(x1.clarification);
+				!! Se puede usar un mensaje de aclaración personalizado
+				!! definiendo la propiedad 'look_clarification' en un objeto
+				!! ('look_clarification' tiene que devolver un string o ser una
+				!! rutina encargada de imprimir un string):
+				if (x1 provides look_clarification) {
+					if (metaclass(x1.look_clarification) == String) {
+						print (string) x1.look_clarification;
+					} else if (metaclass(x1.look_clarification) == Routine) {
+						RunRoutines(x1, look_clarification);
+					}
+				} else {
+					print ", sobre ", (the) x1;
 				}
-				else print "sobre ", (the) x1;
 			2:
-				print ", ";
-				!! XXX: Ver comportamiento de Look con n == 1
-				if ( x1 provides clarification ) {
-					if (x1.clarification ofclass string)
-						print (string) x1.clarification;
-					else if (x1.clarification ofclass routine)
-						indirect( x1.clarification);
+				!! Ver comportamiento de Look con n == 1
+				if ( x1 provides look_clarification ) {
+					if (metaclass(x1.look_clarification) == String) {
+						print (string) x1.look_clarification;
+					} else if (metaclass(x1.look_clarification) == Routine) {
+						RunRoutines(x1, look_clarification);
+					}
+				} else {
+					print ", en ", (the) x1;
 				}
-				else print ", en ", (the) x1;
 			3:
 				print " (como ", (object) x1 , ")";
 			4:
@@ -915,13 +919,24 @@
 						ENGLISH_BIT + RECURSE_BIT + PARTINV_BIT
 						+ TERSE_BIT + ISARE_BIT + CONCEAL_BIT);
 				".";
-			5,	!! XXX: Si la localidad actual tiene definida la propiedad
-			6:	!! "inhibit_object_list" y está establecida como verdadero, se
-				!! evita que se imprima el listado automático de objetos
-				!! simples junto con la descripción de la localidad
-				if (real_location provides inhibit_object_list)
-					if (real_location.inhibit_object_list)
+			5,
+			6:
+				!! La localidad actual puede gestionar de forma personalizada
+				!! el listado automático de objetos visibles en caso de tener
+				!! definida la propiedad 'list_visible_objects':
+				if (location provides list_visible_objects) {
+					if (metaclass(location.list_visible_objects) == String) {
+						new_line;
+						print (string) location.list_visible_objects;
+						new_line;
 						return true;
+					}
+					if (metaclass(location.list_visible_objects) == Routine) {
+						if (location.list_visible_objects(n==5)) {
+							return true;
+						}
+					}
+				}
 				new_line;
 				if (x1 ~= location) {
 					if (x1 has supporter) print "Sobre ";
