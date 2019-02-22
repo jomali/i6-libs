@@ -12,12 +12,12 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		3.0
-!!	Fecha:			2018/10/10
+!!	Versión:		3.1
+!!	Fecha:			2019/02/22
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco Martín
+!!	Copyright (c) 2019, J. Francisco Martín
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
 !!	modificarlo bajo los términos de la Licencia Pública General GNU
@@ -37,6 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	3.1: 2019/02/22	Actualizaciones mínimas de documentación.
 !!	3.0: 2018/10/10 Rutina 'UseTextStyle()' renombrada por 'SetTextStyle()'. Se
 !!					añaden además un nuevo mensaje de compilación para
 !!					especificar que se está utilizando la extensión, y un punto
@@ -69,18 +70,29 @@
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	INSTALACIÓN
+!!	UTILIZACIÓN BÁSICA
 !!
-!!	Para utilizar la extensión basta con añadir la siguiente línea en el
-!!	fichero principal de la aplicación, después de la línea
-!!	'Include "Parser";':
+!!	Para utilizar las funcionalidades básicas de la extensión: acceso a las
+!!	rutinas de selección de estilo de texto y a las reglas de impresión,
+!!	sólo es necesario añadir la siguiente línea en el fichero principal de la
+!!	aplicación, después de la línea 'Include "Parser";':
 !!
 !!		Include "textStyles";
 !!
-!!	Para utilizar el punto de entrada 'BeforeSettingTextStyle()' es necesario
-!!	añadir la sentencia: 'Replace BeforeSettingTextStyle;' antes de incluir la
-!!	extensión. Las sentencias 'Replace' permiten excluir ciertas definiciones
-!!	de una librería o extensión marcada con la directiva 'System_file'.
+!!
+!!	EL PUNTO DE ENTRADA 'BeforeSettingTextStyle()'
+!!
+!!	'BeforeSettingTextStyle()' es una rutina invocada por 'SetTextStyle()'
+!!	justo antes de establecer un nuevo estilo de texto. Permite a los autores
+!!	añadir cualquier lógica adicional personalizada, como los puntos de entrada
+!!	que ofrece la librería Inform. Para utilizarlo es necesario añadir la
+!!	sentencia 'Replace BeforeSettingTextStyle;' en algún punto antes de
+!!	'Include "textStyles";' —estas sentencias 'Replace' permiten excluir
+!!	ciertas definiciones de una librería o extensión marcada con la directiva
+!!	'System_file'—.
+!!
+!!
+!!	RECOMENDACIONES DE ESTILO PARA EL INTÉRPRETE
 !!
 !!	Opcionalmente en Glulx, además, es posible inicializar algunas sugerencias
 !!	sobre el aspecto de los distintos estilos de texto de la extensión. Desde
@@ -329,7 +341,7 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 
 !!==============================================================================
 !!
-!!	3)	Reglas de impresión
+!!	3)	Reglas de impresión normales
 !!
 !!------------------------------------------------------------------------------
 
@@ -561,7 +573,12 @@ Global _current_text_style = TEXT_STYLE_UPRIGHT;
 	return true;
 ];
 
-!! Reglas de impresión contextuales:
+
+!!==============================================================================
+!!
+!!	4)	Reglas de impresión contextuales
+!!
+!!------------------------------------------------------------------------------
 
 !!------------------------------------------------------------------------------
 !! Regla de impresión contextual. Imprime el texto con un estilo enfatizado
