@@ -12,12 +12,12 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
-!!	Fecha:			2018/09/21
+!!	Versión:		1.2
+!!	Fecha:			2019/02/25
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco Martín
+!!	Copyright (c) 2019, J. Francisco Martín
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
 !!	modificarlo bajo los términos de la Licencia Pública General GNU
@@ -37,6 +37,8 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.2: 2019/02/25	Incluye rutinas para imprimir un array de caracteres todas
+!!					en mayúsculas o todas en minúsculas.
 !!	1.1: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
 !!	1.0: 2018/06/19	Versión inicial de la extensión.
@@ -114,6 +116,46 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 	i;
 	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
 		print (char) character_array->(WORDSIZE+i);
+	}
+	return true;
+];
+
+!!------------------------------------------------------------------------------
+!! Imprime en pantalla un array de caracteres, caracter a caracter, todos en
+!! mayúsculas
+!!
+!!	@param {array} character_array - Array de caracteres a imprimir
+!!	@returns {boolean} Verdadero
+!!	@version 1.0
+!!------------------------------------------------------------------------------
+[ PrintCharacterArrayUpperCase character_array
+	i c;
+	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
+		c = character_array->(WORDSIZE+i);
+		if (c >= 'a' && c <= 'z') {
+			c = UpperCase(c);
+		}
+		print (char) c;
+	}
+	return true;
+];
+
+!!------------------------------------------------------------------------------
+!! Imprime en pantalla un array de caracteres, caracter a caracter, todos en
+!! minúsculas
+!!
+!!	@param {array} character_array - Array de caracteres a imprimir
+!!	@returns {boolean} Verdadero
+!!	@version 1.0
+!!------------------------------------------------------------------------------
+[ PrintCharacterArrayLowerCase character_array
+	i c;
+	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
+		c = character_array->(WORDSIZE+i);
+		if (c >= 'A' && c <= 'Z') {
+			c = LowerCase(c);
+		}
+		print (char) c;
 	}
 	return true;
 ];
