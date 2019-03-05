@@ -129,13 +129,9 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 !!	@version 1.0
 !!------------------------------------------------------------------------------
 [ PrintCharacterArrayUpperCase character_array
-	i c;
+	i;
 	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
-		c = character_array->(WORDSIZE+i);
-		if (c >= 'a' && c <= 'z') {
-			c = UpperCase(c);
-		}
-		print (char) c;
+		print (char) UpperCase(character_array->(WORDSIZE+i));
 	}
 	return true;
 ];
@@ -149,13 +145,9 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 !!	@version 1.0
 !!------------------------------------------------------------------------------
 [ PrintCharacterArrayLowerCase character_array
-	i c;
+	i;
 	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
-		c = character_array->(WORDSIZE+i);
-		if (c >= 'A' && c <= 'Z') {
-			c = LowerCase(c);
-		}
-		print (char) c;
+		print (char) LowerCase(character_array->(WORDSIZE+i));
 	}
 	return true;
 ];
