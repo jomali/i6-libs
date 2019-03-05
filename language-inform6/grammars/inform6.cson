@@ -2,6 +2,7 @@
 'name': 'Inform 6'
 'fileTypes': [
 	'inf'
+	'xinf'
 	'h'
 ]
 'patterns': [
