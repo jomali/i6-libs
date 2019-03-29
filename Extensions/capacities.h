@@ -13,12 +13,12 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
-!!	Fecha:			2018/09/21
+!!	Versión:		1.2
+!!	Fecha:			2019/03/29
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco Martín
+!!	Copyright (c) 2019, J. Francisco Martín
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
 !!	modificarlo bajo los términos de la Licencia Pública General GNU
@@ -38,6 +38,8 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.2: 2019/03/29 Corregido error en la comprobación de capacidad en cantidad
+!!					de objetos cuando la capacidad del contenedor es infinita.
 !!	1.1: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
 !!	1.0: 2018/03/08	Versión inicial de la extensión.
@@ -209,7 +211,9 @@ Class	capacities_dummy
 	receiver_capacity = GetCapacity(CAPACITIES_NUMBER, receiver);
 	measure = 1;
 	objectloop(i in receiver) measure++;
-	if (measure > receiver_capacity) return -1;
+	if (receiver_capacity ~= CAPACITIES_INFINITE) {
+		if (measure > receiver_capacity) return -1;
+	}
 	!! 1) Se comprueba el límite de tamaño:
 	receiver_capacity = GetCapacity(CAPACITIES_SIZE, receiver);
 	if (receiver_capacity ~= CAPACITIES_INFINITE) {
