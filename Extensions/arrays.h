@@ -12,8 +12,8 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.2
-!!	Fecha:			2019/02/25
+!!	Versión:		1.3
+!!	Fecha:			2019/03/22
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -37,6 +37,11 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.3: 2019/03/22	Modificada la rutina 'PrintCharacterArray()' para incluir
+!!					la opción de imprimir los caracteres en mayúsculas o
+!!					minúsculas. Añadida rutina para calcular la longitud de un
+!!					array. Añadido un segundo array de utilidad para facilitar
+!!					operaciones (como la de concatenación)
 !!	1.2: 2019/02/25	Incluye rutinas para imprimir un array de caracteres todas
 !!					en mayúsculas o todas en minúsculas.
 !!	1.1: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
@@ -49,18 +54,19 @@ System_file;
 #Ifndef ARRAYS;
 Constant ARRAYS;
 
-Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
+Array utility_array_a -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
+Array utility_array_b -> INPUT_BUFFER_LEN;
 
 !!------------------------------------------------------------------------------
 !! Dado un array de caracteres, capitaliza la primera letra de cada palabra de
-!! éste ---útil por ejemplo si el array almacena el nombre de una persona
+!! éste —útil por ejemplo si el array almacena el nombre de una persona
 !! (Paul O'Brian, Jean-Paul Sartre,...) o de una localidad (Weston-Super-Mare,
-!! Los Angeles,...)---.
+!! Los Angeles,...)—.
 !!
 !!	@param {Array} character_array - El array de caracteres sobre el que se
 !!		realizará la capitalización
 !!	@returns {boolean} Verdadero
-!!	@version 1.0
+!!	@version 2018/06/19
 !!------------------------------------------------------------------------------
 [ CapitaliseCharacterArray character_array
 	i c flg;
@@ -88,7 +94,7 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 !!	@param {char} [c=false] - Caracter opcional que puede introducirse como
 !!		delimitador de los dos arrays
 !!	@returns {boolean} Verdadero
-!!	@version 1.0
+!!	@version 2018/06/19
 !!------------------------------------------------------------------------------
 [ ConcatenateArrays array_a array_b c
 	len i;
@@ -106,48 +112,36 @@ Array temp_array -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 ];
 
 !!------------------------------------------------------------------------------
+!! Retorna la longitud de un array de caracteres.
+!!
+!!	@param {array} character_array - Array de caracteres del que se desea
+!!		conocer su longitud
+!!	@returns {integer} Longitud del array
+!!	@version 2019/03/22
+!!------------------------------------------------------------------------------
+[ GetArrayLength character_array;
+	return character_array->(WORDSIZE-1);
+];
+
+!!------------------------------------------------------------------------------
 !! Imprime en pantalla un array de caracteres, caracter a caracter.
 !!
 !!	@param {array} character_array - Array de caracteres a imprimir
+!!	@param {integer} [capitalised=0] - Por defecto (capitalised == 0) se
+!!		imprimen los caracteres sin modificarlos de ningún modo. Si
+!!		'capitalised == 1', se imprimen todos en mayúsculas. Si
+!!		'capitalised == 2', se imprimen todos en minúsculas
 !!	@returns {boolean} Verdadero
-!!	@version 1.0
+!!	@version 2019/03/22
 !!------------------------------------------------------------------------------
-[ PrintCharacterArray character_array
+[ PrintCharacterArray character_array capitalised
 	i;
 	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
-		print (char) character_array->(WORDSIZE+i);
-	}
-	return true;
-];
-
-!!------------------------------------------------------------------------------
-!! Imprime en pantalla un array de caracteres, caracter a caracter, todos en
-!! mayúsculas
-!!
-!!	@param {array} character_array - Array de caracteres a imprimir
-!!	@returns {boolean} Verdadero
-!!	@version 1.0
-!!------------------------------------------------------------------------------
-[ PrintCharacterArrayUpperCase character_array
-	i;
-	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
-		print (char) UpperCase(character_array->(WORDSIZE+i));
-	}
-	return true;
-];
-
-!!------------------------------------------------------------------------------
-!! Imprime en pantalla un array de caracteres, caracter a caracter, todos en
-!! minúsculas
-!!
-!!	@param {array} character_array - Array de caracteres a imprimir
-!!	@returns {boolean} Verdadero
-!!	@version 1.0
-!!------------------------------------------------------------------------------
-[ PrintCharacterArrayLowerCase character_array
-	i;
-	for (i = 0 : i < character_array->(WORDSIZE-1) : i++) {
-		print (char) LowerCase(character_array->(WORDSIZE+i));
+		switch (capitalised) {
+			0: print (char) character_array->(WORDSIZE+i);
+			1: print (char) UpperCase(character_array->(WORDSIZE+i));
+			2: print (char) LowerCase(character_array->(WORDSIZE+i));
+		}
 	}
 	return true;
 ];
