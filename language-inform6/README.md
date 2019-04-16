@@ -1,6 +1,6 @@
 Inform 6 Language Grammar for Atom
 
-- Created by Jeff Nyman <jeffnyman@gmail.com>
+- Created by Jeff Nyman <jeffnyman@gmail.com> and J. Francisco Martín <jfm.lisaso@gmail.com>
 - https://github.com/jeffnyman/language-inform6
 - https://atom.io/packages/language-inform6
 
@@ -19,6 +19,7 @@ This language extension correctly handles:
 - Strings (double and single)
 - Directives
 - Keywords
+- Verbs
 - Function definitions
 
 Note that Inform 6 uses two file extensions, `inf` and `h`, that are very commonly used by multiple other languages.
