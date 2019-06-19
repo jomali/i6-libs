@@ -13,12 +13,12 @@ directorio_paquetes_atom=$HOME"/.atom/packages"
 sudo true
 
 # Resaltado de sintaxis para GtkSourceView:
-echo -n "Copiando archivo de resaltado de sintaxis para GtkSourceView..."
+echo -n "Copiando archivo de resaltado de sintaxis para GtkSourceView…"
 sudo cp inform6.lang $directorio_sintaxis_gtksourceview
 echo " hecho."
 
 # Definición parcial de la gramática de Inform 6 para Atom:
-echo -n "Copiando archivos de gramática para Atom..."
+echo -n "Copiando archivos de gramática para Atom…"
 if [ -d $directorio_paquetes_atom]; then
 	if [ -d $directorio_paquetes_atom/language-inform6]; then
 		sudo rm -r $directorio_paquetes_atom/language-inform6
@@ -28,7 +28,7 @@ fi
 echo " hecho."
 
 # Librerías Inform 6 e INFSP 6:
-echo -n "Copiando archivos de las librerías Inform 6 e INFSP 6..."
+echo -n "Copiando archivos de las librerías Inform 6 e INFSP 6…"
 if [ -d $directorio_librerias ]; then
 	sudo rm -r $directorio_librerias
 fi
@@ -50,7 +50,7 @@ sudo mv README_temp $directorio_librerias/README
 echo " hecho."
 
 # Otras extensiones:
-echo -n "Copiando archivos de extensiones generales..."
+echo -n "Copiando archivos de extensiones generales…"
 if [ -d $directorio_extensiones ]; then
 	sudo rm -r $directorio_extensiones
 fi
@@ -62,7 +62,7 @@ sudo ln -s $directorio_extensiones/infglk.h $directorio_extensiones/InfGlk.h
 echo " hecho."
 
 # Librería GWindows (DA-Gwindows v1.2):
-echo -n "Copiando archivos de la librería GWindows (DA-Gwindows v1.2)..."
+echo -n "Copiando archivos de la librería GWindows (DA-Gwindows v1.2)…"
 if [ -d $directorio_extensiones/gwindows ]; then
 	sudo rm -r $directorio_extensiones/gwindows
 fi
@@ -73,7 +73,7 @@ sudo cp Extensions/gstatusX.h $directorio_extensiones/gwindows/
 echo " hecho."
 
 # Librería Vorple para Inform 6:
-echo -n "Copiando archivos de la librería Vorple para Inform 6..."
+echo -n "Copiando archivos de la librería Vorple para Inform 6…"
 if [ -d $directorio_extensiones/vorple ]; then
 	sudo rm -r $directorio_extensiones/vorple
 fi

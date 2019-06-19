@@ -76,7 +76,7 @@
 !!			ListenHyperlinkEvents();
 !!
 !! 			!! Resto de contenidos del punto de entrada:
-!! 			[...]
+!! 			[…]
 !! 		];
 !!
 !!	Por último, 2) hay que introducir la lógica encargada de capturar y

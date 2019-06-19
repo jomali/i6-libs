@@ -61,7 +61,7 @@
 !               * Activar/Desactivar el Audio limpiamente (sin cambiar volumen)
 !               * Comprobacion Automatica de Soporte de Audio a nivel de Glk
 !               * Mecanismo de "Proteccion de Sonidos" ante UNDO/RESTORE
-!               * Muchas caracteristicas mas... =D
+!               * Muchas caracteristicas mas… =D
 !
 !               Esta extension esta inspirada profundamente en el modulo
 !               "efectos.h" de Jose Luis Diaz [aka Zak] (para la libreria
@@ -140,7 +140,7 @@ System_file; Constant _DAMUSIX_H_;
 #ifdef IdentifyGlkObject;
   #ifndef DAINUNEK_IGO; ! codigo segun Dainunek
     Message "[DAMUSIX: Usando rutina IdentifyGlkObject() proporcionada por el juego]";
-    Message "[DAMUSIX: -> IMPORTANTISIMO: NO OLVIDES LLAMAR EN ESA RUTINA A...]";
+    Message "[DAMUSIX: -> IMPORTANTISIMO: NO OLVIDES LLAMAR EN ESA RUTINA A…]";
     Message "[DAMUSIX: -> < Damusix.IdentificarSonidos(fase) > ** OBLIGATORIO **]";
   #endif; ! DAINUNEK_IGO
 #endif; ! IdentifyGlkObject
@@ -149,7 +149,7 @@ System_file; Constant _DAMUSIX_H_;
 #ifdef HandleGlkEvent;
   #ifndef DAINUNEK_HGE; ! codigo segun Dainunek
     Message "[DAMUSIX: Usando rutina HandleGlkEvent() proporcionada por el juego]";
-    Message "[DAMUSIX: -> IMPORTANTISIMO: NO OLVIDES LLAMAR EN ESA RUTINA A...]";
+    Message "[DAMUSIX: -> IMPORTANTISIMO: NO OLVIDES LLAMAR EN ESA RUTINA A…]";
     Message "[DAMUSIX: -> < Damusix.NotificarFade(ev) > ** OPTATIVO **]";
   #endif; ! DAINUNEK_HGE
 #endif; ! HandleGlkEvent
@@ -294,7 +294,7 @@ Object Damusix
       ! ponemos el 'estado del sonido'==0 ('lanzado con reproduccion finita')
       if (self.&rep_cnl-->nc ~= -1) { self.&est_cnl-->nc = 0; }
       !-------------------------------------------------------------------------
-      ! MUY IMPORTANTE: ACTUALIZAMOS AHORA REGISTRO DEL ESTADO PIB Y AVISAMOS...
+      ! MUY IMPORTANTE: ACTUALIZAMOS AHORA REGISTRO DEL ESTADO PIB Y AVISAMOS…
       flag_ok_play = self.ActualizarPIB(nc, pib); ! SI SE DEBE 'RE-LANZAR' CANAL
       !-------------------------------------------------------------------------
       ! SI SALIDA DE AUDIO ESTA DESACTIVADA: DETENEMOS CANAL Y EVITAMOS REPROD.
@@ -311,7 +311,7 @@ Object Damusix
       if (glk_gestalt(gestalt_SoundVolume,0)) {
         glk_schannel_set_volume(self.&gg_ncnl-->nc, self.&vol_cnl-->nc * DAMUSIX_VOLMAX);
       }
-      ! y ahora tocamos ahora el sonido efectivamente...
+      ! y ahora tocamos ahora el sonido efectivamente…
       if (flag_ok_play) { ! siempre y cuando la actualizacion PIB no lo haya negado!!
         glk_schannel_play_ext(
           self.&gg_ncnl-->nc, ! el canal
@@ -382,7 +382,7 @@ Object Damusix
       !** 'pib' VALE 1 SOLO CUANDO se llama desde rutina IdentificarSonidos()**
       if (pib == 1) { ! '1' INDICA QUE SE DEBE "CALCULAR" SI HAY QUE RE-LANZAR
         ! si el sonido asignado actualmente al canal es igual que el sonido
-        ! "previo-al-cambio-de-estado-del-juego" (registrado en el PIB)...
+        ! "previo-al-cambio-de-estado-del-juego" (registrado en el PIB)…
         if (self.&snd_cnl-->nc == self.&pib_reg-->nc) {
           ! y si el PIB indica que antes del "cambio-de-estado" el audio
           ! SI ESTABA ACTIVADO (porque podemos 'recuperar' con el audio
@@ -405,7 +405,7 @@ Object Damusix
       if (self.&est_cnl-->nc == 1) { ! si canal actual ESTA 'SONANDO DE FONDO'
         self.&pib_reg-->nc = self.&snd_cnl-->nc; ! guardamos ese dato en el PIB
       }
-      else { ! si el canal actual NO ESTA 'SONANDO DE FONDO', guardamos...
+      else { ! si el canal actual NO ESTA 'SONANDO DE FONDO', guardamos…
         self.&pib_reg-->nc = 0; ! un valor nulo en el PIB (MUY IMPORTANTE!!)
         !-----------------------------------------------------------------------
         ! Este sistema lo unico que hace es "recordar" solamente aquellos
@@ -416,7 +416,7 @@ Object Damusix
       }
       #endif; ! DAMUSIX_NO_PROTEGER_SONIDOS
       !-------------------------------------------------------------------------
-      ! MUY IMPORTANTE: Finalmente retornamos indicando si se permite o no...
+      ! MUY IMPORTANTE: Finalmente retornamos indicando si se permite o no…
       return ok_play; ! 're-lanzar' el canal [ActualizarCanal() usa este valor]
     ],
 
@@ -431,7 +431,7 @@ Object Damusix
             jump Damusix_HacerPausaFin; ! entonces debemos salir del bucle
           !---------------------------------------------------------------------
           evtype_Arrange,evtype_Redraw: ! se produjo cambio en las Ventanas?
-            DrawStatusLine(); ! entonces debemos redibujar la barra de estado y...
+            DrawStatusLine(); ! entonces debemos redibujar la barra de estado y…
             HandleGlkEvent(gg_damusix_event,1,gg_arguments); ! actualizar ventanas
         }
       }
@@ -451,11 +451,11 @@ Object Damusix
       ! hay en proceso algun trabajo de Fade? Si no: no hacemos nada mas
       if (~~self.EnFade()) { return; }
       !-------------------------------------------------------------------------
-      ! SI EL CANAL EN FADE ESTA 'SONANDO DE FONDO' ACTUALMENTE...
+      ! SI EL CANAL EN FADE ESTA 'SONANDO DE FONDO' ACTUALMENTE…
       if (self.&est_cnl-->(self.cnl_fade) == 1) {
         glk_request_timer_events(self.tick_fade); ! reiniciamos el Timer
       }
-      else { ! SI EL CANAL EN FADE NO ESTA 'SONANDO DE FONDO' ACTUALMENTE...
+      else { ! SI EL CANAL EN FADE NO ESTA 'SONANDO DE FONDO' ACTUALMENTE…
         self.AbortarFade(); ! acabamos con el efecto de Fade totalmente!!
       }
     ],
@@ -536,10 +536,10 @@ Object Damusix
     InicializarGlk [
       i;  ! para iteraciones
       !-------------------------------------------------------------------------
-      ! si el audio no esta soportado, no se hace nada mas...
+      ! si el audio no esta soportado, no se hace nada mas…
       self.GlkAudio(1); if (self.glk_sin_audio) { return; } ! (1==mostrar avisos)
       !-------------------------------------------------------------------------
-      ! MUY IMPORTANTE: BORRAMOS COMPLETAMENTE EL REGISTRO DEL ESTADO PIB...
+      ! MUY IMPORTANTE: BORRAMOS COMPLETAMENTE EL REGISTRO DEL ESTADO PIB…
       ! [esto es vital para obtener un inicio de juego limpio en un 'RESTART']
       #ifndef DAMUSIX_NO_PROTEGER_SONIDOS;
       for (i=0 : i<=DAMUSIX_NCANALMAX : i=i+1) { self.&pib_reg-->i = 0; }
@@ -580,7 +580,7 @@ Object Damusix
     IdentificarSonidos [ fase ! la fase actual
       id i; ! id: el canal identificado; i: para iteraciones
       !-------------------------------------------------------------------------
-      ! IMPORTANTE: si el audio no esta soportado, no se hace nada mas...
+      ! IMPORTANTE: si el audio no esta soportado, no se hace nada mas…
       self.GlkAudio(0); if (self.glk_sin_audio) { return; } ! (0==no mostrar avisos)
       !=========================================================================
       ! MUY IMPORTANTE: PROTEGEMOS AREA DE MEMORIA DEL REGISTRO DEL ESTADO PIB
@@ -668,7 +668,7 @@ Object Damusix
         self.PararCanalesExtra();
         ! comprobamos si en el "nuevo-estado-del-juego" existe un efecto de Fade activo
         self.RecuperarFade(); ! en tal caso, timer sera reiniciado, recuperando el Fade
-        ! y retornamos porque ya no hay nada mas que hacer aqui...
+        ! y retornamos porque ya no hay nada mas que hacer aqui…
         return;
       }
     ],
@@ -798,9 +798,9 @@ Object Damusix
       if (self.glk_sin_audio) { return; }
       ! si la salida de audio esta desactivada, no se hace nada mas
       if (~~self.audio_activado) { return; }
-      ! si el volumen es menor a 1% o mayor a 100%, hay que corregir su valor...
+      ! si el volumen es menor a 1% o mayor a 100%, hay que corregir su valor…
       if ((vol < 1) || (vol > 100)) {
-        if (vol == -1) { vol = self.vol_global; } ! si vale -1 usamos Vol.Global, si no...
+        if (vol == -1) { vol = self.vol_global; } ! si vale -1 usamos Vol.Global, si no…
         else { vol = self.vol_vcnl; } ! usamos Vol.Comun actual para canales 'virtuales'
       }
       ! el interprete puede cambiar el volumen? Si es asi: cambialo ahora
@@ -815,7 +815,7 @@ Object Damusix
       ! de todos los canales virtuales se usara para la siguiente reproduccion
       self.que_vcnl++;
       !-------------------------------------------------------------------------
-      ! IMPORTANTE: si llegamos al ultimo canal virtual de la lista, regresamos  y...
+      ! IMPORTANTE: si llegamos al ultimo canal virtual de la lista, regresamos  y…
       if (self.que_vcnl > DAMUSIX_VCANALMAX-1) { self.que_vcnl = 0; } ! usamos el 1ro
     ],
 
@@ -829,8 +829,8 @@ Object Damusix
       ! ahora 'construimos' la lista de reproduccion de sonidos
       for (i=0 : i<(DAMUSIX_SNDLSTMAX*2) : i=i+2) { ! recorremos cada una de las filas de la lista
         if (self.&snd_lst-->i == 0) {  ! siempre que exista una fila disponible ('1er slot'==0)
-          self.&snd_lst-->i = snd;     ! se agrega el sonido concreto... (en 1er slot)
-          self.&snd_lst-->(i+1) = ms;  ! ... su tiempo de duracion... (en 2do slot)
+          self.&snd_lst-->i = snd;     ! se agrega el sonido concreto… (en 1er slot)
+          self.&snd_lst-->(i+1) = ms;  ! … su tiempo de duracion… (en 2do slot)
           return;                      ! y terminamos aqui
         }
       }
@@ -876,9 +876,9 @@ Object Damusix
         jump Damusix_TocarListaFin;
       }
       !-------------------------------------------------------------------------
-      ! si el volumen es menor a 1% o mayor a 100%, hay que corregir su valor...
+      ! si el volumen es menor a 1% o mayor a 100%, hay que corregir su valor…
       if ((vol < 1) || (vol > 100)) {
-        if (vol == -1) { vol = self.vol_global; } ! si vale -1 usamos Vol.Global, si no...
+        if (vol == -1) { vol = self.vol_global; } ! si vale -1 usamos Vol.Global, si no…
         else { vol = self.vol_lcnl; } ! usamos Vol.Comun actual para 'lista de reproduccion'
       }
       ! el interprete puede cambiar el volumen? Si es asi: cambialo ahora
@@ -1102,7 +1102,7 @@ Object Damusix
     ! en el comportamiento de la rutina puede corregirse con un breve truco,
     ! pero se ha decido no hacerlo, porque la correccion podria traer 'efectos
     ! colaterales' en el codigo ajeno a Damusix implementado por el programador
-    ! (la solucion es detener el Timer SIEMPRE, pero... ¿y si el juego lo esta
+    ! (la solucion es detener el Timer SIEMPRE, pero… ¿y si el juego lo esta
     ! usando para una funcion propia? Mejor NO DETENERLO injustificadamente)
     ! A pesar de todo, AbortarFade() SIEMPRE DETIENE CORRECTAMENTE los Fades
     ! activos, incluso si el Timer sige produciendo 'ticks' sin control]
@@ -1114,7 +1114,7 @@ Object Damusix
       ! hay en proceso algun trabajo de Fade? Si no: no hacemos nada mas
       if (~~self.EnFade()) { return; }
       !-------------------------------------------------------------------------
-      glk_request_timer_events(0); ! detenemos los 'ticks' del Timer...
+      glk_request_timer_events(0); ! detenemos los 'ticks' del Timer…
       self.tick_fade = 0;          ! y borramos el calculo de 'ticks' guardado
       !-------------------------------------------------------------------------
       ! recordamos temporalmente el numero del canal en Fade (se usa mas abajo)
@@ -1126,8 +1126,8 @@ Object Damusix
       ! si es FadeOut, adicionalmente paramos el canal que estaba en Fade
       ! si su volumen actual ha llegado al % minimo (0%) luego del efecto
       if ((self.que_fade == 2) && (self.&vol_fade-->1 <= 0)) {
-        self.PararCanal(nc); ! detenemos la reproduccion del canal y...
-        ! aprovechamos de hacer un truquito para que se recupere volumen...
+        self.PararCanal(nc); ! detenemos la reproduccion del canal y…
+        ! aprovechamos de hacer un truquito para que se recupere volumen…
         self.&vol_fade-->1 = self.&vol_fade-->2; ! original antes del FadeOut
       }
       !-------------------------------------------------------------------------
@@ -1137,8 +1137,8 @@ Object Damusix
       self.&vol_fade-->0 = 0;
       ! limpiamos la copia del volumen final
       self.&vol_fade-->1 = 0;
-      ! borramos la copia del 'volumen original'...
-      self.&vol_fade-->2 = 0; ! ... solo usada en FadeOut
+      ! borramos la copia del 'volumen original'…
+      self.&vol_fade-->2 = 0; ! … solo usada en FadeOut
       ! y finalmente ponemos el modo de Fade en cero (sin Fades)
       self.que_fade = 0;
     ],
@@ -1210,7 +1210,7 @@ Object Damusix
       else {
         ! si el volumen actual del sonido al que se le va a hacer el efecto
         ! de Fade es mayor o igual que el 'volumen final', terminamos la
-        ! rutina porque el efecto es totalmente inaplicable en este caso...
+        ! rutina porque el efecto es totalmente inaplicable en este caso…
         if (vol >= volfinal) { return; } ! terminamos aqui sin hacer nada mas
         !-----------------------------------------------------------------------
         ! iteramos tantas veces como numero de msegs. de duracion para el Fade
@@ -1220,11 +1220,11 @@ Object Damusix
         for (i=1 : i<=ms : i=i+1) {
           ! tomamos como 'valor base' para el volumen, la cantidad de msegs. de
           ! duracion total del efecto de Fade y a partir de este valor calculamos
-          ! las unidades de volumen que corresponde cambiar en cada iteracion...
+          ! las unidades de volumen que corresponde cambiar en cada iteracion…
           self.VolumenCanal(nc,(i*(volfinal-vol)/ms)+vol); ! no cambiar formula
           !---------------------------------------------------------------------
-          ! y finalmente hacemos una pausa durante 1ms que se repetira...
-          self.HacerPausa(1); ! ...tantas veces como msegs. dure el efecto
+          ! y finalmente hacemos una pausa durante 1ms que se repetira…
+          self.HacerPausa(1); ! …tantas veces como msegs. dure el efecto
         }
       }
     ],
@@ -1296,7 +1296,7 @@ Object Damusix
       else {
         ! si el volumen actual del sonido al que se le va a hacer el efecto
         ! de Fade es menor o igual que el 'volumen final', terminamos la
-        ! rutina porque el efecto es totalmente inaplicable en este caso...
+        ! rutina porque el efecto es totalmente inaplicable en este caso…
         if (vol <= volfinal) { return; } ! terminamos aqui sin hacer nada mas
         !-----------------------------------------------------------------------
         ! iteramos tantas veces como numero de msegs. de duracion para el Fade
@@ -1306,11 +1306,11 @@ Object Damusix
         for (i=1 : i<=ms : i=i+1) {
           ! tomamos como 'valor base' para el volumen, la cantidad de msegs. de
           ! duracion total del efecto de Fade y a partir de este valor calculamos
-          ! las unidades de volumen que corresponde cambiar en cada iteracion...
+          ! las unidades de volumen que corresponde cambiar en cada iteracion…
           self.VolumenCanal(nc,(i*(volfinal-vol)/ms)+vol); ! no cambiar formula
           !---------------------------------------------------------------------
-          ! y finalmente hacemos una pausa durante 1ms que se repetira...
-          self.HacerPausa(1); ! ...tantas veces como msegs. dure el efecto
+          ! y finalmente hacemos una pausa durante 1ms que se repetira…
+          self.HacerPausa(1); ! …tantas veces como msegs. dure el efecto
         }
       }
       !-------------------------------------------------------------------------
@@ -1520,7 +1520,7 @@ Object Damusix
       ! buscar el canal de ese sonido
       nc = self.BuscarCanal(snd);
       ! IMPORTANTE: si el sonido no tiene canal asignado, significa que NO ESTA SONANDO
-      if (nc == DAMUSIX_ERROR_SND) { return 0; } ! ... y devuelve 0: no sonando de fondo
+      if (nc == DAMUSIX_ERROR_SND) { return 0; } ! … y devuelve 0: no sonando de fondo
       ! devuelve el estado del sonido en ese canal (0==det. o 'rep. finita'; 1==reprod.)
       return self.&est_cnl-->nc;
     ],

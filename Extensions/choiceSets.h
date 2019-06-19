@@ -2,19 +2,19 @@
 
 !!==============================================================================
 !!
-!!	CHOICE SET
+!!	CHOICE SETS
 !!	Sistema para hacer selecciones entre un conjunto de opciones
 !!
 !!==============================================================================
 !!
-!!	File:			choiceSet.h
+!!	File:			choiceSets.h
 !!	Author(s):		J. Francisco Martín <jfm.lisaso@gmail.com>
-!!					Mastodon
+!!					Francisco J. López
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.2
-!!	Released:		2018/09/21
+!!	Version:		1.3
+!!	Released:		2019/05/04
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -33,20 +33,18 @@
 !!	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA. Or see
 !!	<http://www.gnu.org/licenses/>.
 !!
-!!	Copyright (c) 2009, Mastodon
-!!	Copyright (c) 2018, J. Francisco Martín
+!!	Copyright (c) 2009, Francisco J. López
+!!	Copyright (c) 2019, J. Francisco Martín
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.3: 2019/05/04 Pequeñas correcciones sobre la documentación.
 !!	1.2: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
 !!	1.1: 2017/12/28	Corrección en el cambio de estilo de texto en Máquina-Z
 !!	1.0: 2017/09/21	Versión inicial.
-!!	0.0: 2016/07/24	Inicio de la adaptación de la extensión 'topicInventory'
-!!					v2.2 para generalizar el sistema de conversación con
-!!					inventario de temas.
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -62,7 +60,7 @@
 !!	TOPIC INVENTORY v2.1 ---CHOICE SET es una generalización actualizada de
 !!	sobre ésta última---. Permite interacciones del tipo:
 !!
-!!		Te detienes un momento a pensar en qué hacer esta tarde...
+!!		Te detienes un momento a pensar en qué hacer esta tarde…
 !!		(Puedes escoger entre escribir documentación, salir a tomar algo o ver
 !!		una película.)
 !!
@@ -94,7 +92,7 @@
 !!	aleatoriamente con cada listado):
 !!
 !!		> hablar con el programador
-!!		---Disculpe...
+!!		---Disculpe…
 !!		El programador levanta la vista de la pantalla de su ordenador y se
 !!		quita las gafas. ---¿Si?
 !!
@@ -103,9 +101,9 @@
 !!
 !!		> hablar del proyecto
 !!		---He oído que llevas un tiempo trabajando en el proyecto de un relato
-!!		interactivo... ---empiezas.
+!!		interactivo… ---empiezas.
 !!		El hombre se pone muy nervioso de pronto. ---¿Quién te ha hablado de
-!!		eso? Ese proyecto está aparcado desde hace años. Después de aquel... de
+!!		eso? Ese proyecto está aparcado desde hace años. Después de aquel… de
 !!		aquel asunto.
 !!
 !!		> hablar al programador
@@ -118,7 +116,7 @@
 !!		---¿A qué asunto te refieres?
 !!		Él se coloca las gafas y vuelve de nuevo su atención al ordenador,
 !!		claramente agitado. ---T-tengo mucho trabajo que hacer. Si me
-!!		disculpas...
+!!		disculpas…
 !!
 !!		(Puedes insistir en el asunto, preguntar por sus aficiones o hablar
 !!		del tema que nunca se acaba.)
@@ -140,7 +138,7 @@
 !!		(Puedes prepararte un sandwich o hacerte un cocido montañés.)
 !!
 !!		> cocido
-!!		[...]
+!!		[…]
 !!
 !!
 !!	ANÁLISIS NO ESTRICTO
@@ -197,7 +195,7 @@
 !!	que empiecen por la letra 'o' si utiliza ese " o " por defecto como
 !!	separador final del listado. (En el listado del ejemplo, en lugar de
 !!	"opción 1", "opción 2", etc, se ha utilizado: "LA opción 1", "LA opción
-!!	2"... No así en el próximo ejemplo, más abajo).
+!!	2"… No así en el próximo ejemplo, más abajo).
 !!
 !!	Se podría, por ejemplo, cambiar por la siguiente configuración alternativa:
 !!	CSET_STYLE=1, CSET_PREFIX="[", CSET_SUFIX="]", CSET_MSG1="Escoge: ",
@@ -721,7 +719,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 				!! si alguna encaja con la entrada de usuario:
 				objectloop (o in self.current_choice_set) {
 					#Ifdef DEBUG_CHOICE_SET;
-					print "Probando: ", (string) o.entry, "... ";
+					print "Probando: ", (string) o.entry, "… ";
 					#Endif; ! DEBUG_CHOICE_SET;
 
 					!! Se calcula el número de coincidencias de la elección en
@@ -927,9 +925,9 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			else return 0;
 		],
  private
-		 !! Indica si hay que mostrar el inventario de temas al terminar de
-		 !! desarrollar uno de los temas de la conversación actual.
-		 choice_set_flag false,
+		!! Indica si hay que mostrar el inventario de temas al terminar de
+		!! desarrollar uno de los temas de la conversación actual.
+		choice_set_flag false,
  		!! Conversación actual activa en el gestor.
  		current_choice_set 0,
 		!! Número de coincidencias del tema con más coincidencias de la
@@ -1081,7 +1079,7 @@ ChoiceSetItem	cset_item_21
 			^^
 			---Cansado y aburrido. No imagina usted lo tedioso que es explicar
 			las mismas cosas sobre la Torre Eiffel una y otra vez. Un
-			auténtico tostón... perdone el exabrupto.";
+			auténtico tostón… perdone el exabrupto.";
 		],
 		append_choice_set false;
 
@@ -1093,7 +1091,7 @@ ChoiceSetItem	cset_item_22
 			^^
 			---Oh, pues exactamente a eso, Don Pepito. Un poco a todo tipo de
 			negocio; apuestas, inversiones en bolsa, compra-venta de activos,
-			robo de bancos... cualquier cosa que usted imagine. ---Sonríe.
+			robo de bancos… cualquier cosa que usted imagine. ---Sonríe.
 			---No ponga esa cara, hombre. Era broma, por supuesto.";
 		]
 		append_choice_set false;

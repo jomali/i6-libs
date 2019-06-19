@@ -20,7 +20,7 @@
 !       Object  Crystal_Cave "Crystal Cave"
 !         with  s_to Narrow_Passage,
 !               cant_go [; SmartCantGo(); ]
-!               ...;
+!               …;
 !
 !   will produce the message "You can go only south." if the player goes
 !   the wrong way.
@@ -55,7 +55,7 @@
 !               w_to
 !                   "Ouch! You discover that the ~window~ is really
 !                    an incredibly lifelike mural painted on the wall.",
-!               ...;
+!               …;
 !
 !   3.  This routine does include direction properties that are routines
 !       on the assumption that the routine will return something sensible.
@@ -71,7 +71,7 @@
 !                       print "A small room with white walls. ";
 !                       SmartCantGo();
 !                       ],
-!                   ...;
+!                   …;
 !
 !       Don't do this! Part of the interest of a room is a good description
 !       of the exits.

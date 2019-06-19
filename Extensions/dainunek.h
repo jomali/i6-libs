@@ -274,11 +274,11 @@ Constant _DAINUNEK_VERSION_ = 3;
 !    Object NombreDeLaExtension_Glk Dainunek
 !      with
 !        IdentifyGlk [ fase tipo ref rock;
-!          ! el codigo necesario en este punto de entrada, por ejemplo...
+!          ! el codigo necesario en este punto de entrada, por ejemplo…
 !          return EXT_IdentifyGlk(fase,tipo,ref,rock);
 !        ],
 !        HandleGlk [ ev contexto abortres;
-!          ! el codigo necesario en este punto de entrada, por ejemplo...
+!          ! el codigo necesario en este punto de entrada, por ejemplo…
 !          return EXT_HandleGlk(ev,contexto,abortres);
 !        ],
 !    ;

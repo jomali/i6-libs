@@ -153,74 +153,74 @@ Include "gtile.h";				! GWindows: Tiled Image Window Widget
 !!
 !!------------------------------------------------------------------------------
 
-WindowPair rootUI;
-WindowPair -> secondaryAreaA;
-WindowPair -> -> secondaryAreaB;
-WindowPair -> -> -> secondaryAreaC;
-WindowPair -> -> -> -> secondaryAreaD;
-WindowPair -> -> -> -> -> secondaryAreaE;
-WindowPair -> -> -> -> -> -> secondaryAreaF;
-WindowPair -> -> -> -> -> -> -> secondaryAreaG;
-WindowPair -> -> -> -> -> -> -> -> secondaryAreaH;
-WindowPair -> -> -> -> -> -> -> -> -> secondaryAreaI;
-WindowPair -> -> -> -> -> -> -> -> -> -> secondaryAreaJ;
+WindowPair RootUI;
+WindowPair -> SecondaryAreaA;
+WindowPair -> -> SecondaryAreaB;
+WindowPair -> -> -> SecondaryAreaC;
+WindowPair -> -> -> -> SecondaryAreaD;
+WindowPair -> -> -> -> -> SecondaryAreaE;
+WindowPair -> -> -> -> -> -> SecondaryAreaF;
+WindowPair -> -> -> -> -> -> -> SecondaryAreaG;
+WindowPair -> -> -> -> -> -> -> -> SecondaryAreaH;
+WindowPair -> -> -> -> -> -> -> -> -> SecondaryAreaI;
+WindowPair -> -> -> -> -> -> -> -> -> -> SecondaryAreaJ;
 
-TextBuffer -> -> -> -> -> -> -> -> -> -> -> textWindow;
+TextBuffer -> -> -> -> -> -> -> -> -> -> -> TextWindow;
 
-GStatusXWin -> -> -> -> -> -> -> -> -> -> -> statusBar
+GStatusXWin -> -> -> -> -> -> -> -> -> -> -> StatusBar
  with	split 0,
 		split_dir winmethod_Above;
 
-GraphWin -> -> -> -> -> -> -> -> -> -> paddingRight
+GraphWin -> -> -> -> -> -> -> -> -> -> PaddingRight
  with	split 0,
 		split_dir winmethod_Right,
  has	abssplit;
 
-GraphWin -> -> -> -> -> -> -> -> -> paddingLeft
+GraphWin -> -> -> -> -> -> -> -> -> PaddingLeft
  with	split 0,
 		split_dir winmethod_Left,
  has	abssplit;
 
-GraphWin -> -> -> -> -> -> -> -> paddingTop
+GraphWin -> -> -> -> -> -> -> -> PaddingTop
  with	split 0,
 		split_dir winmethod_Above,
  has	abssplit;
 
-GraphWin -> -> -> -> -> -> -> paddingBottom
+GraphWin -> -> -> -> -> -> -> PaddingBottom
  with	split 0,
 		split_dir winmethod_Below,
  has	abssplit;
 
-GImageWin -> -> -> -> -> -> graphicWindowRight
+GImageWin -> -> -> -> -> -> GraphicWindowRight
  with	split 0,
 		split_dir winmethod_Right,
 		col GUICONFIG_MARGIN_COLOR,
 		click_event [; cmd_override="mirar"; ],
  has	abssplit on;
 
-GImageWin -> -> -> -> -> graphicWindowLeft
+GImageWin -> -> -> -> -> GraphicWindowLeft
  with	split 0,
 		split_dir winmethod_Left,
 		col GUICONFIG_MARGIN_COLOR,
 		click_event [; cmd_override="mirar"; ],
  has	abssplit on;
 
-GImageWin -> -> -> -> marginRight
+GImageWin -> -> -> -> MarginRight
  with	split 0,
 		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Right;
 
-GImageWin -> -> -> marginLeft
+GImageWin -> -> -> MarginLeft
  with	split 0,
 		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Left;
 
-GImageWin -> -> marginTop
+GImageWin -> -> MarginTop
   with	split 0,
 		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Above;
 
-GImageWin -> marginBottom
+GImageWin -> MarginBottom
   with	split 0,
 		col GUICONFIG_MARGIN_COLOR,
 		split_dir winmethod_Below,
@@ -378,12 +378,12 @@ GImageWin -> marginBottom
 			self.rearrange_window_configuration(graphic_left, graphic_right,
 				margin_top, margin_right, margin_bottom, margin_left,
  				padding_top, padding_right, padding_bottom, padding_left);
-			glk_window_get_size(statusBar.winid,
-				statusBar.&width,
-				statusBar.&height);
-			statusBar.update();
-			GW_ForceRedraw(graphicWindowLeft);
-			GW_ForceRedraw(graphicWindowRight);
+			glk_window_get_size(StatusBar.winid,
+				StatusBar.&width,
+				StatusBar.&height);
+			GW_ForceRedraw(StatusBar);
+			GW_ForceRedraw(GraphicWindowLeft);
+			GW_ForceRedraw(GraphicWindowRight);
 		],
  private
 		rearrange_window_configuration [ graphic_left_width graphic_right_width

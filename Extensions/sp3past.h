@@ -159,7 +159,7 @@
 	CommandsRead:
 		switch (n) { ![6/11]
 			1:
-				"[Reejecutando órdenes...]";
+				"[Reejecutando órdenes…]";
 			#Ifdef TARGET_GLULX;
 			2:
 				"[Las órdenes ya están siendo relanzadas.]";
@@ -749,7 +749,7 @@
 				else print "llevaba";
 				print " puest", (o) x1;
 			11:	!! Mensaje introductorio para decir "que está
-				!! abierto / cerrado / vacio"...
+				!! abierto / cerrado / vacio"…
 				print " (que estaba", (n) x1, " ";
 			12:	!! Objeto tiene 'container', 'openable' y 'open'
 				!! (y cosas dentro)
@@ -1347,7 +1347,7 @@
 			51:
 				!! El usuario ha intentado una acción con objeto múltiple
 				!! (como COGE TODO). Esta acción es convertida por el parser en
-				!! una serie de actiones COGE OBJETO1, COGE OBJETO2, etc... Si
+				!! una serie de actiones COGE OBJETO1, COGE OBJETO2, etc… Si
 				!! en la ejecución de alguna de estas actiones encuentra que la
 				!! localidad del player ha cambiado, debe abortar el proceso.
 				!! Este mensaje informa de ello al usuario.
@@ -1490,7 +1490,7 @@
 	Pronouns:
 		!! Esta acción (generada por el verbo PRONOMBRES) muestra una lista
 		!! de qué significa en ese momento para el parser cada pronombre:
-		!! -lo, -la, -los, -las...
+		!! -lo, -la, -los, -las…
 		!!
 		!!	1:	Texto introductorio.
 		!!	2:	La palabra "es".
@@ -1732,7 +1732,7 @@
 			1:
 				"[La transcripción ya estaba activada].";
 			2:
-				"[Iniciando transcripción...]";
+				"[Iniciando transcripción…]";
 			3:
 				"[Error al intentar iniciar la transcripción].";
 		}
@@ -2107,7 +2107,7 @@
 		}
 
 	Wait:
-		"Pasaba el tiempo...";
+		"Pasaba el tiempo…";
 
 	Wake: !! TODO - Modificar
 		"La cruda realidad es que aquello no era un sueño.";

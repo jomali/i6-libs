@@ -60,8 +60,8 @@ Array utility_array_b -> INPUT_BUFFER_LEN;
 !!------------------------------------------------------------------------------
 !! Dado un array de caracteres, capitaliza la primera letra de cada palabra de
 !! éste —útil por ejemplo si el array almacena el nombre de una persona
-!! (Paul O'Brian, Jean-Paul Sartre,...) o de una localidad (Weston-Super-Mare,
-!! Los Angeles,...)—.
+!! (Paul O'Brian, Jean-Paul Sartre,…) o de una localidad (Weston-Super-Mare,
+!! Los Angeles,…)—.
 !!
 !!	@param {Array} character_array - El array de caracteres sobre el que se
 !!		realizará la capitalización

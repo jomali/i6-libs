@@ -1,36 +1,36 @@
 !------------------------------------------------------------------------------
 ! ALGORITMO DE BUSQUEDA DE CAMINOS
-! (método breath first)
+! (mï¿½todo breath first)
 ! 2009 por Mastodon
 !
 ! Implementa la funcion "calcula_ruta" entre dos localidades:
 !
-!	- Permite especificar áreas de búsqueda (para optimizar los cálculos), para
+!	- Permite especificar ï¿½reas de bï¿½squeda (para optimizar los cï¿½lculos), para
 !     lo cual se debe definir la propiedad area en las localidades (area "Pueblo" o
-!     area "Bosque", etc)... Si se especifica AREA_TODO, se pillan todas las localidades
-!     pero entonces podría ser lento, dependiendo de las locs de la aventura.
+!     area "Bosque", etc)â€¦ Si se especifica AREA_TODO, se pillan todas las localidades
+!     pero entonces podrï¿½a ser lento, dependiendo de las locs de la aventura.
 ! 	- Todas las localidades que se deseen tener en cuenta deben heredar de la 
 !     clase 'Enrutable'
-!	- Implementa el algoritmo de búsqueda Breath-First para el camino más corto 
-!     (algoritmo óptimo y completo)
-!	- Las localidades que implementen una rutina como dirección, deberán definir
-!     en la propiedad ruta_dir_to una función o valor que devuelva la localidad
-!     de destino SIN imprimir ningún mensaje.
-!   - Debe definirse la constante MAX_LON_RUTA con el número máximo de pasos
+!	- Implementa el algoritmo de bï¿½squeda Breath-First para el camino mï¿½s corto 
+!     (algoritmo ï¿½ptimo y completo)
+!	- Las localidades que implementen una rutina como direcciï¿½n, deberï¿½n definir
+!     en la propiedad ruta_dir_to una funciï¿½n o valor que devuelva la localidad
+!     de destino SIN imprimir ningï¿½n mensaje.
+!   - Debe definirse la constante MAX_LON_RUTA con el nï¿½mero mï¿½ximo de pasos
 !     para un camino (por defecto 20)
 !
 !   Uso:
 !
 !   calcula_ruta(loc_origen, loc_destino, NOMBRE_AREA, array_destino, almacenar_locs)
 !
-!   Parámetros:
+!   Parï¿½metros:
 !      - loc_origen/loc_destino : nombres de las localidades origen y destino
-!      - NOMBRE_AREA : potencia de dos (o suma de) que identifica las áreas a 
+!      - NOMBRE_AREA : potencia de dos (o suma de) que identifica las ï¿½reas a 
 !        buscar, o bien AREA_TODO para buscar en todo el mapa.
-!      - array_destino(opc) : array donde se almacenan las direcciones, tendrá
-!        tamaño MAX_LON_RUTA+1. O bien no especificar para que el resultado
+!      - array_destino(opc) : array donde se almacenan las direcciones, tendrï¿½
+!        tamaï¿½o MAX_LON_RUTA+1. O bien no especificar para que el resultado
 !        se almacene en el array global "ruta_calculada"
-!      - almacenar_locs(opc) : si se especifica un valor diferente de 0, se almacenarán
+!      - almacenar_locs(opc) : si se especifica un valor diferente de 0, se almacenarï¿½n
 !        las localidades por las que hay que pasar, en vez de las direcciones
 !--------------------------------------------------------------------------------
 
@@ -43,17 +43,17 @@ Endif;
 
 ! ruta_calculada-->0 = longitud de la ruta
 ! en ruta_calculada-->1 al MAX_LON, las direcciones en las que hay que moverse
-! por ejemplo n_obj s_obj s_obj ....
+! por ejemplo n_obj s_obj s_obj â€¦.
 Array ruta_calculada --> MAX_LON_RUTA+1; 
 
-! Se puede definir un área al que pertenezca una localidad, para optimizar las búsquedas dentro de
-! una o varias áreas en vez de todo el mapa. Definir las áreas como constantes potencias de 2, ejemplo:
+! Se puede definir un ï¿½rea al que pertenezca una localidad, para optimizar las bï¿½squedas dentro de
+! una o varias ï¿½reas en vez de todo el mapa. Definir las ï¿½reas como constantes potencias de 2, ejemplo:
 ! Constant AREA_PUEBLO 1;
 ! Constant AREA_BOSQUE 2;
 ! Constant AREA_CUEVAS 4;
 ! ..etc..
 ! Por defecto las localidades se definen como AREA_TODO
-! Se puede hacer la búsqueda sobre varias áreas sumándolas (AREA_BOSQUE+AREA_CUEVA)
+! Se puede hacer la bï¿½squeda sobre varias ï¿½reas sumï¿½ndolas (AREA_BOSQUE+AREA_CUEVA)
 
 Constant AREA_TODO 0;
 
@@ -70,8 +70,8 @@ with
 		}
 	],
 	ruta_padre 0,     ! Padre del nodo en la ruta
-	ruta_prof 0,      ! Número de pasos desde el origen
-	ruta_dir_from 0,       ! Dirección desde el padre en la ruta
+	ruta_prof 0,      ! Nï¿½mero de pasos desde el origen
+	ruta_dir_from 0,       ! Direcciï¿½n desde el padre en la ruta
 	ruta_n_to [; return self.funcOValor(n_to); ],
 	ruta_s_to [; return self.funcOValor(s_to); ],
 	ruta_e_to [; return self.funcOValor(e_to); ],
@@ -88,7 +88,7 @@ with
 
 [ calcula_ruta loc_origen loc_destino nombre_area array_destino almacenar_locs nivel tmp;
 	#Ifdef DEBUG_RUTA;
-	print "[RT: Búsqueda de ruta entre ~", (name) loc_origen, "~ y ~", (name) loc_destino, "~]^";
+	print "[RT: Bï¿½squeda de ruta entre ~", (name) loc_origen, "~ y ~", (name) loc_destino, "~]^";
 	#EndIf;
 	InicializarRuta(nombre_area, array_destino); ! pone a cero todos los nodos
 	nivel = 1;
@@ -109,9 +109,9 @@ with
 			print "[RT: El nodo inicial no tiene hijos]^";
 			#EndIf;
 			rfalse;
-		2: ! Se encontró el destino
+		2: ! Se encontrï¿½ el destino
 			#Ifdef DEBUG_RUTA;
-			print "[RT: Se encontró el destino en el nodo inicial]^";
+			print "[RT: Se encontrï¿½ el destino en el nodo inicial]^";
 			#EndIf;
 			trazar_ruta(loc_origen, loc_destino, array_destino, almacenar_locs);
 			rtrue;
@@ -121,7 +121,7 @@ with
 	{
 		nivel++;
 		#Ifdef DEBUG_RUTA;
-		print "[RT: Nivel de búsqueda:", nivel, "]^";
+		print "[RT: Nivel de bï¿½squeda:", nivel, "]^";
 		#EndIf;
 		tmp = establecer_siguiente_nivel(loc_destino, nombre_area, nivel);
 		switch (tmp)
@@ -131,16 +131,16 @@ with
 				print "[RT: No se encontraron nodos en el nivel actual]^";
 				#EndIf;
 				rfalse;
-			2: ! Se encontró el destino
+			2: ! Se encontrï¿½ el destino
 				#Ifdef DEBUG_RUTA;
-				print "[RT: Se encontró el destino en el nivel actual]^";
+				print "[RT: Se encontrï¿½ el destino en el nivel actual]^";
 				#EndIf;
 				trazar_ruta(loc_origen, loc_destino, array_destino, almacenar_locs);
 				rtrue;
 		}
 	}
 	#Ifdef DEBUG_RUTA;
-	print "[RT: Superada la longitud máxima sin haber encontrado el destino]^";
+	print "[RT: Superada la longitud mï¿½xima sin haber encontrado el destino]^";
 	#EndIf;
 	
 ];
@@ -321,7 +321,7 @@ with
 
 
 !--------------------------------------------------------------------
-! Un pequeño mapa para probar en modo DEBUG.... El laberinto de Zork
+! Un pequeï¿½o mapa para probar en modo DEBUGâ€¦. El laberinto de Zork
 !---------------------------------------------------------------------
 
 

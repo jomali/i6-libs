@@ -9,28 +9,28 @@
 !!==============================================================================
 !!
 !!	Archivo:		xxx.inf
-!!	Autor(es):		J. Francisco Martín <jfm.lisaso@gmail.com>
-!!	Idioma:			ES (Español)
+!!	Autor(es):		J. Francisco Martï¿½n <jfm.lisaso@gmail.com>
+!!	Idioma:			ES (Espaï¿½ol)
 !!	Sistema:		Inform-INFSP 6
-!!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.0
+!!	Plataforma:		Mï¿½quina-Z/Glulx
+!!	Versiï¿½n:		1.0
 !!	Fecha:			2018/06/08
 !!
 !!------------------------------------------------------------------------------
 !!
-!!	Copyright (c) 2018, J. Francisco Martín
+!!	Copyright (c) 2018, J. Francisco Martï¿½n
 !!
 !!	Este programa es software libre: usted puede redistribuirlo y/o
-!!	modificarlo bajo los términos de la Licencia Pública General GNU
-!!	publicada por la Fundación para el Software Libre, ya sea la versión
-!!	3 de la Licencia, o (a su elección) cualquier versión posterior.
+!!	modificarlo bajo los tï¿½rminos de la Licencia Pï¿½blica General GNU
+!!	publicada por la Fundaciï¿½n para el Software Libre, ya sea la versiï¿½n
+!!	3 de la Licencia, o (a su elecciï¿½n) cualquier versiï¿½n posterior.
 !!
-!!	Este programa se distribuye con la esperanza de que sea útil, pero
-!!	SIN GARANTÍA ALGUNA; ni siquiera la garantía implícita MERCANTIL o
-!!	de APTITUD PARA UN PROPÓSITO DETERMINADO. Consulte los detalles de
-!!	la Licencia Pública General GNU para más información.
+!!	Este programa se distribuye con la esperanza de que sea ï¿½til, pero
+!!	SIN GARANTï¿½A ALGUNA; ni siquiera la garantï¿½a implï¿½cita MERCANTIL o
+!!	de APTITUD PARA UN PROPï¿½SITO DETERMINADO. Consulte los detalles de
+!!	la Licencia Pï¿½blica General GNU para mï¿½s informaciï¿½n.
 !!
-!!	Debería haber recibido una copia de la Licencia Pública General GNU
+!!	Deberï¿½a haber recibido una copia de la Licencia Pï¿½blica General GNU
 !!	junto a este programa. En caso contrario, consulte
 !!	<http://www.gnu.org/licenses/>.
 !!
@@ -45,14 +45,14 @@
 !!	TABLA DE CONTENIDOS
 !!
 !!	1)	Constantes y variables globales de la obra
-!!	2)	Reemplazos de rutinas utilizadas por la librería Inform
-!!	3)	Librerías y extensiones (parte 1 de 2)
-!!	4)	Puntos de entrada Glk con GWindows (sólo en GLULX)
-!!	5)	Librerías y extensiones (parte 2 de 2)
+!!	2)	Reemplazos de rutinas utilizadas por la librerï¿½a Inform
+!!	3)	Librerï¿½as y extensiones (parte 1 de 2)
+!!	4)	Puntos de entrada Glk con GWindows (sï¿½lo en GLULX)
+!!	5)	Librerï¿½as y extensiones (parte 2 de 2)
 !!	6)	Puntos de entrada de la obra
 !!	7)	Otras rutinas
-!!	8)	Gramática estándar y extendida
-!!	9)	Definición de atributos, clases y objetos
+!!	8)	Gramï¿½tica estï¿½ndar y extendida
+!!	9)	Definiciï¿½n de atributos, clases y objetos
 !!
 !!------------------------------------------------------------------------------
 
@@ -62,23 +62,23 @@
 !!	1)	Constantes y variables globales de la obra
 !!
 !!------------------------------------------------------------------------------
-!!	-	Información bibliográfica
-!!	-	Declaración de extensiones
+!!	-	Informaciï¿½n bibliogrï¿½fica
+!!	-	Declaraciï¿½n de extensiones
 !!	-	Definiciones
 !!------------------------------------------------------------------------------
 
 !!------------------------------------------------------------------------------
-!!	Información bibliográfica
+!!	Informaciï¿½n bibliogrï¿½fica
 !!------------------------------------------------------------------------------
 
 Constant Story
 "XXX_e";
 
 Constant Headline
-"^Pruebas de integración de varias extensiones^";
+"^Pruebas de integraciï¿½n de varias extensiones^";
 
 !!------------------------------------------------------------------------------
-!!	Declaración de extensiones
+!!	Declaraciï¿½n de extensiones
 !!------------------------------------------------------------------------------
 
 !! Constant USE_GWINDOWS_GUI;		! gWindowsGUI.h
@@ -93,24 +93,24 @@ Constant USE_TEXT_STYLES;		! textStyles.h
 
 Constant MANUAL_PRONOUNS;		! Los pronoms. refieren a objetos ya mencionados
 Constant NO_PLACES;				! Acciones LUGARES y OBJETOS desactivadas
-Constant NO_SCORE;				! No se lleva conteo de puntuación
+Constant NO_SCORE;				! No se lleva conteo de puntuaciï¿½n
 
 #Ifdef USE_HYPERLINKS;
-!! Acción por defecto utilizada al seleccionar un hipervínculo:
+!! Acciï¿½n por defecto utilizada al seleccionar un hipervï¿½nculo:
 Global _hyperlinks_command = "examina";
 #Endif; ! USE_HYPERLINKS;
 
 #Ifdef USE_SPANISH_LM;
-Constant PS1 "> ";				! Definición del inductor
+Constant PS1 "> ";				! Definiciï¿½n del inductor
 Constant SIN_MENSAJES;			! Se omiten los mensajes por defecto de la lib.
 Global FORMER__TX	= "tu antiguo ~yo~";
 Global YOURSELF__TX	= "ti mismo";
-Global CANTGO__TX	= "No puedes ir por ahí.";
+Global CANTGO__TX	= "No puedes ir por ahï¿½.";
 Global IS__TX		= " ves";
 Global ARE__TX		= " ves";
 Global IS2__TX		= "ves ";
 Global ARE2__TX		= "ves ";
-Global YOU__TX		= "Tú";
+Global YOU__TX		= "Tï¿½";
 Global PARTICULA_TE	= "te";
 #Endif; ! USE_SPANISH_LM;
 
@@ -133,40 +133,40 @@ Constant TEXT_STYLE_PARSER_SUFIX "]";
 Constant GUICONFIG_MARGIN_COLOR $CCCCCC;
 Object	GUIConfig "(GUI Configuration)"
  with	!!----------------------------------------------------------------------
-		graphic_window_flag true,	! estado de las ventanas gráficas
+		graphic_window_flag true,	! estado de las ventanas grï¿½ficas
 		status_bar_height 0,		! altura de la barra de estado (en filas)
 		!!----------------------------------------------------------------------
-		!! Configuración por defecto A. Ancho de ventana >= threshold_A
+		!! Configuraciï¿½n por defecto A. Ancho de ventana >= threshold_A
 		graphic_width_A 0 0,	! (px)
 		margin_A 0 0,			! (%)
 		padding_A 0 0 8 0,		! (px)
 		threshold_A 0,			! (px)
-		!! Configuración por defecto B. Ancho de ventana >= threshold_B
+		!! Configuraciï¿½n por defecto B. Ancho de ventana >= threshold_B
 		graphic_width_B 0 0,	! (px)
 		margin_B 0 6,			! (%)
 		padding_B 0 0 8 0,		! (px)
 		threshold_B 460,		! (px)
-		!! Configuración por defecto C. Ancho de ventana >= threshold_C
+		!! Configuraciï¿½n por defecto C. Ancho de ventana >= threshold_C
 		graphic_width_C 0 0,	! (px)
 		margin_C 0 12,			! (%)
 		padding_C 0 0 8 0,		! (px)
 		threshold_C 660,		! (px)
-		!! Configuración por defecto D. Ancho de ventana >= threshold_D
+		!! Configuraciï¿½n por defecto D. Ancho de ventana >= threshold_D
 		graphic_width_D 0 0,	! (px)
 		margin_D 0 18,			! (%)
 		padding_D 0 0 8 0,		! (px)
 		threshold_D 900,		! (px)
-		!! Configuración por defecto E. Ancho de ventana >= threshold_E
+		!! Configuraciï¿½n por defecto E. Ancho de ventana >= threshold_E
 		graphic_width_E 0 0,	! (px)
 		margin_E 0 22,			! (%)
 		padding_E 0 0 8 0,		! (px)
 		threshold_E 1050,		! (px)
-		!! Configuración por defecto F. Ancho de ventana >= threshold_F
+		!! Configuraciï¿½n por defecto F. Ancho de ventana >= threshold_F
 		graphic_width_F 0 0,	! (px)
 		margin_F 0 25,			! (%)
 		padding_F 0 0 8 0,		! (px)
 		threshold_F 1224,		! (px)
-		!! Configuración por defecto G. Ancho de ventana >= threshold_G
+		!! Configuraciï¿½n por defecto G. Ancho de ventana >= threshold_G
 		graphic_width_G 0 0,	! (px)
 		margin_G 0 30,			! (%)
 		padding_G 0 0 8 0,		! (px)
@@ -178,7 +178,7 @@ Object	GUIConfig "(GUI Configuration)"
 
 !!==============================================================================
 !!
-!!	2)	Reemplazos de rutinas utilizadas por la librería Inform
+!!	2)	Reemplazos de rutinas utilizadas por la librerï¿½a Inform
 !!
 !!------------------------------------------------------------------------------
 
@@ -189,7 +189,7 @@ Replace ChangePlayer;			! Rutina para cambiar el objeto PC
 
 !!==============================================================================
 !!
-!!	3)	Librerías y extensiones (parte 1 de 2)
+!!	3)	Librerï¿½as y extensiones (parte 1 de 2)
 !!
 !!------------------------------------------------------------------------------
 
@@ -202,12 +202,12 @@ Include "gwindefs.h";			! GWindows: Definiciones
 Include "Parser.h";				! Decodifica la entrada del teclado
 
 #Ifdef USE_TEXT_STYLES;
-Include "textStyles.h";			! Selección de estilo de los textos
+Include "textStyles.h";			! Selecciï¿½n de estilo de los textos
 Include "infglk.h";
 #Endif; ! USE_TEXT_STYLES;
 
 #Ifdef USE_SPANISH_LM;
-Include "SpanishLM.h";			! Mensajes de la librería
+Include "SpanishLM.h";			! Mensajes de la librerï¿½a
 #Endif; ! USE_SPANISH_LM;
 
 #Ifdef TARGET_GLULX;
@@ -219,11 +219,11 @@ Include "gwincls.h";			! GWindows: Window Class Framework
 
 !!==============================================================================
 !!
-!!	4)	Puntos de entrada Glk con GWindows (sólo en GLULX)
+!!	4)	Puntos de entrada Glk con GWindows (sï¿½lo en GLULX)
 !!
 !!------------------------------------------------------------------------------
-!!	GWindows hace uso de los puntos de entrada Glk por defecto por lo cuál
-!!	define los suyos propios para reemplazar aquellos de la librería:
+!!	GWindows hace uso de los puntos de entrada Glk por defecto por lo cuï¿½l
+!!	define los suyos propios para reemplazar aquellos de la librerï¿½a:
 !!	-	GWindowsGlkEvent(), en lugar de 'HandleGlkEvent()'
 !!	-	GWindowsGlkIdentify(), en lugar de 'IdentifyGlkObject()'
 !!	-	InitGWindows(), en lugar de 'InitGlkWindow()'
@@ -231,34 +231,34 @@ Include "gwincls.h";			! GWindows: Window Class Framework
 
 #Ifdef TARGET_GLULX;
 !!------------------------------------------------------------------------------
-!! Punto de entrada para manejar eventos Glk con la librería GWindows.
+!! Punto de entrada para manejar eventos Glk con la librerï¿½a GWindows.
 !! Reemplaza al habitual 'HandleGlkEvent()'.
 !!
 !!	@param {array} ev - Array de 4 palabras que describe el evento. ev-->0
-!!		registra un código numérico con que se determina el tipo de evento. La
-!!		rutina sólo actúa si se trata de un evento de tipo hipervínculo
+!!		registra un cï¿½digo numï¿½rico con que se determina el tipo de evento. La
+!!		rutina sï¿½lo actï¿½a si se trata de un evento de tipo hipervï¿½nculo
 !!		(ev-->0 == 8); ev-->1 indica la ventana sobre la que se ha producido el
 !!		evento; ev-->2 el objeto o cadena de caracteres sobre el que se ha
-!!		creado el hipervínculo; ev-->3, reservado para información adicional,
+!!		creado el hipervï¿½nculo; ev-->3, reservado para informaciï¿½n adicional,
 !!		no se utiliza
 !!	@param {integer} context - 0 si el evento se ha producido durante una
-!!		entrada de línea (comandos normales u otros usos de la función de la
-!!		librería 'KeyboardPrimitive()'); la aplicación debe esperar a que el
+!!		entrada de lï¿½nea (comandos normales u otros usos de la funciï¿½n de la
+!!		librerï¿½a 'KeyboardPrimitive()'); la aplicaciï¿½n debe esperar a que el
 !!		usuario pulse INTRO antes de dar respuesta para la entrada. 1 si el
-!!		evento se ha producido durante una entrada de caracter (función de la
-!!		librería 'KeyCharPrimitive()'); la aplicación responde ante cada
-!!		pulsación de tecla, como en los menús, por ejemplo
+!!		evento se ha producido durante una entrada de caracter (funciï¿½n de la
+!!		librerï¿½a 'KeyCharPrimitive()'); la aplicaciï¿½n responde ante cada
+!!		pulsaciï¿½n de tecla, como en los menï¿½s, por ejemplo
 !!	@param {array} abortres - Utilizado para cancelar la entrada de texto y
 !!		forzar una entrada particular. La longitud de la nueva entrada se
 !!		registra en 'abortres-->0'. Si es diferente de 0, los caracteres del
-!!		comando deben escribirse en el array secuencialmente desde la posición
+!!		comando deben escribirse en el array secuencialmente desde la posiciï¿½n
 !!		'abortres->WORDSIZE' hasta 'abortres->(WORDSIZE+length)' (no
 !!		inclusive). No pueden superarse los 256 caracteres
 !!	@returns {integer|boolean} 2 para que la entrada de usuario sea abortada.
-!!		-1 para que la entrada de usuario continúe incluso después de una
-!!		pulsación de INTRO (para las entradas de línea) o de tecla (para las
-!!		entradas de caracter). Cualquier otro valor de retorno continuará con
-!!		la ejecución normal de la librería
+!!		-1 para que la entrada de usuario continï¿½e incluso despuï¿½s de una
+!!		pulsaciï¿½n de INTRO (para las entradas de lï¿½nea) o de tecla (para las
+!!		entradas de caracter). Cualquier otro valor de retorno continuarï¿½ con
+!!		la ejecuciï¿½n normal de la librerï¿½a
 !!------------------------------------------------------------------------------
 #Ifdef USE_GWINDOWS_GUI;
 [ GWindowsGlkEvent ev context abortres;
@@ -277,14 +277,14 @@ Include "gwincls.h";			! GWindows: Window Class Framework
 #Endif; ! USE_GWINDOWS_GUI;
 
 !!------------------------------------------------------------------------------
-!! 'GWindowsGlkIdentify() permite conocer qué objetos Glk existen; útil para
+!! 'GWindowsGlkIdentify() permite conocer quï¿½ objetos Glk existen; ï¿½til para
 !! gestionar las directivas RESTORE, RESTART y UNDO puesto que, al utilizar
 !! estas entradas, las variables globales con objetos Glk pueden contener
-!! valores desfasados y erróneos.
+!! valores desfasados y errï¿½neos.
 !!
 !! Reemplaza a 'IdentifyGlkObject(phase, type, ref, rock)'.
 !!
-!!	@param {integer} phase - Código numérico indicando la fase en la que se
+!!	@param {integer} phase - Cï¿½digo numï¿½rico indicando la fase en la que se
 !!		invoca a la rutina. Toma los valores: 0, 1 o 2
 !!	@param {integer} type - 0, 1 o 2 para ventanas, 'streams' y 'filerefs',
 !!		respectivamente
@@ -302,19 +302,19 @@ Include "gwincls.h";			! GWindows: Window Class Framework
 #Endif; ! USE_GWINDOWS_GUI;
 
 !!------------------------------------------------------------------------------
-!! La librería GWindows hace uso del punto de entrada 'InitGlkWindow()'. En su
+!! La librerï¿½a GWindows hace uso del punto de entrada 'InitGlkWindow()'. En su
 !! lugar, ofrece este punto de entrada, sin argumentos, que es equivalente a
-!! invocar 'InitGlkWindow(0)'. La librería llama a este punto de entrada
+!! invocar 'InitGlkWindow(0)'. La librerï¿½a llama a este punto de entrada
 !! cuando se crea la interfaz de usuario por primera vez. Debe establecer las
-!! variables 'Active_UI', con la raíz del árbol de ventanas; y 'Main_GWindow',
-!! con el objeto 'GWindow' que sirve de ventana principal de la aplicación. Se
+!! variables 'Active_UI', con la raï¿½z del ï¿½rbol de ventanas; y 'Main_GWindow',
+!! con el objeto 'GWindow' que sirve de ventana principal de la aplicaciï¿½n. Se
 !! cumple que las variables Inform 'gg_mainwin == Main_GWindow.winid'.
 !!
 !!	@returns {boolean} Falso
 !!------------------------------------------------------------------------------
 #Ifdef USE_GWINDOWS_GUI;
 [ InitGWindows;
-	!! Inicializaciones de la interfaz gráfica:
+	!! Inicializaciones de la interfaz grï¿½fica:
 	Active_UI = rootUI;
 	Main_GWindow = textWindow;
 
@@ -396,22 +396,22 @@ Include "gwincls.h";			! GWindows: Window Class Framework
 
 !!==============================================================================
 !!
-!!	5)	Librerías y extensiones (parte 2 de 2)
+!!	5)	Librerï¿½as y extensiones (parte 2 de 2)
 !!
 !!------------------------------------------------------------------------------
 
 #Ifdef TARGET_GLULX;
 #Ifdef USE_GWINDOWS_GUI;
-Include "gwindows.h";			! GWindows: Reemplazos de la librería
-Include "gWindowsGUI.h";		! Interfaz gráfica adaptativa con GWindows
+Include "gwindows.h";			! GWindows: Reemplazos de la librerï¿½a
+Include "gWindowsGUI.h";		! Interfaz grï¿½fica adaptativa con GWindows
 #Endif; ! USE_GWINDOWS_GUI;
 #Endif; ! TARGET_GLULX
 
 #Ifdef USE_HYPERLINKS;
-Include	"hyperlinks.h";			! Rutinas de apoyo para el uso de hipervínculos
+Include	"hyperlinks.h";			! Rutinas de apoyo para el uso de hipervï¿½nculos
 #Endif; ! USE_HYPERLINKS;
 
-Include "VerbLib.h";			! Define cómo trabajan las acciones
+Include "VerbLib.h";			! Define cï¿½mo trabajan las acciones
 
 
 !!==============================================================================
@@ -428,8 +428,8 @@ Include "VerbLib.h";			! Define cómo trabajan las acciones
 !! (o el objeto accesible ---contenedor o soporte--- en el que empieza).
 !!
 !!	@returns {boolean|integer} Verdadero o falso para continuar con la
-!!		ejecución normal de la aplicación, o 2 para suprimir la impresión de
-!!		los créditos, que de otra manera se imprimirían inmediatamente después
+!!		ejecuciï¿½n normal de la aplicaciï¿½n, o 2 para suprimir la impresiï¿½n de
+!!		los crï¿½ditos, que de otra manera se imprimirï¿½an inmediatamente despuï¿½s
 !!		de llamar a la rutina
 !!------------------------------------------------------------------------------
 [ Initialise;
@@ -455,16 +455,16 @@ Include "VerbLib.h";			! Define cómo trabajan las acciones
 
 !!==============================================================================
 !!
-!!	8)	Gramática estándar y extendida
+!!	8)	Gramï¿½tica estï¿½ndar y extendida
 !!
 !!------------------------------------------------------------------------------
 !!	-	##LMode2
 !!------------------------------------------------------------------------------
 
-Include "SpanishG.h";			! Gramática española
+Include "SpanishG.h";			! Gramï¿½tica espaï¿½ola
 
 #Ifdef USE_SPANISH_EG;
-Include "SpanishEG.h";			! Gramática española extendida
+Include "SpanishEG.h";			! Gramï¿½tica espaï¿½ola extendida
 #Endif; ! USE_SPANISH_EG;
 
 !!------------------------------------------------------------------------------
@@ -478,18 +478,18 @@ Extend only 'normal' replace
 
 !!==============================================================================
 !!
-!!	9)	Definición de atributos, clases y objetos
+!!	9)	Definiciï¿½n de atributos, clases y objetos
 !!
 !!------------------------------------------------------------------------------
 
-Object	Limbo "En algún lugar"
+Object	Limbo "En algï¿½n lugar"
  with	name_f	'babia' 'parte',
 		name_m	'limbo' 'lugar' 'sueno' 'vacio',
 		gender	G_MASCULINO,
 		adjectives 'algun' 'alguna',
 		description [;
-			print "Más allá de la barrera casi insuperable que separa la realidad de todo lo demás. Un lugar etéreo, donde la vida, la materia y la vitalidad no son necesariamente constantes; un lugar donde el tiempo y el espacio no existen tal y como los capta nuestro ser despierto...";
-			if (self hasnt visited) print " *bienvenido al mundo del sueño*.";
+			print "Mï¿½s allï¿½ de la barrera casi insuperable que separa la realidad de todo lo demï¿½s. Un lugar etï¿½reo, donde la vida, la materia y la vitalidad no son necesariamente constantes; un lugar donde el tiempo y el espacio no existen tal y como los capta nuestro ser despiertoâ€¦";
+			if (self hasnt visited) print " *bienvenido al mundo del sueï¿½o*.";
 			new_line;
 			return true;
 		],

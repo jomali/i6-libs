@@ -3,7 +3,7 @@
 ! 27-Nov-20007 . Actualizacion by JaReL
 !#######################################################################################
 ! Modo de empleo:
-! incluir en el código de tu aventura lo siguiente:
+! incluir en el cï¿½digo de tu aventura lo siguiente:
 !
 !       Replace ParseNoun; 
 !       Include "SpanishG";
@@ -13,17 +13,17 @@
 ! El nuevo parsenoun permite elegir entre dos opciones:
 !
 ! 0- Parseado admitiendo nombres y adjetivos, priorizando los primeros en caso de duda con otro objeto.
-! Con este modelo serían válidas las expresiones:
+! Con este modelo serï¿½an vï¿½lidas las expresiones:
 ! "EX MADERA", "EX MESA DE MADERA", "EX MESA".
-! (Éste es el modelo por defecto, si deseas parsear siempre así, no necesitas utilizar este módulo)
+! (ï¿½ste es el modelo por defecto, si deseas parsear siempre asï¿½, no necesitas utilizar este mï¿½dulo)
 !
 ! 1- Parseado admitiendo los adjetivos EXCLUSIVAMENTE cuando al menos un nomnbre del objeto ha sido detectado.
-! Con este segundo modelo serían válidas la expresiones: 
-! "EX MESA", "EX MESA DE MADERA"... pero NO "EX MADERA" (queriendo referirnos a la mesa de madera)
+! Con este segundo modelo serï¿½an vï¿½lidas la expresiones: 
+! "EX MESA", "EX MESA DE MADERA"â€¦ pero NO "EX MADERA" (queriendo referirnos a la mesa de madera)
 !
-! AVISO: Este modelo segundo modelo inhabilita las respuestas breves las preguntas de desmabiguación
+! AVISO: Este modelo segundo modelo inhabilita las respuestas breves las preguntas de desmabiguaciï¿½n
 ! del parser del tipo:
-! ¿A cuál te refieres, al paraguas amarillo o al paraguas azul?
+! ï¿½A cuï¿½l te refieres, al paraguas amarillo o al paraguas azul?
 ! Ya no podremos responder simplemente por los adjetivos "el amarillo" o "el azul",
 ! sino que tendremos que responder "el paraguas amarillo" o "el paraguas azul"
 !
@@ -40,7 +40,7 @@
 
 Global parseado_estricto =0; !valores:
 				     ! parseado_estricto =0: admite nombres y adjetivos
-				     ! parseado_estricto =1: admite adjetivos sólo si al menos hay un nombre también.
+				     ! parseado_estricto =1: admite adjetivos sï¿½lo si al menos hay un nombre tambiï¿½n.
 
 [ ParseNoun obj n m dudas seguir gen p aux;
 
@@ -70,7 +70,7 @@ Global parseado_estricto =0; !valores:
 !         ! Una palabra que se refiere al objeto
 !     {
 !         n++;        ! la contamos
-!         n=n+dudas;        ! añadimos todos los "de" "la"...
+!         n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
 !                 ! que estaban sin contar
 !         dudas=0;        ! y resetamos el contador de "de"s
 !         continue;        ! volvemos al while
@@ -82,10 +82,10 @@ Global parseado_estricto =0; !valores:
         if (gen==5) gen=G_FEMENINO;
             n++;        ! la contamos
 		m++;        ! * contamos nombre
-        n=n+dudas;        ! añadimos todos los "de" "la"...
+        n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
                 ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
-!        print " --> es ahora femenino...." ; !infsp debug
+!        print " --> es ahora femeninoâ€¦." ; !infsp debug
         continue;        ! volvemos al while
     }
     if (WordInProperty(p, obj, name_mp))
@@ -95,7 +95,7 @@ Global parseado_estricto =0; !valores:
         if (gen==5) gen=G_MASCULINO+G_PLURAL;
             n++;        ! la contamos
 		m++;        ! * contamos nombre
-        n=n+dudas;        ! añadimos todos los "de" "la"...
+        n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
                 ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
         continue;        ! volvemos al while
@@ -106,7 +106,7 @@ Global parseado_estricto =0; !valores:
         if (gen==5) gen=G_FEMENINO+G_PLURAL;
             n++;        ! la contamos
 		m++;        ! * contamos nombre
-        n=n+dudas;        ! añadimos todos los "de" "la"...
+        n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
                 ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
         continue;        ! volvemos al while
@@ -121,10 +121,10 @@ Global parseado_estricto =0; !valores:
         if (gen==5) gen=G_MASCULINO;
             n++;        ! la contamos
 		m++;        ! * contamos nombre
-        n=n+dudas;        ! añadimos todos los "de" "la"...
+        n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
                 ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
-!        print " --> es ahora masculino...." ; !infsp debug
+!        print " --> es ahora masculinoâ€¦." ; !infsp debug
         continue;        ! volvemos al while
     }
     if (WordInProperty(p, obj, adjectives))
@@ -132,18 +132,18 @@ Global parseado_estricto =0; !valores:
             if (p) dict_flags_of_noun = (p->#dict_par1) & $$01110100;
             n++;        ! la contamos
 	
-        n=n+dudas;        ! añadimos todos los "de" "la"...
+        n=n+dudas;        ! aï¿½adimos todos los "de" "la"â€¦
                 ! que estaban sin contar
         dudas=0;        ! y resetamos el contador de "de"s
         continue;        ! volvemos al while
     }
         
     ! Si la palabra no fue reconocida, miraremos si se trata
-    ! de 'de' o un artículo. En este caso mantenemos la duda y
+    ! de 'de' o un artï¿½culo. En este caso mantenemos la duda y
     ! seguimos mirando palabras, hasta que una de ellas encaje
     ! en este objeto, en cuyo caso se retornan todas las que se
     ! han leido, o bien se encuentre una que no encaja en cuyo
-    ! caso se retorna las que se habían encontrado antes del "de"
+    ! caso se retorna las que se habï¿½an encontrado antes del "de"
 
 
     else if (p== 'el' or 'la' or 'los' or 'las' or 'de' )
@@ -160,7 +160,7 @@ Global parseado_estricto =0; !valores:
         switch(gen)
         { ! Los casos del switch estaban mal.
           ! Bug corregido en 001030
-          1: give obj ~female ~pluralname; !infsp fix for I7 compatibility (en I7 no se puede asignar el 0 a gender, de 1 para arriba, sí)
+          1: give obj ~female ~pluralname; !infsp fix for I7 compatibility (en I7 no se puede asignar el 0 a gender, de 1 para arriba, sï¿½)
           2: give obj female ~pluralname;!print " FEMALE GIVEN "; !infsp debug
           3: give obj ~female pluralname;
           4: give obj female pluralname;
@@ -180,7 +180,7 @@ if(parseado_estricto>0)if(m==0)return 0;
 ];    
 
 !##############################################################################
-! ELIMINAR DESDE AQUÍ HASTA EL FINAL SI NO SE DESEA QUE EL JUGADOR
+! ELIMINAR DESDE AQUï¿½ HASTA EL FINAL SI NO SE DESEA QUE EL JUGADOR
 ! PUEDA CAMBIAR EL MODO DE PARSEADO DURANTE EL JUEGO.
 verb meta 'modoparsing'
  * ->modoparsing;
@@ -189,8 +189,8 @@ if(parseado_estricto==0)parseado_estricto=1;else parseado_estricto=0;
 print "^Modo de parseado cambiado a:^";
 switch (parseado_estricto)
 {
-0: "MODO POR DEFECTO: Puedes referirte a los objetos por sus nombres o por sus adjetivos. Sólo primarán los primeros de cara a la desambiguación con otros objetos.";
-default: "MODO ESTRICTO: Los adjetivos sólo serán válidos acompañados algún nombre del objeto.";
+0: "MODO POR DEFECTO: Puedes referirte a los objetos por sus nombres o por sus adjetivos. Sï¿½lo primarï¿½n los primeros de cara a la desambiguaciï¿½n con otros objetos.";
+default: "MODO ESTRICTO: Los adjetivos sï¿½lo serï¿½n vï¿½lidos acompaï¿½ados algï¿½n nombre del objeto.";
 }
 !rtrue;
 ];

@@ -216,8 +216,8 @@
 !        weight [ w i;
 !                w = 1;                        ! Base weight of bag is 1
 !                objectloop (i in wonder_bag)
-!                        w = w + WeightOf (i); ! Add up weights...
-!                return (w/2);                 ! ...and return 50%
+!                        w = w + WeightOf (i); ! Add up weights…
+!                return (w/2);                 ! …and return 50%
 !        ],
 !        has container;
 !

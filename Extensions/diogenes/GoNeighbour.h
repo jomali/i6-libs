@@ -93,7 +93,7 @@ Property external_name;
      ! First the external_name
      if (WordInProperty(wd,i,external_name)) rtrue;
      
-     ! If the room is concealed forget it...
+     ! If the room is concealed forget it…
      if (i has concealed) rfalse;
      
      ! If the room is unvisited and "opaque" forget it

@@ -51,7 +51,7 @@
 !!					basado en rutinas independientes y variables globales. Por
 !!					reducir la carga de la pila al encadenar llamadas a
 !!					rutinas (especialmente cuando se utilizan directivas de
-!!					depuración: 'acciones', 'mensajes'..., que pueden
+!!					depuración: 'acciones', 'mensajes'…, que pueden
 !!					desencadenar errores de tipo "Stack overflow in callstub").
 !!					La regla de impresión 'emphasis' se reemplaza por su
 !!					sinónimo 'emph', para evitar incompatibilidades con la
@@ -111,7 +111,7 @@
 !!		    InitialiseStyleHints(winrock);
 !!		    !! Espacio para sugerencias de aspecto del autor y
 !!		    !! para el resto de contenidos de InitGlkWindow:
-!!		    [...]
+!!		    […]
 !!		    !! Se continúa con el proceso normal de la librería:
 !!		    return false;
 !!		];

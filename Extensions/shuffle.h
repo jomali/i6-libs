@@ -25,8 +25,8 @@
 !       for (i=0 : i<52 : i++) {
 !           j = Shuffle(52) - 1;
 !           suit = j/13;        ! 0,1,2,3
-!           rank = 1 + j%13;    ! 1,2, ... 13
-!           ...
+!           rank = 1 + j%13;    ! 1,2, … 13
+!           …
 !           }
 !
 !   More commonly, however, you'll need to use Shuffle() for several different
@@ -56,9 +56,9 @@
 !
 !       Object  old_man "old man"
 !         has   animate
-!         with  ...
+!         with  …
 !               life [;
-!                   ...
+!                   …
 !                   Give: switch (Shuffle(2, old_man_give)) {
 !                       1: print_ret (The) self, " doesn't want ", (the) noun, ".";
 !                       2: print_ret (The) self, " ignores your offering.";

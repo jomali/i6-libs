@@ -1035,7 +1035,7 @@
 		}
 
 	Wait:
-		"Pasaba el tiempo...";
+		"Pasaba el tiempo…";
 
 	Wake:
 		"La cruda realidad es que aquello no era un sueño.";

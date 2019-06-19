@@ -66,7 +66,7 @@ if [ "$op" = "3" ]; then
 	fi
 
 	echo "============================================="
-	echo "COMPILANDO PARA GLULX (sin multimedia)..."
+	echo "COMPILANDO PARA GLULX (sin multimedia)…"
 	echo "---------------------------------------------"
 	preprocesa_textos
 	inform +include_path=$inform_path -G $gameFile.inf ../$gameFile.ulx
@@ -93,7 +93,7 @@ elif [ "$op" = "2" ]; then
 	fi
 
 	echo "============================================="
-	echo "COMPILANDO PARA GLULX..."
+	echo "COMPILANDO PARA GLULX…"
 	echo "---------------------------------------------"
 	preprocesa_textos
 	inform +include_path=$inform_path -G $gameFile.inf $gameFile.ulx
@@ -124,7 +124,7 @@ else
 	fi
 
 	echo "============================================="
-	echo "COMPILANDO PARA MÁQUINA-Z..."
+	echo "COMPILANDO PARA MÁQUINA-Z…"
 	echo "---------------------------------------------"
 	preprocesa_textos
 	inform +include_path=$inform_path $gameFile.inf ../$gameFile.z5
