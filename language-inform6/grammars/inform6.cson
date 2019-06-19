@@ -33,6 +33,20 @@
     'match': '\\b(box|break|continue|do|else|font(\\s+)(on|off)|for|give|if|jump|new_line|objectloop|print|print_ret|remove|return|rfalse|rtrue|spaces|string|style(\\s+)(roman|bold|underline|reverse|fixed)|switch|until|while|has|hasnt|with|in|notin|ofclass|provides|or|;)\\b'
   },
   {
+	'name': 'keyword.verbs.group1.inform6'
+	'match': '\\b(FullScore|LMode1|LMode2|LMode3|NotifyOn|NotifyOff|Objects|Places|Pronouns|Quite|Restart|Restore|Save|Score|ScriptOn|ScriptOff|Verify|Version)\\b'
+  },
+  {
+	'name': 'keyword.verbs.group2.inform6'
+	'match':
+	'\\b(Close|Disrobe|Drop|Eat|Empty|EmptyT|Enter|Examine|Exit|GetOff|Give|Go|GoIn|Insert|Inv|InvTall|InvWide|Lock|Look|Open|Order|PutOn|Remove|Search|Show|SwitchOff|SwitchOn|Take|Transfer|Unlock|VagueGo|Wear)\\b'
+  },
+  {
+	'name': 'keyword.verbs.group3.inform6'
+	'match':
+	'\\b(Answer|Ask|AskFor|Attack|Blow|Burn|Buy|Climb|Consult|Cut|Dig|Drink|Fill|Jump|JumpOver|Kiss|LetGo|Listen|LookUnder|Mild|No|Pray|Pull|Push|PushDir|Receive|Rub|Set|SetTo|Sing|Sleep|Smell|Sorry|Squeeze|Strong|Swim|Swing|Taste|Tell|Think|ThrowAt|Tie|Touch|Turn|Wait|Wake|WakeOther|Wave|WaveHands|Yes)\\b'
+  },
+  {
     'name': 'keyword.other.directive.inform6'
     'match': '\\b(Abbreviate|Array|Attribute|Class|Constant|Default|End|Endif|Extend|Global|Ifdef|Ifndef|Ifnot|Iftrue|Iffalse|Import|Include|Link|Lowstring|Message|Object|Property|Release|Replace|Serial|Switches|Statusline(\\s+)(score|time)|System_file|Verb|Zcharacter)\\b'
   },
