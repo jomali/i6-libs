@@ -1,6 +1,6 @@
 #! /bin/sh
 # Script de inicializaciónn de librerías y extensiones para Inform 6.
-# Versión: 3.0 (2018/09/18)
+# Versión: 3.1 (2019/06/25)
 
 # Versión de la librería Inform:
 inform_version="611"
@@ -82,11 +82,13 @@ sudo cp Vorple6/*.h $directorio_extensiones/vorple/
 echo " hecho."
 echo " "
 
-# Script de compilación:
-if [ -f ../compila.sh ]; then
-	rm ../compila.sh
+# Scripts de compilación y de pre-compilación:
+if ! [ -f ../compila.sh ]; then
+	cp compila.sh ../
 fi
-cp compila.sh ../
+if ! [ -f ../preprocesaTexto.pl ]; then
+	cp preprocesaTexto.pl ../
+fi
 
 echo $directorio_librerias
 sudo ls --color=auto $directorio_librerias
