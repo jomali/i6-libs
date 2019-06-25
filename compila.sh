@@ -19,7 +19,7 @@ inform_path=,/usr/share/inform6/library/,/usr/share/inform6/extensions/,/usr/sha
 preprocesa_textos() {
 	for i in *.xinf; do
 	    [ -f "$i" ] || break
-		perl ./libs/preprocesaTexto.pl "$i" "${i%.xinf}.inf"
+		perl ./preprocesaTexto.pl "$i" "${i%.xinf}.inf"
 	done
 }
 
