@@ -37,6 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.4: 2019/07/15 Añadido mensaje del compilador.
 !!	1.3: 2019/03/22	Modificada la rutina 'PrintCharacterArray()' para incluir
 !!					la opción de imprimir los caracteres en mayúsculas o
 !!					minúsculas. Añadida rutina para calcular la longitud de un
@@ -53,6 +54,7 @@ System_file;
 
 #Ifndef ARRAYS;
 Constant ARRAYS;
+Message "Incluyendo 'arrays.h'";
 
 Array utility_array_a -> INPUT_BUFFER_LEN; ! hasta 160 caracteres
 Array utility_array_b -> INPUT_BUFFER_LEN;
