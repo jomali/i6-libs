@@ -37,7 +37,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
-!!	1.4: 2019/07/15 Añadido mensaje del compilador.
+!!	1.4: 2019/07/15 Añadido mensaje de compilación.
 !!	1.3: 2019/03/22	Modificada la rutina 'PrintCharacterArray()' para incluir
 !!					la opción de imprimir los caracteres en mayúsculas o
 !!					minúsculas. Añadida rutina para calcular la longitud de un
