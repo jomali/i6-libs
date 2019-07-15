@@ -13,8 +13,8 @@
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.4
-!!	Released:		2019/06/25
+!!	Version:		1.5
+!!	Released:		2019/07/15
 !!
 !!------------------------------------------------------------------------------
 !!
