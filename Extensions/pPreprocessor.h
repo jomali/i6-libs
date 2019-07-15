@@ -11,13 +11,14 @@
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.4
-!!	Released:		2018/09/21
+!!	Version:		1.5
+!!	Released:		2019/07/15
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	# HISTORIAL DE VERSIONES
 !!
+!!	1.5: 2019/07/15	Añadido mensaje de compilación.
 !!	1.4: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
 !!	1.3: 2017/09/18	Actualización de la rutina 'CompareWord' a la versión 1.2.
@@ -51,9 +52,10 @@ System_file;
 
 #Ifndef PARSING_PREPROCESSOR;
 Constant PARSING_PREPROCESSOR;
+Message "Incluyendo 'pPreprocessor.h'";
 
 !! Descomentar para obtener info. de depuración del preprocesador:
-!Constant DEBUG_PARSING_PREPROCESSOR;
+!! Constant DEBUG_PARSING_PREPROCESSOR;
 
 !! Descomentar para obtener info. de depuración de la rutina CompareWord():
 !Constant DEBUG_COMPARE_WORD_ROUTINE;
