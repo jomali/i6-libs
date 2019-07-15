@@ -13,8 +13,8 @@
 !!	Language:		ES (Castellano)
 !!	System:			Inform-INFSP 6
 !!	Platform:		Z-Machine / Glulx
-!!	Version:		1.3
-!!	Released:		2019/05/04
+!!	Version:		1.4
+!!	Released:		2019/06/25
 !!
 !!------------------------------------------------------------------------------
 !!
@@ -40,6 +40,12 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.5: 2019/07/15	Modificado el nombre de la constante que indica que la
+!!					extensión se ha incluido, y el mensaje de compilación.
+!!	1.4: 2019/06/25	Renombrado el atributo 'choice_set_flag' por
+!!					'show_choice_set_flag'. Ahora se puede activar un conjunto
+!!					de elecciones evitando la impresión de su inventario de
+!!					elecciones disponibles.
 !!	1.3: 2019/05/04 Pequeñas correcciones sobre la documentación.
 !!	1.2: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
 !!					UTF-8 (requiere la versión 6.34 o superior del compilador).
@@ -224,9 +230,9 @@
 !!
 !!------------------------------------------------------------------------------
 System_file;
-#Ifndef _CHOICE_SET_;
-Constant _CHOICE_SET_;
-Message "[Including <choiceSet>]";
+#Ifndef CHOICE_SETS;
+Constant CHOICE_SETS;
+Message "Incluyendo 'choiceSets.h'";
 
 !! Descomentar para obtener info. de depuración del controlador:
 !Constant DEBUG_CHOICE_SET;
@@ -235,7 +241,7 @@ Message "[Including <choiceSet>]";
 !Constant DEBUG_COMPARE_WORD_ROUTINE;
 
 !! Descomentar y compilar para probar la extensión:
-!Constant TEST_CHOICE_SET;
+!Constant TEST_CHOICE_SETS;
 
 !! Estilo y textos por defecto de la extensión:
 Default CSET_STYLE	1; ! [0-3]
@@ -643,13 +649,13 @@ Class	ChoiceSet
 		!! Permite indicar un título para el conjunto que se imprimirá junto
 		!! con el listado de elecciones:
 		title 0,
-		!! La siguiente propiedad ofrece soporte para bloquear el conjunto, de
+		!! La siguiente propiedad ofrece soprote para bloquear el conjunto, de
 		!! forma que mientras un conjunto se encuentre bloqueado se fuerce al
-		!! usuario a seleccionar una de las elecciones sin posibilidad de
-		!! hacer ninguna otra interacción. Para implementar esta funcionalidad
-		!! se debe incluir incluir una rutina 'react_before' en el objeto que
-		!! lanza el sistema CHOICE SET. (Consultar TEST para ver un ejemplo de
-		!! uso de un conjunto bloqueado.)
+		!! usuario a seleccionar una de las elecciones sin posibilidad de hacer
+		!! ninguna otra interacción. Para implementar esta funcionalidad se
+		!! debe implementar la propiedad 'react_before' en el objeto que esté
+		!! lanzando el sistema CHOICE SET. (Consultar TEST para ver un ejemplo
+		!! de uso de un conjunto bloqueado):
 		fixed false,
 		!! Temporizadores:
 		time_left -1,
@@ -670,14 +676,14 @@ Class	ChoiceSet
 !!------------------------------------------------------------------------------
 Object ChoiceSetManager "(ChoiceSet Manager)"
  with	!!----------------------------------------------------------------------
-		!! Retorna el valor de la propiedad 'choice_set_flag' utilizado por la
-		!! acción 'CSETSelected' para determinar si debe listar o no el
+		!! Retorna el valor de la propiedad 'show_choice_set_flag' utilizado
+		!! por la acción 'CSETSelected' para determinar si debe listar o no el
 		!! conjunto de elecciones activo.
 		!!
-		!!	@returns {boolean} Propiedad 'choice_set_flag' del objeto
+		!!	@returns {boolean} Propiedad 'show_choice_set_flag' del objeto
 		!!----------------------------------------------------------------------
-		get_choice_set_flag [;
-			return self.choice_set_flag;
+		get_show_choice_set_flag [;
+			return self.show_choice_set_flag;
 		],
 		!!----------------------------------------------------------------------
 		!! Indica si el conjunto de elecciones pasado como parámetro está o no
@@ -711,7 +717,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 				if (self.current_choice_set.has_ended()) return false;
 
 				!! A) Inicializaciones del método:
-				self.choice_set_flag = false;
+				self.show_choice_set_flag = true;
 				self.hits = 0;
 				self.selected_choice = 0;
 
@@ -760,9 +766,9 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 						PrintOrRun(self.selected_choice, reply);
 					}
 
-					!! Se establece la propiedad 'choice_set_flag' del gestor
-					!! en función de las propiedades de la elección:
-					self.choice_set_flag
+					!! Se establece la propiedad 'show_choice_set_flag' del
+					!! gestor en función de las propiedades de la elección:
+					self.show_choice_set_flag
 						= self.selected_choice.append_choice_set;
 
 					!! La elección se elimina del conjunto si está agotada y
@@ -856,12 +862,15 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 		],
 		!!----------------------------------------------------------------------
 		!! Inicia y deja activo en el gestor el conjunto de elecciones pasado
-		!! como parámetro. Si además se invoca con 'no_action' verdadero, se
-		!! evita la ejecución de las acciones asociadas a la activación (o
-		!! reactivación) del conjunto.
+		!! como parámetro. Si además se invoca con 'avoid_inventory' verdadero,
+ 		!! se evita que se imprima el inventario de elecciones disponibles. Y
+		!! si se invoca con 'no_action' verdadero, se evita la ejecución de las
+		!! acciones asociadas a la activación (o reactivación) del conjunto.
 		!!
 		!!	@param {ChoiceSet} choice_set - Conjunto de elecciones que se
 		!!		activa en el gestor
+		!!	@param {boolean} [avoid_inventory=false] - Si se invoca como
+		!!		verdadero, evita la impresión del inventario de elecciones.
 		!!	@param {boolean} [no_action=false] - Si se invoca como verdadero,
 		!!		evita la ejecucción de las acciones asociadas con la activación
 		!!		y reactivación del conjunto
@@ -869,7 +878,7 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 		!!		(o reactiva) correctamente. Falso si el conjunto no es válido o
 		!!		está marcado como agotado
 		!!----------------------------------------------------------------------
-		start [ choice_set no_action;
+		start [ choice_set avoid_inventory no_action;
 			!! Se comprueba que el conjunto pasado sea válido:
 			if ((choice_set == 0) || ~~(choice_set ofclass ChoiceSet)) {
 				#Ifdef DEBUG_CHOICE_SET;
@@ -890,7 +899,6 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			if (self.is_running(choice_set)) {
 				if ((choice_set.inter_action ~= 0) && ~~(no_action)) {
 					PrintOrRun(choice_set, inter_action);
-					new_line;
 				}
 			}
 			!! Se ejecuta la acción inicial del conjunto (si hay una definida)
@@ -898,12 +906,14 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			else {
 				if ((choice_set.initial_action ~= 0) && ~~(no_action)) {
 					PrintOrRun(choice_set, initial_action);
-					new_line;
 				}
 				self.current_choice_set = choice_set;
 			}
 			!! Imprime el listado de elecciones del conjunto activo:
-			self.show_choice_set();
+			if (~~avoid_inventory) {
+				new_line;
+				self.show_choice_set();
+			}
 			return true;
 		],
 		!!----------------------------------------------------------------------
@@ -925,18 +935,16 @@ Object ChoiceSetManager "(ChoiceSet Manager)"
 			else return 0;
 		],
  private
-		!! Indica si hay que mostrar el inventario de temas al terminar de
-		!! desarrollar uno de los temas de la conversación actual.
-		choice_set_flag false,
  		!! Conversación actual activa en el gestor.
  		current_choice_set 0,
 		!! Número de coincidencias del tema con más coincidencias de la
 		!! conversación (en tanto por 100 sobre el número de palabras clave).
 		hits 0,
-
 		!! Tema con mayor porcentaje de coincidencias hasta el momento.
-		!! FIXME
 		selected_choice 0,
+   		!! Indica si hay que mostrar el inventario de temas al terminar de
+   		!! desarrollar uno de los temas de la conversación actual.
+   		show_choice_set_flag true,
 ;
 
 
@@ -952,7 +960,7 @@ Verb	'cset.selected'
 
 [ CSETSelectedSub;
 	if (ChoiceSetManager.is_running()) {
-		if (ChoiceSetManager.get_choice_set_flag()) {
+		if (ChoiceSetManager.get_show_choice_set_flag()) {
 			new_line;
 			ChoiceSetManager.show_choice_set();
 		}
@@ -963,8 +971,8 @@ Verb	'cset.selected'
 
 !!------------------------------------------------------------------------------
 !! FIXME
-#Ifdef TEST_CHOICE_SET;
-Constant Story "ChoiceSet Test";
+#Ifdef TEST_CHOICE_SETS;
+Constant Story "ChoiceSets Test";
 
 Include "Parser";
 Include "Verblib";
@@ -1071,7 +1079,7 @@ ChoiceSetItem	cset_item_2
 		append_choice_set true;
 
 ChoiceSetItem	cset_item_21
- with	entry	"preguntar sobre los viajes"
+ with	entry	"preguntar sobre los viajes",
 		keys	'viajes',
 		reply [;
 			"---Oh, viajes. ¡Me encanta viajar! Claro que como turista. Supongo
@@ -1119,7 +1127,7 @@ ChoiceSetItem	cset_item_31
 		append_choice_set false;
 
 ChoiceSetItem	cset_item_32
- with	entry	"retirar el insulto"
+ with	entry	"retirar el insulto",
 		keys	'retirar' 'retira' 'insulto',
 		reply [;
 			"---Discúlpeme. Reconozco que ha sido una descortesía. Y era una
@@ -1131,7 +1139,7 @@ ChoiceSetItem	cset_item_32
 		append_choice_set true;
 
 ChoiceSetItem	cset_item_4
- with	entry	"saludarle con el sombrero"
+ with	entry	"saludarle con el sombrero",
 		keys	'saludar' 'saluda' 'saludarle' 'saludale' 'sombrero',
 		reply [;
 			"Inclinas el ala de tu sombrero en un gesto amistoso, y él te
@@ -1140,7 +1148,7 @@ ChoiceSetItem	cset_item_4
 		append_choice_set true,
 		permanent true;
 
-#Endif; ! TEST_CHOICE_SET;
+#Endif; ! TEST_CHOICE_SETS;
 !!------------------------------------------------------------------------------
 
-#Endif; ! _CHOICE_SET_;
+#Endif; ! CHOICE_SETS;
