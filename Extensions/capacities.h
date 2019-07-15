@@ -38,6 +38,7 @@
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.3: 2019/07/15 Modificación del mensaje de compilación.
 !!	1.2: 2019/03/29 Corregido error en la comprobación de capacidad en cantidad
 !!					de objetos cuando la capacidad del contenedor es infinita.
 !!	1.1: 2018/09/21	Modificada la codificación de caracteres de ISO 8859-15 a
@@ -66,7 +67,7 @@ System_file;
 
 #Ifndef CAPACITIES;
 Constant CAPACITIES;
-Message "Incluyendo 'capacities' v1.0";
+Message "Incluyendo 'capacities.h'";
 
 Constant CAPACITIES_INFINITE	-1;
 Constant CAPACITIES_NUMBER		0;
