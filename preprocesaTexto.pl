@@ -2,8 +2,8 @@
 
 #	File:		preprocesaTexto.pl
 #	Author(s):	J. Francisco Martín <jfm.lisaso@gmail.com>
-#	Version:	3.0
-#	Released:	2018/12/24
+#	Version:	3.2
+#	Released:	2019/08/07
 #
 #	Script Perl para preprocesar código fuente escrito en lenguaje Inform 6.
 #	Permite añadir ciertas etiquetas a las descripciones de los objetos, que
@@ -13,6 +13,9 @@
 #
 #	HISTORIAL DE VERSIONES
 #
+#	3.2: 2019/08/07	Se generalizan las etiquetas para abrir secuencias
+#					condicionales: si un objeto dado es plural; si se cumple
+#					una condición dada
 #	3.1: 2019/02/20	El nombre de la rutina encargada de crear hipervínculos se
 #					traslada a la variable $hyperlinks_routine para facilitar
 #					su modificación
@@ -65,15 +68,13 @@ for (@lines) {
 	# Etiquetas para el estilo código: `texto`
 	s/(?<!\\)`([^`\n]+)(?<!\\)`/", (monospaced) "\1", "/g;
 
-	# Secuencia condicional si el objeto player es plural: [plural:player]
-	s/\[\s*plural:player\s*\]/";\nif (IsPluralNoun(player)) {\nprint "/g;
-	# Secuencia condicional si es de día: [if:dia]
-	s/\[\s*if:dia\s*\]/";\nif (Utils.get_current_hour()>7 && Utils.get_current_hour()<21) {\nprint "/g;
-	# Secuencia condicional si el modo brújula está activado: [if:compass_mode]
-	s/\[\s*if:compass_mode\s*\]/";\nif (Utils.is_compass_enabled()) {\nprint "/g;
+	# Abre secuencia condicional si 'object' es plural: [plural:object]
+	s/\[\s*plural:\s*(.+?)\s*\]/";\nif (IsPluralNoun(\2)) {\nprint "/g;
+	# Abre secuencia condicional genérica: [if:condition]
+	s/\[\s*if:\s*(.+?)\s*\]/";\nif (\2) {\nprint "/g;
 	# Secuencia condicional: [else]
 	s/\[\s*else\s*\]/";\n} else {\nprint "/g;
-	# Secuencia condicional: [fi]
+	# Final de la secuencia condicional: [fi]
 	s/\[\s*fi\s*\]/";\n}\nprint "/g;
 
 	# Nombre corto del objeto junto al artículo determinado adecuado:
