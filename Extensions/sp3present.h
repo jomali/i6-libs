@@ -12,13 +12,14 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.1
-!!	Fecha:			2011/02/21
+!!	Versión:		1.20
+!!	Fecha:			2019/09/16
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.20: 2019/09/16 Corrección de erratas: acción ##Wear
 !!	1.1: 2019/02/21 Modificación de mensajes de la acción ##Look para
 !!					reemplazar 'inhibit_object_list' por la nueva propiedad
 !!					'list_visible_objects'.
@@ -1076,7 +1077,7 @@
 				else print "tiene";
  				".";
 			3:
-				print "Ya ", (lo) x1;
+				print "Ya ", (lo) x1, " ";
 				if (IsPluralNoun(player)) print "llevan";
 				else print "lleva";
 				" puest", (o) x1, ".";
