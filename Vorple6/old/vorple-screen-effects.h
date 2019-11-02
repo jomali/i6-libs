@@ -1,6 +1,6 @@
+System_file;
 #Ifndef VORPLE_SCREEN_EFFECTS;
 
-System_file;
 Constant VORPLE_SCREEN_EFFECTS;
 
 Include "vorple.h";
@@ -37,7 +37,7 @@ Include "vorple.h";
 
 Constant STYLE_FIXED_WIDTH = STYLE_MONOSPACE;
 
-[ VorpleCenterText str 		i j len;
+[ VorpleCenterText str;
 	if (isVorpleSupported()) {
                 VorplePlaceBlockLevelElement("center-align", str);
 	} else {
@@ -45,14 +45,6 @@ Constant STYLE_FIXED_WIDTH = STYLE_MONOSPACE;
 		! TODO: glulx
 		font off;
 		print "^";
-		!i = ScreenWidth();
-                !print "i =",i;
-		!len = str-->0;       ! THIS IS NOT GOOD gives the wrong length
-                !print "len ="; print len;
-		!if (len > i-2) { len = i-2; }
-		!j = (i-len)/2 -1;
-                !print "j =",j;
-		!!!!!!!Print__Spaces(j);
 		print (PrintStringOrArray) str;
 		font on;
 	}
@@ -77,7 +69,7 @@ Constant STYLE_FIXED_WIDTH = STYLE_MONOSPACE;
 ! TODO: what does this do?
 !
 ! Section 3 - Displaying boxed quotations (in place of Section SR5/1/7 - Saying - Fonts and visual effects in Standard Rules by Graham Nelson)
-! 
+!
 ! To say bold type -- running on
 !	(documented at phs_bold):
 !	(- style bold; -).
@@ -203,7 +195,7 @@ Constant STYLE_LIGHT_MAGENTA_BACKGROUND = 46;
                 STYLE_LIGHT_CYAN_LETTERS: return "light cyan letters";
                 STYLE_LIGHT_RED_LETTERS: return "light red letters";
                 STYLE_LIGHT_MAGENTA_LETTERS: return "light magenta letters";
-                
+
 		STYLE_RED_BACKGROUND: return "red background";
 		STYLE_GREEN_BACKGROUND: return "green background";
 		STYLE_YELLOW_BACKGROUND: return "yellow background";
