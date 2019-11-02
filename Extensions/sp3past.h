@@ -12,13 +12,14 @@
 !!	Idioma:			ES (Español)
 !!	Sistema:		Inform-INFSP 6
 !!	Plataforma:		Máquina-Z/Glulx
-!!	Versión:		1.20
-!!	Fecha:			2019/09/16
+!!	Versión:		1.21
+!!	Fecha:			2019/09/17
 !!
 !!------------------------------------------------------------------------------
 !!
 !!	HISTORIAL DE VERSIONES
 !!
+!!	1.21: 2019/09/17 Corrección de mensajes: acción ##Miscellany
 !!	1.20: 2019/09/16 Corrección de erratas: acción ##Wear
 !!	1.1: 2019/02/21 Modificación de mensajes de la acción ##Look para
 !!					reemplazar 'inhibit_object_list' por la nueva propiedad
@@ -1300,7 +1301,7 @@
 				!! El usuario ha respondido "TODOS" o "AMBOS" a una pregunta
 				!! aclaratoria como la anterior, pero el verbo no admite
 				!! objetos múltiples.
-				print "[Desafortunadamente sólo puedes referirte a un objeto
+				print "[Sólo puedes referirte a un objeto
 				en este caso. ¿Cuál exactamente?]^";
 				PreguntaCualExactamente=1;
 			48:
