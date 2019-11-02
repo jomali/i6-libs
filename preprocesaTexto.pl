@@ -2,8 +2,8 @@
 
 #	File:		preprocesaTexto.pl
 #	Author(s):	J. Francisco Martín <jfm.lisaso@gmail.com>
-#	Version:	3.2
-#	Released:	2019/08/07
+#	Version:	3.3
+#	Released:	2019/09/12
 #
 #	Script Perl para preprocesar código fuente escrito en lenguaje Inform 6.
 #	Permite añadir ciertas etiquetas a las descripciones de los objetos, que
@@ -13,6 +13,8 @@
 #
 #	HISTORIAL DE VERSIONES
 #
+#	3.3: 2019/09/12 Se omiten los comentarios si empiezan por '!!' (sin las
+#					comillas)
 #	3.2: 2019/08/07	Se generalizan las etiquetas para abrir secuencias
 #					condicionales: si un objeto dado es plural; si se cumple
 #					una condición dada
@@ -57,6 +59,9 @@ open (STDOUT, ">$output_file")
 # Sustituciones (EL ORDEN EN QUE SE HACEN IMPORTA):
 for (@lines) {
 
+	# Comentarios:
+	s/!!.*\n//g;
+
 	# Caracteres '[' y ']':
 	s/\\\[/", (char) 91, "/g;
 	s/\\\]/", (char) 93, "/g;
@@ -69,9 +74,9 @@ for (@lines) {
 	s/(?<!\\)`([^`\n]+)(?<!\\)`/", (monospaced) "\1", "/g;
 
 	# Abre secuencia condicional si 'object' es plural: [plural:object]
-	s/\[\s*plural:\s*(.+?)\s*\]/";\nif (IsPluralNoun(\2)) {\nprint "/g;
+	s/\[\s*plural:\s*(.+?)\s*\]/";\nif (IsPluralNoun(\1)) {\nprint "/g;
 	# Abre secuencia condicional genérica: [if:condition]
-	s/\[\s*if:\s*(.+?)\s*\]/";\nif (\2) {\nprint "/g;
+	s/\[\s*if:\s*(.+?)\s*\]/";\nif (\1) {\nprint "/g;
 	# Secuencia condicional: [else]
 	s/\[\s*else\s*\]/";\n} else {\nprint "/g;
 	# Final de la secuencia condicional: [fi]
