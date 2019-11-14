@@ -30,7 +30,6 @@ Include "vorple.h";
             VorpleExecuteJavaScriptCommand(hugehugestr);
         } else {
             print (string) desc;
-            print "^";
         }
 ];
 
@@ -71,7 +70,7 @@ Constant IMAGE_RIGHT_FLOATING = 5;
 [ VorplePreloadImages list     len i ;
 	! List must be a table, like page 43 of DM4
 	len = list-->0;
-	for (i=1: i<=len: i++) { VorplePreloadImage(list-->i); }
+	for (i=0: i<len: i++) { VorplePreloadImage(list-->i); }
 ];
 
 
@@ -80,35 +79,27 @@ Constant IMAGE_RIGHT_FLOATING = 5;
 !===================================
 ! Audio
 
-Constant SOUND_LOOP = 1;
+Constant LOOP_SOUND = 1;
+Constant LOOP_MUSIC = 1;
 
 [ VorplePlaySoundEffect file loop;
-    bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-    print "vorple.audio.playSound('";
-    PrintStringOrArray(VorpleEscape(file));
-    print "', {looping: ";
-    if (loop == SOUND_LOOP) { print "true"; } else { print "false"; }
-    print "})";
-    bp_output_stream(-3);
-    VorpleExecuteJavaScriptCommand(hugehugestr);
+    if (loop == LOOP_SOUND) {
+        ! @@92 = backslash
+         VorpleExecuteJavaScriptCommand(BuildCommand("$('<audio class=@@92'vorple-audio vorple-sound@@92' src='+vorple.options.resource_paths.audio+'/", VorpleEscape(file), " autoplay loop>').appendTo('body')"));
+    } else {
+         VorpleExecuteJavaScriptCommand(BuildCommand("$('<audio class=@@92'vorple-audio vorple-sound@@92' src='+vorple.options.resource_paths.audio+'/", VorpleEscape(file), " autoplay>').appendTo('body')"));
+    }
 ];
 
 
 
-Constant MUSIC_LOOP = 1;
-Constant MUSIC_FROM_START = 1;
 
-[ VorplePlayMusic file loop from_start;
-    bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
-    print "vorple.audio.playMusic('";
-    PrintStringOrArray(VorpleEscape(file));
-    print "', {looping: ";
-    if (loop == MUSIC_LOOP) { print "true"; } else { print "false"; }
-    print ", restart: ";
-    if (from_start == MUSIC_FROM_START) { print "true"; } else { print "false"; }
-    print "})";
-    bp_output_stream(-3);
-    VorpleExecuteJavaScriptCommand(hugehugestr);
+[ VorplePlayMusic file loop;
+    if (loop == LOOP_MUSIC) {
+        VorpleExecuteJavaScriptCommand(BuildCommand("vorple.audio.playMusic(vorple.options.resource_paths.audio+'/", VorpleEscape(file), "', true)"));
+    } else {
+        VorpleExecuteJavaScriptCommand(BuildCommand("vorple.audio.playMusic(vorple.options.resource_paths.audio+'/", VorpleEscape(file), "')"));
+    }
 ];
 
 [ VorpleStopMusic ;
@@ -121,64 +112,73 @@ Constant MUSIC_FROM_START = 1;
     VorpleExecuteJavaScriptCommand("$('.vorple-sound').remove();vorple.audio.stopMusic()");
 ];
 
-Constant PLAYLIST_LOOP = 1;
-Constant PLAYLIST_SHUFFLE = 1;
-Constant PLAYLIST_FROM_START = 1;
+Constant PLAYLIST_REPEAT = 1;
+Constant PLAYLIST_SHUFFLE = 2;
+Constant PLAYLIST_REPEAT_SHUFFLE = 3;
 
-[ VorpleStartPlaylist playlist loop from_start shuffle       len i j tmp;
+[ VorpleStartPlaylist playlist option       len i j tmp;
     ! Playlist must be a table, like page 43 of DM4
     
     ! We write the full command in hugehugestr (cant just write the playlist in it because BuildCommand writes in it)
+    !@output_stream 3 hugehugestr;
     bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
     print "var pl=";
     
     ! the array
     print "[";
     len = playlist-->0;
+    
+    ! if needed, perform a knuth shuffle on the playlist
+    if (option == PLAYLIST_SHUFFLE || option == PLAYLIST_REPEAT_SHUFFLE) {
+        for(i = len - 1: i > 0: i--) {
+            j = random(i + 1) - 1;
+            tmp = playlist-->j;
+            playlist-->j = playlist-->i;
+            playlist-->i = tmp;
+        }
+    }
+    
     for (i=0: i<len: i++) {
         print "'"; print (string) VorpleEscape(playlist-->i); print "',";
     }
     print "'']";
     
     ! the rest
-    print ";pl.pop();vorple.audio.setPlaylist(pl, {looping: ";
-    if (loop == PLAYLIST_LOOP) { print "true"; } else { print "false"; }
-    print ", restart:";
-    if (from_start == PLAYLIST_FROM_START) { print "true"; } else { print "false"; }
-    print ", shuffled:";
-    if (shuffle == PLAYLIST_SHUFFLE) { print "true"; } else { print "false"; }
-    print "})";
+    print ";pl.pop();vorple.audio.setPlaylist(pl";
+    if (option == PLAYLIST_REPEAT || option == PLAYLIST_REPEAT_SHUFFLE) { print ", true"; }
+    print ")";
     
+    !@output_stream -3;
     bp_output_stream(-3);
     VorpleExecuteJavaScriptCommand(hugehugestr);
 ];
 
 [ VorpleClearPlaylist ;
-    VorpleExecuteJavaScriptCommand("return vorple.audio.clearPlaylist()");
+    VorpleExecuteJavaScriptCommand("vorple.audio.clearPlaylist()");
 ];
 
 [ VorpleIsMusicPlaying ;
-    VorpleExecuteJavaScriptCommand("return vorple.audio.isMusicPlaying()");
+    VorpleExecuteJavaScriptCommand("vorple.audio.isMusicPlaying()");
     return VorpleWhatBooleanWasReturned();
 ];
 
 [ VorpleIsASoundEffectPlaying ;
-    VorpleExecuteJavaScriptCommand("return vorple.audio.isEffectPlaying()");
+    VorpleExecuteJavaScriptCommand("vorple.audio.isEffectPlaying()");
     return VorpleWhatBooleanWasReturned();
 ];
 
 [ VorpleIsAudioPlaying ;
-    VorpleExecuteJavaScriptCommand("return vorple.audio.isAudioPlaying()");
+    VorpleExecuteJavaScriptCommand("vorple.audio.isAudioPlaying()");
     return VorpleWhatBooleanWasReturned();
 ];
 
 [ VorpleIsAudioFilePlaying file ;
-    VorpleExecuteJavaScriptCommand(BuildCommand("return vorple.audio.isElementPlaying('.vorple-audio[src=@@92''+vorple.options.resource_paths.audio+'/", VorpleEscape(file), "@@92']')"));
+    VorpleExecuteJavaScriptCommand(BuildCommand("vorple.audio.isElementPlaying('.vorple-audio[src=@@92''+vorple.options.resource_paths.audio+'/", VorpleEscape(file), "@@92']')"));
     return VorpleWhatBooleanWasReturned();
 ];
 
 [ VorpleGetMusicFilePlaying ;
-    VorpleExecuteJavaScriptCommand("return vorple.audio.currentMusicPlaying()||''");
+    VorpleExecuteJavaScriptCommand("vorple.audio.currentMusicPlaying()||''");
     return VorpleWhatTextWasReturned();
 ];
 

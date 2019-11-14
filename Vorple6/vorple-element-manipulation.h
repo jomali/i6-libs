@@ -75,19 +75,19 @@ Include "vorple.h";
 
 
 [ VorpleMoveElementBefore classes target ;
-    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').last().insertBefore($('.", target, ":last'))"));
+    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').last().before('.", target, "')"));
 ];
 [ VorpleMoveAllElementsBefore classes target ;
-    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').insertBefore($('.", target, ":last'))"));
+    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').before('.", target, "')"));
 ];
 
 
 
 [ VorpleMoveElementAfter classes target ;
-    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').last().insertAfter($('.", target, ":last'))"));
+    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').last().after('.", target, "')"));
 ];
 [ VorpleMoveAllElementsAfter classes target ;
-    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').insertAfter($('.", target, ":last'))"));
+    VorpleExecuteJavaScriptCommand(BuildCommand("$('.", classes, "').after('.", target, "')"));
 ];
 
 
