@@ -2,8 +2,8 @@
 
 #	File:		preprocesaTexto.pl
 #	Author(s):	J. Francisco Martín <jfm.lisaso@gmail.com>
-#	Version:	3.3
-#	Released:	2019/09/12
+#	Version:	3.5
+#	Released:	2020/05/31
 #
 #	Script Perl para preprocesar código fuente escrito en lenguaje Inform 6.
 #	Permite añadir ciertas etiquetas a las descripciones de los objetos, que
@@ -13,6 +13,11 @@
 #
 #	HISTORIAL DE VERSIONES
 #
+#	3.5: 2020/05/31	Modificada la expresión regular para que la sustitución de
+#					género de un objeto acepte formas tanto masculina como
+#					femenina
+#	3.4: 2019/09/17	Al imprimir el listado de objetos contenidos por otro se
+#					dejan de listar los objetos ocultos por defecto
 #	3.3: 2019/09/12 Se omiten los comentarios si empiezan por '!!' (sin las
 #					comillas)
 #	3.2: 2019/08/07	Se generalizan las etiquetas para abrir secuencias
@@ -104,14 +109,14 @@ for (@lines) {
 
 	# Terminación de número adecuada: [n obj]
 	s/\[\s*n\s+(.+?)\s*\]/", (n) \1, "/g;
-	# Terminación de género adeuada: [o obj]
-	s/\[\s*o\s+(.+?)\s*\]/", (o) \1, "/g;
+	# Terminación de género adeuada: [o/a obj]
+	s/\[\s*(o|a)\s+(.+?)\s*\]/", (o) \2, "/g;
 
 	# Lista de objetos contenidos por otro objeto:
 	# [lista de objetos en/sobre obj<códigos de listado>]
 	s/\[\s*lista\s+de\s+objetos\s+(en|sobre)\s+(.+?)\s*\<\s*(.+?)\s*\>\s*\]/";\nWriteListFrom(child(\2), \3);\nprint "/g;
 	# [lista de objetos en/sobre obj]
-	s/\[\s*lista\s+de\s+objetos\s+(en|sobre)\s+(.+?)\s*\]/";\nWriteListFrom(child(\2), ENGLISH_BIT);\nprint "/g;
+	s/\[\s*lista\s+de\s+objetos\s+(en|sobre)\s+(.+?)\s*\]/";\nWriteListFrom(child(\2), ENGLISH_BIT + CONCEAL_BIT);\nprint "/g;
 
 	# Hipervínculo asociado a un objeto, con texto alternativo:
 	# [obj](texto:código_estilo)
