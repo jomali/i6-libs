@@ -27,7 +27,7 @@
 !		"VORPLE_NO_REPLACES" to prevent Vorple from replacing these routines
 !		-- you will have to manually add the Vorple modifications in this case.
 !
-!	Version:	3.1 (preview)
+!	Version:	3.1
 !	Released:	2018/09/23
 ! ==============================================================================
 
@@ -44,9 +44,10 @@ System_file;
 ! To change the status line, add objects to "StatusLineRulebook" with your code
 ! as the description of the object. See the end of this file
 
-Replace Banner OldBanner;					! (verblibm.h)
-Replace DrawStatusLine OldDrawStatusLine;	! (parserm.h)
-Replace L__M OldLM;							! (verblibm.h)
+Replace Banner OldBanner;                                       ! (verblibm.h)
+!Replace L__M OldLM;                                             ! (verblibm.h)
+Replace YesOrNo OldYesNo;                                       ! (verblibm.h)
+Replace AfterGameOver OldAfterGameOver;                         ! (parserm.h)
 #Endif; ! VORPLE_NO_REPLACES;
 
 ! ------------------------------------------------------------------------------
@@ -59,16 +60,10 @@ Constant VORPLE_LIBRARY;
 
 Include "infglk.h";
 
-! This is a horribly hacky way to implement the vorple interface setup rules.
-! If you want to include more rules in that rulebook, declare an object in it
-! and put your code in the description
-
-Object VorpleInterfaceSetup;
 
 ! The following 'bp_output_stream()' routine is directly taken from
 ! JustEnoughGlulx.h by Roger Firth. (We do not include the complete extension
 ! to avoid potential conflicts with Glulx entry points)
-! TODO - check license here
 Constant BP_MEMORYFREF_ROCK 661;
 Constant BP_MEMORY_MAXNEST 16;
 Constant BP_OUTSTREAM_SCREEN 1;
@@ -95,25 +90,25 @@ Global bp_memory_nest = 0;
             ; ! Code to be supplied
 
         bp_outstream_Script: ! ScriptOn
-            if (gg_scriptstr ~= GLK_NULL) rfalse;
-            if (gg_scriptfref == GLK_NULL) {
+            if (gg_scriptstr ~= 0) rfalse;
+            if (gg_scriptfref == 0) {
                 gg_scriptfref = glk_fileref_create_by_prompt(
 					fileusage_TextMode + fileusage_Transcript,
 					filemode_Write,
 					GG_SCRIPTFREF_ROCK);
-                if (gg_scriptfref == GLK_NULL) rfalse;
+                if (gg_scriptfref == 0) rfalse;
             }
             gg_scriptstr = glk_stream_open_file(
 				gg_scriptfref,
 				filemode_WriteAppend,
 				GG_SCRIPTSTR_ROCK);
-            if (gg_scriptstr == GLK_NULL) rfalse;
+            if (gg_scriptstr == 0) rfalse;
             glk_window_set_echo_stream(gg_mainwin, gg_scriptstr);
 
         -bp_outstream_Script:   ! ScriptOff
-            if (gg_scriptstr == GLK_NULL) rfalse;
-            glk_stream_close(gg_scriptstr, GLK_NULL);
-            gg_scriptstr = GLK_NULL;
+            if (gg_scriptstr == 0) rfalse;
+            glk_stream_close(gg_scriptstr, 0);
+            gg_scriptstr = 0;
 
         bp_outstream_Memory:
             if (bp_memory_nest == BP_MEMORY_MAXNEST) rfalse;
@@ -133,29 +128,29 @@ Global bp_memory_nest = 0;
             glk_stream_set_current(bp_memory_str-->bp_memory_nest);
             (bp_memory_buf-->bp_memory_nest)-->0 = gg_arguments-->1;
             bp_memory_buf-->bp_memory_nest = bp_memory_str-->bp_memory_nest
-				= GLK_NULL;
+				= 0;
 
         bp_outstream_Cmdfile: ! CommandsOn
-            if (gg_commandstr ~= GLK_NULL) rfalse;
+            if (gg_commandstr ~= 0) rfalse;
             fref = glk_fileref_create_by_prompt(
 				fileusage_TextMode + fileusage_InputRecord,
 				filemode_Write,
 				GG_COMMANDWSTR_ROCK);
-            if (fref == GLK_NULL) rfalse;
+            if (fref == 0) rfalse;
             gg_commandstr = glk_stream_open_file(
 				fref,
 				filemode_Write,
 				GG_COMMANDWSTR_ROCK);
             glk_fileref_destroy(fref);
             gg_command_reading = false;
-            if (gg_commandstr == GLK_NULL) rfalse;
+            if (gg_commandstr == 0) rfalse;
 
         -bp_outstream_Cmdfile: ! CommandsOff
-            if (gg_commandstr == GLK_NULL) rfalse;
+            if (gg_commandstr == 0) rfalse;
             if (gg_command_reading) rfalse;
             gg_command_reading = false;
-            glk_stream_close(gg_commandstr, GLK_NULL);
-            gg_commandstr = GLK_NULL;
+            glk_stream_close(gg_commandstr, 0);
+            gg_commandstr = 0;
     }
 	#Endif; ! TARGET_
     rtrue;
@@ -167,12 +162,48 @@ Global vorple_support = 0;
 Global fref_handshake;
 Global fref_js_eval;
 Global fref_js_return;
+Global fref_js_return_type;
+
+!============== Vorple Interface
+
+! The vorple interface setup rulebook. If you want to include
+! rules in that rulebook, declare an object in it and put your code
+! in its description
+Object VorpleInterfaceSetup;
+
+[ VorpleSetupTheInterface    r ;
+	if (isVorpleSupported()) {
+	    VorpleExecuteJavaScriptCommand(
+			"return window._vorpleSetupRulebookHasRun||false");
+	    if (~~VorpleWhatBooleanWasReturned()) {
+	        ! go through the rules of vorple interface setup
+	        objectloop(r in VorpleInterfaceSetup) r.description();
+	        VorpleExecuteJavaScriptCommand(
+				"window._vorpleSetupRulebookHasRun=true");
+	    }
+	}
+];
+
+! The vorple interface update rulebook. If you want to include
+! rules in that rulebook, declare an object in it and put your code
+! in its description
+Object VorpleInterfaceUpdate;
+
+[ VorpleUpdateTheInterface      r ;
+        if (isVorpleSupported()) {
+            ! go through the rules of vorple interface construction
+            objectloop (r in VorpleInterfaceUpdate) r.description();
+        }
+];
+
+!===============
+! Vorple Initialise
 
 ! You can use a 'VorpleStartup()' routine to do things while Vorple
 ! initialises. For instance, to execute commands before play begins
 #Stub VorpleStartup 0;
 
-[ VorpleInitialise      r ;
+[ VorpleInitialise  ;
 	! creates references
 	! TODO - remove?
 	!fref_handshake = make_fref(HANDSHAKE_FILE);
@@ -192,23 +223,10 @@ Global fref_js_return;
 	! window title
 	VorpleExecuteJavaScriptCommand(
 		BuildCommand("document.title='", VorpleEscape(Story), "'"));
-
 	! vorple interface setup rules
-	! TODO - is the test for vorple support superflous here, since
-	! "VorpleExecuteJavaScriptCommand()" just doesn't do anything for normal
-	! terps?
-
-	if (isVorpleSupported()) {
-	    ! execute the "Vorple interface setup rules"
-	    VorpleExecuteJavaScriptCommand(
-			"window._vorpleSetupRulebookHasRun||false");
-	    if (~~VorpleWhatBooleanWasReturned()) {
-	        ! go through the rules of vorple interface setup
-	        objectloop(r in VorpleInterfaceSetup) r.description();
-	        VorpleExecuteJavaScriptCommand(
-				"window._vorpleSetupRulebookHasRun=true");
-	    }
-	}
+        VorpleSetupTheInterface();
+        ! vorple interface construction rules
+        VorpleUpdateTheInterface();
 ];
 
 Global VorpleCommunicationDone = 0;
@@ -307,7 +325,7 @@ Array gg_result --> 2;
 	}
     mybuffer->3 = $E0;
     mybuffer->(4+len) = 0;
-    fref = glk($0061, 0, mybuffer+3, 0); ! fileref_create_by_name
+    fref = glk($0061, fileusage_TextMode, mybuffer+3, 0); ! fileref_create_by_name
     ! (This is a type-data, binary file.)
     if (~~fref) {
         print "Unable to create fileref: ", name, "^";
@@ -395,21 +413,37 @@ Array shortstr buffer LEN_SHORTSTR;
 Array hugestr buffer LEN_HUGESTR;
 Array hugehugestr buffer LEN_HUGEHUGESTR;
 
-! Print a string or an array (a buffer array, to be more precise)
+! Print a string or a byte array (a buffer array, to be more precise)
 [ PrintStringOrArray st i ;
 	if (st ofclass String) {
 		print (string) st;
-	}
-	else {
-		!! print " * "; ! FIXME
+	} else {
 		for (i=0: i< st-->0: i++) {
 			print (char) st->(WORDSIZE+i);
 		}
-		!! print " * ";
+	}
+];
+
+! Print a string or a word array (for instance something that
+!   corresponds to a Unicode string).
+! In the case of a word array, since the length isn't stored
+!   in the array, you have to supply the length
+[ PrintStringOrWordArray st len i ;
+	if (st ofclass String) {
+		print (string) st;
+	} else {
+                if (len == 0) len = BUFLEN;     ! in case it wasnt specified
+		for (i=0: i<len: i++) {
+			print (char) st-->i;
+		}
 	}
 ];
 
 ! Concatenates individual parts of a command, send a string back
+! The arguments must be byte arrays or strings with no unicode chars in them
+!   This is essentially because we send JS commands by writing in a file, and
+!   files in Inform / Glulx must be Latin-1.
+! If you want to concatenate Unicode strings, use the routine right after
 [ BuildCommand str1 str2 str3 str4 str5 str6 str7;
 	!@output_stream 3 hugehugestr;
     bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
@@ -426,8 +460,60 @@ Array hugehugestr buffer LEN_HUGEHUGESTR;
 		VorpleThrowRuntimeError("JS command too long; please increase
 			LEN_HUGEHUGESTR");
 	}
-	return hugehugestr ;
+    return hugehugestr ;
 ];
+
+! Concatenates Unicode strings and/or word arrays
+! The result is a byte array, so you can feed it to VorpleEscape with no problems
+!   (and in particular put it directly in a JS command)
+! So VorpleExecuteJavaScriptCommand(VorpleEscape(ConcatenateUnicodeStrings(...)))
+!    is valid
+Array largeuniarray --> (BUFLEN+1);
+Array strcloseresult --> 2;
+[ ConcatenateUnicodeStrings str1 str2 str3 str4 str5 str6 str7         i c oldstr str;
+	for (i=0 : i<BUFLEN : i++)
+		largeuniarray-->i = 0;
+	oldstr = glk($0048); ! stream_get_current
+	str = glk($0139, largeuniarray, BUFLEN, 1, 0); ! stream_open_memory_uni
+	if (str == 0) {
+		VorpleThrowRuntimeError("Unable to open memory stream.");
+	}
+	glk($0047, str); ! stream_set_current
+	if (str1 ~= 0) { print (PrintStringOrWordArray) str1; }
+	if (str2 ~= 0) { print (PrintStringOrWordArray) str2; }
+	if (str3 ~= 0) { print (PrintStringOrWordArray) str3; }
+	if (str4 ~= 0) { print (PrintStringOrWordArray) str4; }
+	if (str5 ~= 0) { print (PrintStringOrWordArray) str5; }
+	if (str6 ~= 0) { print (PrintStringOrWordArray) str6; }
+	if (str7 ~= 0) { print (PrintStringOrWordArray) str7; }
+	glk($0047, oldstr); ! stream_set_current
+	glk($0044, str, strcloseresult); ! stream_close
+	if (strcloseresult-->0 ~= 0)
+		VorpleThrowRuntimeError("Memory stream records more than zero characters read");
+	! strcloseresult-->1 is now the length of the stream
+	
+	! Transform into a byte array (so, de-Unicode here)
+	bp_output_stream(3, hugehugestr, LEN_HUGEHUGESTR);
+        for (i=0: i<LEN_HUGEHUGESTR: i++) {
+		c = largeuniarray-->i;
+		if (c == 0) {
+			break;
+		}
+		if (c > 127) {
+			print (char) 92; print "u";  ! \u
+			Unicode(c);
+			continue;
+		} 
+
+		print (char) c;
+	}
+	bp_output_stream(-3);
+	return hugehugestr;
+];
+[ UnicodeToLatin1 str ;
+    return ConcatenateUnicodeStrings(str);
+];
+
 
 ! int to string
 Constant Vorple_intarraylength = 10;
@@ -508,41 +594,67 @@ Constant NEW_LINE_CHAR = 10; ! '\n'
 	}
 ];
 
-[ VorpleEscapeLineBreaks str lb    i c;
-	!@output_stream 3 toescape;
-    bp_output_stream(3, toescape, 500);
-	print (PrintStringOrArray) str;
-	!@output_stream -3;
-    bp_output_stream(-3);
+Array uniarray --> (BUFLEN+1);
+
+[ VorpleEscapeLineBreaks text lb    i c oldstr str;
+	for (i=0 : i<BUFLEN : i++)
+		uniarray-->i = 0;
+
+	oldstr = glk($0048); ! stream_get_current
+	str = glk($0139, uniarray, BUFLEN, 1, 0); ! stream_open_memory_uni
+	if (str == 0) {
+		VorpleThrowRuntimeError("Unable to open memory stream.");
+	}
+
+	glk($0047, str); ! stream_set_current
+	print (PrintStringOrArray) text;
+	glk($0047, oldstr); ! stream_set_current
+	glk($0044, str, strcloseresult); ! stream_close
+
+	if (strcloseresult-->0 ~= 0)
+		VorpleThrowRuntimeError("Memory stream records more than zero characters read");
+	! strcloseresult-->1 is now the length of the stream
+
 	!@output_stream 3 temp;
-    bp_output_stream(3, temp, 50);
+	bp_output_stream(3, temp, 50);
 	print (PrintStringOrArray) lb;
 	!@output_stream -3;
-    bp_output_stream(-3);
+	bp_output_stream(-3);
+
 	!@output_stream 3 safe;
-    bp_output_stream(3, safe, 500);
-	for (i=0: i<toescape-->0: i++) {
-		if ( toescape->(WORDSIZE+i) == 39 || toescape->(WORDSIZE+i) == 92
-			|| toescape->(WORDSIZE+i) == 34) {
-            ! single quote or \ or double quote
-			print (char) 92; ! \
-			print (char) toescape->(WORDSIZE+i);
-            continue;
+	bp_output_stream(3, safe, BUFLEN);
+
+	for (i=0: i<BUFLEN: i++) {
+		c = uniarray-->i;
+
+		if (c == 0) {
+			break;
 		}
-		if ( toescape->(WORDSIZE+i) == NEW_LINE_CHAR) { ! line break
+
+                ! single quote or double quote or \
+                !    but we don't want to escape a \u that comes from Unicode
+		if (c == 39 || c == 34 || (c == 92 && uniarray-->(i+1) ~= 'u') ) {
+			print (char) 92; ! \
+			print (char) c;
+			continue;
+		}
+
+		if (c == NEW_LINE_CHAR) { ! line break
 			print (PrintStringOrArray) temp;
 			continue;
 		}
-		c =  toescape->(WORDSIZE+i);
-        if (c < 128) {
-            print (char) c;
-        } else {
-            print (char) 92; print "u";  ! \u
-            Unicode(c);
-        }
+
+		if (c > 127) {
+			print (char) 92; print "u";  ! \u
+			Unicode(c);
+			continue;
+		} 
+
+		print (char) c;
 	}
+
 	!@output_stream -3;
-    bp_output_stream(-3);
+	bp_output_stream(-3);
 
 	return safe;
 ];
@@ -550,6 +662,17 @@ Constant NEW_LINE_CHAR = 10; ! '\n'
 
 !========================================
 ! JS Code execution
+
+! Note: if you wish to know and use the result of a JS command,
+!       the command must use the keyword "return". Use then
+!       "VorpleWhatWasReturned" to get the answer as a string,
+!       or "VorpleWhatBooleanWasReturned", "VorpleWhatTextWasReturned"
+!       or "VorpleWhatNumberWasReturned" if you're sure of the type
+!       of value this was ("VorpleWhatType" will tell you).
+!       Example:
+!         VorpleExecuteJavaScriptCommand("return 'foo'");
+!         VorpleExecuteJavaScriptCommand("'bar'");
+!         print VorpleWhatWasReturned();   ! prints "foo"
 
 [ VorpleExecuteJavaScriptCommand cmd    str ;
     if (isVorpleSupported()) {
@@ -564,6 +687,7 @@ Constant NEW_LINE_CHAR = 10; ! '\n'
 ];
 
 Constant JS_RETURN_FILE = "VpJSRtrn";
+Constant JS_RETURN_TYPE_FILE = "VpJSType";
 
 ! TODO - do we need that? or can we use other ones declared later?
 Array returnedValue -> BUFLEN+4;
@@ -574,7 +698,7 @@ Array returnedValuebuffer buffer BUFLEN+4;
         fref_js_return = make_fref(JS_RETURN_FILE);
         str = open_file(fref_js_return, JS_RETURN_FILE, filemode_Read);
         ! what is returned here is an array, but we want a buffer array for the
-		! rest of the code
+        !      rest of the code
         len = glk($0092, str, returnedValue, BUFLEN); ! get_buffer_stream
         returnedValuebuffer-->0 = len;
         for (i=0: i<len: i++) {
@@ -587,84 +711,27 @@ Array returnedValuebuffer buffer BUFLEN+4;
 	}
 ];
 
-[ VorpleWhatType txt        len c d;
-    if (~~isVorpleSupported()) {
-		return "nothing";
-	}
-    ! Assume this is called on a buffer array (like the one returned by
-	! "VorpleWhatWasReturned()"). If not, try again after conversion
-    if (txt ofclass String) {
-        txt.print_to_array(returnedValuebuffer, BUFLEN);
-        return VorpleWhatType(returnedValuebuffer);
-    }
 
-    len = txt-->0;
-    if (compare_string(txt, len, "")) { return "nothing"; }
-    if (compare_string(txt, len, "undefined")) { return "nothing"; }
-    if (compare_string(txt, len, "null")) { return "nothing"; }
-    if (compare_string(txt, len, "true")) { return "truth state"; }
-    if (compare_string(txt, len, "false")) { return "truth state"; }
-    if (compare_string(txt, len, "NaN")) { return "NaN"; }
-    if (compare_string(txt, len, "Infinity")) { return "infinity"; }
-    if (compare_string(txt, len, "-Infinity")) { return "infinity"; }
-    c = txt->(WORDSIZE); ! 1st character
-    d = txt->(WORDSIZE+len-1); ! last character
-    switch(c) {
-        39: ! 39 = '
- 			if (len == 1 || d ~= 39) {
-				return "unknown";
-			} else {
-				return "text";
-			}
-        '[':
-			return "list";
-        '{':
-			return "object";
+! TODO - do we need that? or can we use other ones declared later?
+Array returnedValueType -> BUFLEN+4;
+Array returnedValueTypebuffer buffer BUFLEN+4;
+
+[ VorpleWhatTypeWasReturned     str len i;
+    if (isVorpleSupported()) {
+        fref_js_return_type = make_fref(JS_RETURN_TYPE_FILE);
+        str = open_file(fref_js_return_type, JS_RETURN_TYPE_FILE, filemode_Read);
+        ! what is returned here is an array, but we want a buffer array for the
+        !      rest of the code
+        len = glk($0092, str, returnedValueType, BUFLEN); ! get_buffer_stream
+        returnedValueTypebuffer-->0 = len;
+        for (i=0: i<len: i++) {
+			returnedValueTypebuffer->(WORDSIZE+i) = returnedValueType->i;
+		}
+        glk($0044, str, gg_result); ! stream_close
+        return returnedValueTypebuffer;
+    } else {
+        return "";
     }
-    ! this is so ugly!...
-    if ( txt->(WORDSIZE) == 'f'
-		&& txt->(WORDSIZE) == 'u'
-		&& txt->(WORDSIZE) == 'n'
-    	&& txt->(WORDSIZE) == 'c'
-		&& txt->(WORDSIZE) == 't'
-		&& txt->(WORDSIZE) == 'i'
-		&& txt->(WORDSIZE) == 'o'
-		&& txt->(WORDSIZE) == 'n'
-		&& txt->(WORDSIZE) == ' ') {
-    	return "function";
-    }
-    ! corresponding regexp : "^\-?\d+(\.\d+)?$"
-    c = 0; ! current number of letter
-    ! "^\-?"
-    if (txt->(WORDSIZE) == '-') {
-		c++;
-	}
-    ! "\d+"
-    if (txt->(WORDSIZE+c) > 58 || txt->(WORDSIZE+c) < 48) {
-		return "unknown";
-	}
-    while ( c < len && txt->(WORDSIZE+c) <= 58 && txt->(WORDSIZE+c) >= 48) {
- 		c++;
-	}
-    ! "()?$"
-    if (c == len) {
-		return "number";
-	}
-    ! "\.\d+"
-    if (txt->(WORDSIZE+c) ~= '.') {
-		return "unknown";
-	} else {
-		c++;
-	}
-    while ( c < len && txt->(WORDSIZE+c) <= 58 && txt->(WORDSIZE+c) >= 48) {
-		c++;
-	}
-    ! "$"
-    if (c == len) {
-		return "number";
-	} else {
-		return "unknown";
-	}
 ];
 
 [ VorpleWhatTextWasReturned     txt len i ;
@@ -672,13 +739,13 @@ Array returnedValuebuffer buffer BUFLEN+4;
 		return "";
 	}
     txt = VorpleWhatWasReturned();
-    if ( ~~compare_string(VorpleWhatType(txt), 4, "text")) {
+    if ( ~~compare_string(VorpleWhatTypeWasReturned(), 4, "text")) {
 		return txt;
 	}
     len = txt-->0;
     ! remove first and last character
     for (i=1: i<len: i++) {
-        txt->(WORDSIZE+i) = txt->(WORDSIZE+i-1);
+        txt->(WORDSIZE+i-1) = txt->(WORDSIZE+i);
     }
     txt-->0 = len-2;
     return txt;
@@ -705,45 +772,51 @@ Array returnedValuebuffer buffer BUFLEN+4;
         d = 0;
         if (c < 58 && c > 47) { d = c-48; }
         if (c == '.') {
-			! TODO floating points
-			! let first decimal be text character number N + 1 in T converted
-			! into a number:
-			!
-			!		if first decimal > 5:
-			!			increment result;
-			!		else if first decimal is 5:
-			!			if negated is false:
-			!				increment result;
-			!			otherwise unless T exactly matches the regular
-			!				expression "\-\d+\.50*":
-			!				increment result;
-			!		break;
+            ! floating point numbers are rounded into integers,
+            ! because Inform doesn't do floating points.
+            ! The rounding is to the closest integer, and
+            ! "-1.500000" is rounded to -1 (but "1.50000" is rounded to 2)
+            n++;
+            c = txt->(WORDSIZE+n); ! first decimal
+            if ( c >= 53) {        ! >= 5
+                if (neg==1 && c == 53) { ! -.5XXXXX
+                    ! Check: if -1.5, round to -1, if -1.51, round to 2
+                    n++;
+                    while (n<l) {
+                        if (txt->(WORDSIZE+n) ~= 48) { ! ==0
+                            jump notAll0s;
+                        }
+                        n++;
+                    }
+                    return -res;
+                }
+                .notAll0s;
+                res++;
+            }
+            if (neg==1) { return -res; } else { return res; }
         }
         res = res * 10 + d;
+        ! Check for overflow
         if (prev > res) {
-            VorpleThrowRuntimeError("Number ", txt, " exceeds Glulx range");
+            VorpleThrowRuntimeError(BuildCommand("Number ", txt, " exceeds Glulx range"));
             return 0;
         }
         prev = res;
     }
-    if (neg == 1) {
-		return 0-res;
-	} else {
-		return res;
-	}
+    if (neg == 1) { return -res; } else { return res; }
 ];
 
 [ VorpleWhatNumberWasReturned       txt;
     if (isVorpleSupported() == false) { return 0; }
     txt = VorpleWhatWasReturned();
-    if (compare_string(VorpleWhatType(txt), 4, "text")) {
+    if (compare_string(VorpleWhatTypeWasReturned(), 4, "text")) {
 		txt = VorpleWhatTextWasReturned();
 	}
     else {
-        if (~~compare_string(VorpleWhatType(txt), 6, "number")) {
+        if (~~compare_string(VorpleWhatTypeWasReturned(), 6, "number")) {
             VorpleThrowRuntimeError(
 				BuildCommand("Trying to convert return value of type ",
-				VorpleWhatType(txt), " into a number"));
+				VorpleWhatTypeWasReturned(), " into a number"));
             return 0;
         }
     }
@@ -755,7 +828,7 @@ Array returnedValuebuffer buffer BUFLEN+4;
 		return false;
 	}
     txt = VorpleWhatTextWasReturned();
-    type = VorpleWhatType(txt);
+    type = VorpleWhatTypeWasReturned();
     if (~~compare_string(type, 11, "truth state")) {
         VorpleThrowRuntimeError(
 			BuildCommand("Trying to convert return value of type ", type,
@@ -818,7 +891,7 @@ Array returnedValuebuffer buffer BUFLEN+4;
 ];
 
 [ VorplePlaceElementAtTopLevel classes ;
-    VorpleExecuteJavaScriptCommand("vorple.layout.focus('main#haven')");
+    VorpleExecuteJavaScriptCommand("vorple.layout.focus('main#vorple')");
     VorplePlaceBlockLevelElement(classes);
 ];
 
@@ -851,7 +924,7 @@ Array returnedValuebuffer buffer BUFLEN+4;
 
 [ VorpleCountElements elt ;
     VorpleExecuteJavaScriptCommand(
-		BuildCommand("$('.'+'", elt, "'.split(' ').join('.')).length"));
+		BuildCommand("return $('.'+'", elt, "'.split(' ').join('.')).length"));
     return VorpleWhatNumberWasReturned();
 ];
 
@@ -888,13 +961,20 @@ Array Vorple_prompt buffer (BUFLEN-1);
 
 [ VorpleAppendToLM act n x1 s;
 	x1 = s; ! avoid compiler warning
-    ! Print the prompt in Vorple
     if (act == ##Prompt) {
+        ! This is also the moment we update the user interface
+        VorpleUpdateTheInterface();
+        ! Let's include notifications fallback here too
+        #Ifdef VORPLE_NOTIFICATIONS;
+        VorpleNotificationsFallback();
+        #Endif;
+        ! Now print the prompt in Vorple
         if (isVorpleSupported()) {
-			new_line;
             bp_output_stream(3, Vorple_prompt, BUFLEN-1);
-            ! if you haven't defined any special prompt, Vorple will use ">"
-			if (~~MyVorplePrompt()) print ">";
+            ! if you haven't used the stub, Vorple will go look in "Prompt" in
+            ! the grammar file. Either way, don't forget to start with a newline!
+                !if (~~MyVorplePrompt()) OldLM(##Prompt);
+                if (~~MyVorplePrompt()) L__M(##Prompt);
             bp_output_stream(-3);
 
             ! if the prompt has changed since last turn...
@@ -939,104 +1019,11 @@ Array Vorple_prompt buffer (BUFLEN-1);
 
 [ VorpleAppendToBanner ;
     if (isVorpleSupported()) {
-        VorpleExecuteJavaScriptCommand("vorple.version");
+        VorpleExecuteJavaScriptCommand("return vorple.version");
         print "Vorple version ";
- 		PrintStringOrArray(VorpleWhatTextWasReturned());
-		print " preview";
-		new_line;
+        PrintStringOrArray(VorpleWhatTextWasReturned());
+	new_line;
     }
-	return true;
-];
-
-
-!===========================================
-! Hack to show notifications on the first turn
-
-! Vorple uses "LookRoutine()", in a hack to display notifications on the first
-! turn. If you defined your own, this will trigger an error, but just call
-! yours "MyLookRoutine()"
-#Stub MyLookRoutine 0;
-
-[ LookRoutine ;
-	! each_turn is executed at the end of every turn, so we need a way to
-	! execute it at the very beginning too cf Roger Firth's "Why don't my
-	! daemons run at the start of the game"
-	#Ifdef VORPLE_NOTIFICATIONS;
-	if (turns == 0) { VorpleNotificationsFallback(); }
-	#Endif;
-	MyLookRoutine();
-];
-
-
-!===========================================
-! Refresh the status line
-
-Object StatusLineRulebook "status line rulebook";
-
-! if you don't want normal status lines, insert "remove drawNormalStatusLine;"
-! in your Initialise() routine
-Object drawNormalStatusLine "draw normal statusline" StatusLineRulebook
-    with description [
-			width posa posb;
-
-	! The following is the same code as the "DrawStatusLine()" from parserm.h
-	#Ifdef TARGET_GLULX;
-	! If we have no status window, we must not try to redraw it.
-	if (gg_statuswin == 0)
-		return;
-	#Endif;
-
-	! If there is no player location, we shouldn't try to draw status window
-	if (location == nothing || parent(player) == nothing)
-		return;
-
-	StatusLineHeight(gg_statuswin_size);
-	MoveCursor(1, 1);
-
-	width = ScreenWidth();
-	posa = width-26; posb = width-13;
-	spaces width;
-
-	MoveCursor(1, 2);
-	if (location == thedark) {
-		print (name) location;
-	}
-	else {
-		FindVisibilityLevels();
-		if (visibility_ceiling == location)
-			print (name) location;
-		else
-			print (The) visibility_ceiling;
-	}
-
-	if (sys_statusline_flag && width > 53) {
-		MoveCursor(1, posa);
-		print (string) TIME__TX;
-		LanguageTimeOfDay(sline1, sline2);
-	}
-	else {
-		if (width > 66) {
-			#Ifndef NO_SCORE;
-			MoveCursor(1, posa);
-			print (string) SCORE__TX, sline1;
-			#Endif;
-			MoveCursor(1, posb);
-			print (string) MOVES__TX, sline2;
-		}
-		#Ifndef NO_SCORE;
-		if (width > 53 && width <= 66) {
-			MoveCursor(1, posb);
-			print sline1, "/", sline2;
-		}
-		#Endif;
-	}
-
-	MainWindow(); ! set_window
-	return true;
-		];
-
-[ VorpleAppendToDrawStatusLine r ;
-    objectloop(r in StatusLineRulebook) { r.description(); }
 	return true;
 ];
 
@@ -1051,17 +1038,101 @@ Object drawNormalStatusLine "draw normal statusline" StatusLineRulebook
 	return true;
 ];
 
-[ DrawStatusLine;
-	if (VorpleAppendToDrawStatusLine()) return true;
-	OldDrawStatusLine();
-	return true;
-];
-
 [ L__M act n x1 s;
 	if (VorpleAppendToLM(act, n, x1, s)) return true;
 	OldLM(act, n, x1, s);
 	return true;
 ];
+
+! Matches the 6/11 (2004) version
+[ YesOrNo i j;
+    for (::) {
+        #Ifdef TARGET_ZCODE;
+        if (location == nothing || parent(player) == nothing) read buffer parse;
+        else read buffer parse DrawStatusLine;
+        j = parse->1;
+        #Ifnot; ! TARGET_GLULX;
+        KeyboardPrimitive(buffer, parse);
+        j = parse-->0;
+        #Endif; ! TARGET_
+        if (j) { ! at least one word entered
+            i = parse-->1;
+            if (i == YES1__WD or YES2__WD or YES3__WD) rtrue;
+            if (i == NO1__WD or NO2__WD or NO3__WD) rfalse;
+        }
+        L__M(##Quit, 1);
+        if (isVorpleSupported()==0) print "> ";
+    }
+];
+
+! Matches the 6/11 (2004) version
+[ AfterGameOver i;
+
+  .RRQPL;
+
+    L__M(##Miscellany,5);
+
+  .RRQL;
+
+    if (isVorpleSupported()==0) { print "> "; }
+    #Ifdef TARGET_ZCODE;
+    #IfV3; read buffer parse; #Endif; ! V3
+    temp_global=0;
+    #IfV5; read buffer parse DrawStatusLine; #Endif; ! V5
+    #Ifnot; ! TARGET_GLULX
+    KeyboardPrimitive(buffer, parse);
+    #Endif; ! TARGET_
+    i = parse-->1;
+    if (i == QUIT1__WD or QUIT2__WD) {
+        #Ifdef TARGET_ZCODE;
+        quit;
+        #Ifnot; ! TARGET_GLULX
+        quit;
+        #Endif; ! TARGET_
+    }
+    if (i == RESTART__WD) {
+        #Ifdef TARGET_ZCODE;
+        @restart;
+        #Ifnot; ! TARGET_GLULX
+        @restart;
+        #Endif; ! TARGET_
+    }
+    if (i == RESTORE__WD) {
+        RestoreSub();
+        jump RRQPL;
+    }
+    if (i == FULLSCORE1__WD or FULLSCORE2__WD && TASKS_PROVIDED==0) {
+        new_line; FullScoreSub();
+        jump RRQPL;
+    }
+    if (deadflag == 2 && i == AMUSING__WD && AMUSING_PROVIDED==0) {
+        new_line; Amusing();
+        jump RRQPL;
+    }
+    #IfV5;
+    if (i == UNDO1__WD or UNDO2__WD or UNDO3__WD) {
+        if (undo_flag == 0) {
+            L__M(##Miscellany, 6);
+            jump RRQPL;
+        }
+        if (undo_flag == 1) jump UndoFailed2;
+        #Ifdef TARGET_ZCODE;
+        @restore_undo i;
+        #Ifnot; ! TARGET_GLULX
+        @restoreundo i;
+        i = (~~i);
+        #Endif; ! TARGET_
+        if (i == 0) {
+          .UndoFailed2;
+            L__M(##Miscellany, 7);
+        }
+        jump RRQPL;
+    }
+    #Endif; ! V5
+    L__M(##Miscellany, 8);
+    jump RRQL;
+];
+
 #Endif; ! VORPLE_NO_REPLACES;
 
 #Endif; ! for the "Ifndef VORPLE_LIBRARY"
